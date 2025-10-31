@@ -63,7 +63,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
   }, [params]);
 
   // Pobieramy dane produktu i kategorii
-  const product = getProductBySlug(categoryParam, productSlug);
+  const product = getProductBySlug(productSlug);
   const categoryInfo = productCategories.find(cat => cat.id === categoryParam);
   const relatedProducts = getCategoryProducts(categoryParam).filter(p => p.slug !== productSlug).slice(0, 3);
 
