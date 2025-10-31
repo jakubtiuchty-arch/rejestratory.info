@@ -77,7 +77,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
 
   // Grupowanie specyfikacji w kategorie
   const groupedSpecifications = React.useMemo(() => {
-    if (!product?.specifications) return [];
+    if (!product?.specification) return [];
     
     const groups = {
       "System": ["System operacyjny", "Procesor", "Pamięć RAM", "Pamięć wewnętrzna"],
