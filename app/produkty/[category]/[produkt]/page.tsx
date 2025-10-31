@@ -353,7 +353,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-4">Serwis i gwarancja</h4>
                       <p className="text-gray-600 mb-4">
-                        {product.serviceContract}
+                        {product.service_contract}
                       </p>
                       <Button variant="outline">
                         <Link href="/serwis">
