@@ -87,7 +87,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
       "Inne": []
     };
 
-    const result = [];
+    const result: Array<{ group: string; specs: string[] }> = [];
     
     // Przypisz specyfikacje do grup
     Object.entries(groups).forEach(([groupName, keywords]) => {
