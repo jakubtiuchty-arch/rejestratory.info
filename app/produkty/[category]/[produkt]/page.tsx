@@ -269,16 +269,12 @@ const ProductPage = ({ params }: ProductPageProps) => {
 ))}
                   </ul>
 
-                  <h3>Akcesoria i dodatki</h3>
-                  {product.accessories.length > 0 ? (
-                    <ul>
-                      {product.accessories.map((accessory, index) => (
-                        <li key={index}>{accessory}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>Informacje o akcesoriach dostępne u sprzedawcy.</p>
-                  )}
+                 <h3>Akcesoria i dodatki</h3>
+{product.accessories ? (
+  <p className="text-gray-700">{product.accessories}</p>
+) : (
+  <p className="text-gray-500">Informacje o akcesoriach dostępne u sprzedawcy.</p>
+)}
                 </CardContent>
               </Card>
             </TabsContent>
