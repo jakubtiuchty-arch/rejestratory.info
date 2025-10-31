@@ -1,27 +1,3 @@
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  category: string;
-  slug?: string;
-  shortDescription?: string;
-  specifications?: Array<{ label: string; value: string }>;
-  accessories?: string[];
-  whereToBuy?: string;
-  imageUrl?: string;
-  serviceContract?: string;
-  price?: string;
-  availability?: string;
-}
-
-export interface Category {
-  id: string;
-  name: string;
-  count: number;
-}
-
-export type ProductsByCategory = typeof productsByCategory;
-
 export const productsByCategory = {
   "rejestratory-mobilne": [
     {
@@ -168,52 +144,6 @@ export const productsByCategory = {
   ]
 };
 
-// Eksport kategorii jako stała
-export const productCategories = [
-  { id: "rejestratory-mobilne", name: "Rejestratory mobilne", count: 2 },
-  { id: "drukarki", name: "Drukarki", count: 2 },
-  { id: "tablety", name: "Tablety", count: 1 },
-  { id: "laptopy", name: "Laptopy", count: 1 },
-  { id: "serwery", name: "Serwery", count: 1 }
-];
-
-export function getFeaturedProducts() {
-  const allProducts = Object.values(productsByCategory).flat();
-  return allProducts.slice(0, 3);
-}
-
-export function getTotalProductCount() {
+export const getTotalProductCount = () => {
   return Object.values(productsByCategory).flat().length;
-}
-
-export function getProductCategories() {
-  return productCategories;
-}
-
-export function getMainCategories() {
-  return getProductCategories().slice(0, 3);
-}
-
-export function getAdditionalCategories() {
-  return getProductCategories().slice(3);
-}
-
-// Dodana funkcja getCategoryProducts
-export function getCategoryProducts(categorySlug: string) {
-  return productsByCategory[categorySlug] || [];
-}
-
-// Dodana funkcja getProductBySlug
-export function getProductBySlug(slug: string) {
-  const allProducts = Object.values(productsByCategory).flat();
-  return allProducts.find(product => product.slug === slug);
-}
-
-export function searchProducts(query: string, category?: string) {
-  const allProducts = Object.values(productsByCategory).flat();
-  if (!query) return allProducts.slice(0, 10);
-  
-  return allProducts.filter(product => 
-    product.name.toLowerCase().includes(query.toLowerCase())
-  ).slice(0, 10);
-}
+};
