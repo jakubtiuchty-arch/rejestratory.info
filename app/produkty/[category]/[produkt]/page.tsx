@@ -227,12 +227,12 @@ const ProductPage = ({ params }: ProductPageProps) => {
                 <CardContent className="p-6">
                   <h3 className="font-semibold text-gray-900 mb-3">Kluczowe cechy</h3>
                   <div className="grid grid-cols-1 gap-3">
-                    {product.specifications.slice(0, 6).map((spec, index) => (
+                    {specificationsList.slice(0, 6).map((spec, index) => (
                       <div key={index} className="flex items-center gap-3">
                         <div className="w-2 h-2 bg-emerald-600 rounded-full flex-shrink-0" />
-                        <span className="text-sm text-gray-700">
-                          <strong>{spec.label}:</strong> {spec.value}
-                        </span>
+                       <span className="text-sm text-gray-700">
+  {spec}
+</span>
                       </div>
                     ))}
                   </div>
