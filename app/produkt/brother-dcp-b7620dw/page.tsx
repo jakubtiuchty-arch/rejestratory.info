@@ -784,7 +784,11 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
                     <img
                       src={accessory.image}
                       alt={accessory.name}
-                      className="w-full h-40 object-contain rounded-lg scale-150"
+                      className={`w-full h-40 object-contain rounded-lg ${
+                        accessory.id === 'drum' ? 'scale-[1.20]' : 
+                        accessory.id === 'toner-black' ? 'scale-[1.16]' : 
+                        'scale-150'
+                      }`}
                     />
                     {isSelected && (
                       <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">

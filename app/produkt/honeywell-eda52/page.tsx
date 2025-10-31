@@ -33,14 +33,15 @@ const ImageGallery = ({ images }: { images: string[] }) => {
     <div className="space-y-4">
       {/* Main Image */}
       <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video cursor-pointer"
+        className="relative bg-gray-100 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center"
+        style={{ minHeight: '600px' }}
         whileHover={{ scale: 1.02 }}
         onClick={() => setIsZoomed(true)}
       >
         <img
-          src="/api/placeholder/500/400"
+          src="/eda52_1.png"
           alt="Honeywell EDA52"
-          className="w-full h-full object-cover"
+          className="w-1/2 h-auto object-contain"
         />
         <div className="absolute top-4 right-4">
           <div className="bg-white/80 rounded-full p-2">
@@ -48,26 +49,6 @@ const ImageGallery = ({ images }: { images: string[] }) => {
           </div>
         </div>
       </motion.div>
-
-      {/* Thumbnail Gallery */}
-      <div className="grid grid-cols-3 gap-2">
-        {[1, 2, 3].map((index) => (
-          <motion.div
-            key={index}
-            className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
-              currentImage === index ? 'border-emerald-600' : 'border-transparent'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            onClick={() => setCurrentImage(index)}
-          >
-            <img
-              src="/api/placeholder/120/120"
-              alt={`View ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        ))}
-      </div>
 
       {/* Zoom Modal */}
       <AnimatePresence>

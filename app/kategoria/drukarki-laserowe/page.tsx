@@ -37,7 +37,7 @@ const products = [
     price: "1 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/hll6410ph.png",
     featured: true,
     link: "/produkt/brother-hl-l6410"
   },
@@ -50,7 +50,7 @@ const products = [
     price: "1 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/dcpb75620dwph.png",
     featured: true,
     link: "/produkt/brother-dcp-b7620dw"
   },
@@ -63,7 +63,7 @@ const products = [
     price: "1 600 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź", 
-    image: "/api/placeholder/300/300",
+    image: "/hll6210dwph.png",
     featured: true,
     link: "/produkt/brother-hl-l6210dw"
   }
@@ -299,10 +299,12 @@ export default function CategoryPage() {
                   }`}
                 >
                   {/* Obrazek */}
-                  <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
-                    <div className="bg-gray-100 h-full flex items-center justify-center">
-                      <span className="text-gray-400 text-center px-4">{product.name}</span>
-                    </div>
+                  <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"} bg-gray-100`}>
+                    <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
 
                   {/* Treść */}

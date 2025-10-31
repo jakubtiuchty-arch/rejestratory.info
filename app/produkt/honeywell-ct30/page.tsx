@@ -26,21 +26,20 @@ import {
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
 
   return (
-    <div className="space-y-4">
+    <div>
       {/* Main Image */}
       <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video cursor-pointer"
+        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-[4/3] cursor-pointer"
         whileHover={{ scale: 1.02 }}
         onClick={() => setIsZoomed(true)}
       >
         <img
-          src="/api/placeholder/500/400"
+          src="/ct30p_1.png"
           alt="Honeywell CT30P"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
         <div className="absolute top-4 right-4">
           <div className="bg-white/80 rounded-full p-2">
@@ -48,26 +47,6 @@ const ImageGallery = ({ images }: { images: string[] }) => {
           </div>
         </div>
       </motion.div>
-
-      {/* Thumbnail Gallery */}
-      <div className="grid grid-cols-3 gap-2">
-        {[1, 2, 3].map((index) => (
-          <motion.div
-            key={index}
-            className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
-              currentImage === index ? 'border-emerald-600' : 'border-transparent'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            onClick={() => setCurrentImage(index)}
-          >
-            <img
-              src="/api/placeholder/120/120"
-              alt={`View ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        ))}
-      </div>
 
       {/* Zoom Modal */}
       <AnimatePresence>
@@ -86,7 +65,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
               exit={{ scale: 0.5 }}
             >
               <img
-                src="/api/placeholder/800/800"
+                src="/ct30p_1.png"
                 alt="Honeywell CT30P - powiększenie"
                 className="max-w-full max-h-full object-contain"
               />
@@ -257,7 +236,6 @@ const CourierServiceSection = ({ productName }: { productName: string }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Create email body
     const emailBody = `
 Zamówienie kuriera - ${productName}
 
@@ -279,13 +257,9 @@ Opis usterki:
 ${formData.faultDescription}
     `.trim()
 
-    // Create mailto link
     const mailtoLink = `mailto:handlowy@takma.com.pl?subject=Zamówienie kuriera - ${productName}&body=${encodeURIComponent(emailBody)}`
-    
-    // Open email client
     window.location.href = mailtoLink
     
-    // Reset form and close modal
     setFormData({
       firstName: '',
       lastName: '',
@@ -317,11 +291,7 @@ ${formData.faultDescription}
                 <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <motion.div
                     animate={{ opacity: [1, 0.3, 1] }}
-                    transition={{ 
-                      duration: 1.5, 
-                      repeat: Infinity, 
-                      ease: "easeInOut" 
-                    }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                   >
                     <AlertTriangle className="w-6 h-6 text-orange-600" />
                   </motion.div>
@@ -801,16 +771,14 @@ export default function ZebraEM45ProductPage() {
                 </div>
               </div>
 
-              {/* Gdzie kupić - prosty design */}
+              {/* Gdzie kupić */}
               <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
                     <span className="font-medium text-gray-900">ZUP Łódź</span>
                     <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
                   </div>
-                  
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
                     <span className="font-medium text-gray-900">TAKMA</span>
                     <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
@@ -843,11 +811,8 @@ export default function ZebraEM45ProductPage() {
                 }`}
                 onClick={() => {
                   if (tab.isScroll) {
-                    // Scroll to service section
                     const serviceSection = document.getElementById('service-section')
-                    if (serviceSection) {
-                      serviceSection.scrollIntoView({ behavior: 'smooth' })
-                    }
+                    if (serviceSection) serviceSection.scrollIntoView({ behavior: 'smooth' })
                   } else {
                     setActiveTab(tab.id)
                   }
@@ -862,8 +827,6 @@ export default function ZebraEM45ProductPage() {
         {/* Tab Content */}
         <div className="mb-16">
           <AnimatePresence mode="wait">
-
-
             {activeTab === 'specs' && (
               <motion.div
                 key="specs"
@@ -874,8 +837,6 @@ export default function ZebraEM45ProductPage() {
                 <Specifications />
               </motion.div>
             )}
-
-
 
             {activeTab === 'downloads' && (
               <motion.div
@@ -928,7 +889,7 @@ export default function ZebraEM45ProductPage() {
       {/* Courier Service Section */}
       <CourierServiceSection productName="Honeywell CT30P" />
 
-      {/* Footer - IDENTYCZNY JAK STRONA GŁÓWNA */}
+      {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">

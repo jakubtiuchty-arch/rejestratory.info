@@ -26,21 +26,20 @@ import {
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
 
   return (
-    <div className="space-y-4">
+    <div>
       {/* Main Image */}
       <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video cursor-pointer"
+        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-[4/3] cursor-pointer"
         whileHover={{ scale: 1.02 }}
         onClick={() => setIsZoomed(true)}
       >
         <img
-          src="/api/placeholder/500/400"
+          src="/tc27_1.png"
           alt="Zebra TC27"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
         <div className="absolute top-4 right-4">
           <div className="bg-white/80 rounded-full p-2">
@@ -48,26 +47,6 @@ const ImageGallery = ({ images }: { images: string[] }) => {
           </div>
         </div>
       </motion.div>
-
-      {/* Thumbnail Gallery */}
-      <div className="grid grid-cols-3 gap-2">
-        {[1, 2, 3].map((index) => (
-          <motion.div
-            key={index}
-            className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
-              currentImage === index ? 'border-emerald-600' : 'border-transparent'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            onClick={() => setCurrentImage(index)}
-          >
-            <img
-              src="/api/placeholder/120/120"
-              alt={`View ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        ))}
-      </div>
 
       {/* Zoom Modal */}
       <AnimatePresence>
@@ -86,7 +65,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
               exit={{ scale: 0.5 }}
             >
               <img
-                src="/api/placeholder/800/800"
+                src="/tc27_1.png"
                 alt="Zebra TC27 - powiększenie"
                 className="max-w-full max-h-full object-contain"
               />

@@ -26,21 +26,20 @@ import {
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
 
   return (
-    <div className="space-y-4">
+    <div>
       {/* Main Image */}
       <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video cursor-pointer"
+        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-[4/3] cursor-pointer"
         whileHover={{ scale: 1.02 }}
         onClick={() => setIsZoomed(true)}
       >
         <img
-          src="/api/placeholder/500/400"
+          src="/ea660_1.png"
           alt="Unitech EA660"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
         <div className="absolute top-4 right-4">
           <div className="bg-white/80 rounded-full p-2">
@@ -48,26 +47,6 @@ const ImageGallery = ({ images }: { images: string[] }) => {
           </div>
         </div>
       </motion.div>
-
-      {/* Thumbnail Gallery */}
-      <div className="grid grid-cols-3 gap-2">
-        {[1, 2, 3].map((index) => (
-          <motion.div
-            key={index}
-            className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
-              currentImage === index ? 'border-emerald-600' : 'border-transparent'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            onClick={() => setCurrentImage(index)}
-          >
-            <img
-              src="/api/placeholder/120/120"
-              alt={`View ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        ))}
-      </div>
 
       {/* Zoom Modal */}
       <AnimatePresence>
@@ -86,7 +65,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
               exit={{ scale: 0.5 }}
             >
               <img
-                src="/api/placeholder/800/800"
+                src="/ea660_1.png"
                 alt="Unitech EA660 - powiększenie"
                 className="max-w-full max-h-full object-contain"
               />
@@ -279,9 +258,13 @@ Opis usterki:
 ${formData.faultDescription}
     `.trim()
 
+    // Create mailto link
     const mailtoLink = `mailto:handlowy@takma.com.pl?subject=Zamówienie kuriera - ${productName}&body=${encodeURIComponent(emailBody)}`
+    
+    // Open email client
     window.location.href = mailtoLink
     
+    // Reset form and close modal
     setFormData({
       firstName: '',
       lastName: '',
@@ -582,7 +565,7 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
   const accessories = [
     {
       id: 'case',
-      name: 'Etui ochronne Zebra',
+      name: 'Etui ochronne Unitech',
       description: 'Wytrzymałe etui ochronne z paskiem na nadgarstek',
       image: '/api/placeholder/120/120',
       price: '129 zł'
@@ -694,7 +677,7 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
 }
 
 // Main Product Page Component
-export default function ZebraEM45ProductPage() {
+export default function UnitechEM45ProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
   return (

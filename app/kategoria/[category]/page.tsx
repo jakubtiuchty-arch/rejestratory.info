@@ -30,12 +30,12 @@ const products = [
     id: 1,
     name: "Zebra EM45",
     category: "Rejestratory",
-    description: "Niezawodny terminal terenowy z wbudowanym skanerem kodów QR/1D/2D",
-    specifications: "Android 14, 6,5\" FHD, Snapdragon 2,2 GHz, 6GB RAM",
+    description: "To nie tylko smartfon! - zresztą kliknij i się przekonaj!",
+    specifications: "Android 14, 6,7'' FHD+, 8GB RAM, Snapdragon 2,2 GHz",
     price: "Cena na zapytanie",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/em45_1.png",
     badge: "Bestseller",
     featured: true
   },
@@ -48,7 +48,7 @@ const products = [
     price: "4 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/tc27_1.png",
     badge: null,
     featured: false
   },
@@ -61,7 +61,7 @@ const products = [
     price: "5 100 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300", 
+    image: "/tc58_1.png", 
     badge: null,
     featured: false
   },
@@ -74,7 +74,7 @@ const products = [
     price: "5 300 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/ct47_1.png",
     badge: null,
     featured: true
   },
@@ -87,7 +87,7 @@ const products = [
     price: "4 600 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/ea660_1.png",
     badge: null,
     featured: true
   },
@@ -100,7 +100,7 @@ const products = [
     price: "4 900 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/pa768_1.png",
     badge: null,
     featured: false
   },
@@ -113,7 +113,7 @@ const products = [
     price: "3 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź", 
-    image: "/api/placeholder/300/300",
+    image: "/eda52_1.png",
     badge: "Nowość",
     featured: true
   },
@@ -126,7 +126,7 @@ const products = [
     price: "3 900 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/ct40xp_1.png",
     badge: null,
     featured: false
   },
@@ -139,7 +139,7 @@ const products = [
     price: "3 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/ct30p_1.png",
     badge: null,
     featured: false,
     customUrl: "/produkt/honeywell-ct30"
@@ -153,7 +153,7 @@ const products = [
     price: "4 700 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/sl20_1.png",
     badge: null,
     featured: false,
     customUrl: "/produkt/m3-sl20"
@@ -395,7 +395,15 @@ export default function CategoryPage() {
                   {/* Obrazek */}
                   <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
                     <div className="bg-gray-100 h-full flex items-center justify-center">
-                      <span className="text-gray-400 text-center px-4">{product.name}</span>
+                      <img 
+                        src={product.image} 
+                        alt={product.name} 
+                        className={product.image === '/em45_1.png' ? "object-contain" : "object-contain p-4"}
+                        style={{ 
+                          width: product.image === '/em45_1.png' ? '98%' : '92%',
+                          height: product.image === '/em45_1.png' ? '98%' : '92%'
+                        }}
+                      />
                     </div>
                     {product.badge && (
                       <span className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium ${
