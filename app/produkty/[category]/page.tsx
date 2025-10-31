@@ -329,7 +329,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
 </div>
                                   <div className="flex items-center gap-1">
                                     <Truck className="h-4 w-4 text-emerald-600" />
-                                    {product.whereToBuy}
+                                    {product.where_to_buy}
                                   </div>
                                 </div>
                               </div>
