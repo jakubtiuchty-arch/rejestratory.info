@@ -298,7 +298,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                                 </div>
                                 
                                 <div className="text-right">
-                                  <div className="text-2xl font-bold text-gray-900">{product.price}</div>
+                                  <div className="text-2xl font-bold text-gray-900">Cena na zapytanie</div>
                                 </div>
                               </div>
                               
