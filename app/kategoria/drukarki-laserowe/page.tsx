@@ -82,7 +82,7 @@ const availabilityOptions = [
   { value: "available", label: "Dostępne" }
 ];
 
-export default function CategoryPage({ params }) {
+export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [sortBy, setSortBy] = React.useState("name");
   const [availabilityFilter, setAvailabilityFilter] = React.useState("all");
