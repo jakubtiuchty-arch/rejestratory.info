@@ -258,11 +258,11 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                           
                           <div className="flex items-center justify-between mb-4">
                             <div>
-                              <span className="text-xl font-bold text-gray-900">{product.price}</span>
+                              <span className="text-xl font-bold text-gray-900">Cena na zapytanie</span>
                             </div>
                             <Badge variant="secondary" className="text-emerald-600 bg-emerald-50">
-                              {product.availability}
-                            </Badge>
+  Dostępny
+</Badge>
                           </div>
                           
                           <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
