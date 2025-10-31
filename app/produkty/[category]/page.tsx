@@ -324,9 +324,9 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                                 
                                 <div className="ml-auto flex items-center gap-4 text-sm text-gray-600">
                                   <div className="flex items-center gap-1">
-                                    <Package className="h-4 w-4 text-emerald-600" />
-                                    {product.availability}
-                                  </div>
+  <Package className="h-4 w-4 text-emerald-600" />
+  Dostępny
+</div>
                                   <div className="flex items-center gap-1">
                                     <Truck className="h-4 w-4 text-emerald-600" />
                                     {product.whereToBuy}
