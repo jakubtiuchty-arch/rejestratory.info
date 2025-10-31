@@ -26,7 +26,21 @@ import {
 } from "lucide-react";
 
 // Placeholder produkty dla kategorii Laptopy
-const products = [
+type Product = {
+  id: number;
+  name: string;
+  category: string;
+  description: string;
+  specifications: string;
+  price: string;
+  availability: string;
+  whereToBuy: string;
+  image: string;
+  badge?: string | null;
+  featured?: boolean;
+  slug: string;
+};
+const products: Product[] = [
   {
     id: 1,
     name: "HP EliteBook 645 G11 14\"",
