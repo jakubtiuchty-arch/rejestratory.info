@@ -246,12 +246,14 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                           
                           {/* Cechy */}
                           <div className="space-y-1 mb-4">
-                            {product.specifications.slice(0, 3).map((spec, i) => (
-                              <div key={i} className="flex items-center gap-2 text-xs text-gray-500">
-                                <div className="w-1 h-1 bg-gray-400 rounded-full" />
-                                {spec.label}: {spec.value}
-                              </div>
-                            ))}
+                            {product.specification ? (
+  product.specification.split(',').slice(0, 3).map((spec, i) => (
+    <div key={i} className="flex items-center gap-2 text-xs text-gray-500">
+      <div className="w-1 h-1 bg-gray-400 rounded-full" />
+      {spec.trim()}
+    </div>
+  ))
+) : null}
                           </div>
                           
                           <div className="flex items-center justify-between mb-4">
