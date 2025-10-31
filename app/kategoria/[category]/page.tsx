@@ -174,12 +174,7 @@ const availabilityOptions = [
   { value: "available", label: "Dostępne" }
 ];
 
-export default async function CategoryPage({ 
-  params 
-}: { 
-  params: Promise<{ category: string }> 
-}) {
-  const { category } = await params;
+export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [sortBy, setSortBy] = React.useState("default");
   const [availabilityFilter, setAvailabilityFilter] = React.useState("all");
