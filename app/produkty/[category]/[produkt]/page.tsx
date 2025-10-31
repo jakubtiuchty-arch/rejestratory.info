@@ -262,11 +262,11 @@ const ProductPage = ({ params }: ProductPageProps) => {
                   
                   <h3>Dlaczego {product.name} dla Lasów Państwowych?</h3>
                   <ul>
-                    {product.specifications.slice(0, 4).map((spec, index) => (
-                      <li key={index}>
-                        <strong>{spec.label}</strong> - {spec.value}
-                      </li>
-                    ))}
+                    {specificationsList.slice(0, 4).map((spec, index) => (
+  <li key={index}>
+    {spec}
+  </li>
+))}
                   </ul>
 
                   <h3>Akcesoria i dodatki</h3>
