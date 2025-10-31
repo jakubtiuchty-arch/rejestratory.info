@@ -43,6 +43,7 @@ const categories = [
 
 // Funkcja do mapowania nazw kategorii na URLe
 const getCategoryUrl = (categoryName: string) => {
+  const urlMap: Record<string, string> = {
   const urlMap = {
     "Rejestratory": "/kategoria/rejestratory",
     "Telefony": "/kategoria/telefony", 
