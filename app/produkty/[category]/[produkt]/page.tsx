@@ -69,7 +69,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
 
   // Placeholder images (można zastąpić prawdziwymi URL-ami z Google Drive)
   const images = [
-    product?.image || "/api/placeholder/600/600",
+    product?.image_link || "/api/placeholder/600/600",
     "/api/placeholder/600/600",
     "/api/placeholder/600/600",
     "/api/placeholder/600/600",
