@@ -333,7 +333,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
                       <h4 className="font-semibold text-gray-900 mb-4">Dostawca</h4>
                       <div className="space-y-3">
                         <p className="text-gray-600">
-                          Produkt dostępny u: <strong>{product.whereToBuy}</strong>
+                          Produkt dostępny u: <strong>{product.where_to_buy}</strong>
                         </p>
                         <p className="text-gray-600">
                           Skontaktuj się z działem handlowym, aby otrzymać ofertę 
