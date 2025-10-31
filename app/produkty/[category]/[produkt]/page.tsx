@@ -76,48 +76,10 @@ const ProductPage = ({ params }: ProductPageProps) => {
   ];
 
   // Grupowanie specyfikacji w kategorie
-  const groupedSpecifications = React.useMemo(() => {
-    if (!product?.specification) return [];
-    
-    const groups = {
-      "System": ["System operacyjny", "Procesor", "Pamięć RAM", "Pamięć wewnętrzna"],
-      "Ekran": ["Ekran"],
-      "Wytrzymałość": ["Odporność", "IP"],
-      "Bateria": ["Bateria"],
-      "Inne": []
-    };
-
-    const result: Array<{ group: string; specs: string[] }> = [];
-    
-    // Przypisz specyfikacje do grup
-    Object.entries(groups).forEach(([groupName, keywords]) => {
-      const groupItems = product.specifications.filter(spec => 
-        keywords.some(keyword => spec.label.toLowerCase().includes(keyword.toLowerCase()))
-      );
-      
-      if (groupItems.length > 0) {
-        result.push({
-          category: groupName,
-          items: groupItems
-        });
-      }
-    });
-
-    // Dodaj pozostałe specyfikacje do grupy "Inne"
-    const usedSpecs = result.flatMap(group => group.items);
-    const remainingSpecs = product.specifications.filter(spec => 
-      !usedSpecs.some(used => used.label === spec.label)
-    );
-    
-    if (remainingSpecs.length > 0) {
-      result.push({
-        category: "Inne",
-        items: remainingSpecs
-      });
-    }
-
-    return result;
-  }, [product]);
+ const specificationsList = React.useMemo(() => {
+  if (!product?.specification) return [];
+  return product.specification.split(',').map(s => s.trim());
+}, [product]);
 
   const downloads = [
     { name: `Karta katalogowa ${product?.name}`, type: "PDF", size: "2.4 MB" },
@@ -322,26 +284,25 @@ const ProductPage = ({ params }: ProductPageProps) => {
             </TabsContent>
 
             <TabsContent value="specs">
-              <div className="grid md:grid-cols-2 gap-6">
-                {groupedSpecifications.map((spec, index) => (
-                  <Card key={index}>
-                    <CardHeader>
-                      <CardTitle className="text-lg">{spec.category}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <dl className="space-y-3">
-                        {spec.items.map((item, i) => (
-                          <div key={i} className="flex justify-between py-2 border-b border-gray-100 last:border-0">
-                            <dt className="text-gray-600">{item.label}</dt>
-                            <dd className="font-medium text-gray-900">{item.value}</dd>
-                          </div>
-                        ))}
-                      </dl>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-lg">Specyfikacja</CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="space-y-2">
+        {specificationsList.length > 0 ? (
+          <ul className="list-disc list-inside space-y-1">
+            {specificationsList.map((spec, index) => (
+              <li key={index} className="text-gray-700">{spec}</li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500">Brak specyfikacji</p>
+        )}
+      </div>
+    </CardContent>
+  </Card>
+</TabsContent>
 
             <TabsContent value="downloads">
               <Card>
