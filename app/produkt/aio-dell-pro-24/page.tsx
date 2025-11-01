@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
 import {
+  ZoomIn,
   Shield,
   Battery,
   Wifi,
@@ -21,30 +21,94 @@ import {
   ShoppingCart,
   Info,
   Truck,
-  AlertTriangle
+  AlertTriangle,
+  Laptop,
+  Cpu
 } from 'lucide-react'
 
 // Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
+const ImageGallery = () => {
   const [currentImage, setCurrentImage] = useState(0)
+  const [isZoomed, setIsZoomed] = useState(false)
+
+  const galleryImages = [
+    '/aio_dell_1.png',
+    '/aio_dell_2.png',
+    '/aio_dell_3.png',
+    '/aio_dell_4.png'
+  ]
 
   return (
     <div className="space-y-4">
       {/* Main Image */}
       <motion.div 
-        className="relative rounded-lg overflow-hidden aspect-square p-10"
+        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video cursor-pointer"
         whileHover={{ scale: 1.02 }}
+        onClick={() => setIsZoomed(true)}
       >
-        <div className="relative w-full h-full">
-          <Image
-            src="/xcover7_1.png"
-            alt="Samsung XCover7"
-            fill
-            className="object-contain"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+        <img
+          src={galleryImages[currentImage]}
+          alt="Dell Pro 24 All in One"
+          className="w-full h-full object-contain"
+        />
+        <div className="absolute top-4 right-4">
+          <div className="bg-white/80 rounded-full p-2">
+            <ZoomIn className="w-5 h-5 text-gray-600" />
+          </div>
         </div>
       </motion.div>
+
+      {/* Thumbnail Gallery */}
+      <div className="grid grid-cols-4 gap-2">
+        {[0, 1, 2, 3].map((index) => (
+          <motion.div
+            key={index}
+            className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
+              currentImage === index ? 'border-emerald-600' : 'border-transparent'
+            }`}
+            whileHover={{ scale: 1.05 }}
+            onClick={() => setCurrentImage(index)}
+          >
+            <img
+              src={galleryImages[index]}
+              alt={`View ${index + 1}`}
+              className="w-full h-full object-contain"
+            />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Zoom Modal */}
+      <AnimatePresence>
+        {isZoomed && (
+          <motion.div
+            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsZoomed(false)}
+          >
+            <motion.div
+              className="relative max-w-4xl max-h-full"
+              initial={{ scale: 0.5 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.5 }}
+            >
+              <img
+                src={galleryImages[currentImage]}
+                alt="Dell Pro 24 All in One - powiększenie"
+                className="max-w-full max-h-full object-contain"
+              />
+              <button
+                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
+                onClick={() => setIsZoomed(false)}
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
@@ -54,23 +118,28 @@ const ImageGallery = ({ images }: { images: string[] }) => {
 const Specifications = () => {
   const specs = [
     { category: "Wyświetlacz", items: [
-      { name: "Rozmiar", value: "6.6 cala" },
-      { name: "Rozdzielczość", value: "1080 x 2408 Full HD+ TFT LCD" },
+      { name: "Rozmiar", value: "23,8 cala" },
+      { name: "Typ", value: "FHD, 100 Hz, bez obsługi dotykowej" },
+      { name: "Kamera", value: "FHD HDR" }
     ]},
     { category: "Wydajność", items: [
-      { name: "Procesor", value: "MediaTek Dimensity 6100+" },
-      { name: "RAM", value: "6 GB" },
-      { name: "Pamięć", value: "128 GB (rozszerzalna do 1 TB)" }
+      { name: "Procesor", value: "Intel® Core™ Ultra 5 235" },
+      { name: "NPU", value: "13 TOPS, 14 rdzeni, do 5,0 GHz" },
+      { name: "RAM", value: "16 GB DDR5, 5600 MT/s" },
+      { name: "Dysk", value: "SSD 512 GB" },
+      { name: "Karta graficzna", value: "Zintegrowany układ graficzny" }
     ]},
-    { category: "Wytrzymałość", items: [
-      { name: "Norma", value: "IP68 - pyłoszczelny i wodoodporny" },
-      { name: "Upadki", value: "Gorilla Glass Victus+ + MIL-STD-810H" },
-      { name: "Temperatura", value: "-10°C do +50°C" }
+    { category: "Łączność i akcesoria", items: [
+      { name: "Sieć bezprzewodowa", value: "Wi-Fi 6E AX211, 2x2, 802.11ax" },
+      { name: "Bluetooth", value: "Bluetooth®" },
+      { name: "Klawiatura", value: "Multimedialna Dell KB216" },
+      { name: "Mysz", value: "Przewodowa Dell MS116" }
     ]},
-    { category: "Bateria", items: [
-      { name: "Pojemność", value: "4050 mAh (wymienna)" },
-      { name: "Czas pracy", value: "Do 12 godzin" },
-      { name: "Ładowanie", value: "USB-C, 15W + POGO" }
+    { category: "System i gwarancja", items: [
+      { name: "System operacyjny", value: "Windows 11 Pro" },
+      { name: "Podstawa", value: "Regulowana wysokość (HAS)" },
+      { name: "Gwarancja", value: "ProSupport 60 miesięcy (5 lat)" },
+      { name: "Serwis", value: "Na miejscu w następnym dniu roboczym" }
     ]}
   ]
 
@@ -124,7 +193,7 @@ const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose
           >
             <div className="p-6">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-900">Brak kontraktów serwisowych dla urządzeń konsumenckich</h3>
+                <h3 className="text-xl font-bold text-gray-900">Dell ProSupport - Gwarancja Premium</h3>
                 <button
                   onClick={onClose}
                   className="p-2 hover:bg-gray-100 rounded-full"
@@ -135,51 +204,46 @@ const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose
               
               <div className="space-y-4 text-gray-600">
                 <p>
-                  Urządzenia konsumenckie, takie jak Samsung Galaxy XCover7, nie są objęte 
-                  kontraktami serwisowymi dostępnymi dla sprzętu profesjonalnych, przystosowanych do pracy w terenie. Oznacza to szereg 
-                  konsekwencji dla administratora i użytkowników terenowych:
+                  Dell Pro 24 All in One jest objęty 5-letnią gwarancją Dell ProSupport z serwisem na miejscu 
+                  w następnym dniu roboczym po przeprowadzeniu zdalnej diagnozy. To kompleksowe wsparcie 
+                  zapewnia ciągłość pracy i bezpieczeństwo inwestycji.
                 </p>
                 
-                <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-                  <h4 className="font-semibold text-red-700 mb-3">Co traci administrator i użytkownik?</h4>
+                <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+                  <h4 className="font-semibold text-emerald-700 mb-3">Co zyskuje administrator i użytkownik?</h4>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak gwarancji szybkiej naprawy lub wymiany urządzenia</span>
+                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Serwis na miejscu w następnym dniu roboczym - zero przestojów</span>
                     </li>
                     <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Długie oczekiwanie na serwis - nawet kilka tygodni</span>
+                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Pomoc techniczna 24/7 w zakresie sprzętu i oprogramowania</span>
                     </li>
                     <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak urządzeń zastępczych podczas naprawy</span>
+                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Zdalna diagnostyka przed wizytą technika</span>
                     </li>
                     <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak priorytetowego wsparcia technicznego 24/7</span>
+                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Gwarancja na 5 lat - przewidywalne koszty i spokój</span>
                     </li>
                     <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Wyższe koszty długoterminowe i przestoje w pracy terenowej</span>
+                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Priorytetowe wsparcie dla urządzeń biznesowych</span>
                     </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak regularnych aktualizacji bezpieczeństwa przez producenta</span>
-                    </li>
+                
                   </ul>
                 </div>
                 
                 <div className="bg-gray-50 p-4 rounded-lg">
                   <p className="text-sm font-semibold text-gray-900 mb-2">
-                    Konsekwencje dla Nadleśnictwa:
+                    Korzyści dla Nadleśnictwa:
                   </p>
                   <p className="text-sm">
-                    Brak profesjonalnego wsparcia oznacza poważne ryzyko operacyjne - każda awaria może 
-                    skutkować wielodniowym przestojem w pracy leśniczego. Administrator 
-                    musi samodzielnie zarządzać rezerwowymi urządzeniami, co generuje dodatkowe koszty 
-                    i komplikacje logistyczne. Pracownik w terenie pozostaje bez wsparcia, a ciągłość 
-                    pracy zależy wyłącznie od sprawności urządzenia konsumenckiego.
+                    Dell ProSupport oznacza całkowite bezpieczeństwo operacyjne - każda awaria jest 
+                    rozwiązywana następnego dnia roboczego bezpośrednio na miejscu. Administrator ma 
+                    pełną kontrolę i przewidywalność kosztów przez 5 lat.
                   </p>
                 </div>
               </div>
@@ -665,130 +729,8 @@ ${formData.faultDescription}
   )
 }
 
-// Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
-
-  const accessories = [
-    {
-      id: 'charger',
-      name: 'Ładowarka sieciowa USB-C',
-      description: 'Szybka ładowarka 15W z kablem USB-C',
-      image: '/api/placeholder/120/120',
-      price: '69 zł'
-    },
-    {
-      id: 'case',
-      name: 'Etui ochronne Premium',
-      description: 'Pancerne etui zwiększające ochronę',
-      image: '/api/placeholder/120/120',
-      price: '79 zł'
-    },
-    {
-      id: 'glass',
-      name: 'Szkło hartowane 9H',
-      description: 'Hartowane szkło ochronne na ekran',
-      image: '/api/placeholder/120/120',
-      price: '39 zł'
-    },
-    {
-      id: 'mount',
-      name: 'Uchwyt samochodowy',
-      description: 'Uniwersalny uchwyt do montażu w pojeździe',
-      image: '/api/placeholder/120/120',
-      price: '129 zł'
-    }
-  ]
-
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
-  }
-
-  return (
-    <div className="mb-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Akcesoria
-            </h3>
-          </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
-                setSelectedAccessories([])
-              }}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {accessories.map((accessory) => {
-            const isSelected = selectedAccessories.includes(accessory.id)
-            return (
-              <motion.div
-                key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
-                  isSelected 
-                    ? 'border-emerald-500 bg-emerald-50' 
-                    : 'border-gray-200 hover:border-emerald-300'
-                }`}
-                onClick={() => toggleAccessory(accessory.id)}
-              >
-                <div className="p-4 flex flex-col h-full">
-                  <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className="w-full h-24 object-cover rounded-lg"
-                    />
-                    {isSelected && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
-                  <div className="flex items-center justify-end mt-auto">
-                    <button
-                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                        isSelected 
-                          ? 'bg-emerald-700 text-white' 
-                          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                      }`}
-                    >
-                      {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
-      </motion.div>
-    </div>
-  )
-}
-
 // Main Product Page Component
-export default function SamsungXCover7ProductPage() {
+export default function DellPro24AIOProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
   const [inquiryCount, setInquiryCount] = useState(0)
@@ -867,9 +809,9 @@ export default function SamsungXCover7ProductPage() {
         <nav className="text-sm text-gray-500">
           <a href="/" className="hover:text-emerald-600">Strona główna</a>
           <span className="mx-2">/</span>
-          <a href="/kategoria/telefony" className="hover:text-emerald-600">Telefony</a>
+          <a href="/kategoria/komputery-all-in-one" className="hover:text-emerald-600">Komputery All-in-One</a>
           <span className="mx-2">/</span>
-          <span className="text-gray-900">Samsung XCover7</span>
+          <span className="text-gray-900">Dell Pro 24 All in One</span>
         </nav>
       </div>
 
@@ -878,7 +820,7 @@ export default function SamsungXCover7ProductPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
           {/* Image Gallery */}
           <div>
-            <ImageGallery images={[]} />
+            <ImageGallery />
           </div>
 
           {/* Product Info */}
@@ -889,17 +831,18 @@ export default function SamsungXCover7ProductPage() {
             >
               <div className="flex items-center space-x-2 mb-2">
                 <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Telefon konsumencki
+                  All-in-One
                 </span>
               </div>
               
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Samsung Galaxy XCover7
+                Dell Pro 24 All in One
               </h1>
               
               <p className="text-gray-600 mb-4 text-justify">
-                Samsung Galaxy XCover7 to wzmocniony smartfon konsumencki z ekranem 6.6 cala i certyfikatem IP68, zaprojektowany dla użytkowników poszukujących podstawowej odporności na wodę i pył. Urządzenie wyposażono w procesor MediaTek Dimensity 6100+ z obsługą 5G oraz wymienną baterię 4050 mAh, co stanowi rzadkość w dzisiejszych smartfonach. Pomimo wzmocnionej konstrukcji z Gorilla Glass Victus+ i normy MIL-STD-810H, pozostaje telefonem konsumenckim bez kontraktów serwisowych dedykowanych urządzeniom przemysłowym. Brak gwarancji szybkiej naprawy oraz długie przestoje serwisowe ograniczają zastosowania profesjonalne wymagające ciągłości pracy. Dedykowany przycisk XCover Key oraz obsługa ekranu w rękawiczkach sugerują zastosowania terenowe, jednak charakter konsumencki i brak wsparcia korporacyjnego wykluczają intensywną eksploatację w wymagających warunkach.
+                Dell Pro 24 All in One to kompaktowe rozwiązanie biznesowe łączące wydajność komputera stacjonarnego z elegancją jednolitej konstrukcji. Wyposażony w duży 23,8-calowy wyświetlacz FHD 100 Hz zapewnia komfortową pracę z dokumentami i aplikacjami biurowymi. Nowoczesny procesor Intel Core Ultra 5 z zintegrowanym NPU 13 TOPS gwarantuje płynną wielozadaniowość i długą żywotność inwestycji. Komputer wyposażony w podstawę o regulowanej wysokości umożliwia dostosowanie pozycji ekranu do indywidualnych potrzeb. Kompleksowa 5-letnia gwarancja Dell ProSupport z serwisem na miejscu zapewnia całkowite bezpieczeństwo operacyjne i przewidywalność kosztów dla nadleśnictw.
               </p>
+              
               <div className="flex space-x-4 mb-6">
                 <motion.button
                   onClick={addToInquiry}
@@ -912,33 +855,49 @@ export default function SamsungXCover7ProductPage() {
                 </motion.button>
               </div>
 
-              {/* Kontrakty serwisowe - NIEDOSTĘPNE */}
-              <div className="bg-red-50 rounded-lg p-4 border border-red-200 mb-6">
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <X className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-semibold text-red-700">Kontrakty serwisowe niedostępne</h4>
-                      <motion.button
-                        onClick={() => setIsServiceLightboxOpen(true)}
-                        className="p-1 hover:bg-red-200 rounded-full transition-colors"
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ 
-                          duration: 1.5, 
-                          repeat: Infinity, 
-                          ease: "easeInOut" 
-                        }}
-                      >
-                        <Info className="w-4 h-4 text-red-600" />
-                      </motion.button>
+              {/* Gwarancja Dell ProSupport i Intel Ultra 5 - grid 2 kolumny */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                {/* Gwarancja Dell ProSupport */}
+                <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="w-4 h-4 text-white" />
                     </div>
-                    <p className="text-sm text-gray-600">
-                      Urządzenia konsumenckie nie są objęte kontraktami serwisowymi. 
-                      Oznacza to brak gwarancji szybkiej naprawy, długie przestoje i brak urządzeń zastępczych. 
-                      Administrator nie ma spokoju, a ciągłość pracy leśniczego w terenie jest zagrożona przy każdej awarii.
-                    </p>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-semibold text-emerald-700">5-letnia gwarancja Dell ProSupport</h4>
+                        <motion.button
+                          onClick={() => setIsServiceLightboxOpen(true)}
+                          className="p-1 hover:bg-emerald-200 rounded-full transition-colors"
+                          animate={{ scale: [1, 1.1, 1] }}
+                          transition={{ 
+                            duration: 1.5, 
+                            repeat: Infinity, 
+                            ease: "easeInOut" 
+                          }}
+                        >
+                          <Info className="w-4 h-4 text-emerald-600" />
+                        </motion.button>
+                      </div>
+                      <p className="text-sm text-gray-600">
+                        Objęty kompleksową gwarancją ProSupport z serwisem na miejscu w następnym dniu roboczym po zdalnej diagnozie. 
+                        Pełne wsparcie techniczne 24/7, brak przestojów i gwarancja ciągłości pracy przez 5 lat.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Intel Ultra 5 */}
+                <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
+                  <div className="flex items-start space-x-3">
+                    <Cpu className="w-6 h-6 text-white flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-white mb-1">Procesor Intel® Core™ Ultra 5</h4>
+                      <p className="text-sm text-blue-50">
+                        Najnowszy procesor z NPU 13 TOPS i 14 rdzeniami zapewnia wyjątkową wydajność 
+                        w pracy z dokumentami, aplikacjami i wielozadaniowości do 5,0 GHz.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -962,9 +921,6 @@ export default function SamsungXCover7ProductPage() {
             </motion.div>
           </div>
         </div>
-
-        {/* Accessories Section */}
-        <AccessoriesSection productName="Samsung Galaxy XCover7" onAddToInquiry={addToInquiry} />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">
@@ -1029,7 +985,7 @@ export default function SamsungXCover7ProductPage() {
               >
                 {[
                   { title: "Karta katalogowa", type: "PDF", size: "1.8 MB" },
-                  { title: "Instrukcja obsługi", type: "PDF", size: "4.2 MB" },
+                  { title: "Instrukcja obsługi", type: "PDF", size: "3.2 MB" },
                   { title: "Specyfikacja techniczna", type: "PDF", size: "1.1 MB" }
                 ].map((file, index) => (
                   <motion.div
@@ -1065,7 +1021,7 @@ export default function SamsungXCover7ProductPage() {
       />
 
       {/* Courier Service Section */}
-      <CourierServiceSection productName="Samsung Galaxy XCover7" />
+      <CourierServiceSection productName="Dell Pro 24 All in One" />
 
       {/* Footer - IDENTYCZNY JAK STRONA GŁÓWNA */}
       <footer className="bg-gray-900 text-white py-12">
@@ -1074,7 +1030,7 @@ export default function SamsungXCover7ProductPage() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <div className="bg-white p-2 rounded-lg">
-                  <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-8 w-auto" />
+                  <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
                 </div>
               </div>
               <div className="text-gray-400">

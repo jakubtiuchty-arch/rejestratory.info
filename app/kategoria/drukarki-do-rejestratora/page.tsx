@@ -23,28 +23,94 @@ import {
   Eye,
   Heart,
   ArrowUpDown,
-  Monitor
+  Printer
 } from "lucide-react";
 
-// Placeholder produkty dla kategorii All In One
+// Placeholder produkty dla kategorii Drukarki do rejestratora
 const products = [
   {
-    id: 2,
-    name: "AIO Dell Pro 24 All in One",
-    category: "All In One", 
-    description: "Kompaktowy komputer All-in-One z regulowanym ekranem 23,8'' i szybkim procesorem do zadań biurowych.",
-    price: "3 400 PLN",
+    id: 1,
+    name: "Zebra ZQ521",
+    category: "Drukarki do rejestratora",
+    description: "Mobilna drukarka termiczna o szerokości druku 112 mm, idealna do pracy terenowej w lesie.",
+    price: "2 100 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
-    image: "aio_dell_1.png",
+    whereToBuy: "TAKMA",
+    image: "zq521_1.png",
+    badge: "Bestseller",
+    featured: false,
+    customUrl: "/produkt/zebra-zq521"
+  },
+  {
+    id: 2,
+    name: "Sewoo LK-P43",
+    category: "Drukarki do rejestratora", 
+    description: "Kompaktowa drukarka mobilna 4-calowa z długą żywotnością baterii i łączą Bluetooth.",
+    price: "1 800 PLN",
+    availability: "Dostępny",
+    whereToBuy: "TAKMA",
+    image: "lkp43_1.png",
     badge: null,
     featured: true,
-    customUrl: "/produkt/aio-dell-pro-24"
+    customUrl: "/produkt/sewoo-lkp43"
+  },
+  {
+    id: 3,
+    name: "Honeywell RP4",
+    category: "Drukarki do rejestratora",
+    description: "Wytrzymała drukarka mobilna 4-calowa z certyfikatem IP54, odporna na upadki i trudne warunki.",
+    price: "2 400 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź", 
+    image: "rp4_1.png",
+    badge: null,
+    featured: true,
+    customUrl: "/produkt/honeywell-rp4"
+  },
+  {
+    id: 4,
+    name: "Seiko MP-A40",
+    category: "Drukarki do rejestratora",
+    description: "Lekka i kompaktowa drukarka mobilna z obsługą WiFi i Bluetooth oraz długim czasem pracy.",
+    price: "1 900 PLN",
+    availability: "Dostępny",
+    whereToBuy: "TAKMA",
+    image: "mpa40_1.png", 
+    badge: null,
+    featured: true,
+    customUrl: "/produkt/seiko-mpa40"
+  },
+  {
+    id: 5,
+    name: "Sewoo LK-P400",
+    category: "Drukarki do rejestratora",
+    description: "Wydajna drukarka mobilna 4-calowa z szybkim drukiem i obsługą różnych systemów operacyjnych.",
+    price: "1 700 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź",
+    image: "lkp400_1.png",
+    badge: null,
+    featured: false,
+    customUrl: "/produkt/sewoo-lkp400"
+  },
+  {
+    id: 6,
+    name: "Bixolon SPP-R410",
+    category: "Drukarki do rejestratora",
+    description: "Profesjonalna drukarka mobilna z obsługą NFC, Bluetooth 5.0 i długim czasem pracy na baterii.",
+    price: "2 200 PLN",
+    availability: "Dostępny",
+    whereToBuy: "TAKMA",
+    image: "sppr410_1.png",
+    badge: null,
+    featured: true,
+    customUrl: "/produkt/bixolon-sppr410"
   }
 ];
 
 // Opcje filtrowania i sortowania
 const sortOptions = [
+  { value: "default", label: "Domyślnie" },
   { value: "name", label: "Nazwa A-Z" },
   { value: "price-asc", label: "Cena rosnąco" },
   { value: "price-desc", label: "Cena malejąco" },
@@ -58,7 +124,7 @@ const availabilityOptions = [
 
 export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [sortBy, setSortBy] = React.useState("name");
+  const [sortBy, setSortBy] = React.useState("default");
   const [availabilityFilter, setAvailabilityFilter] = React.useState("all");
   const [viewMode, setViewMode] = React.useState("grid"); // grid lub list
   const [showFilters, setShowFilters] = React.useState(false);
@@ -86,6 +152,8 @@ export default function CategoryPage() {
     // Sortowanie
     filtered.sort((a, b) => {
       switch (sortBy) {
+        case "default":
+          return a.id - b.id;
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
@@ -137,7 +205,7 @@ export default function CategoryPage() {
             <ChevronRight className="h-4 w-4 text-gray-400" />
             <a href="/#produkty" className="text-gray-600 hover:text-emerald-600">Produkty</a>
             <ChevronRight className="h-4 w-4 text-gray-400" />
-            <span className="text-gray-900 font-medium">All In One</span>
+            <span className="text-gray-900 font-medium">Drukarki do rejestratora</span>
           </nav>
         </div>
       </div>
@@ -147,16 +215,16 @@ export default function CategoryPage() {
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 mb-6">
             <div className="w-16 h-16 bg-emerald-100 rounded-lg flex items-center justify-center">
-              <Monitor className="h-8 w-8 text-emerald-600" />
+              <Printer className="h-8 w-8 text-emerald-600" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">All In One</h1>
+              <h1 className="text-3xl font-bold text-gray-900">Drukarki do rejestratora</h1>
               <p className="text-gray-600">{filteredProducts.length} produktów dostępnych</p>
             </div>
           </div>
           
           <p className="text-gray-700 max-w-3xl">
-            Kompaktowe komputery typu All-in-One łączące monitor i jednostkę centralną w jednej obudowie. Idealne rozwiązanie do biur leśnictwa, oszczędzające przestrzeń i zapewniające profesjonalną wydajność.
+            Mobilne drukarki termiczne przeznaczone do współpracy z rejestratorami danych i terminalami mobilnymi. Wytrzymałe urządzenia zaprojektowane do pracy w trudnych warunkach terenowych.
           </p>
         </div>
       </section>
@@ -170,7 +238,7 @@ export default function CategoryPage() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <input
                 type="text"
-                placeholder="Szukaj w All In One..."
+                placeholder="Szukaj w drukarkach..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
@@ -273,7 +341,12 @@ export default function CategoryPage() {
                 >
                   {/* Obrazek */}
                   <div className={`relative ${viewMode === "list" ? "w-44 flex-shrink-0 p-3" : "aspect-square p-5"}`}>
-                    <div className="relative w-full h-full">
+                    {product.badge && (
+                      <div className="absolute top-2 left-2 bg-orange-100 text-orange-700 px-3 py-1 rounded text-xs font-semibold z-10">
+                        {product.badge}
+                      </div>
+                    )}
+                    <div className="relative w-full h-full" style={product.image === "sppr410_1.png" ? { transform: "scale(0.85)" } : {}}>
                       <Image 
                         src={`/${product.image}`}
                         alt={product.name}

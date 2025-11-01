@@ -32,7 +32,6 @@ const categories = [
   { id: 3, name: "Laptopy", count: 11, icon: Laptop },
   { id: 4, name: "Urządzenia wielofunkcyjne", count: 7, icon: Printer },
   { id: 5, name: "Monitory", count: 8, icon: Monitor },
-  { id: 6, name: "Drukarki", count: 12, icon: Printer },
   { id: 7, name: "Serwery", count: 6, icon: Database },
   { id: 8, name: "Drukarki do rejestratora", count: 9, icon: Printer },
   { id: 9, name: "Drukarki laserowe", count: 14, icon: Printer },
@@ -49,7 +48,6 @@ const getCategoryUrl = (categoryName: string) => {
     "Laptopy": "/kategoria/laptopy",
     "Urządzenia wielofunkcyjne": "/kategoria/urzadzenia-wielofunkcyjne",
     "Monitory": "/kategoria/monitory",
-    "Drukarki": "/kategoria/drukarki",
     "Serwery": "/kategoria/serwery",
     "Drukarki do rejestratora": "/kategoria/drukarki-do-rejestratora",
     "Drukarki laserowe": "/kategoria/drukarki-laserowe",
@@ -471,59 +469,17 @@ export default function HomePage() {
   <div className="absolute inset-0 bg-black/60"></div>
   
   <div className="container mx-auto px-4 relative z-10">
-    <div className="grid md:grid-cols-4 gap-8">
-      <div>
-        <div className="flex items-center gap-2 mb-4">
-          <img src="/rejestratory_logo_footer.png" alt="TAKMA" className="h-8 w-auto" />
-        </div>
-        <div className="text-gray-400 text-justify">
-          <div>Administratorem serwisu</div>
-          <div>Rejestratory.info,</div>
-          <div>jest firma TAKMA</div>
-        </div>
+    <div className="flex flex-col items-center gap-6">
+      <div className="flex items-center justify-center gap-10">
+        <img src="/takma_logo.png" alt="TAKMA" className="h-14 w-auto" />
+        <span className="text-gray-200 text-lg">takma@takma.com.pl</span>
+        <span className="text-gray-200 text-lg">607 819 688</span>
+        <span className="text-gray-200 text-lg">51-128 Wrocław, ul. Poświęcka 1a</span>
       </div>
-      
-      <div>
-        <h4 className="font-semibold mb-4">Produkty</h4>
-        <ul className="space-y-2 text-gray-400">
-          <li><a href="/kategoria/rejestratory" className="hover:text-white">Rejestratory</a></li>
-          <li><a href="/kategoria/telefony" className="hover:text-white">Telefony</a></li>
-          <li><a href="/kategoria/laptopy" className="hover:text-white">Laptopy</a></li>
-          <li><a href="/kategoria/drukarki" className="hover:text-white">Drukarki</a></li>
-        </ul>
+      <div className="w-full max-w-4xl border-t border-gray-500"></div>
+      <div className="text-gray-400 text-sm">
+        © 2024 Rejestratory.info. Wszystkie prawa zastrzeżone.
       </div>
-      
-      <div>
-        <h4 className="font-semibold mb-4">Firma</h4>
-        <ul className="space-y-2 text-gray-400">
-          <li><a href="#" className="hover:text-white">O nas</a></li>
-          <li><a href="#" className="hover:text-white">Serwis</a></li>
-          <li><a href="#" className="hover:text-white">Kontakt</a></li>
-          <li><a href="#" className="hover:text-white">Blog</a></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h4 className="font-semibold mb-4">Kontakt</h4>
-        <div className="space-y-2 text-gray-400">
-          <div className="flex items-center gap-2">
-            <Phone className="h-4 w-4" />
-            <span>71 781 71 28</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Mail className="h-4 w-4" />
-            <span>takma@takma.com.pl</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4" />
-            <span>Wrocław, Poświęcka 1a, 51-128 Wrocław</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div className="border-t border-emerald-800 mt-8 pt-8 text-center text-gray-400">
-      <p>&copy; 2024 Rejestratory.info. Wszystkie prawa zastrzeżone.</p>
     </div>
   </div>
 </footer>

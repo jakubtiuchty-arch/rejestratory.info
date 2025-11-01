@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { 
   Search, 
@@ -35,7 +36,7 @@ const products = [
     price: "1 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "a36_1.png",
     badge: null,
     featured: false,
     customUrl: "/produkt/samsung-a36"
@@ -49,7 +50,7 @@ const products = [
     price: "1 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "a56_1.png",
     badge: null,
     featured: true,
     customUrl: "/produkt/samsung-a56"
@@ -63,7 +64,7 @@ const products = [
     price: "4 500 PLN",
     availability: "Dostępny",
     whereToBuy: "TAKMA", 
-    image: "/api/placeholder/300/300",
+    image: "s25plus_1.png",
     badge: null,
     featured: true,
     customUrl: "/produkt/samsung-s25-plus"
@@ -77,7 +78,7 @@ const products = [
     price: "6 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300", 
+    image: "s25ultra_1.png", 
     badge: null,
     featured: true,
     customUrl: "/produkt/samsung-s25-ultra"
@@ -91,7 +92,7 @@ const products = [
     price: "2 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "xcover7_1.png",
     badge: null,
     featured: true,
     customUrl: "/produkt/samsung-xcover7"
@@ -328,9 +329,15 @@ export default function CategoryPage() {
                   }`}
                 >
                   {/* Obrazek */}
-                  <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
-                    <div className="bg-gray-100 h-full flex items-center justify-center">
-                      <span className="text-gray-400 text-center px-4">{product.name}</span>
+                  <div className={`relative ${viewMode === "list" ? "w-44 flex-shrink-0 p-3" : "aspect-square p-5"}`}>
+                    <div className="relative w-full h-full">
+                      <Image 
+                        src={`/${product.image}`}
+                        alt={product.name}
+                        fill
+                        className="object-contain"
+                        sizes={viewMode === "list" ? "176px" : "(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 20vw"}
+                      />
                     </div>
                   </div>
 

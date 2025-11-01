@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
 import {
+  ZoomIn,
   Shield,
   Battery,
   Wifi,
@@ -21,30 +21,67 @@ import {
   ShoppingCart,
   Info,
   Truck,
-  AlertTriangle
+  AlertTriangle,
+  Palette,
+  Nfc
 } from 'lucide-react'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
+  const [isZoomed, setIsZoomed] = useState(false)
 
   return (
-    <div className="space-y-4">
+    <div>
       {/* Main Image */}
       <motion.div 
-        className="relative rounded-lg overflow-hidden aspect-square p-10"
+        className="relative rounded-lg overflow-hidden aspect-[4/3] cursor-pointer"
         whileHover={{ scale: 1.02 }}
+        onClick={() => setIsZoomed(true)}
       >
-        <div className="relative w-full h-full">
-          <Image
-            src="/xcover7_1.png"
-            alt="Samsung XCover7"
-            fill
-            className="object-contain"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+        <img
+          src="/rp4_1.png"
+          alt="Honeywell RP4"
+          className="w-full h-full object-contain"
+          style={{ transform: 'scale(1.10) translateY(-2%)' }}
+        />
+        <div className="absolute top-4 right-4">
+          <div className="bg-white/80 rounded-full p-2">
+            <ZoomIn className="w-5 h-5 text-gray-600" />
+          </div>
         </div>
       </motion.div>
+
+      {/* Zoom Modal */}
+      <AnimatePresence>
+        {isZoomed && (
+          <motion.div
+            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsZoomed(false)}
+          >
+            <motion.div
+              className="relative max-w-4xl max-h-full"
+              initial={{ scale: 0.5 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.5 }}
+            >
+              <img
+                src="/rp4_1.png"
+                alt="Honeywell RP4 - powiększenie"
+                className="max-w-full max-h-full object-contain"
+              />
+              <button
+                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
+                onClick={() => setIsZoomed(false)}
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
@@ -53,24 +90,41 @@ const ImageGallery = ({ images }: { images: string[] }) => {
 // Specifications Component
 const Specifications = () => {
   const specs = [
-    { category: "Wyświetlacz", items: [
-      { name: "Rozmiar", value: "6.6 cala" },
-      { name: "Rozdzielczość", value: "1080 x 2408 Full HD+ TFT LCD" },
+    { category: "Ogólne", items: [
+      { name: "Typ drukarki", value: "Mobilna, termiczna" },
+      { name: "Wymiary", value: "187 x 164 x 77 mm" },
+      { name: "Waga z baterią", value: "1,02 kg" },
+      { name: "Platforma", value: "Honeywell Printer Edge" },
+      { name: "Gwarancja", value: "2 lata" }
     ]},
-    { category: "Wydajność", items: [
-      { name: "Procesor", value: "MediaTek Dimensity 6100+" },
-      { name: "RAM", value: "6 GB" },
-      { name: "Pamięć", value: "128 GB (rozszerzalna do 1 TB)" }
+    { category: "Drukowanie", items: [
+      { name: "Prędkość druku", value: "25-125 mm/s (1-5 ips)" },
+      { name: "Rozdzielczość", value: "203 dpi" },
+      { name: "Szerokość druku", value: "4 cale (104 mm)" },
+      { name: "Technologia", value: "Direct Thermal" }
     ]},
-    { category: "Wytrzymałość", items: [
-      { name: "Norma", value: "IP68 - pyłoszczelny i wodoodporny" },
-      { name: "Upadki", value: "Gorilla Glass Victus+ + MIL-STD-810H" },
-      { name: "Temperatura", value: "-10°C do +50°C" }
+    { category: "Obsługa papieru", items: [
+      { name: "Rodzaje nośników", value: "Etykiety, paragony, linered, linerless, tagi" },
+      { name: "Maksymalna średnica rolki", value: "58 mm" },
+      { name: "Objętość wydruku", value: "Do 2000 wydruków dziennie" }
     ]},
-    { category: "Bateria", items: [
-      { name: "Pojemność", value: "4050 mAh (wymienna)" },
-      { name: "Czas pracy", value: "Do 12 godzin" },
-      { name: "Ładowanie", value: "USB-C, 15W + POGO" }
+    { category: "Bateria i zasilanie", items: [
+      { name: "Bateria", value: "4900 mAh" },
+      { name: "Interfejs", value: "USB 2.0" },
+      { name: "Wydajność energetyczna", value: "Wysoka" }
+    ]},
+    { category: "Łączność", items: [
+      { name: "Bluetooth", value: "5.0 + LE dual radio mode" },
+      { name: "Wi-Fi", value: "IEEE 802.11 a/b/g/n/ac" },
+      { name: "NFC", value: "Pairing" },
+      { name: "Zabezpieczenia", value: "OPEN, WEP, WPA/WPA2/WPA3" }
+    ]},
+    { category: "Odporność", items: [
+      { name: "Szczelność", value: "IP54" },
+      { name: "Odporność na upadki", value: "2 m" },
+      { name: "Test tumble", value: "1000 cykli z 0,5 m" },
+      { name: "Temperatura robocza", value: "-20°C do 55°C" },
+      { name: "Wilgotność robocza", value: "20-80% non-condensing" }
     ]}
   ]
 
@@ -100,94 +154,6 @@ const Specifications = () => {
         </motion.div>
       ))}
     </div>
-  )
-}
-
-// Service Contract Lightbox Component
-const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          <motion.div
-            className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.5, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-900">Brak kontraktów serwisowych dla urządzeń konsumenckich</h3>
-                <button
-                  onClick={onClose}
-                  className="p-2 hover:bg-gray-100 rounded-full"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              
-              <div className="space-y-4 text-gray-600">
-                <p>
-                  Urządzenia konsumenckie, takie jak Samsung Galaxy XCover7, nie są objęte 
-                  kontraktami serwisowymi dostępnymi dla sprzętu profesjonalnych, przystosowanych do pracy w terenie. Oznacza to szereg 
-                  konsekwencji dla administratora i użytkowników terenowych:
-                </p>
-                
-                <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-                  <h4 className="font-semibold text-red-700 mb-3">Co traci administrator i użytkownik?</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak gwarancji szybkiej naprawy lub wymiany urządzenia</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Długie oczekiwanie na serwis - nawet kilka tygodni</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak urządzeń zastępczych podczas naprawy</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak priorytetowego wsparcia technicznego 24/7</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Wyższe koszty długoterminowe i przestoje w pracy terenowej</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak regularnych aktualizacji bezpieczeństwa przez producenta</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-sm font-semibold text-gray-900 mb-2">
-                    Konsekwencje dla Nadleśnictwa:
-                  </p>
-                  <p className="text-sm">
-                    Brak profesjonalnego wsparcia oznacza poważne ryzyko operacyjne - każda awaria może 
-                    skutkować wielodniowym przestojem w pracy leśniczego. Administrator 
-                    musi samodzielnie zarządzać rezerwowymi urządzeniami, co generuje dodatkowe koszty 
-                    i komplikacje logistyczne. Pracownik w terenie pozostaje bez wsparcia, a ciągłość 
-                    pracy zależy wyłącznie od sprawności urządzenia konsumenckiego.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
   )
 }
 
@@ -671,32 +637,24 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 
   const accessories = [
     {
-      id: 'charger',
-      name: 'Ładowarka sieciowa USB-C',
-      description: 'Szybka ładowarka 15W z kablem USB-C',
-      image: '/api/placeholder/120/120',
-      price: '69 zł'
+      id: 'charger-network',
+      name: 'Ładowarka sieciowa',
+      price: 'Zapytaj o cenę'
     },
     {
-      id: 'case',
-      name: 'Etui ochronne Premium',
-      description: 'Pancerne etui zwiększające ochronę',
-      image: '/api/placeholder/120/120',
-      price: '79 zł'
+      id: 'charger-car',
+      name: 'Ładowarka samochodowa',
+      price: 'Zapytaj o cenę'
     },
     {
-      id: 'glass',
-      name: 'Szkło hartowane 9H',
-      description: 'Hartowane szkło ochronne na ekran',
-      image: '/api/placeholder/120/120',
-      price: '39 zł'
+      id: 'bag',
+      name: 'Torba na drukarkę',
+      price: 'Zapytaj o cenę'
     },
     {
-      id: 'mount',
-      name: 'Uchwyt samochodowy',
-      description: 'Uniwersalny uchwyt do montażu w pojeździe',
-      image: '/api/placeholder/120/120',
-      price: '129 zł'
+      id: 'paper',
+      name: 'Papier termiczny',
+      price: 'Zapytaj o cenę'
     }
   ]
 
@@ -738,7 +696,7 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {accessories.map((accessory) => {
             const isSelected = selectedAccessories.includes(accessory.id)
             return (
@@ -751,32 +709,24 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
                 }`}
                 onClick={() => toggleAccessory(accessory.id)}
               >
-                <div className="p-4 flex flex-col h-full">
-                  <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className="w-full h-24 object-cover rounded-lg"
-                    />
-                    {isSelected && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
+                <div className="p-4 flex flex-col items-center text-center">
+                  {isSelected && (
+                    <div className="mb-2">
+                      <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
                         <Check className="w-4 h-4 text-white" />
                       </div>
-                    )}
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
-                  <div className="flex items-center justify-end mt-auto">
-                    <button
-                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                        isSelected 
-                          ? 'bg-emerald-700 text-white' 
-                          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                      }`}
-                    >
-                      {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
-                    </button>
-                  </div>
+                    </div>
+                  )}
+                  <h4 className="font-semibold text-gray-900 mb-3">{accessory.name}</h4>
+                  <button
+                    className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                      isSelected 
+                        ? 'bg-emerald-700 text-white' 
+                        : 'bg-emerald-600 text-white hover:bg-emerald-700'
+                    }`}
+                  >
+                    {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
+                  </button>
                 </div>
               </motion.div>
             )
@@ -788,9 +738,8 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 }
 
 // Main Product Page Component
-export default function SamsungXCover7ProductPage() {
+export default function HoneywellRP4ProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
-  const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
   const [inquiryCount, setInquiryCount] = useState(0)
   const [showRipple, setShowRipple] = useState(false)
 
@@ -867,9 +816,9 @@ export default function SamsungXCover7ProductPage() {
         <nav className="text-sm text-gray-500">
           <a href="/" className="hover:text-emerald-600">Strona główna</a>
           <span className="mx-2">/</span>
-          <a href="/kategoria/telefony" className="hover:text-emerald-600">Telefony</a>
+          <a href="/kategoria/drukarki-mobilne" className="hover:text-emerald-600">Drukarki mobilne</a>
           <span className="mx-2">/</span>
-          <span className="text-gray-900">Samsung XCover7</span>
+          <span className="text-gray-900">Honeywell RP4</span>
         </nav>
       </div>
 
@@ -889,16 +838,16 @@ export default function SamsungXCover7ProductPage() {
             >
               <div className="flex items-center space-x-2 mb-2">
                 <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Telefon konsumencki
+                  Drukarka mobilna
                 </span>
               </div>
               
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Samsung Galaxy XCover7
+                Honeywell RP4
               </h1>
               
               <p className="text-gray-600 mb-4 text-justify">
-                Samsung Galaxy XCover7 to wzmocniony smartfon konsumencki z ekranem 6.6 cala i certyfikatem IP68, zaprojektowany dla użytkowników poszukujących podstawowej odporności na wodę i pył. Urządzenie wyposażono w procesor MediaTek Dimensity 6100+ z obsługą 5G oraz wymienną baterię 4050 mAh, co stanowi rzadkość w dzisiejszych smartfonach. Pomimo wzmocnionej konstrukcji z Gorilla Glass Victus+ i normy MIL-STD-810H, pozostaje telefonem konsumenckim bez kontraktów serwisowych dedykowanych urządzeniom przemysłowym. Brak gwarancji szybkiej naprawy oraz długie przestoje serwisowe ograniczają zastosowania profesjonalne wymagające ciągłości pracy. Dedykowany przycisk XCover Key oraz obsługa ekranu w rękawiczkach sugerują zastosowania terenowe, jednak charakter konsumencki i brak wsparcia korporacyjnego wykluczają intensywną eksploatację w wymagających warunkach.
+                Honeywell RP4 to wytrzymała drukarka mobilna 4-calowa zaprojektowana do intensywnej pracy w trudnych warunkach terenowych. Dzięki certyfikatowi IP54 i odporności na upadki z wysokości 2 metrów, urządzenie doskonale sprawdzi się w codziennej pracy leśników. Drukarka oferuje szybki druk termiczny z prędkością do 125 mm/s oraz zaawansowaną łączność bezprzewodową przez Bluetooth 5.0, Wi-Fi i NFC. Wydajna bateria 4900 mAh zapewnia długą pracę bez dostępu do zasilania, a platforma Honeywell Printer Edge umożliwia inteligentne zarządzanie drukiem i diagnostykę zdalną.
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
@@ -910,37 +859,6 @@ export default function SamsungXCover7ProductPage() {
                   <Package className="w-5 h-5 mr-2" />
                   Zapytaj o produkt
                 </motion.button>
-              </div>
-
-              {/* Kontrakty serwisowe - NIEDOSTĘPNE */}
-              <div className="bg-red-50 rounded-lg p-4 border border-red-200 mb-6">
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <X className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-semibold text-red-700">Kontrakty serwisowe niedostępne</h4>
-                      <motion.button
-                        onClick={() => setIsServiceLightboxOpen(true)}
-                        className="p-1 hover:bg-red-200 rounded-full transition-colors"
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ 
-                          duration: 1.5, 
-                          repeat: Infinity, 
-                          ease: "easeInOut" 
-                        }}
-                      >
-                        <Info className="w-4 h-4 text-red-600" />
-                      </motion.button>
-                    </div>
-                    <p className="text-sm text-gray-600">
-                      Urządzenia konsumenckie nie są objęte kontraktami serwisowymi. 
-                      Oznacza to brak gwarancji szybkiej naprawy, długie przestoje i brak urządzeń zastępczych. 
-                      Administrator nie ma spokoju, a ciągłość pracy leśniczego w terenie jest zagrożona przy każdej awarii.
-                    </p>
-                  </div>
-                </div>
               </div>
 
               {/* Gdzie kupić - prosty design */}
@@ -964,36 +882,23 @@ export default function SamsungXCover7ProductPage() {
         </div>
 
         {/* Accessories Section */}
-        <AccessoriesSection productName="Samsung Galaxy XCover7" onAddToInquiry={addToInquiry} />
+        <AccessoriesSection productName="Honeywell RP4" onAddToInquiry={addToInquiry} />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">
           <nav className="-mb-px flex space-x-8">
             {[
               { id: 'specs', label: 'Specyfikacja' },
-              { id: 'downloads', label: 'Pliki do pobrania' },
-              { id: 'service', label: 'Serwis', isScroll: true }
+              { id: 'downloads', label: 'Pliki do pobrania' }
             ].map((tab) => (
               <button
                 key={tab.id}
                 className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  tab.id === 'service'
-                    ? 'border-transparent text-orange-600 hover:text-orange-700 hover:border-orange-300'
-                    : activeTab === tab.id
+                  activeTab === tab.id
                     ? 'border-emerald-500 text-emerald-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
-                onClick={() => {
-                  if (tab.isScroll) {
-                    // Scroll to service section
-                    const serviceSection = document.getElementById('service-section')
-                    if (serviceSection) {
-                      serviceSection.scrollIntoView({ behavior: 'smooth' })
-                    }
-                  } else {
-                    setActiveTab(tab.id)
-                  }
-                }}
+                onClick={() => setActiveTab(tab.id)}
               >
                 {tab.label}
               </button>
@@ -1028,9 +933,9 @@ export default function SamsungXCover7ProductPage() {
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
                 {[
-                  { title: "Karta katalogowa", type: "PDF", size: "1.8 MB" },
-                  { title: "Instrukcja obsługi", type: "PDF", size: "4.2 MB" },
-                  { title: "Specyfikacja techniczna", type: "PDF", size: "1.1 MB" }
+                  { title: "Karta katalogowa", type: "PDF", size: "1.2 MB" },
+                  { title: "Instrukcja obsługi", type: "PDF", size: "3.4 MB" },
+                  { title: "Specyfikacja techniczna", type: "PDF", size: "0.8 MB" }
                 ].map((file, index) => (
                   <motion.div
                     key={index}
@@ -1058,14 +963,8 @@ export default function SamsungXCover7ProductPage() {
         </div>
       </div>
 
-      {/* Service Contract Lightbox */}
-      <ServiceContractLightbox 
-        isOpen={isServiceLightboxOpen} 
-        onClose={() => setIsServiceLightboxOpen(false)} 
-      />
-
       {/* Courier Service Section */}
-      <CourierServiceSection productName="Samsung Galaxy XCover7" />
+      <CourierServiceSection productName="Honeywell RP4" />
 
       {/* Footer - IDENTYCZNY JAK STRONA GŁÓWNA */}
       <footer className="bg-gray-900 text-white py-12">
