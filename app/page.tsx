@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInquiry } from '@/components/InquiryContext';
+import SearchAutocomplete from '@/components/SearchAutocomplete';
 import { 
   Search, 
   ShoppingCart, 
@@ -128,7 +129,7 @@ export default function HomePage() {
                 scale: promoOpen ? 1 : [1, 1.3, 1]
               }}
               transition={{
-                rotate: { duration: 0.3, ease: "easeInOut" },
+                rotate: { duration: 0.3, easeInOut: "easeInOut" },
                 scale: {
                   duration: 1.5,
                   repeat: promoOpen ? 0 : Infinity,
@@ -251,17 +252,19 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="text-white py-16 relative overflow-hidden">
+      <section className="text-white py-16 relative">
         {/* Video Background */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/las-video.mp4" type="video/mp4" />
-        </video>
+        <div className="absolute inset-0 overflow-hidden">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/las-video_new.mov" type="video/mp4" />
+          </video>
+        </div>
         
         {/* Ciemne nakładka dla lepszej czytelności tekstu */}
         <div className="absolute inset-0 bg-black/40"></div>
@@ -286,12 +289,9 @@ export default function HomePage() {
               </p>
               
               <div className="flex gap-4">
-                <button className="bg-white text-emerald-700 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors">
+                <a href="#produkty" className="bg-white text-emerald-700 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold transition-colors">
                   Zobacz produkty
-                </button>
-                <button className="border border-white text-white hover:bg-emerald-600 px-8 py-3 rounded-lg font-semibold transition-colors">
-                  Skontaktuj się
-                </button>
+                </a>
               </div>
             </motion.div>
             
@@ -303,16 +303,7 @@ export default function HomePage() {
             >
               <div className="bg-white/10 backdrop-blur rounded-2xl p-8">
                 <h3 className="text-xl font-semibold mb-4">Szukasz konkretnego produktu?</h3>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                  <input
-                    type="text"
-                    placeholder="Szukaj produktów..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-gray-900"
-                  />
-                </div>
+                <SearchAutocomplete value={searchQuery} onChange={setSearchQuery} />
               </div>
             </motion.div>
           </div>

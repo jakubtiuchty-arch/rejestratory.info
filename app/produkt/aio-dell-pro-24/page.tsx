@@ -809,7 +809,7 @@ export default function DellPro24AIOProductPage() {
         <nav className="text-sm text-gray-500">
           <a href="/" className="hover:text-emerald-600">Strona główna</a>
           <span className="mx-2">/</span>
-          <a href="/kategoria/komputery-all-in-one" className="hover:text-emerald-600">Komputery All-in-One</a>
+          <a href="/kategoria/all-in-one" className="hover:text-emerald-600">All in One</a>
           <span className="mx-2">/</span>
           <span className="text-gray-900">Dell Pro 24 All in One</span>
         </nav>

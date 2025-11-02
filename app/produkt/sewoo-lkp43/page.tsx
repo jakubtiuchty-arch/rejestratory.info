@@ -801,7 +801,7 @@ export default function SewooLKP43ProductPage() {
         <nav className="text-sm text-gray-500">
           <a href="/" className="hover:text-emerald-600">Strona główna</a>
           <span className="mx-2">/</span>
-          <a href="/kategoria/drukarki-mobilne" className="hover:text-emerald-600">Drukarki mobilne</a>
+          <a href="/kategoria/drukarki-do-rejestratora" className="hover:text-emerald-600">Drukarki do rejestratora</a>
           <span className="mx-2">/</span>
           <span className="text-gray-900">Sewoo LK-P43</span>
         </nav>
