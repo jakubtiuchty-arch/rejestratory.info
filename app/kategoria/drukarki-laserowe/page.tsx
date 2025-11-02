@@ -299,7 +299,7 @@ export default function CategoryPage() {
                   }`}
                 >
                   {/* Obrazek */}
-                  <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"} bg-gray-100`}>
+                  <div className={`relative border-b border-gray-200 ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
                     <img 
                       src={product.image} 
                       alt={product.name} 

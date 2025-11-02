@@ -22,7 +22,6 @@ import {
   Grid3X3,
   List,
   SortAsc,
-  Eye,
   Heart,
   ArrowUpDown
 } from "lucide-react";
@@ -32,72 +31,73 @@ const products = [
   {
     id: 1,
     name: "Zebra ZD421c",
+    slug: "zebra-zd421c",
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Kompaktowa drukarka etykiet kolorowych do oznaczania dokumentów",
     specifications: "Druk termiczny, 203 dpi, USB, Ethernet, Wi-Fi, kolorowe etykiety",
     price: "1 850 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Bestseller",
+    image: "/zd421c_1.png",
     featured: true
   },
   {
     id: 2,
     name: "Honeywell PC45t",
+    slug: "honeywell-pc45t",
     category: "Elektroniczne Zarządzanie Dokumentacją", 
     description: "Przemysłowa drukarka kodów kreskowych do dokumentacji leśnej",
     specifications: "Druk termotransferowy, 300 dpi, USB, RS-232, Ethernet",
     price: "2 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Nowość",
+    image: "/pc45t_1.png",
     featured: true
   },
   {
     id: 3,
-    name: "Zebra DS2208",
-    category: "Elektroniczne Zarządzanie Dokumentacją",
-    description: "Uniwersalny skaner kodów kreskowych 1D/2D do biura",
-    specifications: "Imager 2D, USB, czytanie z ekranu, zasięg do 61cm",
-    price: "680 PLN",
-    availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Uniwersalny",
-    featured: true
-  },
-  {
-    id: 4,
-    name: "Honeywell 1450g",
-    category: "Elektroniczne Zarządzanie Dokumentacją",
-    description: "Ręczny skaner kodów kreskowych 2D do szybkiego skanowania",
-    specifications: "Imager 2D, USB, dekodowanie omnidyrektional, zasięg do 90cm",
-    price: "750 PLN",
-    availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: null,
-    featured: false
-  },
-  {
-    id: 5,
     name: "Epson DS730n",
+    slug: "epson-ds730n",
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Sieciowy skaner dokumentów do digitalizacji archiwów leśnych",
     specifications: "A4, 600 dpi, 40 str/min, duplex, USB 3.0, Ethernet, Wi-Fi",
     price: "3 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Sieciowy",
+    image: "/ds730_1.png",
     featured: true
+  },
+  {
+    id: 4,
+    name: "Zebra DS2208",
+    slug: "zebra-ds2208",
+    category: "Elektroniczne Zarządzanie Dokumentacją",
+    description: "Uniwersalny skaner kodów kreskowych 1D/2D do biura",
+    specifications: "Imager 2D, USB, czytanie z ekranu, zasięg do 61cm",
+    price: "680 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź",
+    image: "/ds2208_1.png",
+    featured: true
+  },
+  {
+    id: 5,
+    name: "Honeywell 1450g",
+    slug: "honeywell-1450g",
+    category: "Elektroniczne Zarządzanie Dokumentacją",
+    description: "Ręczny skaner kodów kreskowych 2D do szybkiego skanowania",
+    specifications: "Imager 2D, USB, dekodowanie omnidyrektional, zasięg do 90cm",
+    price: "750 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź",
+    image: "/1450g_1.png",
+    featured: false
   }
 ];
 
 // Opcje filtrowania i sortowania
 const sortOptions = [
+  { value: "default", label: "Domyślnie" },
   { value: "name", label: "Nazwa A-Z" },
   { value: "price-asc", label: "Cena rosnąco" },
   { value: "price-desc", label: "Cena malejąco" },
@@ -111,7 +111,7 @@ const availabilityOptions = [
 
 export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [sortBy, setSortBy] = React.useState("name");
+  const [sortBy, setSortBy] = React.useState("default");
   const [availabilityFilter, setAvailabilityFilter] = React.useState("all");
   const [viewMode, setViewMode] = React.useState("grid"); // grid lub list
   const [showFilters, setShowFilters] = React.useState(false);
@@ -139,6 +139,8 @@ export default function CategoryPage() {
     // Sortowanie
     filtered.sort((a, b) => {
       switch (sortBy) {
+        case "default":
+          return a.id - b.id;
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
@@ -208,7 +210,7 @@ export default function CategoryPage() {
           </div>
           
           <p className="text-gray-700 max-w-3xl">
-            Profesjonalne urządzenia do elektronicznego zarządzania dokumentacją leśną. 
+            Profesjonalne urządzenia do elektronicznego zarządzania dokumentacją. 
             Drukarki etykiet, skanery kodów kreskowych i dokumentów do digitalizacji procesów biurowych.
           </p>
         </div>
@@ -326,21 +328,15 @@ export default function CategoryPage() {
                 >
                   {/* Obrazek */}
                   <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
-                    <div className="bg-gray-100 h-full flex items-center justify-center">
-                      <span className="text-gray-400 text-center px-4">{product.name}</span>
-                    </div>
-                    {product.badge && (
-                      <span className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium ${
-                        product.badge === "Bestseller" ? "bg-emerald-100 text-emerald-800" :
-                        product.badge === "Nowość" ? "bg-blue-100 text-blue-800" : 
-                        product.badge === "Rack 2U" ? "bg-purple-100 text-purple-800" :
-                        product.badge === "Uniwersalny" ? "bg-orange-100 text-orange-800" :
-                        product.badge === "Sieciowy" ? "bg-cyan-100 text-cyan-800" : "bg-gray-100 text-gray-800"
-                      }`}>
-                        {product.badge}
-                      </span>
-                    )}
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-contain bg-white scale-[0.8]"
+                    />
                   </div>
+
+                  {/* Cienka linia oddzielająca */}
+                  <div className="border-t border-gray-200"></div>
 
                   {/* Treść */}
                   <div className="p-6 flex-1">
@@ -357,13 +353,12 @@ export default function CategoryPage() {
                     </div>
 
                     <div className="flex gap-2">
-                      <button className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                        <ShoppingCart className="h-4 w-4 inline mr-2" />
-                        Dodaj do zapytania
-                      </button>
-                      <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Eye className="h-4 w-4" />
-                      </button>
+                      <a 
+                        href={`/produkt/${product.slug}`}
+                        className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-center"
+                      >
+                        Zobacz produkt
+                      </a>
                     </div>
                   </div>
                 </motion.div>

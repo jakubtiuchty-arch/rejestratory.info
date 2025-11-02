@@ -38,7 +38,7 @@ const products = [
     price: "1 450 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/temo_online_1.png",
     badge: "Bestseller",
     featured: true,
     link: "/produkt/posnet-temo-online"
@@ -52,7 +52,7 @@ const products = [
     price: "2 100 PLN",
     availability: "Dostępny",
     whereToBuy: "TAKMA",
-    image: "/api/placeholder/300/300",
+    image: "/pospay_3.png",
     badge: "Terminal",
     featured: true,
     link: "/produkt/posnet-pospay-2"
@@ -288,10 +288,12 @@ export default function CategoryPage() {
                   }`}
                 >
                   {/* Obrazek */}
-                  <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
-                    <div className="bg-gray-100 h-full flex items-center justify-center">
-                      <span className="text-gray-400 text-center px-4">{product.name}</span>
-                    </div>
+                  <div className={`relative border-b border-gray-200 ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-contain"
+                    />
                   </div>
 
                   {/* Treść */}

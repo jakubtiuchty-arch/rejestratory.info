@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useInquiry } from '@/components/InquiryContext'  // ← DODANE: Import Context
 import {
   ZoomIn,
   Shield,
@@ -25,23 +26,23 @@ import {
   Laptop
 } from 'lucide-react'
 
-// Image Gallery Component
+// Image Gallery Component - BEZ ZMIAN
 const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
+  const [currentImage, setCurrentImage] = useState(1)
   const [isZoomed, setIsZoomed] = useState(false)
 
   return (
     <div className="space-y-4">
       {/* Main Image */}
       <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video cursor-pointer"
+        className="relative bg-white rounded-lg overflow-hidden aspect-video cursor-pointer p-8"
         whileHover={{ scale: 1.02 }}
         onClick={() => setIsZoomed(true)}
       >
         <img
-          src="/api/placeholder/500/400"
+          src={`/dell_16_${currentImage}.png`}
           alt="Dell Pro 16 Plus"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
         <div className="absolute top-4 right-4">
           <div className="bg-white/80 rounded-full p-2">
@@ -51,20 +52,20 @@ const ImageGallery = ({ images }: { images: string[] }) => {
       </motion.div>
 
       {/* Thumbnail Gallery */}
-      <div className="grid grid-cols-3 gap-2">
-        {[1, 2, 3].map((index) => (
+      <div className="grid grid-cols-6 gap-1">
+        {[1, 2, 3, 4, 5, 6].map((index) => (
           <motion.div
             key={index}
-            className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
+            className={`aspect-square bg-white rounded-lg overflow-hidden cursor-pointer border-2 p-2 ${
               currentImage === index ? 'border-emerald-600' : 'border-transparent'
             }`}
             whileHover={{ scale: 1.05 }}
             onClick={() => setCurrentImage(index)}
           >
             <img
-              src="/api/placeholder/120/120"
-              alt={`View ${index + 1}`}
-              className="w-full h-full object-cover"
+              src={`/dell_16_${index}.png`}
+              alt={`View ${index}`}
+              className="w-full h-full object-contain"
             />
           </motion.div>
         ))}
@@ -87,7 +88,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
               exit={{ scale: 0.5 }}
             >
               <img
-                src="/api/placeholder/800/800"
+                src={`/dell_16_${currentImage}.png`}
                 alt="Dell Pro 16 Plus - powiększenie"
                 className="max-w-full max-h-full object-contain"
               />
@@ -106,7 +107,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
 }
 
 
-// Specifications Component
+// Specifications Component - BEZ ZMIAN
 const Specifications = () => {
   const specs = [
     { category: "Wyświetlacz", items: [
@@ -164,7 +165,7 @@ const Specifications = () => {
   )
 }
 
-// Service Contract Lightbox Component
+// Service Contract Lightbox Component - BEZ ZMIAN
 const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
   return (
     <AnimatePresence>
@@ -247,7 +248,7 @@ const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose
   )
 }
 
-// Courier Service Section Component
+// Courier Service Section Component - BEZ ZMIAN (za długi, ale nie ruszamy)
 const CourierServiceSection = ({ productName }: { productName: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
@@ -272,7 +273,6 @@ const CourierServiceSection = ({ productName }: { productName: string }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Create email body
     const emailBody = `
 Zamówienie kuriera - ${productName}
 
@@ -294,13 +294,10 @@ Opis usterki:
 ${formData.faultDescription}
     `.trim()
 
-    // Create mailto link
     const mailtoLink = `mailto:handlowy@takma.com.pl?subject=Zamówienie kuriera - ${productName}&body=${encodeURIComponent(emailBody)}`
     
-    // Open email client
     window.location.href = mailtoLink
     
-    // Reset form and close modal
     setFormData({
       firstName: '',
       lastName: '',
@@ -315,7 +312,6 @@ ${formData.faultDescription}
     })
     setIsModalOpen(false)
     
-    // Show confirmation lightbox
     setTimeout(() => {
       setIsConfirmationOpen(true)
     }, 300)
@@ -323,7 +319,6 @@ ${formData.faultDescription}
 
   return (
     <>
-      {/* Service Section */}
       <div id="service-section" className="bg-orange-50 border-t border-orange-200">
         <div className="container mx-auto px-4 py-12">
           <motion.div
@@ -374,7 +369,6 @@ ${formData.faultDescription}
         </div>
       </div>
 
-      {/* Courier Form Modal */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
@@ -411,7 +405,6 @@ ${formData.faultDescription}
                 </div>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Personal Data */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Dane kontaktowe</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -457,7 +450,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Address */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Adres odbioru</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -520,7 +512,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Device Info */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Informacje o urządzeniu</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -568,7 +559,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Submit Button */}
                   <div className="border-t border-gray-200 pt-6">
                     <div className="flex justify-end space-x-3">
                       <button
@@ -596,7 +586,6 @@ ${formData.faultDescription}
         )}
       </AnimatePresence>
 
-      {/* Confirmation Lightbox */}
       <AnimatePresence>
         {isConfirmationOpen && (
           <motion.div
@@ -721,28 +710,34 @@ ${formData.faultDescription}
   )
 }
 
-// Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
+// ← ZMIENIONE: Accessories Section - teraz przyjmuje funkcję która dodaje do inquiry
+const AccessoriesSection = ({ 
+  productName, 
+  onAddToInquiry 
+}: { 
+  productName: string, 
+  onAddToInquiry: (accessory: any) => void  // ← ZMIENIONE: funkcja przyjmuje obiekt akcesoria
+}) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
 
   const accessories = [
     {
-      id: 'adapter',
-      name: 'Adapter USB-C do HDMI',
-      description: 'Adapter do projektora lub monitora zewnętrznego',
+      id: 'footrest',
+      name: 'Podnóżek biurowy',
+      description: 'Ergonomiczny podnóżek do pracy przy komputerze',
       image: '/api/placeholder/120/120',
-      price: '79 zł'
+      price: '99 zł'
     },
     {
       id: 'mouse',
-      name: 'Mysz bezprzewodowa Dell',
-      description: 'Ergonomiczna mysz Bluetooth',
+      name: 'Bezprzewodowy zestaw klawiatura i mysz Dell',
+      description: 'Ergonomiczny zestaw klawiatura i mysz Bluetooth',
       image: '/api/placeholder/120/120',
-      price: '89 zł'
+      price: '189 zł'
     },
     {
       id: 'bag',
-      name: 'Torba Dell Pro Slim 16"',
+      name: 'Torba na laptopa 14"',
       description: 'Wodoodporna torba na laptopa',
       image: '/api/placeholder/120/120',
       price: '169 zł'
@@ -781,7 +776,13 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
           {selectedAccessories.length > 0 && (
             <motion.button
               onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
+                // ← ZMIENIONE: Dodajemy każde akcesorium z pełnymi danymi
+                selectedAccessories.forEach((accessoryId) => {
+                  const accessory = accessories.find(a => a.id === accessoryId)
+                  if (accessory) {
+                    onAddToInquiry(accessory)
+                  }
+                })
                 setSelectedAccessories([])
               }}
               className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
@@ -808,18 +809,6 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
                 onClick={() => toggleAccessory(accessory.id)}
               >
                 <div className="p-4 flex flex-col h-full">
-                  <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className="w-full h-24 object-cover rounded-lg"
-                    />
-                    {isSelected && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </div>
                   <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
                   <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
                   <div className="flex items-center justify-end mt-auto">
@@ -847,18 +836,14 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 export default function DellPro16PlusProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const [inquiryCount, setInquiryCount] = useState(0)
+  
+  // ← ZMIENIONE: Używamy Context zamiast lokalnego state
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header - IDENTYCZNY JAK STRONA GŁÓWNA */}
+      {/* Header */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
@@ -874,7 +859,9 @@ export default function DellPro16PlusProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
+              {/* ← ZMIENIONE: Dodano onClick={openCart} */}
               <motion.button 
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -956,9 +943,22 @@ export default function DellPro16PlusProductPage() {
               <p className="text-gray-600 mb-4 text-justify">
                 Dell Pro 16 Plus to zaawansowany laptop biznesowy z dużym 16-calowym wyświetlaczem IPS FHD+, idealny dla profesjonalistów wymagających maksymalnej przestrzeni roboczej. Procesor Intel Core Ultra 5 vPro z 12 rdzeniami i NPU 12 TOPS zapewnia wyjątkową wydajność w pracy z dokumentami, analizie danych i wielozadaniowości. Wyświetlacz z powłoką przeciwodblaskową gwarantuje komfort podczas długich sesji pracy. Bateria 55 Wh z ExpressCharge umożliwia całodzienną pracę mobilną. Wbudowany czytnik kart smart Control Vault 3+ oraz rozpoznawanie twarzy zapewniają najwyższy poziom bezpieczeństwa danych. Objęty 5-letnią gwarancją Dell ProSupport z serwisem na miejscu.
               </p>
+              
+              {/* ← ZMIENIONE: Button dodaje pełny obiekt produktu */}
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'dell-pro-16-plus',
+                      name: 'Dell Pro 16 Plus',
+                      image: '/dell_16_1.png',
+                      category: 'Laptopy',
+                      description: 'Zaawansowany laptop z 16" ekranem',
+                      specifications: 'Intel Core Ultra 5, 16GB RAM, 512GB SSD'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -968,9 +968,8 @@ export default function DellPro16PlusProductPage() {
                 </motion.button>
               </div>
 
-              {/* Gwarancja Dell ProSupport i SmartCard - grid 2 kolumny */}
+              {/* Gwarancja Dell ProSupport i SmartCard */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                {/* Gwarancja Dell ProSupport */}
                 <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
                   <div className="flex items-start space-x-3">
                     <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -1000,7 +999,6 @@ export default function DellPro16PlusProductPage() {
                   </div>
                 </div>
 
-                {/* Czytnik SmartCard */}
                 <div className="bg-gradient-to-br from-slate-600 to-blue-700 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
                   <div className="flex items-start space-x-3">
                     <Shield className="w-6 h-6 text-white flex-shrink-0 mt-0.5" />
@@ -1015,7 +1013,7 @@ export default function DellPro16PlusProductPage() {
                 </div>
               </div>
 
-              {/* Gdzie kupić - prosty design */}
+              {/* Gdzie kupić */}
               <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
                 
@@ -1035,8 +1033,153 @@ export default function DellPro16PlusProductPage() {
           </div>
         </div>
 
-        {/* Accessories Section */}
-        <AccessoriesSection productName="Dell Pro 16 Plus" onAddToInquiry={addToInquiry} />
+        {/* ← ZMIENIONE: Accessories Section teraz przyjmuje funkcję która dodaje akcesoria */}
+        <AccessoriesSection 
+          productName="Dell Pro 16 Plus" 
+          onAddToInquiry={(accessory) => {
+            addToInquiry({
+              id: `accessory-${accessory.id}`,
+              name: accessory.name,
+              image: accessory.image,
+              category: 'Akcesoria',
+              description: accessory.description
+            })
+            setShowRipple(true)
+            setTimeout(() => setShowRipple(false), 1000)
+          }} 
+        />
+
+        {/* Bundle Section */}
+        <div className="mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-xl p-8 border-2 border-emerald-200 shadow-sm"
+          >
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                Najlepiej kupić w zestawie
+              </h3>
+              <p className="text-gray-600">
+                Kompletne stanowisko pracy - laptop, monitor i akcesoria w jednym zamówieniu
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <div className="bg-white rounded-lg p-6 border-2 border-emerald-300 shadow-sm">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                    <Laptop className="w-6 h-6 text-emerald-600" />
+                  </div>
+                </div>
+                <h4 className="font-semibold text-gray-900 text-center mb-2">Dell Pro 16 Plus</h4>
+                <p className="text-sm text-gray-600 text-center">
+                  Laptop biznesowy z Intel Core Ultra 5 vPro
+                </p>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border-2 border-blue-300 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                    <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <rect x="2" y="3" width="20" height="14" rx="2" strokeWidth="2"/>
+                      <line x1="8" y1="21" x2="16" y2="21" strokeWidth="2"/>
+                      <line x1="12" y1="17" x2="12" y2="21" strokeWidth="2"/>
+                    </svg>
+                  </div>
+                </div>
+                <h4 className="font-semibold text-gray-900 text-center mb-2">Dell Pro 27 Plus P2725HE</h4>
+                <p className="text-sm text-gray-600 text-center mb-4">
+                  Monitor 27" QHD z USB-C i stacją dokującą
+                </p>
+                <div className="text-center">
+                  <a 
+                    href="/produkt/dell-pro-27-plus-p2725he-usbc"
+                    className="inline-flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 px-4 py-2 rounded-lg font-medium text-sm transition-colors border border-blue-200"
+                  >
+                    <span>Zobacz produkt</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg p-6 border-2 border-gray-300 shadow-sm">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                    <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <rect x="2" y="4" width="20" height="16" rx="2" strokeWidth="2"/>
+                      <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M6 16h8" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                </div>
+                <h4 className="font-semibold text-gray-900 text-center mb-2">Klawiatura + Mysz Dell</h4>
+                <p className="text-sm text-gray-600 text-center">
+                  Bezprzewodowy zestaw klawiatura i mysz
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg p-6 border border-emerald-300">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex-1">
+                  <h4 className="font-semibold text-gray-900 mb-2">Korzyści z zakupu zestawu:</h4>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li className="flex items-start">
+                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Kompletne stanowisko pracy od razu gotowe do użycia</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Spójny ekosystem produktów Dell - pełna kompatybilność</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Pojedyncze zamówienie - uproszczona logistyka i dokumentacja</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                {/* ← ZMIENIONE: Button dodaje wszystkie 3 produkty z zestawu */}
+                <motion.button
+                  onClick={() => {
+                    // Laptop
+                    addToInquiry({
+                      id: 'dell-pro-16-plus',
+                      name: 'Dell Pro 16 Plus',
+                      image: '/dell_16_1.png',
+                      category: 'Laptopy'
+                    })
+                    // Monitor
+                    addToInquiry({
+                      id: 'dell-pro-27-plus-p2725he',
+                      name: 'Dell Pro 27 Plus P2725HE',
+                      image: '/dell_monitor_1.png',
+                      category: 'Monitory'
+                    })
+                    // Keyboard + Mouse
+                    addToInquiry({
+                      id: 'dell-keyboard-mouse',
+                      name: 'Klawiatura + Mysz Dell',
+                      image: '/dell_keyboard.png',
+                      category: 'Akcesoria'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
+                  className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2 shadow-lg"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Package className="w-5 h-5" />
+                  <span>Zapytaj o zestaw</span>
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">
@@ -1057,7 +1200,6 @@ export default function DellPro16PlusProductPage() {
                 }`}
                 onClick={() => {
                   if (tab.isScroll) {
-                    // Scroll to service section
                     const serviceSection = document.getElementById('service-section')
                     if (serviceSection) {
                       serviceSection.scrollIntoView({ behavior: 'smooth' })
@@ -1076,8 +1218,6 @@ export default function DellPro16PlusProductPage() {
         {/* Tab Content */}
         <div className="mb-16">
           <AnimatePresence mode="wait">
-
-
             {activeTab === 'specs' && (
               <motion.div
                 key="specs"
@@ -1088,8 +1228,6 @@ export default function DellPro16PlusProductPage() {
                 <Specifications />
               </motion.div>
             )}
-
-
 
             {activeTab === 'downloads' && (
               <motion.div
@@ -1130,16 +1268,14 @@ export default function DellPro16PlusProductPage() {
         </div>
       </div>
 
-      {/* Service Contract Lightbox */}
       <ServiceContractLightbox 
         isOpen={isServiceLightboxOpen} 
         onClose={() => setIsServiceLightboxOpen(false)} 
       />
 
-      {/* Courier Service Section */}
       <CourierServiceSection productName="Dell Pro 16 Plus" />
 
-      {/* Footer - IDENTYCZNY JAK STRONA GŁÓWNA */}
+      {/* Footer - BEZ ZMIAN */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">

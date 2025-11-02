@@ -38,18 +38,21 @@ const ImageGallery = ({ images }: { images: string[] }) => {
   const [currentImage, setCurrentImage] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
 
+  const allImages = ['/527pu_1.png', '/527pu_2.png', '/527pu_3.png', '/527pu_4.png']
+
   return (
     <div className="space-y-4">
       {/* Main Image */}
       <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video cursor-pointer"
+        className="relative bg-white rounded-lg overflow-hidden aspect-video cursor-pointer flex items-center justify-center"
         whileHover={{ scale: 1.02 }}
         onClick={() => setIsZoomed(true)}
       >
         <img
-          src="/527pu_1.png"
+          src={allImages[currentImage]}
           alt="HP Seria 5 QHD USB-C"
-          className="w-full h-full object-cover"
+          className="object-contain"
+          style={{ width: '93%', height: '93%' }}
         />
         <div className="absolute top-4 right-4">
           <div className="bg-white/80 rounded-full p-2">
@@ -61,13 +64,13 @@ const ImageGallery = ({ images }: { images: string[] }) => {
       {/* Thumbnail Gallery */}
       <div className="grid grid-cols-3 gap-2">
         {[
-          { index: 0, src: '/527pu_2.png' },
-          { index: 1, src: '/527pu_3.png' },
-          { index: 2, src: '/527pu_4.png' }
+          { index: 1, src: allImages[1] },
+          { index: 2, src: allImages[2] },
+          { index: 3, src: allImages[3] }
         ].map((item) => (
           <motion.div
             key={item.index}
-            className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
+            className={`aspect-square bg-white rounded-lg overflow-hidden cursor-pointer border-2 flex items-center justify-center ${
               currentImage === item.index ? 'border-emerald-600' : 'border-transparent'
             }`}
             whileHover={{ scale: 1.05 }}
@@ -76,7 +79,8 @@ const ImageGallery = ({ images }: { images: string[] }) => {
             <img
               src={item.src}
               alt={`View ${item.index + 1}`}
-              className="w-full h-full object-cover"
+              className="object-contain"
+              style={{ width: '93%', height: '93%' }}
             />
           </motion.div>
         ))}
@@ -93,15 +97,16 @@ const ImageGallery = ({ images }: { images: string[] }) => {
             onClick={() => setIsZoomed(false)}
           >
             <motion.div
-              className="relative max-w-4xl max-h-full"
+              className="relative max-w-4xl max-h-full flex items-center justify-center"
               initial={{ scale: 0.5 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.5 }}
             >
               <img
-                src="/527pu_1.png"
+                src={allImages[currentImage]}
                 alt="HP Seria 5 QHD USB-C - powiększenie"
-                className="max-w-full max-h-full object-contain"
+                className="object-contain"
+                style={{ width: '93%', height: '93%' }}
               />
               <button
                 className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
@@ -737,128 +742,6 @@ ${formData.faultDescription}
   )
 }
 
-// Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
-
-  const accessories = [
-    {
-      id: 'adapter',
-      name: 'Kabel USB-C - USB-C',
-      description: 'Wysokiej jakości kabel USB-C 2m',
-      image: '/api/placeholder/120/120',
-      price: '79 zł'
-    },
-    {
-      id: 'mouse',
-      name: 'Mysz bezprzewodowa HP',
-      description: 'Ergonomiczna mysz Bluetooth',
-      image: '/api/placeholder/120/120',
-      price: '89 zł'
-    },
-    {
-      id: 'webcam',
-      name: 'Klawiatura HP Pro',
-      description: 'Bezprzewodowa klawiatura biurowa',
-      image: '/api/placeholder/120/120',
-      price: '149 zł'
-    },
-    {
-      id: 'mount',
-      name: 'Uchwyt ścienny VESA',
-      description: 'Regulowany uchwyt montażowy',
-      image: '/api/placeholder/120/120',
-      price: '129 zł'
-    }
-  ]
-
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
-  }
-
-  return (
-    <div className="mb-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Akcesoria
-            </h3>
-          </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
-                setSelectedAccessories([])
-              }}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {accessories.map((accessory) => {
-            const isSelected = selectedAccessories.includes(accessory.id)
-            return (
-              <motion.div
-                key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
-                  isSelected 
-                    ? 'border-emerald-500 bg-emerald-50' 
-                    : 'border-gray-200 hover:border-emerald-300'
-                }`}
-                onClick={() => toggleAccessory(accessory.id)}
-              >
-                <div className="p-4 flex flex-col h-full">
-                  <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className="w-full h-24 object-cover rounded-lg"
-                    />
-                    {isSelected && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
-                  <div className="flex items-center justify-end mt-auto">
-                    <button
-                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                        isSelected 
-                          ? 'bg-emerald-700 text-white' 
-                          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                      }`}
-                    >
-                      {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
-      </motion.div>
-    </div>
-  )
-}
-
 // Main Product Page Component
 export default function HPSeries5QHDUSBCProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
@@ -1019,9 +902,6 @@ export default function HPSeries5QHDUSBCProductPage() {
             </motion.div>
           </div>
         </div>
-
-        {/* Accessories Section */}
-        <AccessoriesSection productName="HP Seria 5 QHD USB-C" onAddToInquiry={addToInquiry} />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">

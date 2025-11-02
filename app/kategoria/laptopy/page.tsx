@@ -40,43 +40,31 @@ type Product = {
   featured?: boolean;
   slug: string;
 };
+
 const products: Product[] = [
   {
-    id: 1,
-    name: "HP EliteBook 645 G11 14\"",
-    category: "Laptopy",
-    description: "Kompaktowy laptop biznesowy z procesorem AMD i ekranem 14 cali",
-    specifications: "AMD Ryzen 7 PRO, 16GB RAM, 512GB SSD, 14\" FHD IPS",
-    price: "4 200 PLN",
-    availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    featured: true,
-    slug: "hp-elitebook-645-g11-14"
-  },
-  {
     id: 2,
-    name: "HP EliteBook 665 G11 16\"",
+    name: "HP EliteBook 6 G1ah 16\"",
     category: "Laptopy", 
     description: "Wydajny laptop z dużym ekranem 16 cali do pracy biurowej",
     specifications: "AMD Ryzen 7 PRO, 16GB RAM, 1TB SSD, 16\" WUXGA IPS",
     price: "5 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/hp_elite_16_1.png",
     featured: true,
-    slug: "hp-elitebook-665-g11-16"
+    slug: "hp-elitebook-6-g1ah-16"
   },
   {
     id: 3,
     name: "Dell Pro 14\" Plus",
     category: "Laptopy",
     description: "Profesjonalny laptop Dell z ekranem 14 cali i długą żywotnością baterii",
-    specifications: "Intel Core i7, 16GB RAM, 512GB SSD, 14\" FHD+ IPS",
+    specifications: "Intel Core Ultra 5, 16GB RAM, 512GB SSD, 14\" FHD+ IPS",
     price: "3 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź", 
-    image: "/api/placeholder/300/300",
+    image: "/dell_14_1.png",
     badge: null,
     featured: false,
     slug: "dell-pro-14-plus"
@@ -86,11 +74,11 @@ const products: Product[] = [
     name: "Dell Pro 16\" Plus",
     category: "Laptopy",
     description: "Zaawansowany laptop z dużym ekranem do profesjonalnych zastosowań",
-    specifications: "Intel Core i7, 32GB RAM, 1TB SSD, 16\" QHD+ IPS",
+    specifications: "Intel Core Ultra 5, 16GB RAM, 1TB SSD, 16\" FHD+ IPS",
     price: "5 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300", 
+    image: "/dell_16_1.png", 
     featured: true,
     slug: "dell-pro-16-plus"
   },
@@ -103,7 +91,7 @@ const products: Product[] = [
     price: "2 900 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/dell_16_bs_1.png",
     badge: null,
     featured: false,
     slug: "dell-pro-16"
@@ -340,9 +328,13 @@ export default function CategoryPage() {
                   }`}
                 >
                   {/* Obrazek */}
-                  <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
-                    <div className="bg-gray-100 h-full flex items-center justify-center">
-                      <span className="text-gray-400 text-center px-4">{product.name}</span>
+                  <div className={`relative bg-white ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
+                    <div className="h-full flex items-center justify-center p-4">
+                      <img 
+                        src={product.image} 
+                        alt={product.name}
+                        className="w-full h-full object-contain"
+                      />
                     </div>
                     {product.badge && (
                       <span className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium ${
@@ -353,6 +345,9 @@ export default function CategoryPage() {
                       </span>
                     )}
                   </div>
+
+                  {/* Linia pozioma oddzielająca obrazek od treści */}
+                  <div className="border-b border-gray-200"></div>
 
                   {/* Treść */}
                   <div className="p-6 flex-1 flex flex-col">

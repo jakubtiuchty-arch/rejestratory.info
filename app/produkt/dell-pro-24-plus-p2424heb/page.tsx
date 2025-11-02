@@ -39,14 +39,15 @@ const ImageGallery = ({ images }: { images: string[] }) => {
     <div className="space-y-4">
       {/* Main Image */}
       <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video cursor-pointer"
+        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video cursor-pointer flex items-center justify-center"
         whileHover={{ scale: 1.02 }}
         onClick={() => setIsZoomed(true)}
       >
         <img
           src="/P2424HEB_1.png"
           alt="Dell Pro 24 Plus P2424HEB"
-          className="w-full h-full object-cover"
+          className="object-contain"
+          style={{ width: '80%', height: '80%' }}
         />
         <div className="absolute top-4 right-4">
           <div className="bg-white/80 rounded-full p-2">
@@ -64,7 +65,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
         ].map((item) => (
           <motion.div
             key={item.index}
-            className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
+            className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 flex items-center justify-center ${
               currentImage === item.index ? 'border-emerald-600' : 'border-transparent'
             }`}
             whileHover={{ scale: 1.05 }}
@@ -73,7 +74,8 @@ const ImageGallery = ({ images }: { images: string[] }) => {
             <img
               src={item.src}
               alt={`View ${item.index + 1}`}
-              className="w-full h-full object-cover"
+              className="object-contain"
+              style={{ width: '80%', height: '80%' }}
             />
           </motion.div>
         ))}
@@ -90,7 +92,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
             onClick={() => setIsZoomed(false)}
           >
             <motion.div
-              className="relative max-w-4xl max-h-full"
+              className="relative max-w-4xl max-h-full flex items-center justify-center"
               initial={{ scale: 0.5 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.5 }}
@@ -98,7 +100,8 @@ const ImageGallery = ({ images }: { images: string[] }) => {
               <img
                 src="/P2424HEB_1.png"
                 alt="Dell Pro 24 Plus P2424HEB - powiększenie"
-                className="max-w-full max-h-full object-contain"
+                className="object-contain"
+                style={{ width: '80%', height: '80%', maxWidth: '100%', maxHeight: '100%' }}
               />
               <button
                 className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"

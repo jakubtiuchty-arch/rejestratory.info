@@ -22,7 +22,6 @@ import {
   Grid3X3,
   List,
   SortAsc,
-  Eye,
   Heart,
   ArrowUpDown
 } from "lucide-react";
@@ -34,12 +33,12 @@ const products = [
     name: "Dell PowerEdge R360",
     category: "Serwery",
     description: "Kompaktowy serwer rack 1U do małych i średnich biur leśnych",
-    specifications: "1U Rack, Intel Xeon E-2300, 16GB DDR4, 1TB SSD, iDRAC9",
+    specifications: "1U Rack, Intel Xeon E-2436, 32GB DDR5, 8TB HDD (4x2TB), iDRAC9",
     price: "8 500 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Bestseller",
+    image: "/r360_1.png",
+    link: "/produkt/dell-poweredge-r360",
     featured: true
   },
   {
@@ -47,12 +46,12 @@ const products = [
     name: "Dell PowerEdge R660xs",
     category: "Serwery", 
     description: "Wydajny serwer rack 1U z procesorami Intel 4. generacji",
-    specifications: "1U Rack, Intel Xeon Gold 6400, 32GB DDR5, 2x 1TB SSD, iDRAC9",
+    specifications: "1U Rack, Intel Xeon Gold-5416S, 128GB DDR5, 9,6TB HDD (4x2,4TB SAS), iDRAC9",
     price: "15 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Nowość",
+    image: "/r660_1.png",
+    link: "/produkt/dell-poweredge-r660xs",
     featured: true
   },
   {
@@ -60,12 +59,12 @@ const products = [
     name: "Dell PowerEdge R550",
     category: "Serwery",
     description: "Elastyczny serwer rack 2U do zastosowań wielozadaniowych",
-    specifications: "2U Rack, Intel Xeon Silver 4300, 32GB DDR4, 4x 1TB SAS, iDRAC9",
+    specifications: "2U Rack, Intel Xeon Silver-4314, 64GB DDR4, 20TB HDD (5x4TB), iDRAC9",
     price: "12 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Rack 2U",
+    image: "/r550_1.png",
+    link: "/produkt/dell-poweredge-r550",
     featured: true
   }
 ];
@@ -181,10 +180,15 @@ export default function CategoryPage() {
             </div>
           </div>
           
-          <p className="text-gray-700 max-w-3xl">
-            Profesjonalne serwery Dell PowerEdge dostosowane do potrzeb pracowników leśnictwa. 
-            Wydajne serwery rack do pracy biurowej z różnymi konfiguracjami procesorów i pamięci.
+          <p className="text-gray-700 max-w-3xl mb-4">
+            Profesjonalne serwery Dell PowerEdge dostosowane do potrzeb Nadleśnictw. Od kompaktowych, bardzo wydajne maszyny.
           </p>
+          
+          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 max-w-3xl">
+            <p className="text-emerald-800 font-medium">
+              💡 Wszystkie serwery można rozbudowywać o dodatkową pamięć RAM, dyski i inne komponenty
+            </p>
+          </div>
         </div>
       </section>
 
@@ -299,19 +303,12 @@ export default function CategoryPage() {
                   }`}
                 >
                   {/* Obrazek */}
-                  <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
-                    <div className="bg-gray-100 h-full flex items-center justify-center">
-                      <span className="text-gray-400 text-center px-4">{product.name}</span>
-                    </div>
-                    {product.badge && (
-                      <span className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium ${
-                        product.badge === "Bestseller" ? "bg-emerald-100 text-emerald-800" :
-                        product.badge === "Nowość" ? "bg-blue-100 text-blue-800" : 
-                        product.badge === "Rack 2U" ? "bg-purple-100 text-purple-800" : "bg-gray-100 text-gray-800"
-                      }`}>
-                        {product.badge}
-                      </span>
-                    )}
+                  <div className={`relative border-b border-gray-200 ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-contain bg-white p-4"
+                    />
                   </div>
 
                   {/* Treść */}
@@ -329,13 +326,12 @@ export default function CategoryPage() {
                     </div>
 
                     <div className="flex gap-2">
-                      <button className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-                        <ShoppingCart className="h-4 w-4 inline mr-2" />
-                        Dodaj do zapytania
-                      </button>
-                      <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                        <Eye className="h-4 w-4" />
-                      </button>
+                      <a 
+                        href={product.link}
+                        className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-center"
+                      >
+                        Zobacz produkt
+                      </a>
                     </div>
                   </div>
                 </motion.div>

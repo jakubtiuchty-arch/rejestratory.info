@@ -25,23 +25,23 @@ import {
   Laptop
 } from 'lucide-react'
 
-// Image Gallery Component
+// Image Gallery Component - ZMODYFIKOWANY: usunięte miniatury, dodane dell_16_bs_1.png
 const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
 
   return (
     <div className="space-y-4">
-      {/* Main Image */}
+      {/* Main Image - Larger */}
       <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-video cursor-pointer"
+        className="relative bg-gray-100 rounded-lg overflow-hidden cursor-pointer"
+        style={{ aspectRatio: '4/3' }}
         whileHover={{ scale: 1.02 }}
         onClick={() => setIsZoomed(true)}
       >
         <img
-          src="/api/placeholder/500/400"
+          src="/dell_16_bs_1.png"
           alt="Dell Pro 16"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
         <div className="absolute top-4 right-4">
           <div className="bg-white/80 rounded-full p-2">
@@ -49,26 +49,6 @@ const ImageGallery = ({ images }: { images: string[] }) => {
           </div>
         </div>
       </motion.div>
-
-      {/* Thumbnail Gallery */}
-      <div className="grid grid-cols-3 gap-2">
-        {[1, 2, 3].map((index) => (
-          <motion.div
-            key={index}
-            className={`aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer border-2 ${
-              currentImage === index ? 'border-emerald-600' : 'border-transparent'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            onClick={() => setCurrentImage(index)}
-          >
-            <img
-              src="/api/placeholder/120/120"
-              alt={`View ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        ))}
-      </div>
 
       {/* Zoom Modal */}
       <AnimatePresence>
@@ -87,7 +67,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
               exit={{ scale: 0.5 }}
             >
               <img
-                src="/api/placeholder/800/800"
+                src="/dell_16_bs_1.png"
                 alt="Dell Pro 16 - powiększenie"
                 className="max-w-full max-h-full object-contain"
               />
@@ -720,37 +700,33 @@ ${formData.faultDescription}
   )
 }
 
-// Accessories Section Component
+// Accessories Section Component - ZMODYFIKOWANY: usunięte zdjęcia, nowe akcesoria
 const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
 
   const accessories = [
     {
-      id: 'adapter',
-      name: 'Adapter USB-C do HDMI',
-      description: 'Adapter do projektora lub monitora zewnętrznego',
-      image: '/api/placeholder/120/120',
-      price: '79 zł'
-    },
-    {
-      id: 'mouse',
-      name: 'Mysz bezprzewodowa Dell',
-      description: 'Ergonomiczna mysz Bluetooth',
-      image: '/api/placeholder/120/120',
+      id: 'footrest',
+      name: 'Podnóżek biurowy',
+      description: 'Ergonomiczny podnóżek regulowany',
       price: '89 zł'
     },
     {
-      id: 'bag',
-      name: 'Torba Dell Pro Slim 16"',
-      description: 'Wodoodporna torba na laptopa',
-      image: '/api/placeholder/120/120',
+      id: 'keyboard-mouse',
+      name: 'Bezprzewodowy zestaw klawiatura i mysz Dell',
+      description: 'Zestaw klawiatura + mysz Bluetooth',
       price: '169 zł'
+    },
+    {
+      id: 'bag',
+      name: 'Torba na laptopa 16"',
+      description: 'Wodoodporna torba na laptopa',
+      price: '149 zł'
     },
     {
       id: 'dock',
       name: 'Stacja dokująca Dell',
       description: 'USB-C uniwersalna stacja z ładowaniem',
-      image: '/api/placeholder/120/120',
       price: '399 zł'
     }
   ]
@@ -799,28 +775,23 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
             return (
               <motion.div
                 key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
+                className={`bg-white rounded-lg border-2 transition-all cursor-pointer p-6 ${
                   isSelected 
                     ? 'border-emerald-500 bg-emerald-50' 
                     : 'border-gray-200 hover:border-emerald-300'
                 }`}
                 onClick={() => toggleAccessory(accessory.id)}
               >
-                <div className="p-4 flex flex-col h-full">
-                  <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className="w-full h-24 object-cover rounded-lg"
-                    />
-                    {isSelected && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
+                <div className="flex flex-col h-full">
+                  {isSelected && (
+                    <div className="flex justify-end mb-2">
+                      <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
                         <Check className="w-4 h-4 text-white" />
                       </div>
-                    )}
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
+                    </div>
+                  )}
+                  <h4 className="font-semibold text-gray-900 mb-2">{accessory.name}</h4>
+                  <p className="text-sm text-gray-600 mb-4 flex-1">{accessory.description}</p>
                   <div className="flex items-center justify-end mt-auto">
                     <button
                       className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
@@ -836,6 +807,123 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
               </motion.div>
             )
           })}
+        </div>
+      </motion.div>
+    </div>
+  )
+}
+
+// Bundle Section Component - NOWA SEKCJA
+const BundleSection = ({ onAddToInquiry }: { onAddToInquiry: () => void }) => {
+  return (
+    <div className="mb-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-xl p-8 border-2 border-emerald-200 shadow-sm"
+      >
+        <div className="text-center mb-6">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+            Najlepiej kupić w zestawie
+          </h3>
+          <p className="text-gray-600">
+            Kompletne stanowisko pracy - laptop, monitor i akcesoria w jednym zamówieniu
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          {/* Dell Pro 16 */}
+          <div className="bg-white rounded-lg p-6 border-2 border-emerald-300 shadow-sm">
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
+                <Laptop className="w-6 h-6 text-emerald-600" />
+              </div>
+            </div>
+            <h4 className="font-semibold text-gray-900 text-center mb-2">Dell Pro 16</h4>
+            <p className="text-sm text-gray-600 text-center">
+              Laptop biznesowy z Intel Core 3 100U
+            </p>
+          </div>
+
+          {/* Dell Pro Monitor */}
+          <div className="bg-white rounded-lg p-6 border-2 border-blue-300 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <rect x="2" y="3" width="20" height="14" rx="2" strokeWidth="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21" strokeWidth="2"/>
+                  <line x1="12" y1="17" x2="12" y2="21" strokeWidth="2"/>
+                </svg>
+              </div>
+            </div>
+            <h4 className="font-semibold text-gray-900 text-center mb-2">Dell Pro 27 Plus P2725HE</h4>
+            <p className="text-sm text-gray-600 text-center mb-4">
+              Monitor 27" QHD z USB-C i stacją dokującą
+            </p>
+            <div className="text-center">
+              <a 
+                href="/produkt/dell-pro-27-plus-p2725he-usbc"
+                className="inline-flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 px-4 py-2 rounded-lg font-medium text-sm transition-colors border border-blue-200"
+              >
+                <span>Zobacz produkt</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          {/* Keyboard + Mouse */}
+          <div className="bg-white rounded-lg p-6 border-2 border-gray-300 shadow-sm">
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <rect x="2" y="4" width="20" height="16" rx="2" strokeWidth="2"/>
+                  <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M6 16h8" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <h4 className="font-semibold text-gray-900 text-center mb-2">Klawiatura + Mysz Dell</h4>
+            <p className="text-sm text-gray-600 text-center">
+              Bezprzewodowy zestaw klawiatura i mysz
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-6 border border-emerald-300">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex-1">
+              <h4 className="font-semibold text-gray-900 mb-2">Korzyści z zakupu zestawu:</h4>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li className="flex items-start">
+                  <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>Kompletne stanowisko pracy od razu gotowe do użycia</span>
+                </li>
+                <li className="flex items-start">
+                  <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>Spójny ekosystem produktów Dell - pełna kompatybilność</span>
+                </li>
+                <li className="flex items-start">
+                  <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>Pojedyncze zamówienie - uproszczona logistyka i dokumentacja</span>
+                </li>
+              </ul>
+            </div>
+            <motion.button
+              onClick={() => {
+                onAddToInquiry() // laptop
+                onAddToInquiry() // monitor
+                onAddToInquiry() // keyboard + mouse
+              }}
+              className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Package className="w-5 h-5" />
+              <span>Zapytaj o zestaw</span>
+            </motion.button>
+          </div>
         </div>
       </motion.div>
     </div>
@@ -1032,6 +1120,9 @@ export default function DellPro16ProductPage() {
             </motion.div>
           </div>
         </div>
+
+        {/* Bundle Section - NOWA SEKCJA */}
+        <BundleSection onAddToInquiry={addToInquiry} />
 
         {/* Accessories Section */}
         <AccessoriesSection productName="Dell Pro 16" onAddToInquiry={addToInquiry} />

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { useInquiry } from '@/components/InquiryContext';
 import { 
   Search, 
   ShoppingCart, 
@@ -86,6 +87,7 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [categoriesView, setCategoriesView] = React.useState(0); // 0=4, 1=8, 2=all
   const [promoOpen, setPromoOpen] = React.useState(false);
+  const { inquiryCount, openCart } = useInquiry();
   
   // Logika wyświetlania kategorii w trzech krokach
   const getVisibleCategories = () => {
@@ -236,10 +238,13 @@ export default function HomePage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                <ShoppingCart className="h-4 w-4" />
-                Zapytanie (0)
-              </button>
+              <button 
+  onClick={openCart}
+  className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+>
+  <ShoppingCart className="h-4 w-4" />
+  Zapytanie ({inquiryCount})
+</button>
             </div>
           </nav>
         </div>

@@ -38,8 +38,8 @@ const products = [
     price: "1 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Bestseller",
+    image: "/527pu_1.png",
+    badge: null,
     featured: true,
     link: "/produkt/hp-seria-5-pro-527pu"
   },
@@ -52,8 +52,8 @@ const products = [
     price: "1 600 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Nowość",
+    image: "/527pq_1.png",
+    badge: null,
     featured: true,
     link: "/produkt/hp-seria-5-pro-527pq"
   },
@@ -66,7 +66,8 @@ const products = [
     price: "1 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź", 
-    image: "/api/placeholder/300/300",
+    image: "/P2425HE_1.png",
+    imageScale: 0.8,
     badge: "USB-C",
     featured: true,
     link: "/produkt/dell-pro-24-plus-p2425he-usbc"
@@ -80,7 +81,8 @@ const products = [
     price: "1 000 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300", 
+    image: "/P2425HE_1.png",
+    imageScale: 0.8,
     badge: null,
     featured: false,
     link: "/produkt/dell-pro-24-plus-p2425he"
@@ -94,7 +96,8 @@ const products = [
     price: "1 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/P2425HE_1.png",
+    imageScale: 0.8,
     badge: "USB-C",
     featured: true,
     link: "/produkt/dell-pro-27-plus-p2725he-usbc"
@@ -108,7 +111,8 @@ const products = [
     price: "1 500 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/P2425HE_1.png",
+    imageScale: 0.8,
     badge: null,
     featured: false,
     link: "/produkt/dell-pro-27-plus-p2725he"
@@ -122,8 +126,9 @@ const products = [
     price: "1 100 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Ergonomiczny",
+    image: "/P2424HEB_1.png",
+    imageScale: 0.8,
+    badge: null,
     featured: true,
     link: "/produkt/dell-pro-24-plus-p2424heb"
   },
@@ -136,8 +141,9 @@ const products = [
     price: "1 300 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
-    badge: "Ergonomiczny",
+    image: "/P2424HEB_1.png",
+    imageScale: 0.8,
+    badge: null,
     featured: true,
     link: "/produkt/dell-pro-27-plus-p2724heb"
   },
@@ -150,7 +156,8 @@ const products = [
     price: "",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
-    image: "/api/placeholder/300/300",
+    image: "/hp_series_1.png",
+    imageScale: 0.8,
     badge: null,
     featured: true,
     link: "/produkt/hp-seria-3-pro-324pv"
@@ -387,10 +394,13 @@ export default function CategoryPage() {
                   }`}
                 >
                   {/* Obrazek */}
-                  <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
-                    <div className="bg-gray-100 h-full flex items-center justify-center">
-                      <span className="text-gray-400 text-center px-4">{product.name}</span>
-                    </div>
+                  <div className={`relative border-b border-gray-200 ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
+                    <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      className="w-full h-full object-contain p-4" 
+                      style={product.imageScale ? { transform: `scale(${product.imageScale})` } : undefined}
+                    />
                     {product.badge && (
                       <span className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium ${
                         product.badge === "Bestseller" ? "bg-emerald-100 text-emerald-800" :

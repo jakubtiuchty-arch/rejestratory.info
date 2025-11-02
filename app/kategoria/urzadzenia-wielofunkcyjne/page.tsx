@@ -345,11 +345,18 @@ export default function CategoryPage() {
               }`}
             >
               {/* Obrazek */}
-              <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
+              <div className={`relative border-b border-gray-200 ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
                 <img 
                   src={product.image} 
                   alt={product.name}
-                  className="w-full h-full object-contain bg-gray-100"
+                  className="w-full h-full object-contain"
+                  style={
+                    product.id === 2 || product.id === 4 
+                      ? { transform: 'scale(0.8)' }
+                      : product.id === 3 
+                      ? { transform: 'scale(1.03) translateY(3%)' }
+                      : {}
+                  }
                 />
               </div>
 

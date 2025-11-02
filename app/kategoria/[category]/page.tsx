@@ -36,7 +36,7 @@ const products = [
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
     image: "/em45_1.png",
-    badge: "Bestseller",
+    badges: ["Bestseller", "Nowość"],
     featured: true
   },
   {
@@ -49,7 +49,7 @@ const products = [
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
     image: "/tc27_1.png",
-    badge: null,
+    badges: [],
     featured: false
   },
   {
@@ -62,7 +62,7 @@ const products = [
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
     image: "/tc58_1.png", 
-    badge: null,
+    badges: [],
     featured: false
   },
   {
@@ -75,7 +75,7 @@ const products = [
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
     image: "/ct47_1.png",
-    badge: null,
+    badges: [],
     featured: true
   },
   {
@@ -88,7 +88,7 @@ const products = [
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
     image: "/ea660_1.png",
-    badge: null,
+    badges: [],
     featured: true
   },
   {
@@ -101,7 +101,7 @@ const products = [
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
     image: "/pa768_1.png",
-    badge: null,
+    badges: [],
     featured: false
   },
   {
@@ -114,7 +114,7 @@ const products = [
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź", 
     image: "/eda52_1.png",
-    badge: "Nowość",
+    badges: [],
     featured: true
   },
   {
@@ -127,7 +127,7 @@ const products = [
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
     image: "/ct40xp_1.png",
-    badge: null,
+    badges: [],
     featured: false
   },
   {
@@ -140,7 +140,7 @@ const products = [
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
     image: "/ct30p_1.png",
-    badge: null,
+    badges: [],
     featured: false,
     customUrl: "/produkt/honeywell-ct30"
   },
@@ -154,7 +154,7 @@ const products = [
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
     image: "/sl20_1.png",
-    badge: null,
+    badges: [],
     featured: false,
     customUrl: "/produkt/m3-sl20"
   }
@@ -393,25 +393,32 @@ export default function CategoryPage() {
                   }`}
                 >
                   {/* Obrazek */}
-                  <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
-                    <div className="bg-gray-100 h-full flex items-center justify-center">
+                  <div className={`relative ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"} border-b border-gray-200`}>
+                    <div className="h-full flex items-center justify-center">
                       <img 
                         src={product.image} 
                         alt={product.name} 
                         className={product.image === '/em45_1.png' ? "object-contain" : "object-contain p-4"}
                         style={{ 
-                          width: product.image === '/em45_1.png' ? '98%' : '92%',
-                          height: product.image === '/em45_1.png' ? '98%' : '92%'
+                          width: product.image === '/em45_1.png' ? '88%' : '82%',
+                          height: product.image === '/em45_1.png' ? '88%' : '82%'
                         }}
                       />
                     </div>
-                    {product.badge && (
-                      <span className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium ${
-                        product.badge === "Bestseller" ? "bg-emerald-100 text-emerald-800" :
-                        product.badge === "Nowość" ? "bg-blue-100 text-blue-800" : "bg-gray-100 text-gray-800"
-                      }`}>
-                        {product.badge}
-                      </span>
+                    {product.badges && product.badges.length > 0 && (
+                      <div className="absolute top-3 left-3 flex flex-row gap-2">
+                        {product.badges.map((badge, index) => (
+                          <span 
+                            key={index}
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              badge === "Bestseller" ? "bg-emerald-100 text-emerald-800" :
+                              badge === "Nowość" ? "bg-blue-100 text-blue-800" : "bg-gray-100 text-gray-800"
+                            }`}
+                          >
+                            {badge}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
 

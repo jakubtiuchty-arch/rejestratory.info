@@ -340,7 +340,7 @@ export default function CategoryPage() {
                   }`}
                 >
                   {/* Obrazek */}
-                  <div className={`relative ${viewMode === "list" ? "w-44 flex-shrink-0 p-3" : "aspect-square p-5"}`}>
+                  <div className={`relative border-b border-gray-200 ${viewMode === "list" ? "w-44 flex-shrink-0 p-3" : "aspect-square p-5"}`}>
                     {product.badge && (
                       <div className="absolute top-2 left-2 bg-orange-100 text-orange-700 px-3 py-1 rounded text-xs font-semibold z-10">
                         {product.badge}
