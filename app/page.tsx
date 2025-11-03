@@ -2,7 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInquiry } from '@/components/InquiryContext';
-import SearchAutocomplete from '@/components/SearchAutocomplete';
+import SearchAutocomplete from './components/SearchAutocomplete';
 import { 
   Search, 
   ShoppingCart, 
