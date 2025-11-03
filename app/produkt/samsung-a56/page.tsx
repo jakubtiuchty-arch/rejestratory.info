@@ -674,28 +674,24 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
       id: 'charger',
       name: 'Ładowarka sieciowa USB-C',
       description: 'Szybka ładowarka 25W z kablem USB-C',
-      image: '/api/placeholder/120/120',
       price: '49 zł'
     },
     {
       id: 'case',
       name: 'Etui ochronne',
       description: 'Silikonowe etui z wzmocnionymi rogami',
-      image: '/api/placeholder/120/120',
       price: '39 zł'
     },
     {
       id: 'glass',
       name: 'Szkło hartowane 9H',
       description: 'Hartowane szkło ochronne na ekran',
-      image: '/api/placeholder/120/120',
       price: '29 zł'
     },
     {
       id: 'mount',
       name: 'Uchwyt samochodowy',
       description: 'Uniwersalny uchwyt do montażu w pojeździe',
-      image: '/api/placeholder/120/120',
       price: '159 zł'
     }
   ]
@@ -752,18 +748,6 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
                 onClick={() => toggleAccessory(accessory.id)}
               >
                 <div className="p-4 flex flex-col h-full">
-                  <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className="w-full h-24 object-cover rounded-lg"
-                    />
-                    {isSelected && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </div>
                   <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
                   <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
                   <div className="flex items-center justify-end mt-auto">
@@ -1067,67 +1051,23 @@ export default function SamsungA56ProductPage() {
       {/* Courier Service Section */}
       <CourierServiceSection productName="Samsung Galaxy A56" />
 
-      {/* Footer - IDENTYCZNY JAK STRONA GŁÓWNA */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="bg-white p-2 rounded-lg">
-                  <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-8 w-auto" />
-                </div>
-              </div>
-              <div className="text-gray-400">
-                <div>Administratorem serwisu</div>
-                <div>Rejestratory.info,</div>
-                <div>jest firma TAKMA</div>
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Produkty</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="/kategoria/rejestratory" className="hover:text-white">Rejestratory</a></li>
-                <li><a href="/kategoria/telefony" className="hover:text-white">Telefony</a></li>
-                <li><a href="/kategoria/laptopy" className="hover:text-white">Laptopy</a></li>
-                <li><a href="/kategoria/drukarki" className="hover:text-white">Drukarki</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Firma</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">O nas</a></li>
-                <li><a href="#" className="hover:text-white">Serwis</a></li>
-                <li><a href="#" className="hover:text-white">Kontakt</a></li>
-                <li><a href="#" className="hover:text-white">Blog</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Kontakt</h4>
-              <div className="space-y-2 text-gray-400">
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
-                  <span>71 781 71 28</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
-                  <span>takma@takma.com.pl</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  <span>Wrocław, Poświęcka 1a, 51-128 Wrocław</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; Rejestratory.info. Wszystkie prawa zastrzeżone.</p>
-          </div>
-        </div>
-      </footer>
+      {/* Footer */}
+<footer className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50/20 py-12">
+  <div className="container mx-auto px-4">
+    <div className="flex flex-col items-center gap-6">
+      <div className="flex items-center justify-center gap-10">
+        <img src="/takma_logo_footer.png" alt="TAKMA" className="h-14 w-auto" />
+        <span className="text-gray-700 text-lg">takma@takma.com.pl</span>
+        <span className="text-gray-700 text-lg">607 819 688</span>
+        <span className="text-gray-700 text-lg">51-128 Wrocław, ul. Poświęcka 1a</span>
+      </div>
+      <div className="w-full max-w-4xl border-t border-gray-300"></div>
+      <div className="text-gray-500 text-sm">
+        © 2024 Rejestratory.info. Wszystkie prawa zastrzeżone.
+      </div>
     </div>
+  </div>
+</footer>
+</div>
   )
 }

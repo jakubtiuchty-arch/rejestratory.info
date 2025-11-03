@@ -21,7 +21,8 @@ import {
   ShoppingCart,
   Info,
   Truck,
-  AlertTriangle
+  AlertTriangle,
+  ChevronDown
 } from 'lucide-react'
 
 // Image Gallery Component
@@ -552,37 +553,62 @@ ${formData.faultDescription}
 // Accessories Section Component
 const AccessoriesSection = ({ productName }: { productName: string }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
+  const [showAllAccessories, setShowAllAccessories] = useState(false)
 
   const accessories = [
     {
       id: 'case',
-      name: 'Etui ochronne Zebra',
-      description: 'Wytrzymałe etui ochronne z paskiem na nadgarstek',
-      image: '/api/placeholder/120/120',
-      price: '129 zł'
+      name: 'Etui ochronne',
+      description: 'Wytrzymałe etui ochronne z paskiem na nadgarstek'
     },
     {
-      id: 'charger',
-      name: 'Dodatkowa ładowarka',
-      description: 'Ładowarka sieciowa z kablem USB-C',
-      image: '/api/placeholder/120/120',
-      price: '89 zł'
+      id: 'screen',
+      name: 'Szkło hartowane na ekran',
+      description: 'Ochrona wyświetlacza przed zadrapaniami'
     },
     {
       id: 'mount',
       name: 'Uchwyt samochodowy',
-      description: 'Uniwersalny uchwyt do montażu w pojeździe',
-      image: '/api/placeholder/120/120',
-      price: '159 zł'
+      description: 'Uniwersalny uchwyt do montażu w pojeździe'
     },
     {
-      id: 'holster',
-      name: 'Kabura na pasek',
-      description: 'Kabura z klamrą do paska z możliwością obrotu',
-      image: '/api/placeholder/120/120',
-      price: '99 zł'
+      id: 'carcharger',
+      name: 'Ładowarka samochodowa',
+      description: 'Szybka ładowarka do samochodu z kablem USB-C'
+    },
+    {
+      id: 'dock-usb',
+      name: 'Stacja dokująca z portami USB + zasilacz + kabel USB',
+      description: 'Kompletna stacja dokująca z portami USB'
+    },
+    {
+      id: 'ethernet-module',
+      name: 'Moduł Ethernet do stacji dokującej',
+      description: 'Dodatkowy moduł rozszerzający o port Ethernet'
+    },
+    {
+      id: 'battery-4750',
+      name: 'Akumulator 4750mAh',
+      description: 'Akumulator zapasowy o pojemności 4750mAh'
+    },
+    {
+      id: 'wrist-strap',
+      name: 'Pasek na rękę montowany do nakładki na obudowę',
+      description: 'Wygodny pasek zabezpieczający montowany do nakładki'
+    },
+    {
+      id: 'stylus',
+      name: 'Rysik do ekranu',
+      description: 'Precyzyjny rysik do obsługi ekranu dotykowego'
+    },
+    {
+      id: 'protective-cover',
+      name: 'Nakładka na obudowę zabezpieczająca przed uszkodzeniami',
+      description: 'Dodatkowa ochrona obudowy przed uszkodzeniami'
     }
   ]
+
+  const visibleAccessories = showAllAccessories ? accessories : accessories.slice(0, 4)
 
   const toggleAccessory = (accessoryId: string) => {
     setSelectedAccessories(prev => 
@@ -619,7 +645,7 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {accessories.map((accessory) => {
+          {visibleAccessories.map((accessory) => {
             const isSelected = selectedAccessories.includes(accessory.id)
             return (
               <motion.div
@@ -633,11 +659,6 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
               >
                 <div className="p-4 flex flex-col h-full">
                   <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className="w-full h-24 object-cover rounded-lg"
-                    />
                     {isSelected && (
                       <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
                         <Check className="w-4 h-4 text-white" />
@@ -654,7 +675,7 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
                           : 'bg-emerald-600 text-white hover:bg-emerald-700'
                       }`}
                     >
-                      {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
+                      {isSelected ? 'Wybrane' : 'Wybierz'}
                     </button>
                   </div>
                 </div>
@@ -662,6 +683,26 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
             )
           })}
         </div>
+
+        {/* Show More Button */}
+        {accessories.length > 4 && (
+          <div className="mt-6 flex justify-center">
+            <motion.button
+              onClick={() => setShowAllAccessories(!showAllAccessories)}
+              className="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors flex items-center space-x-2"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <span>{showAllAccessories ? 'Zwiń akcesoria' : 'Zobacz więcej akcesoriów'}</span>
+              <motion.div
+                animate={{ rotate: showAllAccessories ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ChevronDown className="w-4 h-4" />
+              </motion.div>
+            </motion.button>
+          </div>
+        )}
       </motion.div>
     </div>
   )
@@ -723,12 +764,6 @@ export default function ZebraEM45ProductPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Bestseller
-                </span>
-              </div>
-              
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
                 Honeywell CT47
               </h1>
@@ -889,67 +924,23 @@ export default function ZebraEM45ProductPage() {
       {/* Courier Service Section */}
       <CourierServiceSection productName="Honeywell CT47" />
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="bg-white p-2 rounded-lg">
-                  <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-8 w-auto" />
-                </div>
-              </div>
-              <div className="text-gray-400">
-                <div>Administratorem serwisu</div>
-                <div>Rejestratory.info,</div>
-                <div>jest firma TAKMA</div>
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Produkty</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="/kategoria/rejestratory" className="hover:text-white">Rejestratory</a></li>
-                <li><a href="/kategoria/telefony" className="hover:text-white">Telefony</a></li>
-                <li><a href="/kategoria/laptopy" className="hover:text-white">Laptopy</a></li>
-                <li><a href="/kategoria/drukarki" className="hover:text-white">Drukarki</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Firma</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">O nas</a></li>
-                <li><a href="#" className="hover:text-white">Serwis</a></li>
-                <li><a href="#" className="hover:text-white">Kontakt</a></li>
-                <li><a href="#" className="hover:text-white">Blog</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Kontakt</h4>
-              <div className="space-y-2 text-gray-400">
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
-                  <span>71 781 71 28</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
-                  <span>takma@takma.com.pl</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  <span>Wrocław, Poświęcka 1a, 51-128 Wrocław</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; Rejestratory.info. Wszystkie prawa zastrzeżone.</p>
-          </div>
-        </div>
-      </footer>
+ {/* Footer */}
+<footer className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50/20 py-12">
+  <div className="container mx-auto px-4">
+    <div className="flex flex-col items-center gap-6">
+      <div className="flex items-center justify-center gap-10">
+        <img src="/takma_logo_footer.png" alt="TAKMA" className="h-14 w-auto" />
+        <span className="text-gray-700 text-lg">takma@takma.com.pl</span>
+        <span className="text-gray-700 text-lg">607 819 688</span>
+        <span className="text-gray-700 text-lg">51-128 Wrocław, ul. Poświęcka 1a</span>
+      </div>
+      <div className="w-full max-w-4xl border-t border-gray-300"></div>
+      <div className="text-gray-500 text-sm">
+        © 2024 Rejestratory.info. Wszystkie prawa zastrzeżone.
+      </div>
     </div>
+  </div>
+</footer>
+</div>
   )
 }
