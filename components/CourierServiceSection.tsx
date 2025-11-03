@@ -492,3 +492,4 @@ export const CourierServiceSection = ({ productName }: CourierServiceSectionProp
     </>
   )
 }
+export default CourierServiceSection
