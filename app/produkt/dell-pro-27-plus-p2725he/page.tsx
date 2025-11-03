@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useInquiry } from '@/components/InquiryContext'
 import {
   ZoomIn,
   Shield,
@@ -745,14 +746,8 @@ ${formData.faultDescription}
 export default function DellPro27PlusP2725HEProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const [inquiryCount, setInquiryCount] = useState(0)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -761,7 +756,7 @@ export default function DellPro27PlusP2725HEProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -773,6 +768,7 @@ export default function DellPro27PlusP2725HEProductPage() {
               </ul>
               
               <motion.button 
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -856,7 +852,18 @@ export default function DellPro27PlusP2725HEProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'dell-pro-27-plus-p2725he',
+                      name: 'Dell Pro 27 Plus P2725HE',
+                      image: '/P2425HE_1.png',
+                      category: 'Monitory',
+                      description: 'Monitor biznesowy 27" Full HD IPS z USB-C 90W',
+                      specifications: 'FHD IPS, 100Hz, USB-C 90W PD, Ethernet, 3-letnia gwarancja Premium Panel'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

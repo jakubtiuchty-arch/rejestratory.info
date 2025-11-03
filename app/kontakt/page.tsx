@@ -26,7 +26,8 @@ import {
   Wrench,
   Send,
   Loader2,
-  CreditCard
+  CreditCard,
+  AlertCircle
 } from "lucide-react";
 
 // Komponenty współdzielone
@@ -68,23 +69,43 @@ const ContactPage = () => {
     e.preventDefault();
     setFormState('submitting');
     
-    // Symulacja wysyłania
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setFormState('success');
-    
-    // Reset po 5 sekundach
-    setTimeout(() => {
-      setFormState('idle');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        subject: '',
-        department: 'general',
-        message: ''
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-    }, 5000);
+
+      if (!response.ok) {
+        throw new Error('Błąd wysyłania formularza');
+      }
+
+      setFormState('success');
+      
+      // Reset po 5 sekundach
+      setTimeout(() => {
+        setFormState('idle');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          subject: '',
+          department: 'general',
+          message: ''
+        });
+      }, 5000);
+    } catch (error) {
+      console.error('Error:', error);
+      setFormState('error');
+      
+      // Reset error state po 5 sekundach
+      setTimeout(() => {
+        setFormState('idle');
+      }, 5000);
+    }
   };
 
   return (
@@ -94,7 +115,7 @@ const ContactPage = () => {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -263,6 +284,25 @@ const ContactPage = () => {
                     </h3>
                     <p className="text-emerald-800">
                       Dziękujemy za kontakt. Odpowiemy najszybciej jak to możliwe.
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ) : formState === 'error' ? (
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+              >
+                <Card className="border-red-200 bg-red-50">
+                  <CardContent className="p-8 text-center">
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
+                      <AlertCircle className="h-8 w-8 text-red-600" />
+                    </div>
+                    <h3 className="mb-2 text-xl font-bold text-red-950">
+                      Wystąpił błąd
+                    </h3>
+                    <p className="text-red-800">
+                      Nie udało się wysłać wiadomości. Spróbuj ponownie lub zadzwoń: +48 607 819 688
                     </p>
                   </CardContent>
                 </Card>

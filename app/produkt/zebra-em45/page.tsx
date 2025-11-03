@@ -23,6 +23,7 @@ import {
   Truck,
   AlertTriangle
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -682,35 +683,30 @@ ${formData.faultDescription}
 // Accessories Section Component
 const AccessoriesSection = ({ productName }: { productName: string }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
+  
+  // ✅ HOOK Z KONTEKSTU ZAPYTAŃ
+  const { addToInquiry } = useInquiry()
 
   const accessories = [
     {
       id: 'case',
       name: 'Etui ochronne Zebra',
-      description: 'Wytrzymałe etui ochronne z paskiem na nadgarstek',
-      image: '/api/placeholder/120/120',
-      price: '129 zł'
+      description: 'Wytrzymałe etui ochronne z paskiem na nadgarstek'
     },
     {
       id: 'charger',
       name: 'Dodatkowa ładowarka',
-      description: 'Ładowarka sieciowa z kablem USB-C',
-      image: '/api/placeholder/120/120',
-      price: '89 zł'
+      description: 'Ładowarka sieciowa z kablem USB-C'
     },
     {
       id: 'mount',
       name: 'Uchwyt samochodowy',
-      description: 'Uniwersalny uchwyt do montażu w pojeździe',
-      image: '/api/placeholder/120/120',
-      price: '159 zł'
+      description: 'Uniwersalny uchwyt do montażu w pojeździe'
     },
     {
       id: 'holster',
       name: 'Kabura na pasek',
-      description: 'Kabura z klamrą do paska z możliwością obrotu',
-      image: '/api/placeholder/120/120',
-      price: '99 zł'
+      description: 'Kabura z klamrą do paska z możliwością obrotu'
     }
   ]
 
@@ -720,6 +716,24 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
         ? prev.filter(id => id !== accessoryId)
         : [...prev, accessoryId]
     )
+  }
+
+  // ✅ FUNKCJA DODAWANIA WYBRANYCH AKCESORIÓW
+  const handleAddSelectedAccessories = () => {
+    selectedAccessories.forEach(accessoryId => {
+      const accessory = accessories.find(a => a.id === accessoryId)
+      if (accessory) {
+        addToInquiry({
+          id: `em45-accessory-${accessory.id}`,
+          name: `${productName} - ${accessory.name}`,
+          image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' fill='%23f3f4f6'/%3E%3C/svg%3E",
+          category: 'Akcesoria',
+          description: accessory.description
+        })
+      }
+    })
+    // Wyczyść zaznaczone akcesoria po dodaniu
+    setSelectedAccessories([])
   }
 
   return (
@@ -738,6 +752,7 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
           </div>
           {selectedAccessories.length > 0 && (
             <motion.button
+              onClick={handleAddSelectedAccessories}
               className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -763,11 +778,6 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
               >
                 <div className="p-4 flex flex-col h-full">
                   <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className="w-full h-24 object-cover rounded-lg"
-                    />
                     {isSelected && (
                       <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
                         <Check className="w-4 h-4 text-white" />
@@ -801,6 +811,10 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
 export default function ZebraEM45ProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
+  const [showRipple, setShowRipple] = useState(false)
+  
+  // ✅ HOOK Z KONTEKSTU ZAPYTAŃ
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
 
   const features = [
     { icon: Shield, title: "Wytrzymałość IP68", description: "Odporność na pył, wodę i upadki z 2.4m" },
@@ -816,7 +830,7 @@ export default function ZebraEM45ProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-8 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-8 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -827,10 +841,47 @@ export default function ZebraEM45ProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+              {/* ✅ PRZYCISK ZAPYTANIE Z onClick={openCart} */}
+              <motion.button 
+                onClick={openCart}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
+                animate={showRipple ? {
+                  scale: [1, 1.05, 1],
+                } : {}}
+                transition={{ duration: 0.3 }}
+              >
                 <ShoppingCart className="h-4 w-4" />
-                Zapytanie (0)
-              </button>
+                Zapytanie ({inquiryCount})
+                
+                {/* Ripple Effect */}
+                <AnimatePresence>
+                  {showRipple && (
+                    <>
+                      <motion.span
+                        className="absolute inset-0 bg-white rounded-lg"
+                        initial={{ scale: 0, opacity: 0.6 }}
+                        animate={{ scale: 2.5, opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                      />
+                      <motion.span
+                        className="absolute inset-0 bg-white rounded-lg"
+                        initial={{ scale: 0, opacity: 0.4 }}
+                        animate={{ scale: 3, opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                      />
+                      <motion.span
+                        className="absolute inset-0 bg-white rounded-lg"
+                        initial={{ scale: 0, opacity: 0.3 }}
+                        animate={{ scale: 3.5, opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                      />
+                    </>
+                  )}
+                </AnimatePresence>
+              </motion.button>
             </div>
           </nav>
         </div>
@@ -877,8 +928,22 @@ export default function ZebraEM45ProductPage() {
               <p className="text-gray-600 mb-4 text-justify">
                 Zebra EM45 to profesjonalny smartfon stworzony z myślą o pracy w trudnych warunkach terenowych, idealny dla leśników i służb terenowych. W przeciwieństwie do zwykłych telefonów, EM45 oferuje solidną, wzmocnioną konstrukcję z klasą odporności IP68, co gwarantuje niezawodność nawet w deszczu, błocie czy niskich temperaturach. Duży, czytelny ekran umożliwia wygodną obsługę aplikacji leśnych w rękawicach, a pojemna bateria zapewnia pracę przez cały dzień bez potrzeby ładowania. Dzięki stabilnej łączności LTE, Wi-Fi 6 i Bluetooth 5.0 EM45 pozostaje zawsze gotowy do działania – tam, gdzie zwykły smartfon dawno by zawiódł.
               </p>
+              
+              {/* ✅ PRZYCISK DODAJ DO ZAPYTANIA Z OBIEKTEM PRODUKTU */}
               <div className="flex space-x-4 mb-6">
                 <motion.button
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'zebra-em45',
+                      name: 'Zebra EM45',
+                      image: '/em45_1.png',
+                      category: 'Rejestratory',
+                      description: 'Profesjonalny smartfon terenowy',
+                      specifications: 'IP68, 6.7", Android 11, 4700mAh, 14h pracy'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

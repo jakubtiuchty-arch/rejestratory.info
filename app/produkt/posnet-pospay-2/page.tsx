@@ -27,6 +27,7 @@ import {
   Printer,
   Monitor
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -258,7 +259,6 @@ const PurchaseTimeline = () => {
   const [hasAnimated, setHasAnimated] = useState(false)
   const timelineRef = React.useRef(null)
 
-  // Detect when timeline enters viewport
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -378,7 +378,7 @@ const PurchaseTimeline = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-6 relative">
               {timelineSteps.map((step, index) => {
                 const Icon = step.icon
-                const baseDelay = index * 0.9 // Zwiększone z 0.6s na 0.9s
+                const baseDelay = index * 0.9
                 
                 return (
                   <motion.div
@@ -396,10 +396,10 @@ const PurchaseTimeline = () => {
                     }}
                     transition={{ 
                       delay: baseDelay,
-                      duration: 1.0, // Zwiększone z 0.8s na 1.0s
+                      duration: 1.0,
                       ease: "easeOut",
                       type: "spring",
-                      stiffness: 80, // Zmniejszone dla wolniejszego ruchu
+                      stiffness: 80,
                       damping: 18
                     }}
                   >
@@ -415,7 +415,7 @@ const PurchaseTimeline = () => {
                         } : { scale: 1, opacity: 0 }}
                         transition={{
                           delay: baseDelay + 0.5,
-                          duration: 2.0, // Zwiększone z 1.5s
+                          duration: 2.0,
                           ease: "easeOut"
                         }}
                       />
@@ -431,10 +431,10 @@ const PurchaseTimeline = () => {
                         } : { scale: 0, rotate: -180 }}
                         transition={{ 
                           delay: baseDelay + 0.4,
-                          duration: 1.0, // Zwiększone z 0.8s
+                          duration: 1.0,
                           scale: {
                             type: "spring",
-                            stiffness: 150, // Zmniejszone
+                            stiffness: 150,
                             damping: 12
                           },
                           rotate: {
@@ -443,7 +443,7 @@ const PurchaseTimeline = () => {
                           },
                           backgroundColor: {
                             delay: baseDelay + 1.0,
-                            duration: 1.5, // Zwiększone z 1.2s
+                            duration: 1.5,
                             times: [0, 0.5, 1]
                           }
                         }}
@@ -458,7 +458,7 @@ const PurchaseTimeline = () => {
                           animate={hasAnimated ? { scale: 1 } : { scale: 0 }}
                           transition={{ 
                             delay: baseDelay + 0.7,
-                            duration: 0.5, // Zwiększone z 0.4s
+                            duration: 0.5,
                             type: "spring",
                             stiffness: 250
                           }}
@@ -475,7 +475,7 @@ const PurchaseTimeline = () => {
                       animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                       transition={{ 
                         delay: baseDelay + 0.8,
-                        duration: 0.6 // Zwiększone z 0.5s
+                        duration: 0.6
                       }}
                     >
                       KROK {index + 1}
@@ -488,7 +488,7 @@ const PurchaseTimeline = () => {
                       animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                       transition={{ 
                         delay: baseDelay + 0.95,
-                        duration: 0.6 // Zwiększone z 0.5s
+                        duration: 0.6
                       }}
                     >
                       {step.title}
@@ -501,7 +501,7 @@ const PurchaseTimeline = () => {
                       animate={hasAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                       transition={{ 
                         delay: baseDelay + 1.1,
-                        duration: 0.6 // Zwiększone z 0.5s
+                        duration: 0.6
                       }}
                     >
                       {step.description}
@@ -577,7 +577,6 @@ const CourierServiceSection = ({ productName }: { productName: string }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Create email body
     const emailBody = `
 Zamówienie kuriera - ${productName}
 
@@ -599,13 +598,9 @@ Opis usterki:
 ${formData.faultDescription}
     `.trim()
 
-    // Create mailto link
     const mailtoLink = `mailto:handlowy@takma.com.pl?subject=Zamówienie kuriera - ${productName}&body=${encodeURIComponent(emailBody)}`
-    
-    // Open email client
     window.location.href = mailtoLink
     
-    // Reset form and close modal
     setFormData({
       firstName: '',
       lastName: '',
@@ -620,7 +615,6 @@ ${formData.faultDescription}
     })
     setIsModalOpen(false)
     
-    // Show confirmation lightbox
     setTimeout(() => {
       setIsConfirmationOpen(true)
     }, 300)
@@ -716,7 +710,6 @@ ${formData.faultDescription}
                 </div>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Personal Data */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Dane kontaktowe</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -762,7 +755,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Address */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Adres odbioru</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -825,7 +817,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Device Info */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Informacje o urządzeniu</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -873,7 +864,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Submit Button */}
                   <div className="border-t border-gray-200 pt-6">
                     <div className="flex justify-end space-x-3">
                       <button
@@ -1026,130 +1016,11 @@ ${formData.faultDescription}
   )
 }
 
-// Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
-
-  const accessories = [
-    {
-      id: 'paper',
-      name: 'Rolki papieru termicznego',
-      description: 'Oryginalne rolki 57mm x 14m',
-      price: '49 zł'
-    },
-    {
-      id: 'charger',
-      name: 'Ładowarka sieciowa',
-      description: 'Ładowarka sieciowa 5V/4A',
-      price: '79 zł'
-    },
-    {
-      id: 'cover',
-      name: 'Pokrowiec ochronny',
-      description: 'Wodoodporny pokrowiec',
-      price: '89 zł'
-    },
-    {
-      id: 'car-charger',
-      name: 'Ładowarka samochodowa',
-      description: 'Ładowarka samochodowa 12V',
-      price: '199 zł'
-    }
-  ]
-
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
-  }
-
-  return (
-    <div className="mb-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Akcesoria
-            </h3>
-          </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
-                setSelectedAccessories([])
-              }}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {accessories.map((accessory) => {
-            const isSelected = selectedAccessories.includes(accessory.id)
-            return (
-              <motion.div
-                key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
-                  isSelected 
-                    ? 'border-emerald-500 bg-emerald-50' 
-                    : 'border-gray-200 hover:border-emerald-300'
-                }`}
-                onClick={() => toggleAccessory(accessory.id)}
-              >
-                <div className="p-4 flex flex-col h-full">
-                  <div className="flex items-start justify-between mb-3">
-                    <h4 className="font-semibold text-gray-900">{accessory.name}</h4>
-                    {isSelected && (
-                      <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 ml-2">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
-                  <div className="flex items-center justify-end mt-auto">
-                    <button
-                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                        isSelected 
-                          ? 'bg-emerald-700 text-white' 
-                          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                      }`}
-                    >
-                      {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
-      </motion.div>
-    </div>
-  )
-}
-
 // Main Product Page Component
 export default function PosnetPospay2ProductPage() {
   const [activeTab, setActiveTab] = useState('timeline')
-  const [inquiryCount, setInquiryCount] = useState(0)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -1158,7 +1029,7 @@ export default function PosnetPospay2ProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -1169,45 +1040,13 @@ export default function PosnetPospay2ProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
-              <motion.button 
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
-                animate={showRipple ? {
-                  scale: [1, 1.05, 1],
-                } : {}}
-                transition={{ duration: 0.3 }}
+              <button 
+                onClick={openCart}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
               >
                 <ShoppingCart className="h-4 w-4" />
                 Zapytanie ({inquiryCount})
-                
-                {/* Ripple Effect */}
-                <AnimatePresence>
-                  {showRipple && (
-                    <>
-                      <motion.span
-                        className="absolute inset-0 bg-white rounded-lg"
-                        initial={{ scale: 0, opacity: 0.6 }}
-                        animate={{ scale: 2.5, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                      />
-                      <motion.span
-                        className="absolute inset-0 bg-white rounded-lg"
-                        initial={{ scale: 0, opacity: 0.4 }}
-                        animate={{ scale: 3, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-                      />
-                      <motion.span
-                        className="absolute inset-0 bg-white rounded-lg"
-                        initial={{ scale: 0, opacity: 0.3 }}
-                        animate={{ scale: 3.5, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                      />
-                    </>
-                  )}
-                </AnimatePresence>
-              </motion.button>
+              </button>
             </div>
           </nav>
         </div>
@@ -1256,7 +1095,18 @@ export default function PosnetPospay2ProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'posnet-pospay-2',
+                      name: 'Posnet Pospay 2',
+                      image: '/pospay_1.png',
+                      category: 'Urządzenia fiskalne',
+                      description: 'Urządzenie fiskalne online z terminalem płatniczym',
+                      specifications: 'Ekran 4,5", Terminal płatniczy, Bateria 6800 mAh, Kompatybilny z Leśnik+'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -1325,7 +1175,6 @@ export default function PosnetPospay2ProductPage() {
           <nav className="-mb-px flex space-x-8">
             {[
               { id: 'timeline', label: 'Proces zakupu i wdrożenia' },
-              { id: 'accessories', label: 'Akcesoria' },
               { id: 'specs', label: 'Specyfikacja' },
               { id: 'downloads', label: 'Pliki do pobrania' }
             ].map((tab) => (
@@ -1338,7 +1187,6 @@ export default function PosnetPospay2ProductPage() {
                 }`}
                 onClick={() => {
                   setActiveTab(tab.id)
-                  // Scroll do sekcji
                   const element = document.getElementById(tab.id)
                   if (element) {
                     element.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -1354,11 +1202,6 @@ export default function PosnetPospay2ProductPage() {
         {/* Timeline Section */}
         <div id="timeline" className="scroll-mt-24">
           <PurchaseTimeline />
-        </div>
-
-        {/* Accessories Section */}
-        <div id="accessories" className="scroll-mt-24">
-          <AccessoriesSection productName="Posnet Pospay 2" onAddToInquiry={addToInquiry} />
         </div>
 
         {/* Specyfikacja Section */}

@@ -24,7 +24,8 @@ import {
   Vibrate,
   Smartphone,
   TreePine,
-  Trees
+  Trees,
+  Package
 } from "lucide-react";
 
 // Placeholder data
@@ -39,7 +40,8 @@ const categories = [
   { id: 9, name: "Drukarki laserowe", count: 14, icon: Printer },
   { id: 10, name: "All in One", count: 5, icon: Monitor },
   { id: 11, name: "Elektroniczne Zarządzanie Dokumentacją", count: 8, icon: FolderOpen },
-  { id: 12, name: "Urządzenia fiskalne", count: 3, icon: CreditCard }
+  { id: 12, name: "Urządzenia fiskalne", count: 3, icon: CreditCard },
+  { id: 13, name: "Akcesoria komputerowe", count: 18, icon: Package }
 ];
 
 // Funkcja do mapowania nazw kategorii na URLe
@@ -55,7 +57,8 @@ const getCategoryUrl = (categoryName: string) => {
     "Drukarki laserowe": "/kategoria/drukarki-laserowe",
     "All in One": "/kategoria/all-in-one",
     "Elektroniczne Zarządzanie Dokumentacją": "/kategoria/ezd",
-    "Urządzenia fiskalne": "/kategoria/urzadzenia-fiskalne"
+    "Urządzenia fiskalne": "/kategoria/urzadzenia-fiskalne",
+    "Akcesoria komputerowe": "/kategoria/akcesoria-komputerowe"
   };
   return urlMap[categoryName] || "#";
 };
@@ -66,21 +69,24 @@ const featuredProducts = [
     name: "Zebra EM45",
     category: "Rejestrator",
     description: "To nie tylko smartfon!",
-    price: "Cena na zapytanie"
+    price: "Cena na zapytanie",
+    image: "em45_1.png"
   },
   {
     id: 2,
-    name: "AIO Dell Pro 24 All-In-One ", 
-    category: "All in One",
+    name: "Dell Pro 16\" Plus", 
+    category: "Laptop",
     description: "Wydajny komputer dla biura leśnika",
-    price: "3 299 PLN"
+    price: "3 299 PLN",
+    image: "dell_16_1.png"
   },
   {
     id: 3,
     name: "Brother MFC-L8690CDW",
     category: "Urządzenie wielofunkcyjne", 
     description: "Wszechstronne urządzenie biurowe",
-    price: "899 PLN"
+    price: "899 PLN",
+    image: "MFCL8690CDW_1.png"
   }
 ];
 
@@ -431,16 +437,21 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: product.id * 0.1 }}
                 className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
               >
-                <div className="aspect-square bg-gray-100 rounded-t-lg flex items-center justify-center">
-                  <span className="text-gray-400 text-center px-4">{product.name}</span>
+                <div className="aspect-square rounded-t-lg flex items-center justify-center overflow-hidden">
+                  <img 
+                    src={`/${product.image}`} 
+                    alt={product.name}
+                    className="w-4/5 h-4/5 object-contain"
+                  />
                 </div>
+                <div className="border-t border-gray-200"></div>
                 <div className="p-6">
                   <div className="text-sm text-emerald-600 font-medium mb-2">{product.category}</div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
                   <p className="text-gray-600 mb-4">{product.description}</p>
                   <div className="flex justify-end">
                 <a 
-  href={`/produkt/${product.name.toLowerCase().replace(/\s+/g, '-')}`}
+  href={`/produkt/${product.name.toLowerCase().replace(/\s+/g, '-').replace(/"/g, '')}`}
   className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors"
 >
   Zobacz więcej

@@ -29,6 +29,7 @@ import {
   Cloud,
   Database
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -237,7 +238,6 @@ const PurchaseTimeline = () => {
   const [hasAnimated, setHasAnimated] = useState(false)
   const timelineRef = React.useRef(null)
 
-  // Detect when timeline enters viewport
   React.useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -320,11 +320,9 @@ const PurchaseTimeline = () => {
 
           {/* Timeline */}
           <div className="relative">
-            {/* Linia łącząca - animowana */}
             <div className="absolute top-8 left-0 right-0 h-0.5 bg-gray-200 hidden lg:block" 
                  style={{ left: '5%', right: '5%' }} />
             
-            {/* Aktywna linia - rysuje się od lewej do prawej BARDZO WOLNO */}
             <motion.div 
               className="absolute top-8 left-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-600 hidden lg:block shadow-lg" 
               style={{ left: '5%' }}
@@ -336,7 +334,6 @@ const PurchaseTimeline = () => {
               }}
             />
             
-            {/* Świecący efekt na końcu linii */}
             <motion.div 
               className="absolute top-6 h-5 w-5 bg-emerald-500 rounded-full blur-md hidden lg:block" 
               style={{ left: '5%' }}
@@ -382,9 +379,7 @@ const PurchaseTimeline = () => {
                       damping: 18
                     }}
                   >
-                    {/* Ikona z pulsującym ringiem */}
                     <div className="relative">
-                      {/* Pulsujący ring */}
                       <motion.div
                         className="absolute inset-0 rounded-full bg-emerald-500"
                         initial={{ scale: 1, opacity: 0 }}
@@ -399,7 +394,6 @@ const PurchaseTimeline = () => {
                         }}
                       />
                       
-                      {/* Ikona */}
                       <motion.div
                         className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-3 relative z-10 border-4 border-white shadow-xl"
                         initial={{ scale: 0, rotate: -180 }}
@@ -447,7 +441,6 @@ const PurchaseTimeline = () => {
                       </motion.div>
                     </div>
                     
-                    {/* Numer kroku */}
                     <motion.div 
                       className="text-xs font-bold text-emerald-600 mb-2"
                       initial={{ opacity: 0, y: 10 }}
@@ -460,7 +453,6 @@ const PurchaseTimeline = () => {
                       KROK {index + 1}
                     </motion.div>
                     
-                    {/* Tytuł */}
                     <motion.h4 
                       className="font-semibold text-gray-900 mb-1"
                       initial={{ opacity: 0, y: 10 }}
@@ -473,7 +465,6 @@ const PurchaseTimeline = () => {
                       {step.title}
                     </motion.h4>
                     
-                    {/* Opis */}
                     <motion.p 
                       className="text-sm text-gray-600 mb-3"
                       initial={{ opacity: 0, y: 10 }}
@@ -486,7 +477,6 @@ const PurchaseTimeline = () => {
                       {step.description}
                     </motion.p>
                     
-                    {/* Button jeśli wymagany */}
                     {step.hasButton && (
                       <motion.button
                         onClick={() => setIsDocumentsLightboxOpen(true)}
@@ -522,7 +512,6 @@ const PurchaseTimeline = () => {
         </motion.div>
       </div>
 
-      {/* Documents Lightbox */}
       <DocumentsLightbox 
         isOpen={isDocumentsLightboxOpen} 
         onClose={() => setIsDocumentsLightboxOpen(false)} 
@@ -556,7 +545,6 @@ const CourierServiceSection = ({ productName }: { productName: string }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Create email body
     const emailBody = `
 Zamówienie kuriera - ${productName}
 
@@ -578,13 +566,9 @@ Opis usterki:
 ${formData.faultDescription}
     `.trim()
 
-    // Create mailto link
     const mailtoLink = `mailto:handlowy@takma.com.pl?subject=Zamówienie kuriera - ${productName}&body=${encodeURIComponent(emailBody)}`
-    
-    // Open email client
     window.location.href = mailtoLink
     
-    // Reset form and close modal
     setFormData({
       firstName: '',
       lastName: '',
@@ -599,7 +583,6 @@ ${formData.faultDescription}
     })
     setIsModalOpen(false)
     
-    // Show confirmation lightbox
     setTimeout(() => {
       setIsConfirmationOpen(true)
     }, 300)
@@ -607,7 +590,6 @@ ${formData.faultDescription}
 
   return (
     <>
-      {/* Service Section */}
       <div id="service-section" className="bg-orange-50 border-t border-orange-200">
         <div className="container mx-auto px-4 py-12">
           <motion.div
@@ -658,7 +640,6 @@ ${formData.faultDescription}
         </div>
       </div>
 
-      {/* Courier Form Modal */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
@@ -695,7 +676,6 @@ ${formData.faultDescription}
                 </div>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Personal Data */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Dane kontaktowe</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -741,7 +721,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Address */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Adres odbioru</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -804,7 +783,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Device Info */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Informacje o urządzeniu</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -852,7 +830,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Submit Button */}
                   <div className="border-t border-gray-200 pt-6">
                     <div className="flex justify-end space-x-3">
                       <button
@@ -880,7 +857,6 @@ ${formData.faultDescription}
         )}
       </AnimatePresence>
 
-      {/* Confirmation Lightbox */}
       <AnimatePresence>
         {isConfirmationOpen && (
           <motion.div
@@ -1005,127 +981,11 @@ ${formData.faultDescription}
   )
 }
 
-// Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
-
-  const accessories = [
-    {
-      id: 'paper',
-      name: 'Rolki papieru termicznego',
-      description: 'Oryginalne rolki 57mm x 14m',
-      image: '/api/placeholder/120/120',
-      price: '49 zł'
-    },
-    {
-      id: 'holder',
-      name: 'Ładowarka sieciowa',
-      description: 'Do montażu przy stanowisku',
-      image: '/api/placeholder/120/120',
-      price: '79 zł'
-    },
-    {
-      id: 'cover',
-      name: 'Pokrowiec ochronny',
-      description: 'Wodoodporny pokrowiec',
-      image: '/api/placeholder/120/120',
-      price: '89 zł'
-    },
-    {
-      id: 'battery',
-      name: 'Ładowarka samochodowa',
-      description: 'Zapasowy akumulator Li-ion',
-      image: '/api/placeholder/120/120',
-      price: '199 zł'
-    }
-  ]
-
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
-  }
-
-  return (
-    <div className="mb-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Akcesoria
-            </h3>
-          </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
-                setSelectedAccessories([])
-              }}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {accessories.map((accessory) => {
-            const isSelected = selectedAccessories.includes(accessory.id)
-            return (
-              <motion.div
-                key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
-                  isSelected 
-                    ? 'border-emerald-500 bg-emerald-50' 
-                    : 'border-gray-200 hover:border-emerald-300'
-                }`}
-                onClick={() => toggleAccessory(accessory.id)}
-              >
-                <div className="p-4 flex flex-col h-full">
-                  <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
-                  <div className="flex items-center justify-end mt-auto">
-                    <button
-                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                        isSelected 
-                          ? 'bg-emerald-700 text-white' 
-                          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                      }`}
-                    >
-                      {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
-      </motion.div>
-    </div>
-  )
-}
-
 // Main Product Page Component
 export default function PosnetTemoOnlineProductPage() {
   const [activeTab, setActiveTab] = useState('timeline')
-  const [inquiryCount, setInquiryCount] = useState(0)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -1134,7 +994,7 @@ export default function PosnetTemoOnlineProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -1145,45 +1005,13 @@ export default function PosnetTemoOnlineProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
-              <motion.button 
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
-                animate={showRipple ? {
-                  scale: [1, 1.05, 1],
-                } : {}}
-                transition={{ duration: 0.3 }}
+              <button 
+                onClick={openCart}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
               >
                 <ShoppingCart className="h-4 w-4" />
                 Zapytanie ({inquiryCount})
-                
-                {/* Ripple Effect */}
-                <AnimatePresence>
-                  {showRipple && (
-                    <>
-                      <motion.span
-                        className="absolute inset-0 bg-white rounded-lg"
-                        initial={{ scale: 0, opacity: 0.6 }}
-                        animate={{ scale: 2.5, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                      />
-                      <motion.span
-                        className="absolute inset-0 bg-white rounded-lg"
-                        initial={{ scale: 0, opacity: 0.4 }}
-                        animate={{ scale: 3, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-                      />
-                      <motion.span
-                        className="absolute inset-0 bg-white rounded-lg"
-                        initial={{ scale: 0, opacity: 0.3 }}
-                        animate={{ scale: 3.5, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                      />
-                    </>
-                  )}
-                </AnimatePresence>
-              </motion.button>
+              </button>
             </div>
           </nav>
         </div>
@@ -1232,7 +1060,18 @@ export default function PosnetTemoOnlineProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'posnet-temo-online',
+                      name: 'Posnet Temo Online',
+                      image: '/temo_online_1.png',
+                      category: 'Urządzenia fiskalne',
+                      description: 'Najmniejsza drukarka fiskalna ONLINE',
+                      specifications: 'Waga 315g, Akumulator 2150mAh, 50000 wierszy, WiFi/USB, Kompatybilny z Leśnik+'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -1300,7 +1139,6 @@ export default function PosnetTemoOnlineProductPage() {
           <nav className="-mb-px flex space-x-8">
             {[
               { id: 'timeline', label: 'Proces zakupu i wdrożenia' },
-              { id: 'accessories', label: 'Akcesoria' },
               { id: 'specs', label: 'Specyfikacja' },
               { id: 'downloads', label: 'Pliki do pobrania' }
             ].map((tab) => (
@@ -1313,7 +1151,6 @@ export default function PosnetTemoOnlineProductPage() {
                 }`}
                 onClick={() => {
                   setActiveTab(tab.id)
-                  // Scroll do sekcji
                   const element = document.getElementById(tab.id)
                   if (element) {
                     element.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -1329,11 +1166,6 @@ export default function PosnetTemoOnlineProductPage() {
         {/* Timeline Section */}
         <div id="timeline" className="scroll-mt-24">
           <PurchaseTimeline />
-        </div>
-
-        {/* Accessories Section */}
-        <div id="accessories" className="scroll-mt-24">
-          <AccessoriesSection productName="Posnet Temo Online" onAddToInquiry={addToInquiry} />
         </div>
 
         {/* Specyfikacja Section */}

@@ -24,6 +24,7 @@ import {
   AlertTriangle,
   ChevronDown
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -551,7 +552,7 @@ ${formData.faultDescription}
 }
 
 // Accessories Section Component
-const AccessoriesSection = ({ productName }: { productName: string }) => {
+const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: (accessory: any) => void }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
   const [showAllAccessories, setShowAllAccessories] = useState(false)
 
@@ -624,6 +625,17 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
           </div>
           {selectedAccessories.length > 0 && (
             <motion.button
+              onClick={() => {
+                // Dodaj każde wybrane akcesorium do zapytania
+                selectedAccessories.forEach(accessoryId => {
+                  const accessory = accessories.find(a => a.id === accessoryId)
+                  if (accessory) {
+                    onAddToInquiry(accessory)
+                  }
+                })
+                // Wyczyść zaznaczenie
+                setSelectedAccessories([])
+              }}
               className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -699,9 +711,12 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
 }
 
 // Main Product Page Component
-export default function ZebraEM45ProductPage() {
+export default function HoneywellCT30PProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
+  const [showRipple, setShowRipple] = useState(false)
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header - IDENTYCZNY JAK STRONA GŁÓWNA */}
@@ -709,7 +724,7 @@ export default function ZebraEM45ProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-8 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-8 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -720,9 +735,12 @@ export default function ZebraEM45ProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+              <button 
+                onClick={openCart}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+              >
                 <ShoppingCart className="h-4 w-4" />
-                Zapytanie (0)
+                Zapytanie ({inquiryCount})
               </button>
             </div>
           </nav>
@@ -763,6 +781,18 @@ export default function ZebraEM45ProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'honeywell-ct30p',
+                      name: 'Honeywell CT30P',
+                      image: '/ct30p_1.png',
+                      category: 'Rejestratory',
+                      description: 'Komputer mobilny dla leśników',
+                      specifications: 'Snapdragon Octa-Core 2.0 GHz, 4GB RAM, 64GB Flash, IP67'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -815,7 +845,18 @@ export default function ZebraEM45ProductPage() {
         </div>
 
         {/* Accessories Section */}
-        <AccessoriesSection productName="Honeywell CT30P" />
+        <AccessoriesSection 
+          productName="Honeywell CT30P"
+          onAddToInquiry={(accessory) => {
+            addToInquiry({
+              id: `ct30p-accessory-${accessory.id}`,
+              name: `${accessory.name} (do CT30P)`,
+              image: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
+              category: 'Akcesoria',
+              description: accessory.description
+            })
+          }}
+        />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">

@@ -24,6 +24,7 @@ import {
   AlertTriangle,
   ScanLine
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -737,7 +738,7 @@ ${formData.faultDescription}
 }
 
 // Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
+const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: (accessory: any) => void }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
 
   const accessories = [
@@ -789,7 +790,10 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
           {selectedAccessories.length > 0 && (
             <motion.button
               onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
+                selectedAccessories.forEach(accessoryId => {
+                  const accessory = accessories.find(a => a.id === accessoryId)
+                  if (accessory) onAddToInquiry(accessory)
+                })
                 setSelectedAccessories([])
               }}
               className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
@@ -855,14 +859,8 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 export default function BrotherMFCL5710DWProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const [inquiryCount, setInquiryCount] = useState(0)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -871,7 +869,7 @@ export default function BrotherMFCL5710DWProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -883,6 +881,7 @@ export default function BrotherMFCL5710DWProductPage() {
               </ul>
               
               <motion.button 
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -966,7 +965,18 @@ export default function BrotherMFCL5710DWProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'brother-mfc-l5710dw',
+                      name: 'Brother MFC-L5710DW',
+                      image: '/MFCL5710DW_1.png?v=2',
+                      category: 'Urządzenia wielofunkcyjne',
+                      description: 'Wielofunkcyjne urządzenie monochromatyczne z szybkim skanowaniem dwustronnym',
+                      specifications: '48 str/min, ADF 50 ark., Wi-Fi, ekran dotykowy 8.9cm, 512MB RAM'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -1014,7 +1024,20 @@ export default function BrotherMFCL5710DWProductPage() {
         </div>
 
         {/* Accessories Section */}
-        <AccessoriesSection productName="Brother MFC-L5710DW" onAddToInquiry={addToInquiry} />
+        <AccessoriesSection 
+          productName="Brother MFC-L5710DW" 
+          onAddToInquiry={(accessory) => {
+            addToInquiry({
+              id: `brother-mfc-accessory-${accessory.id}`,
+              name: accessory.name,
+              image: accessory.image,
+              category: 'Akcesoria',
+              description: accessory.description
+            })
+            setShowRipple(true)
+            setTimeout(() => setShowRipple(false), 1000)
+          }} 
+        />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useInquiry } from '@/components/InquiryContext'
 import {
   ZoomIn,
   Shield,
@@ -627,7 +628,7 @@ ${formData.faultDescription}
 }
 
 // Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
+const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: (accessory: any) => void }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
 
   const accessories = [
@@ -678,7 +679,12 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
           {selectedAccessories.length > 0 && (
             <motion.button
               onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
+                selectedAccessories.forEach((accessoryId) => {
+                  const accessory = accessories.find(a => a.id === accessoryId)
+                  if (accessory) {
+                    onAddToInquiry(accessory)
+                  }
+                })
                 setSelectedAccessories([])
               }}
               className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
@@ -735,14 +741,8 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 // Main Product Page Component
 export default function ZebraZQ521ProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
-  const [inquiryCount, setInquiryCount] = useState(0)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -751,7 +751,7 @@ export default function ZebraZQ521ProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -763,6 +763,7 @@ export default function ZebraZQ521ProductPage() {
               </ul>
               
               <motion.button 
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -846,7 +847,18 @@ export default function ZebraZQ521ProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'zebra-zq521',
+                      name: 'Zebra ZQ521',
+                      image: '/zq521_1.png',
+                      category: 'Drukarki mobilne',
+                      description: 'Drukarka mobilna 4-calowa z Link-OS',
+                      specifications: 'IP54, Bluetooth 4.1, Wi-Fi 802.11ac'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -892,6 +904,16 @@ export default function ZebraZQ521ProductPage() {
                     <span className="font-medium text-gray-900">TAKMA</span>
                     <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
                   </div>
+                  
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
+                    <span className="font-medium text-gray-900">ZSLP Stargard</span>
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
+                    <span className="font-medium text-gray-900">ZPUH Olsztyn</span>
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -899,7 +921,17 @@ export default function ZebraZQ521ProductPage() {
         </div>
 
         {/* Accessories Section */}
-        <AccessoriesSection productName="Zebra ZQ521" onAddToInquiry={addToInquiry} />
+        <AccessoriesSection 
+          productName="Zebra ZQ521" 
+          onAddToInquiry={(accessory) => {
+            addToInquiry({
+              id: `accessory-${accessory.id}`,
+              name: accessory.name,
+              image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==',
+              category: 'Akcesoria'
+            })
+          }} 
+        />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">

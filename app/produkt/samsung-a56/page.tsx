@@ -23,6 +23,7 @@ import {
   Truck,
   AlertTriangle
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -666,7 +667,8 @@ ${formData.faultDescription}
 }
 
 // Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
+const AccessoriesSection = ({ productName }: { productName: string }) => {
+  const { addToInquiry } = useInquiry()
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
 
   const accessories = [
@@ -704,6 +706,22 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
     )
   }
 
+  const handleAddSelectedToInquiry = () => {
+    selectedAccessories.forEach(accessoryId => {
+      const accessory = accessories.find(a => a.id === accessoryId)
+      if (accessory) {
+        addToInquiry({
+          id: `samsung-a56-accessory-${accessory.id}`,
+          name: accessory.name,
+          image: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
+          category: 'Akcesoria',
+          description: accessory.description
+        })
+      }
+    })
+    setSelectedAccessories([])
+  }
+
   return (
     <div className="mb-12">
       <motion.div
@@ -720,10 +738,7 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
           </div>
           {selectedAccessories.length > 0 && (
             <motion.button
-              onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
-                setSelectedAccessories([])
-              }}
+              onClick={handleAddSelectedToInquiry}
               className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -775,14 +790,8 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 export default function SamsungA56ProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const [inquiryCount, setInquiryCount] = useState(0)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -791,7 +800,7 @@ export default function SamsungA56ProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -802,7 +811,8 @@ export default function SamsungA56ProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
-              <motion.button 
+              <motion.button
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -886,7 +896,18 @@ export default function SamsungA56ProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'samsung-galaxy-a56',
+                      name: 'Samsung Galaxy A56',
+                      image: '/a56_1.png',
+                      category: 'Telefony',
+                      description: 'Smartfon konsumencki z segmentu średniej klasy',
+                      specifications: '6.7" Full HD+, Exynos 1480, 8GB RAM, IP67'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -948,7 +969,7 @@ export default function SamsungA56ProductPage() {
         </div>
 
         {/* Accessories Section */}
-        <AccessoriesSection productName="Samsung Galaxy A56" onAddToInquiry={addToInquiry} />
+        <AccessoriesSection productName="Samsung Galaxy A56" />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">

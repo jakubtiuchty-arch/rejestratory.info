@@ -26,6 +26,8 @@ import {
   Nfc
 } from 'lucide-react'
 
+import { useInquiry } from '@/components/InquiryContext' // ← DODANE
+
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
   const [isZoomed, setIsZoomed] = useState(false)
@@ -552,26 +554,11 @@ ${formData.faultDescription}
 
                 <div className="space-y-3">
                   {[
-                    { 
-                      text: "Przygotuj urządzenie", 
-                      detail: "Wykonaj kopię zapasową danych i wyloguj się z kont" 
-                    },
-                    { 
-                      text: "Starannie zapakuj", 
-                      detail: "Zabezpiecz urządzenie w oryginalnym pudełku lub w bezpiecznym opakowaniu" 
-                    },
-                    { 
-                      text: "Wydrukuj otrzymaną etykietę", 
-                      detail: "Otrzymasz etykietę kurierską na email - wydrukuj i przyklej do paczki" 
-                    },
-                    { 
-                      text: "Dołącz dokumenty", 
-                      detail: "Jeśli posiadasz fakturę lub dowód zakupu, dołącz kopię do przesyłki" 
-                    },
-                    { 
-                      text: "Oczekuj na kuriera", 
-                      detail: "Kurier odbierze paczkę we wskazanym miejscu - nie musisz jej nadawać" 
-                    }
+                    { text: "Przygotuj urządzenie", detail: "Wykonaj kopię zapasową danych i wyloguj się z kont" },
+                    { text: "Starannie zapakuj", detail: "Zabezpiecz urządzenie w oryginalnym pudełku lub w bezpiecznym opakowaniu" },
+                    { text: "Wydrukuj otrzymaną etykietę", detail: "Otrzymasz etykietę kurierską na email - wydrukuj i przyklej do paczki" },
+                    { text: "Dołącz dokumenty", detail: "Jeśli posiadasz fakturę lub dowód zakupu, dołącz kopię do przesyłki" },
+                    { text: "Oczekuj na kuriera", detail: "Kurier odbierze paczkę we wskazanym miejscu - nie musisz jej nadawać" }
                   ].map((item, index) => (
                     <motion.div
                       key={index}
@@ -632,30 +619,14 @@ ${formData.faultDescription}
 }
 
 // Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
+const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: (payload: any) => void }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
 
   const accessories = [
-    {
-      id: 'charger-network',
-      name: 'Ładowarka sieciowa',
-      price: 'Zapytaj o cenę'
-    },
-    {
-      id: 'charger-car',
-      name: 'Ładowarka samochodowa',
-      price: 'Zapytaj o cenę'
-    },
-    {
-      id: 'bag',
-      name: 'Torba na drukarkę',
-      price: 'Zapytaj o cenę'
-    },
-    {
-      id: 'paper',
-      name: 'Papier termiczny',
-      price: 'Zapytaj o cenę'
-    }
+    { id: 'charger-network', name: 'Ładowarka sieciowa', price: 'Zapytaj o cenę' },
+    { id: 'charger-car',     name: 'Ładowarka samochodowa', price: 'Zapytaj o cenę' },
+    { id: 'bag',             name: 'Torba na drukarkę',     price: 'Zapytaj o cenę' },
+    { id: 'paper',           name: 'Papier termiczny',      price: 'Zapytaj o cenę' }
   ]
 
   const toggleAccessory = (accessoryId: string) => {
@@ -676,14 +647,22 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
       >
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Akcesoria
-            </h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Akcesoria</h3>
           </div>
           {selectedAccessories.length > 0 && (
             <motion.button
               onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
+                selectedAccessories.forEach((accId) => {
+                  const acc = accessories.find(a => a.id === accId)!
+                  onAddToInquiry({
+                    id: `honeywell-rp4-${acc.id}`,
+                    name: `${productName} — ${acc.name}`,
+                    image: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
+                    category: 'Akcesoria',
+                    description: acc.name,
+                    specifications: acc.price
+                  })
+                })
                 setSelectedAccessories([])
               }}
               className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
@@ -740,14 +719,9 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 // Main Product Page Component
 export default function HoneywellRP4ProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
-  const [inquiryCount, setInquiryCount] = useState(0)
   const [showRipple, setShowRipple] = useState(false)
 
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
+  const { inquiryCount, addToInquiry, openCart } = useInquiry() // ← DODANE
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -756,7 +730,7 @@ export default function HoneywellRP4ProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -768,10 +742,9 @@ export default function HoneywellRP4ProductPage() {
               </ul>
               
               <motion.button 
+                onClick={openCart} // ← DODANE
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
-                animate={showRipple ? {
-                  scale: [1, 1.05, 1],
-                } : {}}
+                animate={showRipple ? { scale: [1, 1.05, 1] } : {}}
                 transition={{ duration: 0.3 }}
               >
                 <ShoppingCart className="h-4 w-4" />
@@ -851,7 +824,18 @@ export default function HoneywellRP4ProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'honeywell-rp4',               // ← ID produktu
+                      name: 'Honeywell RP4',
+                      image: '/rp4_1.png',
+                      category: 'Drukarki mobilne',
+                      description: 'Wytrzymała 4" drukarka mobilna z BT/Wi-Fi/NFC, IP54, 2 m drop',
+                      specifications: '203 dpi, do 125 mm/s, 4900 mAh, linered/linerless'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -882,7 +866,14 @@ export default function HoneywellRP4ProductPage() {
         </div>
 
         {/* Accessories Section */}
-        <AccessoriesSection productName="Honeywell RP4" onAddToInquiry={addToInquiry} />
+        <AccessoriesSection
+          productName="Honeywell RP4"
+          onAddToInquiry={(payload) => {
+            addToInquiry(payload)
+            setShowRipple(true)
+            setTimeout(() => setShowRipple(false), 800)
+          }}
+        />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">
@@ -909,8 +900,6 @@ export default function HoneywellRP4ProductPage() {
         {/* Tab Content */}
         <div className="mb-16">
           <AnimatePresence mode="wait">
-
-
             {activeTab === 'specs' && (
               <motion.div
                 key="specs"
@@ -921,8 +910,6 @@ export default function HoneywellRP4ProductPage() {
                 <Specifications />
               </motion.div>
             )}
-
-
 
             {activeTab === 'downloads' && (
               <motion.div
@@ -966,23 +953,23 @@ export default function HoneywellRP4ProductPage() {
       {/* Courier Service Section */}
       <CourierServiceSection productName="Honeywell RP4" />
 
-{/* Footer */}
-<footer className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50/20 py-12">
-  <div className="container mx-auto px-4">
-    <div className="flex flex-col items-center gap-6">
-      <div className="flex items-center justify-center gap-10">
-        <img src="/takma_logo_footer.png" alt="TAKMA" className="h-14 w-auto" />
-        <span className="text-gray-700 text-lg">takma@takma.com.pl</span>
-        <span className="text-gray-700 text-lg">607 819 688</span>
-        <span className="text-gray-700 text-lg">51-128 Wrocław, ul. Poświęcka 1a</span>
-      </div>
-      <div className="w-full max-w-4xl border-t border-gray-300"></div>
-      <div className="text-gray-500 text-sm">
-        © 2024 Rejestratory.info. Wszystkie prawa zastrzeżone.
-      </div>
+      {/* Footer */}
+      <footer className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50/20 py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col items-center gap-6">
+            <div className="flex items-center justify-center gap-10">
+              <img src="/takma_logo_footer.png" alt="TAKMA" className="h-14 w-auto" />
+              <span className="text-gray-700 text-lg">takma@takma.com.pl</span>
+              <span className="text-gray-700 text-lg">607 819 688</span>
+              <span className="text-gray-700 text-lg">51-128 Wrocław, ul. Poświęcka 1a</span>
+            </div>
+            <div className="w-full max-w-4xl border-t border-gray-300"></div>
+            <div className="text-gray-500 text-sm">
+              © 2024 Rejestratory.info. Wszystkie prawa zastrzeżone.
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
-  </div>
-</footer>
-</div>
   )
 }

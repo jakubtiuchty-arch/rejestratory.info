@@ -29,6 +29,7 @@ import {
   Speaker,
   Zap
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -734,140 +735,12 @@ ${formData.faultDescription}
   )
 }
 
-// Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
-
-  const accessories = [
-    {
-      id: 'adapter',
-      name: 'Kabel HDMI 2.0',
-      description: 'Wysokiej jakości kabel HDMI 2m',
-      image: '/api/placeholder/120/120',
-      price: '49 zł'
-    },
-    {
-      id: 'mouse',
-      name: 'Mysz bezprzewodowa Dell',
-      description: 'Ergonomiczna mysz Bluetooth',
-      image: '/api/placeholder/120/120',
-      price: '89 zł'
-    },
-    {
-      id: 'webcam',
-      name: 'Klawiatura Dell Pro',
-      description: 'Bezprzewodowa klawiatura biurowa',
-      image: '/api/placeholder/120/120',
-      price: '149 zł'
-    },
-    {
-      id: 'mount',
-      name: 'Uchwyt ścienny VESA',
-      description: 'Regulowany uchwyt montażowy',
-      image: '/api/placeholder/120/120',
-      price: '129 zł'
-    }
-  ]
-
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
-  }
-
-  return (
-    <div className="mb-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Akcesoria
-            </h3>
-          </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
-                setSelectedAccessories([])
-              }}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {accessories.map((accessory) => {
-            const isSelected = selectedAccessories.includes(accessory.id)
-            return (
-              <motion.div
-                key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
-                  isSelected 
-                    ? 'border-emerald-500 bg-emerald-50' 
-                    : 'border-gray-200 hover:border-emerald-300'
-                }`}
-                onClick={() => toggleAccessory(accessory.id)}
-              >
-                <div className="p-4 flex flex-col h-full">
-                  <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className="w-full h-24 object-cover rounded-lg"
-                    />
-                    {isSelected && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
-                  <div className="flex items-center justify-end mt-auto">
-                    <button
-                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                        isSelected 
-                          ? 'bg-emerald-700 text-white' 
-                          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                      }`}
-                    >
-                      {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
-      </motion.div>
-    </div>
-  )
-}
-
 // Main Product Page Component
 export default function DellPro24PlusProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const [inquiryCount, setInquiryCount] = useState(0)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -876,7 +749,7 @@ export default function DellPro24PlusProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -888,6 +761,7 @@ export default function DellPro24PlusProductPage() {
               </ul>
               
               <motion.button 
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -971,7 +845,18 @@ export default function DellPro24PlusProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'dell-pro-24-plus-p2424heb',
+                      name: 'Dell Pro 24 Plus P2424HEB',
+                      image: '/P2424HEB_1.png',
+                      category: 'Monitory',
+                      description: 'Monitor biznesowy 23,8" z kamerą 4K i USB-C',
+                      specifications: 'Full HD IPS, kamera 4K, USB-C 90W, 99% sRGB'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -1031,9 +916,6 @@ export default function DellPro24PlusProductPage() {
             </motion.div>
           </div>
         </div>
-
-        {/* Accessories Section */}
-        <AccessoriesSection productName="Dell Pro 24 Plus P2424HEB" onAddToInquiry={addToInquiry} />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">

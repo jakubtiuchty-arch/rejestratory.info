@@ -25,6 +25,7 @@ import {
   Palette,
   Nfc
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -714,37 +715,32 @@ ${formData.faultDescription}
 }
 
 // Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
+const AccessoriesSection = ({ productName }: { productName: string }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
+  
+  // ✅ HOOK Z KONTEKSTU ZAPYTAŃ
+  const { addToInquiry } = useInquiry()
 
   const accessories = [
     {
       id: 'wax-ribbon',
       name: 'Kaseta z taśmą woskową',
-      description: 'Taśma woskowa do druku na etykietach papierowych',
-      image: '/zd421c_wax_ribbon.png',
-      price: 'Zapytaj o cenę'
+      description: 'Taśma woskowa do druku na etykietach papierowych'
     },
     {
       id: 'wax-resin-ribbon',
       name: 'Kaseta z taśmą woskowo-żywiczną',
-      description: 'Taśma woskowo-żywiczna do druku na etykietach syntetycznych',
-      image: '/zd421c_wax_resin_ribbon.png',
-      price: 'Zapytaj o cenę'
+      description: 'Taśma woskowo-żywiczna do druku na etykietach syntetycznych'
     },
     {
       id: 'resin-ribbon',
       name: 'Kaseta z taśmą żywiczną',
-      description: 'Taśma żywiczna do druku na etykietach foliowych',
-      image: '/zd421c_resin_ribbon.png',
-      price: 'Zapytaj o cenę'
+      description: 'Taśma żywiczna do druku na etykietach foliowych'
     },
     {
       id: 'labels-32x20',
       name: 'Etykiety foliowe 32x20',
-      description: 'Etykiety poliestrowe, rolka 1000 szt.',
-      image: '/zd421c_labels_32x20.png',
-      price: 'Zapytaj o cenę'
+      description: 'Etykiety poliestrowe, rolka 1000 szt.'
     }
   ]
 
@@ -754,6 +750,23 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
         ? prev.filter(id => id !== accessoryId)
         : [...prev, accessoryId]
     )
+  }
+
+  // ✅ FUNKCJA DODAWANIA WYBRANYCH AKCESORIÓW Z DATA URL
+  const handleAddSelectedAccessories = () => {
+    selectedAccessories.forEach(accessoryId => {
+      const accessory = accessories.find(a => a.id === accessoryId)
+      if (accessory) {
+        addToInquiry({
+          id: `zd421c-accessory-${accessory.id}`,
+          name: `${productName} - ${accessory.name}`,
+          image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' fill='%23f3f4f6'/%3E%3C/svg%3E",
+          category: 'Materiały eksploatacyjne',
+          description: accessory.description
+        })
+      }
+    })
+    setSelectedAccessories([])
   }
 
   return (
@@ -772,10 +785,7 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
           </div>
           {selectedAccessories.length > 0 && (
             <motion.button
-              onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
-                setSelectedAccessories([])
-              }}
+              onClick={handleAddSelectedAccessories}
               className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -801,11 +811,6 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
               >
                 <div className="p-4 flex flex-col h-full">
                   <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className="w-full h-40 object-contain rounded-lg"
-                    />
                     {isSelected && (
                       <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
                         <Check className="w-4 h-4 text-white" />
@@ -839,14 +844,10 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 export default function ZebraZD421cProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const [inquiryCount, setInquiryCount] = useState(0)
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
+  
+  // ✅ HOOK Z KONTEKSTU ZAPYTAŃ
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -855,7 +856,7 @@ export default function ZebraZD421cProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -866,7 +867,9 @@ export default function ZebraZD421cProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
+              {/* ✅ PRZYCISK ZAPYTANIE Z onClick={openCart} */}
               <motion.button 
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -948,9 +951,22 @@ export default function ZebraZD421cProductPage() {
               <p className="text-gray-600 mb-4 text-justify">
                 Zebra ZD421c to kompaktowa drukarka etykiet termotransferowych, zaprojektowana z myślą o zastosowaniach biurowych i przemysłowych. Urządzenie oferuje łatwą obsługę dzięki systemowi OpenACCESS, który umożliwia szybką wymianę materiałów eksploatacyjnych. Wyposażona w nowoczesny system operacyjny Link-OS, drukarka zapewnia elastyczne możliwości integracji z infrastrukturą IT. Obsługa standardowych języków programowania ZPL II i EPL2 gwarantuje kompatybilność z istniejącymi systemami. Opcjonalna łączność bezprzewodowa Wi-Fi i Bluetooth oraz aplikacja mobilna do konfiguracji zwiększają mobilność i wygodę użytkowania w różnych środowiskach pracy.
               </p>
+              
+              {/* ✅ PRZYCISK DODAJ DO ZAPYTANIA Z OBIEKTEM PRODUKTU */}
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'zebra-zd421c',
+                      name: 'Zebra ZD421c',
+                      image: '/zd421c_1.png?v=2',
+                      category: 'Drukarki etykiet',
+                      description: 'Kompaktowa drukarka etykiet termotransferowa',
+                      specifications: '203 dpi, 152 mm/s, USB/Wi-Fi/Bluetooth'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -999,7 +1015,7 @@ export default function ZebraZD421cProductPage() {
         </div>
 
         {/* Accessories Section */}
-        <AccessoriesSection productName="Zebra ZD421c" onAddToInquiry={addToInquiry} />
+        <AccessoriesSection productName="Zebra ZD421c" />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">

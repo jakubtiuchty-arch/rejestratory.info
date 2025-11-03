@@ -32,6 +32,7 @@ import {
   Layout,
   Maximize2
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -293,7 +294,6 @@ const CourierServiceSection = ({ productName }: { productName: string }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Create email body
     const emailBody = `
 Zamówienie kuriera - ${productName}
 
@@ -315,13 +315,9 @@ Opis usterki:
 ${formData.faultDescription}
     `.trim()
 
-    // Create mailto link
     const mailtoLink = `mailto:handlowy@takma.com.pl?subject=Zamówienie kuriera - ${productName}&body=${encodeURIComponent(emailBody)}`
-    
-    // Open email client
     window.location.href = mailtoLink
     
-    // Reset form and close modal
     setFormData({
       firstName: '',
       lastName: '',
@@ -336,7 +332,6 @@ ${formData.faultDescription}
     })
     setIsModalOpen(false)
     
-    // Show confirmation lightbox
     setTimeout(() => {
       setIsConfirmationOpen(true)
     }, 300)
@@ -432,7 +427,6 @@ ${formData.faultDescription}
                 </div>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Personal Data */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Dane kontaktowe</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -478,7 +472,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Address */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Adres odbioru</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -541,7 +534,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Device Info */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Informacje o urządzeniu</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -589,7 +581,6 @@ ${formData.faultDescription}
                     </div>
                   </div>
 
-                  {/* Submit Button */}
                   <div className="border-t border-gray-200 pt-6">
                     <div className="flex justify-end space-x-3">
                       <button
@@ -746,14 +737,8 @@ ${formData.faultDescription}
 export default function HPSeries5QHDUSBCProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const [inquiryCount, setInquiryCount] = useState(0)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -762,7 +747,7 @@ export default function HPSeries5QHDUSBCProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -773,45 +758,13 @@ export default function HPSeries5QHDUSBCProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
-              <motion.button 
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
-                animate={showRipple ? {
-                  scale: [1, 1.05, 1],
-                } : {}}
-                transition={{ duration: 0.3 }}
+              <button 
+                onClick={openCart}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
               >
                 <ShoppingCart className="h-4 w-4" />
                 Zapytanie ({inquiryCount})
-                
-                {/* Ripple Effect */}
-                <AnimatePresence>
-                  {showRipple && (
-                    <>
-                      <motion.span
-                        className="absolute inset-0 bg-white rounded-lg"
-                        initial={{ scale: 0, opacity: 0.6 }}
-                        animate={{ scale: 2.5, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                      />
-                      <motion.span
-                        className="absolute inset-0 bg-white rounded-lg"
-                        initial={{ scale: 0, opacity: 0.4 }}
-                        animate={{ scale: 3, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-                      />
-                      <motion.span
-                        className="absolute inset-0 bg-white rounded-lg"
-                        initial={{ scale: 0, opacity: 0.3 }}
-                        animate={{ scale: 3.5, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                      />
-                    </>
-                  )}
-                </AnimatePresence>
-              </motion.button>
+              </button>
             </div>
           </nav>
         </div>
@@ -857,7 +810,18 @@ export default function HPSeries5QHDUSBCProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'hp-seria-5-qhd-usb-c',
+                      name: 'HP Seria 5 QHD USB-C',
+                      image: '/527pu_1.png',
+                      category: 'Monitory',
+                      description: 'Profesjonalny monitor 27" QHD 100Hz z USB-C',
+                      specifications: '27" QHD (2560x1440), IPS, 100Hz, USB-C, Ethernet'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -869,7 +833,6 @@ export default function HPSeries5QHDUSBCProductPage() {
 
               {/* Monitor QHD - pełna szerokość */}
               <div className="mb-6">
-                {/* Monitor QHD */}
                 <div className="bg-gradient-to-br from-purple-600 to-indigo-600 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
                   <div className="flex items-start space-x-3">
                     <Maximize2 className="w-6 h-6 text-white flex-shrink-0 mt-0.5" />
@@ -922,7 +885,6 @@ export default function HPSeries5QHDUSBCProductPage() {
                 }`}
                 onClick={() => {
                   if (tab.isScroll) {
-                    // Scroll to service section
                     const serviceSection = document.getElementById('service-section')
                     if (serviceSection) {
                       serviceSection.scrollIntoView({ behavior: 'smooth' })
@@ -941,8 +903,6 @@ export default function HPSeries5QHDUSBCProductPage() {
         {/* Tab Content */}
         <div className="mb-16">
           <AnimatePresence mode="wait">
-
-
             {activeTab === 'specs' && (
               <motion.div
                 key="specs"
@@ -953,8 +913,6 @@ export default function HPSeries5QHDUSBCProductPage() {
                 <Specifications />
               </motion.div>
             )}
-
-
 
             {activeTab === 'downloads' && (
               <motion.div

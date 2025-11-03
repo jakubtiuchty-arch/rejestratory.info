@@ -28,6 +28,7 @@ import {
   HardDrive,
   Cpu
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -726,14 +727,10 @@ ${formData.faultDescription}
 export default function EpsonDS730nProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const [inquiryCount, setInquiryCount] = useState(0)
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
+  
+  // ✅ HOOK Z KONTEKSTU ZAPYTAŃ
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -742,7 +739,7 @@ export default function EpsonDS730nProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -753,7 +750,9 @@ export default function EpsonDS730nProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
+              {/* ✅ PRZYCISK ZAPYTANIE Z onClick={openCart} */}
               <motion.button 
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -836,9 +835,21 @@ export default function EpsonDS730nProductPage() {
                 Epson DS-730n to wydajny skaner dokumentowy z automatycznym podajnikiem na 100 arkuszy. Oferuje szybkie skanowanie dwustronne z prędkością do 40 stron na minutę i rozdzielczością 600 DPI. Dzięki wbudowanemu interfejsowi sieciowemu i Wi-Fi można udostępnić urządzenie wielu użytkownikom w biurze lub nadleśnictwie. Zaawansowane funkcje obejmują automatyczne wykrywanie dokumentów, usuwanie pustych stron oraz rozpoznawanie kodów kreskowych. Idealny do digitalizacji dokumentów leśnych i biurowych.
               </p>
               
+              {/* ✅ PRZYCISK DODAJ DO ZAPYTANIA Z OBIEKTEM PRODUKTU */}
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'epson-ds-730n',
+                      name: 'Epson DS-730n',
+                      image: '/ds730_1.png',
+                      category: 'Skanery',
+                      description: 'Wydajny skaner dokumentowy z automatycznym podajnikiem na 100 arkuszy',
+                      specifications: '40 str/min, 600 DPI, Wi-Fi, ADF 100 arkuszy'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

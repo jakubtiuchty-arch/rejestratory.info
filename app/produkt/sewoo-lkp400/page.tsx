@@ -25,6 +25,7 @@ import {
   Palette,
   Nfc
 } from 'lucide-react'
+import { useInquiry } from '@/components/InquiryContext'
 
 // Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
@@ -618,8 +619,11 @@ ${formData.faultDescription}
 }
 
 // Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
+const AccessoriesSection = ({ productName }: { productName: string }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
+  
+  // ✅ HOOK Z KONTEKSTU ZAPYTAŃ
+  const { addToInquiry } = useInquiry()
 
   const accessories = [
     {
@@ -652,6 +656,24 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
     )
   }
 
+  // ✅ FUNKCJA DODAWANIA WYBRANYCH AKCESORIÓW
+  const handleAddSelectedAccessories = () => {
+    selectedAccessories.forEach(accessoryId => {
+      const accessory = accessories.find(a => a.id === accessoryId)
+      if (accessory) {
+        addToInquiry({
+          id: `lkp400-accessory-${accessory.id}`,
+          name: `${productName} - ${accessory.name}`,
+          image: '/api/placeholder/120/120',
+          category: 'Akcesoria',
+          description: accessory.name
+        })
+      }
+    })
+    // Wyczyść zaznaczone akcesoria po dodaniu
+    setSelectedAccessories([])
+  }
+
   return (
     <div className="mb-12">
       <motion.div
@@ -668,10 +690,7 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
           </div>
           {selectedAccessories.length > 0 && (
             <motion.button
-              onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
-                setSelectedAccessories([])
-              }}
+              onClick={handleAddSelectedAccessories}
               className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -726,14 +745,10 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 // Main Product Page Component
 export default function SewooLKP400ProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
-  const [inquiryCount, setInquiryCount] = useState(0)
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
+  
+  // ✅ HOOK Z KONTEKSTU ZAPYTAŃ
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -742,7 +757,7 @@ export default function SewooLKP400ProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -753,7 +768,9 @@ export default function SewooLKP400ProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
+              {/* ✅ PRZYCISK ZAPYTANIE Z onClick={openCart} */}
               <motion.button 
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -835,9 +852,22 @@ export default function SewooLKP400ProductPage() {
               <p className="text-gray-600 mb-4 text-justify">
                 Sewoo LK-P400 to wydajna drukarka mobilna 4-calowa zaprojektowana dla użytkowników wymagających szybkiego i niezawodnego druku w trudnych warunkach terenowych. Urządzenie wyróżnia się prędkością druku do 127 mm/s oraz rozdzielczością 203 DPI, zapewniając czytelne wydruki etykiet i paragonów. Drukarka obsługuje szeroki zakres formatów papieru od 50 mm do 112 mm, w tym nośniki linerless. Dzięki kompleksowej łączności bezprzewodowej obejmującej Wi-Fi (802.11 a/b/g/n/ac), Bluetooth 4.2 z BLE oraz NFC Tag, urządzenie łatwo integruje się z mobilnymi systemami leśnymi i inwentaryzacyjnymi, zapewniając elastyczność w codziennej pracy.
               </p>
+              
+              {/* ✅ PRZYCISK DODAJ DO ZAPYTANIA Z OBIEKTEM PRODUKTU */}
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'sewoo-lk-p400',
+                      name: 'Sewoo LK-P400',
+                      image: '/lkp400_1.png',
+                      category: 'Drukarki',
+                      description: 'Wydajna drukarka mobilna 4-calowa',
+                      specifications: '127 mm/s, 203 DPI, Wi-Fi, Bluetooth, NFC'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -868,7 +898,7 @@ export default function SewooLKP400ProductPage() {
         </div>
 
         {/* Accessories Section */}
-        <AccessoriesSection productName="Sewoo LK-P400" onAddToInquiry={addToInquiry} />
+        <AccessoriesSection productName="Sewoo LK-P400" />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">

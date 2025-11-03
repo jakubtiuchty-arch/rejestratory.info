@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useInquiry } from '@/components/InquiryContext'  // ← DODANE: Import Context
+import { useInquiry } from '@/components/InquiryContext'
 import {
   ZoomIn,
   Shield,
@@ -26,7 +26,7 @@ import {
   Laptop
 } from 'lucide-react'
 
-// Image Gallery Component - BEZ ZMIAN
+// Image Gallery Component
 const ImageGallery = ({ images }: { images: string[] }) => {
   const [currentImage, setCurrentImage] = useState(1)
   const [isZoomed, setIsZoomed] = useState(false)
@@ -107,7 +107,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
 }
 
 
-// Specifications Component - BEZ ZMIAN
+// Specifications Component
 const Specifications = () => {
   const specs = [
     { category: "Wyświetlacz", items: [
@@ -165,7 +165,7 @@ const Specifications = () => {
   )
 }
 
-// Service Contract Lightbox Component - BEZ ZMIAN
+// Service Contract Lightbox Component
 const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
   return (
     <AnimatePresence>
@@ -248,7 +248,7 @@ const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose
   )
 }
 
-// Courier Service Section Component - BEZ ZMIAN (za długi, ale nie ruszamy)
+// Courier Service Section Component
 const CourierServiceSection = ({ productName }: { productName: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
@@ -710,13 +710,13 @@ ${formData.faultDescription}
   )
 }
 
-// ← ZMIENIONE: Accessories Section - teraz przyjmuje funkcję która dodaje do inquiry
+// Accessories Section
 const AccessoriesSection = ({ 
   productName, 
   onAddToInquiry 
 }: { 
   productName: string, 
-  onAddToInquiry: (accessory: any) => void  // ← ZMIENIONE: funkcja przyjmuje obiekt akcesoria
+  onAddToInquiry: (accessory: any) => void
 }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
 
@@ -776,7 +776,6 @@ const AccessoriesSection = ({
           {selectedAccessories.length > 0 && (
             <motion.button
               onClick={() => {
-                // ← ZMIENIONE: Dodajemy każde akcesorium z pełnymi danymi
                 selectedAccessories.forEach((accessoryId) => {
                   const accessory = accessories.find(a => a.id === accessoryId)
                   if (accessory) {
@@ -836,8 +835,6 @@ const AccessoriesSection = ({
 export default function DellPro16PlusProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  
-  // ← ZMIENIONE: Używamy Context zamiast lokalnego state
   const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
 
@@ -848,7 +845,7 @@ export default function DellPro16PlusProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -859,7 +856,6 @@ export default function DellPro16PlusProductPage() {
                 <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
               </ul>
               
-              {/* ← ZMIENIONE: Dodano onClick={openCart} */}
               <motion.button 
                 onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
@@ -944,7 +940,6 @@ export default function DellPro16PlusProductPage() {
                 Dell Pro 16 Plus to zaawansowany laptop biznesowy z dużym 16-calowym wyświetlaczem IPS FHD+, idealny dla profesjonalistów wymagających maksymalnej przestrzeni roboczej. Procesor Intel Core Ultra 5 vPro z 12 rdzeniami i NPU 12 TOPS zapewnia wyjątkową wydajność w pracy z dokumentami, analizie danych i wielozadaniowości. Wyświetlacz z powłoką przeciwodblaskową gwarantuje komfort podczas długich sesji pracy. Bateria 55 Wh z ExpressCharge umożliwia całodzienną pracę mobilną. Wbudowany czytnik kart smart Control Vault 3+ oraz rozpoznawanie twarzy zapewniają najwyższy poziom bezpieczeństwa danych. Objęty 5-letnią gwarancją Dell ProSupport z serwisem na miejscu.
               </p>
               
-              {/* ← ZMIENIONE: Button dodaje pełny obiekt produktu */}
               <div className="flex space-x-4 mb-6">
                 <motion.button
                   onClick={() => {
@@ -1033,7 +1028,6 @@ export default function DellPro16PlusProductPage() {
           </div>
         </div>
 
-        {/* ← ZMIENIONE: Accessories Section teraz przyjmuje funkcję która dodaje akcesoria */}
         <AccessoriesSection 
           productName="Dell Pro 16 Plus" 
           onAddToInquiry={(accessory) => {
@@ -1142,24 +1136,20 @@ export default function DellPro16PlusProductPage() {
                   </ul>
                 </div>
                 
-                {/* ← ZMIENIONE: Button dodaje wszystkie 3 produkty z zestawu */}
                 <motion.button
                   onClick={() => {
-                    // Laptop
                     addToInquiry({
                       id: 'dell-pro-16-plus',
                       name: 'Dell Pro 16 Plus',
                       image: '/dell_16_1.png',
                       category: 'Laptopy'
                     })
-                    // Monitor
                     addToInquiry({
                       id: 'dell-pro-27-plus-p2725he',
                       name: 'Dell Pro 27 Plus P2725HE',
                       image: '/dell_monitor_1.png',
                       category: 'Monitory'
                     })
-                    // Keyboard + Mouse
                     addToInquiry({
                       id: 'dell-keyboard-mouse',
                       name: 'Klawiatura + Mysz Dell',

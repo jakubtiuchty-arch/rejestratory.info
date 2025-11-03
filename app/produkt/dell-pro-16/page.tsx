@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useInquiry } from '@/components/InquiryContext'
 import {
   ZoomIn,
   Shield,
@@ -701,7 +702,7 @@ ${formData.faultDescription}
 }
 
 // Accessories Section Component - ZMODYFIKOWANY: usunięte zdjęcia, nowe akcesoria
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
+const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: (accessory: any) => void }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
 
   const accessories = [
@@ -731,12 +732,21 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
     }
   ]
 
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
+  const toggleAccessory = (accessory: any) => {
+    const isSelected = selectedAccessories.includes(accessory.id)
+    
+    if (isSelected) {
+      setSelectedAccessories(prev => prev.filter(id => id !== accessory.id))
+    } else {
+      setSelectedAccessories(prev => [...prev, accessory.id])
+      onAddToInquiry({
+        id: `accessory-${accessory.id}`,
+        name: accessory.name,
+        image: '/api/placeholder/120/120',
+        category: 'Akcesoria',
+        description: accessory.description
+      })
+    }
   }
 
   return (
@@ -753,20 +763,6 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
               Akcesoria
             </h3>
           </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
-                setSelectedAccessories([])
-              }}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -780,7 +776,7 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
                     ? 'border-emerald-500 bg-emerald-50' 
                     : 'border-gray-200 hover:border-emerald-300'
                 }`}
-                onClick={() => toggleAccessory(accessory.id)}
+                onClick={() => toggleAccessory(accessory)}
               >
                 <div className="flex flex-col h-full">
                   {isSelected && (
@@ -814,7 +810,7 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 }
 
 // Bundle Section Component - NOWA SEKCJA
-const BundleSection = ({ onAddToInquiry }: { onAddToInquiry: () => void }) => {
+const BundleSection = ({ onAddToInquiry }: { onAddToInquiry: (product: any) => void }) => {
   return (
     <div className="mb-12">
       <motion.div
@@ -912,9 +908,27 @@ const BundleSection = ({ onAddToInquiry }: { onAddToInquiry: () => void }) => {
             </div>
             <motion.button
               onClick={() => {
-                onAddToInquiry() // laptop
-                onAddToInquiry() // monitor
-                onAddToInquiry() // keyboard + mouse
+                onAddToInquiry({
+                  id: 'dell-pro-16',
+                  name: 'Dell Pro 16',
+                  image: '/dell_16_bs_1.png',
+                  category: 'Laptopy',
+                  description: 'Laptop biznesowy z Intel Core 3 100U'
+                })
+                onAddToInquiry({
+                  id: 'dell-pro-27-plus-p2725he',
+                  name: 'Dell Pro 27 Plus P2725HE',
+                  image: '/dell_monitor_1.png',
+                  category: 'Monitory',
+                  description: 'Monitor 27" QHD z USB-C'
+                })
+                onAddToInquiry({
+                  id: 'dell-keyboard-mouse',
+                  name: 'Klawiatura + Mysz Dell',
+                  image: '/dell_keyboard.png',
+                  category: 'Akcesoria',
+                  description: 'Bezprzewodowy zestaw'
+                })
               }}
               className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2 shadow-lg"
               whileHover={{ scale: 1.05 }}
@@ -934,14 +948,8 @@ const BundleSection = ({ onAddToInquiry }: { onAddToInquiry: () => void }) => {
 export default function DellPro16ProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const [inquiryCount, setInquiryCount] = useState(0)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -950,7 +958,7 @@ export default function DellPro16ProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -962,6 +970,7 @@ export default function DellPro16ProductPage() {
               </ul>
               
               <motion.button 
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -1045,7 +1054,18 @@ export default function DellPro16ProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'dell-pro-16',
+                      name: 'Dell Pro 16',
+                      image: '/dell_16_bs_1.png',
+                      category: 'Laptopy',
+                      description: 'Laptop biznesowy z Intel Core 3 100U',
+                      specifications: 'Intel Core 3 100U, 8GB RAM, 256GB SSD, Ubuntu Linux'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

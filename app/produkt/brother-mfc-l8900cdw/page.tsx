@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useInquiry } from '@/components/InquiryContext'
 import {
   ZoomIn,
   Shield,
@@ -732,7 +733,7 @@ ${formData.faultDescription}
 }
 
 // Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: () => void }) => {
+const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: (accessory: any) => void }) => {
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
 
   const accessories = [
@@ -791,7 +792,12 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
           {selectedAccessories.length > 0 && (
             <motion.button
               onClick={() => {
-                selectedAccessories.forEach(() => onAddToInquiry())
+                selectedAccessories.forEach((accessoryId) => {
+                  const accessory = accessories.find(a => a.id === accessoryId)
+                  if (accessory) {
+                    onAddToInquiry(accessory)
+                  }
+                })
                 setSelectedAccessories([])
               }}
               className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
@@ -857,14 +863,8 @@ const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: stri
 export default function BrotherMFCL8900CDWProductPage() {
   const [activeTab, setActiveTab] = useState('specs')
   const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const [inquiryCount, setInquiryCount] = useState(0)
+  const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
-
-  const addToInquiry = () => {
-    setInquiryCount(prev => prev + 1)
-    setShowRipple(true)
-    setTimeout(() => setShowRipple(false), 1000)
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -873,7 +873,7 @@ export default function BrotherMFCL8900CDWProductPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
@@ -885,6 +885,7 @@ export default function BrotherMFCL8900CDWProductPage() {
               </ul>
               
               <motion.button 
+                onClick={openCart}
                 className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 relative overflow-hidden"
                 animate={showRipple ? {
                   scale: [1, 1.05, 1],
@@ -968,7 +969,18 @@ export default function BrotherMFCL8900CDWProductPage() {
               </p>
               <div className="flex space-x-4 mb-6">
                 <motion.button
-                  onClick={addToInquiry}
+                  onClick={() => {
+                    addToInquiry({
+                      id: 'brother-mfc-l8900cdw',
+                      name: 'Brother MFC-L8900CDW',
+                      image: '/MFCL8900CDW_1.png',
+                      category: 'Urządzenia wielofunkcyjne',
+                      description: 'Kolorowe urządzenie laserowe z NFC',
+                      specifications: 'Prędkość druku: 31 str/min kolor/mono, ADF 50 ark., Druk/Kopiowanie/Skanowanie/Faks, NFC, Wi-Fi'
+                    })
+                    setShowRipple(true)
+                    setTimeout(() => setShowRipple(false), 1000)
+                  }}
                   className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -1016,7 +1028,18 @@ export default function BrotherMFCL8900CDWProductPage() {
         </div>
 
         {/* Accessories Section */}
-        <AccessoriesSection productName="Brother MFC-L8900CDW" onAddToInquiry={addToInquiry} />
+        <AccessoriesSection 
+          productName="Brother MFC-L8900CDW" 
+          onAddToInquiry={(accessory) => {
+            addToInquiry({
+              id: `accessory-${accessory.id}`,
+              name: accessory.name,
+              image: accessory.image,
+              category: 'Akcesoria - Brother MFC-L8900CDW',
+              description: accessory.description
+            })
+          }} 
+        />
 
         {/* Tabs Navigation */}
         <div className="border-b border-gray-200 mb-8">
