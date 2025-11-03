@@ -89,7 +89,18 @@ const allProducts = [
   
   // Urządzenia fiskalne
   { name: "Posnet Pospay 2", category: "Urządzenie fiskalne", url: "/produkt/posnet-pospay-2", keywords: ["posnet", "pospay", "2", "kasa", "fiskalna", "terminal"] },
-  { name: "Posnet Temo Online", category: "Urządzenie fiskalne", url: "/produkt/posnet-temo-online", keywords: ["posnet", "temo", "online", "kasa", "fiskalna", "drukarka"] }
+  { name: "Posnet Temo Online", category: "Urządzenie fiskalne", url: "/produkt/posnet-temo-online", keywords: ["posnet", "temo", "online", "kasa", "fiskalna", "drukarka"] },
+  
+  // Akcesoria komputerowe
+  { name: "Torba na laptop", category: "Akcesoria komputerowe", url: "/produkt/torba-na-laptopa-15", keywords: ["torba", "laptop", "15", "plecak", "futerał", "pokrowiec"] },
+  { name: "Podkładka pod mysz", category: "Akcesoria komputerowe", url: "/produkt/podkladka-pod-mysz", keywords: ["podkładka", "mysz", "myszka", "ergonomiczna", "nadgarstek"] },
+  { name: "Podnóżek biurowy", category: "Akcesoria komputerowe", url: "/produkt/podnozek-biurowy", keywords: ["podnóżek", "biurowy", "ergonomia", "regulowany", "stopy"] },
+  { name: "Samsung SSD T9 1TB", category: "Akcesoria komputerowe", url: "/produkt/samsung-ssd-t9", keywords: ["samsung", "ssd", "t9", "1tb", "dysk", "zewnętrzny", "usb"] },
+  { name: "Samsung SSD T7 3.2TB", category: "Akcesoria komputerowe", url: "/produkt/samsung-ssd-t7", keywords: ["samsung", "ssd", "t7", "3tb", "dysk", "zewnętrzny", "usb"] },
+  { name: "Microsoft 365 Business Standard", category: "Akcesoria komputerowe", url: "/produkt/ms-365", keywords: ["microsoft", "365", "office", "licencja", "oprogramowanie", "business"] },
+  { name: "Klawiatura i mysz bezprzewodowa Dell KM5221", category: "Akcesoria komputerowe", url: "/produkt/dell-km5221", keywords: ["dell", "km5221", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] },
+  { name: "Klawiatura i mysz bezprzewodowa Dell KM7321", category: "Akcesoria komputerowe", url: "/produkt/dell-km7321", keywords: ["dell", "km7321", "klawiatura", "mysz", "bezprzewodowa", "zestaw", "premium"] },
+  { name: "Klawiatura i mysz bezprzewodowa HP 655", category: "Akcesoria komputerowe", url: "/produkt/hp-655", keywords: ["hp", "655", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] }
 ]
 
 interface SearchAutocompleteProps {

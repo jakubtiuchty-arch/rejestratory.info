@@ -268,7 +268,7 @@ export default function HomePage() {
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="/las-video_new.mov" type="video/mp4" />
+            <source src="/las_video.mp4" type="video/mp4" />
           </video>
         </div>
         
