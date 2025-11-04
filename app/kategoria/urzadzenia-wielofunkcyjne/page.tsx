@@ -36,7 +36,7 @@ const products = [
     specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 31 ppm",
     price: "2 800 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/MFCL8690CDW_1.png",
     badge: "Bestseller",
     featured: true
@@ -49,7 +49,7 @@ const products = [
     specifications: "Drukarka monochromatyczna, skaner, kopiarka, fax, A4, 40 ppm",
     price: "1 400 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/MFCL5710DW_1.png",
     badge: null,
     featured: false
@@ -62,7 +62,7 @@ const products = [
     specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 33 ppm, NFC",
     price: "3 200 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź", 
+    whereToBuy: "ZUP Łódź, TAKMA", 
     image: "/MFCL8900CDW_1.png",
     badge: "Nowość",
     featured: true
@@ -75,7 +75,7 @@ const products = [
     specifications: "Drukarka monochromatyczna, skaner, kopiarka, fax, A4, 46 ppm",
     price: "1 800 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/MFCL6710DW_1.png", 
     badge: null,
     featured: false
@@ -88,7 +88,7 @@ const products = [
     specifications: "Drukarka monochromatyczna, skaner, kopiarka, A4, 40 ppm",
     price: "1 100 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/DCPL5510DW_1.png",
     badge: "Ekonomiczne",
     featured: true
@@ -101,7 +101,7 @@ const products = [
     specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 31 ppm, duplex",
     price: "2 600 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/MFCL8390CDW_1.png",
     badge: null,
     featured: true

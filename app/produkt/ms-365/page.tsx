@@ -166,7 +166,7 @@ export default function Microsoft365BusinessStandardProductPage() {
         <nav className="text-sm text-gray-500">
           <a href="/" className="hover:text-emerald-600">Strona główna</a>
           <span className="mx-2">/</span>
-          <a href="/kategoria/akcesoria" className="hover:text-emerald-600">Akcesoria komputerowe</a>
+          <a href="/kategoria/akcesoria-komputerowe" className="hover:text-emerald-600">Akcesoria komputerowe</a>
           <span className="mx-2">/</span>
           <span className="text-gray-900">Microsoft 365 Business Standard</span>
         </nav>

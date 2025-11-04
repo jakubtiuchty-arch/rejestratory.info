@@ -37,7 +37,7 @@ const products = [
     specifications: "Online, bateria 8h, Bluetooth, Wi-Fi, drukarka termiczna 58mm",
     price: "1 450 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/temo_online_1.png",
     badge: "Bestseller",
     featured: true,

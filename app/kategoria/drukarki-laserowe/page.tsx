@@ -36,7 +36,7 @@ const products = [
     specifications: "Drukarka laserowa, A4, 50 ppm, duplex, USB, Ethernet",
     price: "1 800 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/hll6410ph.png",
     featured: true,
     link: "/produkt/brother-hl-l6410"
@@ -49,7 +49,7 @@ const products = [
     specifications: "Drukarka laserowa, skaner, kopiarka, A4, 34 ppm, Wi-Fi, duplex",
     price: "1 200 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/dcpb75620dwph.png",
     featured: true,
     link: "/produkt/brother-dcp-b7620dw"
@@ -62,7 +62,7 @@ const products = [
     specifications: "Drukarka laserowa, A4, 48 ppm, Wi-Fi, duplex, USB, Ethernet",
     price: "1 600 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź", 
+    whereToBuy: "ZUP Łódź, TAKMA", 
     image: "/hll6210dwph.png",
     featured: true,
     link: "/produkt/brother-hl-l6210dw"

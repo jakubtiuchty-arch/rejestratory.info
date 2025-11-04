@@ -36,7 +36,7 @@ const products = [
     specifications: "1U Rack, Intel Xeon E-2436, 32GB DDR5, 8TB HDD (4x2TB), iDRAC9",
     price: "8 500 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/r360_1.png",
     link: "/produkt/dell-poweredge-r360",
     featured: true
@@ -49,7 +49,7 @@ const products = [
     specifications: "1U Rack, Intel Xeon Gold-5416S, 128GB DDR5, 9,6TB HDD (4x2,4TB SAS), iDRAC9",
     price: "15 200 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/r660_1.png",
     link: "/produkt/dell-poweredge-r660xs",
     featured: true
@@ -62,7 +62,7 @@ const products = [
     specifications: "2U Rack, Intel Xeon Silver-4314, 64GB DDR4, 20TB HDD (5x4TB), iDRAC9",
     price: "12 800 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/r550_1.png",
     link: "/produkt/dell-poweredge-r550",
     featured: true

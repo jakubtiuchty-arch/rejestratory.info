@@ -37,7 +37,7 @@ const products = [
     specifications: "Druk termiczny, 203 dpi, USB, Ethernet, Wi-Fi, kolorowe etykiety",
     price: "1 850 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/zd421c_1.png",
     featured: true
   },
@@ -50,7 +50,7 @@ const products = [
     specifications: "Druk termotransferowy, 300 dpi, USB, RS-232, Ethernet",
     price: "2 200 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/pc45t_1.png",
     featured: true
   },
@@ -63,7 +63,7 @@ const products = [
     specifications: "A4, 600 dpi, 40 str/min, duplex, USB 3.0, Ethernet, Wi-Fi",
     price: "3 400 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ds730_1.png",
     featured: true
   },
@@ -76,7 +76,7 @@ const products = [
     specifications: "Imager 2D, USB, czytanie z ekranu, zasięg do 61cm",
     price: "680 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ds2208_1.png",
     featured: true
   },
@@ -89,7 +89,7 @@ const products = [
     specifications: "Imager 2D, USB, dekodowanie omnidyrektional, zasięg do 90cm",
     price: "750 PLN",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "/1450g_1.png",
     featured: false
   }

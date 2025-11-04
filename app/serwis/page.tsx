@@ -13,7 +13,8 @@ import {
   X,
   Package,
   Printer,
-  Truck
+  Truck,
+  Menu
 } from "lucide-react";
 
 export default function ServicePage() {
@@ -34,6 +35,7 @@ export default function ServicePage() {
 
   const [showLightbox, setShowLightbox] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -80,7 +82,7 @@ export default function ServicePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header - identyczny jak na stronie głównej */}
+      {/* Header - z hamburger menu dla mobile */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
@@ -88,8 +90,9 @@ export default function ServicePage() {
               <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
-            <div className="flex items-center gap-8">
-              <ul className="hidden md:flex items-center gap-8">
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center gap-8">
+              <ul className="flex items-center gap-8">
                 <li><a href="/" className="text-gray-700 hover:text-emerald-600 transition-colors">Strona główna</a></li>
                 <li><a href="/#produkty" className="text-gray-700 hover:text-emerald-600 transition-colors">Produkty</a></li>
                 <li><a href="/serwis" className="text-emerald-600 font-semibold">Serwis</a></li>
@@ -101,7 +104,71 @@ export default function ServicePage() {
                 Zapytanie (0)
               </button>
             </div>
+
+            {/* Mobile Menu Button & Cart */}
+            <div className="flex md:hidden items-center gap-3">
+              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg flex items-center gap-2">
+                <ShoppingCart className="h-4 w-4" />
+                (0)
+              </button>
+              
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 text-gray-700 hover:text-emerald-600 transition-colors"
+              >
+                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
           </nav>
+
+          {/* Mobile Menu Dropdown */}
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden border-t border-gray-200"
+            >
+              <ul className="py-4 space-y-2">
+                <li>
+                  <a 
+                    href="/" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Strona główna
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/#produkty" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Produkty
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/serwis" 
+                    className="block px-4 py-2 text-emerald-600 bg-emerald-50 font-semibold"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Serwis
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/kontakt" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Kontakt
+                  </a>
+                </li>
+              </ul>
+            </motion.div>
+          )}
         </div>
       </header>
 
@@ -566,7 +633,7 @@ export default function ServicePage() {
                   </div>
                 </div>
 
-                {/* Zamówienie kuriera - wyróżniona sekcja */}
+                {/* Zamówienie kuriera - wyróżniona sekcja z poprawą na mobile */}
                 <div className="bg-blue-50 border-2 border-blue-300 rounded-xl p-6">
                   <div className="flex items-start gap-3 mb-4">
                     <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -581,7 +648,7 @@ export default function ServicePage() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-row gap-4">
                     <label className="flex items-center gap-3 cursor-pointer bg-white px-6 py-3 rounded-lg border-2 border-gray-200 hover:border-emerald-500 transition-all flex-1">
                       <input
                         type="radio"
@@ -589,7 +656,7 @@ export default function ServicePage() {
                         value="tak"
                         checked={formData.courierPickup === "tak"}
                         onChange={(e) => setFormData({...formData, courierPickup: e.target.value})}
-                        className="w-5 h-5 text-emerald-600 focus:ring-emerald-500"
+                        className="w-5 h-5 text-emerald-600 focus:ring-emerald-500 flex-shrink-0"
                       />
                       <span className="text-gray-900 font-semibold">Tak, zamów kuriera</span>
                     </label>
@@ -600,7 +667,7 @@ export default function ServicePage() {
                         value="nie"
                         checked={formData.courierPickup === "nie"}
                         onChange={(e) => setFormData({...formData, courierPickup: e.target.value})}
-                        className="w-5 h-5 text-gray-600 focus:ring-gray-500"
+                        className="w-5 h-5 text-gray-600 focus:ring-gray-500 flex-shrink-0"
                       />
                       <span className="text-gray-900 font-semibold">Nie, dostarczę osobiście</span>
                     </label>
@@ -911,7 +978,7 @@ export default function ServicePage() {
 <footer className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50/20 py-12">
   <div className="container mx-auto px-4">
     <div className="flex flex-col items-center gap-6">
-      <div className="flex items-center justify-center gap-10">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 text-center md:text-left">
         <img src="/takma_logo_footer.png" alt="TAKMA" className="h-14 w-auto" />
         <span className="text-gray-700 text-lg">takma@takma.com.pl</span>
         <span className="text-gray-700 text-lg">607 819 688</span>

@@ -149,6 +149,34 @@ const products = [
     badge: null,
     featured: false,
     customUrl: "/produkt/hp-655"
+  },
+  {
+    id: 10,
+    name: "Zasilacz UPS Vertiv Liebert itON 600 VA",
+    category: "Akcesoria komputerowe",
+    description: "Niezawodny zasilacz UPS typu line-interactive do ochrony komputerów i sprzętu IT",
+    specifications: "600 VA / 360 W, 230V, 2 gniazda Schuko, bateria VRLA 7Ah 12V",
+    price: "450 PLN",
+    availability: "Dostępny",
+    whereToBuy: "TAKMA",
+    image: "vertin_600_1.png",
+    badge: null,
+    featured: false,
+    customUrl: "/produkt/vertin-600"
+  },
+  {
+    id: 11,
+    name: "Zasilacz UPS Vertiv Liebert itON 1000 VA",
+    category: "Akcesoria komputerowe",
+    description: "Niezawodny zasilacz UPS line-interactive z AVR do ochrony sprzętu IT w nadleśnictwach",
+    specifications: "1000 VA / 600 W, 230V, bateria VRLA 2x7Ah 12V, 3x Schuko + 3x C13",
+    price: "650 PLN",
+    availability: "Dostępny",
+    whereToBuy: "TAKMA",
+    image: "vertin_1000_1.png",
+    badge: null,
+    featured: false,
+    customUrl: "/produkt/vertin-1000"
   }
 ];
 
@@ -244,7 +272,7 @@ export default function CategoryPage() {
           <nav className="flex items-center gap-2 text-sm">
             <a href="/" className="text-gray-600 hover:text-emerald-600">Strona główna</a>
             <ChevronRight className="h-4 w-4 text-gray-400" />
-            <a href="/#produkty" className="text-gray-600 hover:text-emerald-600">Produkty</a>
+            <a href="/kategoria/akcesoria-komputerowe" className="text-gray-600 hover:text-emerald-600">Produkty</a>
             <ChevronRight className="h-4 w-4 text-gray-400" />
             <span className="text-gray-900 font-medium">Akcesoria komputerowe</span>
           </nav>

@@ -26,7 +26,9 @@ import {
   Smartphone,
   TreePine,
   Trees,
-  Package
+  Package,
+  Menu,
+  X
 } from "lucide-react";
 
 // Placeholder data
@@ -95,6 +97,7 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [categoriesView, setCategoriesView] = React.useState(0); // 0=4, 1=8, 2=all
   const [promoOpen, setPromoOpen] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const { inquiryCount, openCart } = useInquiry();
   
   // Logika wyświetlania kategorii w trzech krokach
@@ -128,7 +131,7 @@ export default function HomePage() {
             whileTap={{ scale: 0.98 }}
           >
             <span className="font-semibold text-lg">
-              PROMOCJA: Laptopy Dell do -20%!
+              PROMOCJA NA LAPTOPY DELL!
             </span>
             <motion.div
               animate={{ 
@@ -197,23 +200,8 @@ export default function HomePage() {
             <div className="bg-white/15 backdrop-blur-md rounded-lg p-6 max-w-3xl mx-auto border border-white/20 shadow-xl">
               <h3 className="font-bold text-xl mb-3">Laptopy Dell w promocyjnych cenach!</h3>
               <p className="mb-4">
-                Specjalna oferta na wybrane modele laptopów Dell – idealne rozwiązanie dla biur leśnictwa. 
-                Wydajne procesory, długi czas pracy na baterii i solidna konstrukcja.
+                Specjalna oferta na wybrane modele laptopów Dell dostępna w ZUP Łódź!
               </p>
-              <ul className="space-y-2 mb-4">
-                <li className="flex items-start gap-2">
-                  <span className="text-emerald-300">✓</span>
-                  <span>Dell Latitude 5540 – teraz tylko 3 999 PLN (zamiast 4 999 PLN)</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-emerald-300">✓</span>
-                  <span>Dell Precision 3581 – rabat 15% na konfiguracje z SSD 1TB</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-emerald-300">✓</span>
-                  <span>Darmowa dostawa i przedłużona gwarancja do 3 lat</span>
-                </li>
-              </ul>
               <motion.a 
                 href="/kategoria/laptopy"
                 className="inline-block bg-white text-emerald-600 font-semibold px-6 py-3 rounded-lg transition-colors shadow-lg"
@@ -238,8 +226,9 @@ export default function HomePage() {
               <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
             </div>
             
-            <div className="flex items-center gap-8">
-              <ul className="hidden md:flex items-center gap-8">
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center gap-8">
+              <ul className="flex items-center gap-8">
                 <li><a href="/" className="text-gray-700 hover:text-emerald-600 transition-colors">Strona główna</a></li>
                 <li><a href="#produkty" className="text-gray-700 hover:text-emerald-600 transition-colors">Produkty</a></li>
                 <li><a href="/serwis" className="text-gray-700 hover:text-emerald-600 transition-colors">Serwis</a></li>
@@ -254,7 +243,74 @@ export default function HomePage() {
                 Zapytanie ({inquiryCount})
               </button>
             </div>
+
+            {/* Mobile Menu Button & Cart */}
+            <div className="flex md:hidden items-center gap-3">
+              <button 
+                onClick={openCart}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg flex items-center gap-2"
+              >
+                <ShoppingCart className="h-4 w-4" />
+                ({inquiryCount})
+              </button>
+              
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 text-gray-700 hover:text-emerald-600 transition-colors"
+              >
+                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
           </nav>
+
+          {/* Mobile Menu Dropdown */}
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden border-t border-gray-200"
+            >
+              <ul className="py-4 space-y-2">
+                <li>
+                  <a 
+                    href="/" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Strona główna
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="#produkty" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Produkty
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/serwis" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Serwis
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="/kontakt" 
+                    className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Kontakt
+                  </a>
+                </li>
+              </ul>
+            </motion.div>
+          )}
         </div>
       </header>
 
@@ -469,7 +525,7 @@ export default function HomePage() {
       <footer className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50/20 py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center gap-6">
-            <div className="flex items-center justify-center gap-10">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 text-center md:text-left">
               <img src="/takma_logo_footer.png" alt="TAKMA" className="h-14 w-auto" />
               <span className="text-gray-700 text-lg">takma@takma.com.pl</span>
               <span className="text-gray-700 text-lg">607 819 688</span>

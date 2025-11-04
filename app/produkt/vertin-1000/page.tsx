@@ -44,7 +44,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
       >
         <img
           src={images[currentImage]}
-          alt="Podnóżek biurowy"
+          alt="Zasilacz UPS Vertin Liebert itON 1000 VA"
           className="w-full h-full object-contain"
         />
         <div className="absolute top-4 right-4">
@@ -72,7 +72,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
             >
               <img
                 src={images[currentImage]}
-                alt="Podnóżek biurowy - powiększenie"
+                alt="Zasilacz UPS Vertin Liebert itON 1000 VA - powiększenie"
                 className="max-w-full max-h-full object-contain"
               />
               <button
@@ -90,12 +90,12 @@ const ImageGallery = ({ images }: { images: string[] }) => {
 }
 
 // Main Product Page Component
-export default function PodnozekBiurowyProductPage() {
+export default function VertinUPS1000ProductPage() {
   const { inquiryCount, addToInquiry, openCart } = useInquiry()
   const [showRipple, setShowRipple] = useState(false)
 
   const productImages = [
-    '/podnozek_pod_biurko_1.png'
+    '/vertin_1000_1.png'
   ]
 
   return (
@@ -168,7 +168,7 @@ export default function PodnozekBiurowyProductPage() {
           <span className="mx-2">/</span>
           <a href="/kategoria/akcesoria-komputerowe" className="hover:text-emerald-600">Akcesoria komputerowe</a>
           <span className="mx-2">/</span>
-          <span className="text-gray-900">Podnóżek biurowy</span>
+          <span className="text-gray-900">Zasilacz UPS Vertin Liebert itON 1000 VA</span>
         </nav>
       </div>
 
@@ -188,27 +188,54 @@ export default function PodnozekBiurowyProductPage() {
             >
               <div className="flex items-center space-x-2 mb-2">
                 <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Akcesoria komputerowe
+                  Zasilacz UPS
                 </span>
               </div>
               
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Podnóżek biurowy
+                Zasilacz UPS Vertin Liebert itON 1000 VA
               </h1>
               
               <p className="text-gray-600 mb-4 text-justify">
-                Regulowany podnóżek biurowy poprawiający ergonomię pracy. Regulacja kąta nachylenia, powierzchnia antypoślizgowa. Idealny do pracy biurowej w nadleśnictwach - zapewnia prawidłową pozycję ciała podczas długiej pracy przy biurku i zmniejsza zmęczenie nóg.
+                Niezawodny zasilacz UPS typu line-interactive z automatycznym regulatorem napięcia (AVR), zaprojektowany do ochrony komputerów biurowych i sprzętu IT w nadleśnictwach. Kompaktowa konstrukcja i intuicyjna obsługa zapewniają wystarczający czas podtrzymania, umożliwiając bezpieczne zapisanie pracy i uporządkowane wyłączenie systemu. Wyposażony w funkcje automatycznego restartu i cold start dla zwiększonej ciągłości działania. Idealne rozwiązanie dla administracji leśnej wymagającej niezawodnej ochrony sprzętu.
               </p>
+
+              <div className="bg-gray-50 rounded-lg p-4 mb-6">
+                <h3 className="font-semibold text-gray-900 mb-3">Najważniejsze cechy:</h3>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Moc:</strong> 1000 VA / 600 W</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Napięcie wyjściowe:</strong> 230 V (modyfikowana sinusoida), 50 Hz</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Gniazda wyjściowe:</strong> 3 gniazda Schuko + 3 gniazda C13</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Bateria:</strong> VRLA 2x7Ah 12V</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Funkcje:</strong> Automatyczny regulator napięcia (AVR), zabezpieczenie przed przeciążeniem, automatyczne ponowne uruchomienie, funkcja zimnego startu</span>
+                  </li>
+                </ul>
+              </div>
+
               <div className="flex space-x-4 mb-6">
                 <motion.button
                   onClick={() => {
                     addToInquiry({
-                      id: 'podnozek-biurowy',
-                      name: 'Podnóżek biurowy',
+                      id: 'vertin-ups-1000',
+                      name: 'Zasilacz UPS Vertin Liebert itON 1000 VA',
                       image: '/placeholder.png',
                       category: 'Akcesoria komputerowe',
-                      description: 'Regulowany podnóżek biurowy poprawiający ergonomię pracy',
-                      specifications: 'Regulacja kąta nachylenia, powierzchnia antypoślizgowa'
+                      description: 'Niezawodny zasilacz UPS line-interactive z AVR do ochrony sprzętu IT',
+                      specifications: '1000VA/600W, 230V, bateria VRLA 2x7Ah 12V, gniazda Schuko + C13'
                     })
                     setShowRipple(true)
                     setTimeout(() => setShowRipple(false), 1000)
