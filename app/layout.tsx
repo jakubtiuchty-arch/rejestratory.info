@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { InquiryProvider } from '@/components/InquiryContext'
 import InquiryCartPanel from '@/components/InquiryCartPanel'
+import CrispChat from '@/components/CrispChat'
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,6 +34,7 @@ export default function RootLayout({
         {children}
         <InquiryCartPanel />
       </InquiryProvider>
+      <CrispChat />
     </body>
   </html>
 );

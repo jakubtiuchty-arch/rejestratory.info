@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useInquiry } from '@/components/InquiryContext';
 import SearchAutocomplete from './components/SearchAutocomplete';
+import CrispChat from '@/components/CrispChat';
 import { 
   Search, 
   ShoppingCart, 
@@ -246,12 +247,12 @@ export default function HomePage() {
               </ul>
               
               <button 
-  onClick={openCart}
-  className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
->
-  <ShoppingCart className="h-4 w-4" />
-  Zapytanie ({inquiryCount})
-</button>
+                onClick={openCart}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+              >
+                <ShoppingCart className="h-4 w-4" />
+                Zapytanie ({inquiryCount})
+              </button>
             </div>
           </nav>
         </div>
@@ -450,12 +451,12 @@ export default function HomePage() {
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
                   <p className="text-gray-600 mb-4">{product.description}</p>
                   <div className="flex justify-end">
-                <a 
-  href={`/produkt/${product.name.toLowerCase().replace(/\s+/g, '-').replace(/"/g, '')}`}
-  className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors"
->
-  Zobacz więcej
-</a>
+                    <a 
+                      href={`/produkt/${product.name.toLowerCase().replace(/\s+/g, '-').replace(/"/g, '')}`}
+                      className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors"
+                    >
+                      Zobacz więcej
+                    </a>
                   </div>
                 </div>
               </motion.div>
@@ -464,23 +465,26 @@ export default function HomePage() {
         </div>
       </section>
 
-{/* Footer */}
-<footer className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50/20 py-12">
-  <div className="container mx-auto px-4">
-    <div className="flex flex-col items-center gap-6">
-      <div className="flex items-center justify-center gap-10">
-        <img src="/takma_logo_footer.png" alt="TAKMA" className="h-14 w-auto" />
-        <span className="text-gray-700 text-lg">takma@takma.com.pl</span>
-        <span className="text-gray-700 text-lg">607 819 688</span>
-        <span className="text-gray-700 text-lg">51-128 Wrocław, ul. Poświęcka 1a</span>
-      </div>
-      <div className="w-full max-w-4xl border-t border-gray-300"></div>
-      <div className="text-gray-500 text-sm">
-        © 2024 Rejestratory.info. Wszystkie prawa zastrzeżone.
-      </div>
+      {/* Footer */}
+      <footer className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50/20 py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col items-center gap-6">
+            <div className="flex items-center justify-center gap-10">
+              <img src="/takma_logo_footer.png" alt="TAKMA" className="h-14 w-auto" />
+              <span className="text-gray-700 text-lg">takma@takma.com.pl</span>
+              <span className="text-gray-700 text-lg">607 819 688</span>
+              <span className="text-gray-700 text-lg">51-128 Wrocław, ul. Poświęcka 1a</span>
+            </div>
+            <div className="w-full max-w-4xl border-t border-gray-300"></div>
+            <div className="text-gray-500 text-sm">
+              © 2024 Rejestratory.info. Wszystkie prawa zastrzeżone.
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* Crisp Chat */}
+      <CrispChat />
     </div>
-  </div>
-</footer>
-</div>
   );
 }
