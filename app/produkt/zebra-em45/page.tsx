@@ -33,16 +33,16 @@ const ImageGallery = ({ images }: { images: string[] }) => {
   const [isZoomed, setIsZoomed] = useState(false)
 
   const productImages = [
-    '/em45_1.png',
-    '/em45_2.png',
-    '/em45_3.png',
-    '/em45_4.png'
+    '/em45_1.webp',
+    '/em45_2.webp',
+    '/em45_3.webp',
+    '/em45_4.webp'
   ]
 
   const thumbnailImages = [
-    '/em45_2.png',
-    '/em45_3.png',
-    '/em45_4.png'
+    '/em45_2.webp',
+    '/em45_3.webp',
+    '/em45_4.webp'
   ]
 
   return (
