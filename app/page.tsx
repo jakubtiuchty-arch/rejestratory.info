@@ -71,7 +71,7 @@ const featuredProducts = [
     category: "Rejestrator",
     description: "To nie tylko smartfon!",
     price: "Cena na zapytanie",
-    image: "em45_1.png"
+    image: "em45_1.webp"
   },
   {
     id: 2,
