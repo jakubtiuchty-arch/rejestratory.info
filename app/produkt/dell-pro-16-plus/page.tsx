@@ -278,7 +278,7 @@ const AccessoriesSection = ({
     },
     {
       id: 'bag',
-      name: 'Torba na laptopa 14"',
+      name: 'Torba na laptopa 16"',
       description: 'Wodoodporna torba na laptopa',
       image: '/api/placeholder/120/120',
       price: '169 zł'
@@ -641,7 +641,7 @@ export default function DellPro16PlusProductPage() {
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg p-6 border-2 border-gray-300 shadow-sm">
+              <div className="bg-white rounded-lg p-6 border-2 border-gray-300 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-center mb-4">
                   <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
                     <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -651,9 +651,20 @@ export default function DellPro16PlusProductPage() {
                   </div>
                 </div>
                 <h4 className="font-semibold text-gray-900 text-center mb-2">Klawiatura + Mysz Dell</h4>
-                <p className="text-sm text-gray-600 text-center">
+                <p className="text-sm text-gray-600 text-center mb-4">
                   Bezprzewodowy zestaw klawiatura i mysz
                 </p>
+                <div className="text-center">
+                  <a 
+                    href="/produkt/dell-km5221"
+                    className="inline-flex items-center gap-2 bg-gray-50 hover:bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium text-sm transition-colors border border-gray-200"
+                  >
+                    <span>Zobacz produkt</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
 

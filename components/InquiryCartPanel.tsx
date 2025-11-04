@@ -361,10 +361,9 @@ export default function InquiryCartPanel() {
                         <div className="flex items-start space-x-3">
                           <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                           <div className="text-sm text-blue-900">
-                            <p className="font-semibold mb-1">Jak to działa?</p>
+                            <p className="font-semibold mb-1">Co po wysłaniu zapytania?</p>
                             <p className="text-blue-800">
-                              Po kliknięciu przycisku "Wyślij zapytanie" otworzy się Twój program pocztowy 
-                              z przygotowaną wiadomością. Możesz ją jeszcze edytować przed wysłaniem.
+                              Prześlemy ofertę i oraz wskażemy jak najszybciej dokonąć zakupu bez zbędnych formalności.
                             </p>
                           </div>
                         </div>

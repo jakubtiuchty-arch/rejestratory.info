@@ -356,9 +356,9 @@ const AccessoriesSection = ({ productName }: { productName: string }) => {
       description: 'Ładowarka sieciowa z kablem USB-C'
     },
     {
-      id: 'mount',
-      name: 'Uchwyt samochodowy',
-      description: 'Uniwersalny uchwyt do montażu w pojeździe'
+      id: 'workstation',
+      name: 'Stacja Workstation Connect',
+      description: 'Profesjonalna stacja dokująca z ładowaniem i przeniesieniem danych'
     },
     {
       id: 'holster',
@@ -610,29 +610,41 @@ export default function ZebraEM45ProductPage() {
                 </motion.button>
               </div>
 
-              {/* Kontrakty serwisowe */}
-              <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200 mb-6">
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-semibold text-emerald-700">Kontrakty serwisowe dostępne</h4>
-                      <button
-                        onClick={() => setIsServiceLightboxOpen(true)}
-                        className="p-1 hover:bg-emerald-200 rounded-full transition-colors"
-                      >
-                        <Info className="w-4 h-4 text-emerald-600" />
-                      </button>
+              {/* Link do pełnej strony produktu */}
+              <motion.a
+                href="https://www.em45.info"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-xl p-6 mb-6 group shadow-lg border-2 border-emerald-200 hover:border-emerald-300"
+                style={{
+                  background: 'linear-gradient(to right, #ccffc4, #9eff90)',
+                  transition: 'all 0.3s ease-in-out'
+                }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-white/40 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-white/50 transition-all duration-300">
+                      <FileText className="w-6 h-6 text-emerald-800" />
                     </div>
-                    <p className="text-sm text-gray-600">
-                      Kontrakt serwisowy to spokój dla administratora i gwarancja ciągłości pracy dla leśniczego w terenie. 
-                      Profesjonalne wsparcie zapewnia, że urządzenia zawsze będą gotowe do pracy.
-                    </p>
+                    <div className="flex-1">
+                      <h4 className="font-bold text-emerald-900 mb-2 text-xl">
+                        Zobacz urządzenie w pełnej okazałości
+                      </h4>
+                      <p className="text-emerald-800 text-base">
+                        Odwiedź dedykowaną stronę produktu, aby dowiedzieć się, że Zebra EM45 to nie tylko zwykły smartfon.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="ml-4 flex-shrink-0 text-emerald-800 group-hover:translate-x-1 transition-all duration-300">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   </div>
                 </div>
-              </div>
+              </motion.a>
 
               {/* Gdzie kupić - prosty design */}
               <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
