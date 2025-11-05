@@ -57,7 +57,8 @@ export default function ServicePage() {
       setIsSubmitting(false);
       setShowLightbox(true);
       
-      // Reset formularza
+      // Reset formularza - ale zachowaj courierPickup dla warunkowego lightboxa
+      const savedCourierChoice = formData.courierPickup;
       setFormData({
         firstName: "",
         lastName: "",
@@ -69,7 +70,7 @@ export default function ServicePage() {
         otherDevice: "",
         serialNumber: "",
         hasContract: "",
-        courierPickup: "",
+        courierPickup: savedCourierChoice,
         problemDescription: ""
       });
 
@@ -737,7 +738,7 @@ export default function ServicePage() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", damping: 20 }}
-              className="bg-white rounded-2xl p-8 max-w-2xl w-full shadow-2xl relative z-[9999]"
+              className="bg-white rounded-2xl p-8 max-w-2xl w-full shadow-2xl relative z-[9999] max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <button
@@ -757,71 +758,85 @@ export default function ServicePage() {
                   <CheckCircle className="h-10 w-10 text-emerald-600" />
                 </motion.div>
                 <h3 className="text-2xl font-bold text-gray-900">
-                  Zgłoszenie przyjęte!
+                  {formData.courierPickup === "tak" ? "Zamówienie kuriera wysłane!" : "Zgłoszenie przyjęte!"}
                 </h3>
+                <p className="text-gray-600 mt-2">
+                  {formData.courierPickup === "tak" 
+                    ? "Otrzymasz wiadomość email z dalszymi instrukcjami" 
+                    : "Oczekujemy na przesyłkę"}
+                </p>
               </div>
 
               {/* Warunkowa treść - zależnie od wyboru kuriera */}
               {formData.courierPickup === "tak" ? (
                 // Lightbox dla kuriera
                 <>
-                  <div className="bg-emerald-50 rounded-xl p-6 mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                      <Package className="h-5 w-5 text-emerald-600" />
-                      Co teraz zrobić?
-                    </h4>
-                    <ol className="space-y-4">
-                      <motion.li
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="flex items-start gap-3"
-                      >
-                        <div className="flex-shrink-0 w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold">
-                          1
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900">Zapakuj urządzenie</div>
-                          <div className="text-sm text-gray-600">Zabezpiecz sprzęt w oryginalnym opakowaniu lub kartonowym pudełku</div>
-                        </div>
-                      </motion.li>
+                  <div className="bg-orange-50 rounded-xl p-6 mb-6">
+                    <h4 className="font-semibold text-gray-900 mb-4">Co dalej?</h4>
+                    <p className="text-sm text-orange-800 mb-4">
+                      Przygotuj urządzenie do odbioru zgodnie z poniższą listą. Kurier skontaktuje się z Tobą 
+                      w ciągu 24 godzin od otrzymania zgłoszenia.
+                    </p>
 
-                      <motion.li
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 }}
-                        className="flex items-start gap-3"
-                      >
-                        <div className="flex-shrink-0 w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold">
-                          2
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 flex items-center gap-2">
-                            Wydrukuj etykietę
-                            <Printer className="h-4 w-4 text-emerald-600" />
+                    <div className="space-y-3">
+                      {[
+                        { 
+                          text: "Przygotuj urządzenie", 
+                          detail: "Wykonaj kopię zapasową danych i wyloguj się z kont" 
+                        },
+                        { 
+                          text: "Starannie zapakuj", 
+                          detail: "Zabezpiecz urządzenie w oryginalnym pudełku lub w bezpiecznym opakowaniu" 
+                        },
+                        { 
+                          text: "Wydrukuj otrzymaną etykietę", 
+                          detail: "Otrzymasz etykietę kurierską na email - wydrukuj i przyklej do paczki" 
+                        },
+                        { 
+                          text: "Dołącz dokumenty", 
+                          detail: "Jeśli posiadasz fakturę lub dowód zakupu, dołącz kopię do przesyłki" 
+                        },
+                        { 
+                          text: "Oczekuj na kuriera", 
+                          detail: "Kurier odbierze paczkę we wskazanym miejscu - nie musisz jej nadawać" 
+                        }
+                      ].map((item, index) => (
+                        <motion.div
+                          key={index}
+                          className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-orange-200"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                        >
+                          <motion.div
+                            className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: index * 0.1 + 0.05, type: "spring" }}
+                          >
+                            <CheckCircle className="w-4 h-4 text-white" />
+                          </motion.div>
+                          <div className="flex-1">
+                            <p className="font-semibold text-gray-900 text-sm">{index + 1}. {item.text}</p>
+                            <p className="text-xs text-gray-600 mt-0.5">{item.detail}</p>
                           </div>
-                          <div className="text-sm text-gray-600">Otrzymasz od nas email z etykietą kurierską do wydruku</div>
-                        </div>
-                      </motion.li>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
 
-                      <motion.li
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5 }}
-                        className="flex items-start gap-3"
-                      >
-                        <div className="flex-shrink-0 w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold">
-                          3
-                        </div>
-                        <div>
-                          <div className="font-medium text-gray-900 flex items-center gap-2">
-                            Oczekuj na kuriera
-                            <Truck className="h-4 w-4 text-emerald-600" />
-                          </div>
-                          <div className="text-sm text-gray-600">Kurier odbierze przesyłkę w ciągu 48h</div>
-                        </div>
-                      </motion.li>
-                    </ol>
+                  <div className="bg-blue-50 p-4 rounded-lg mb-6">
+                    <div className="flex items-start space-x-3">
+                      <Package className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <div className="text-sm text-blue-900">
+                        <p className="font-semibold mb-1">Ważne informacje:</p>
+                        <ul className="space-y-1 text-blue-800">
+                          <li>• Numer przesyłki otrzymasz w wiadomości email</li>
+                          <li>• Śledź status naprawy w systemie lub kontaktując się z nami</li>
+                          <li>• W razie pytań zadzwoń: <span className="font-semibold">71 781 71 28</span></li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </>
               ) : (

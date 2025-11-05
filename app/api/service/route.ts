@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
     <!-- Footer info -->
     <div style="border-top: 2px solid #e5e7eb; padding-top: 20px; margin-top: 30px; text-align: center; color: #6b7280; font-size: 13px;">
       <p style="margin: 5px 0;">🌲 Wiadomość wygenerowana automatycznie z formularza zgłoszenia serwisowego</p>
-      <p style="margin: 5px 0;">Rejestratory.info | TAKMA Sp. z o.o.</p>
+      <p style="margin: 5px 0;">Rejestratory.info | TAKMA</p>
       <p style="margin: 5px 0;">📞 601 619 898 | ✉️ serwis@takma.com.pl</p>
     </div>
   </div>
@@ -147,9 +147,11 @@ export async function POST(request: NextRequest) {
 </html>
     `
 
-    // Wysyłka email
+    // Wysyłka email - warunkowo dla localhost i produkcji
     const { data, error } = await resend.emails.send({
-      from: 'kontakt@rejestratory.info',
+      from: process.env.NODE_ENV === 'development' 
+        ? 'onboarding@resend.dev' 
+        : 'kontakt@rejestratory.info',
       to: ['serwis@takma.com.pl'],
       replyTo: email,
       subject: `🔧 Zgłoszenie serwisowe - ${displayDeviceType} | ${firstName} ${lastName}`,
