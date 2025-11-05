@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
     // Wysyłka email
     const { data, error } = await resend.emails.send({
       from: 'kontakt@rejestratory.info',
-      to: ['takma@takma.com.pl'],
+      to: ['handlowy@takma.com.pl'],
       subject: `🚚 Zamówienie kuriera - ${deviceName} | ${firstName} ${lastName}`,
       html: emailHTML,
     })
