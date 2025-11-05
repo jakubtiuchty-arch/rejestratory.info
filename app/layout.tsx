@@ -4,6 +4,7 @@ import "./globals.css";
 import { InquiryProvider } from '@/components/InquiryContext'
 import InquiryCartPanel from '@/components/InquiryCartPanel'
 import CrispChat from '@/components/CrispChat'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({
   variable: "--font-inter",
@@ -34,6 +35,7 @@ export default function RootLayout({
         {children}
         <InquiryCartPanel />
       </InquiryProvider>
+      <GoogleAnalytics gaId="G-FDR8NNEMJN" />
       <CrispChat />
     </body>
   </html>
