@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
 
     // Wysyłka email na dwa adresy
     const { data, error } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'kontakt@rejestratory.info',
       to: ['handlowy@takma.com.pl', 'rejestratory@takma.com.pl'],
       replyTo: email,
       subject: `📧 Kontakt - ${subject} | ${name}`,

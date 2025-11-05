@@ -124,8 +124,8 @@ export async function POST(request: NextRequest) {
 
     // Wysyłka email
     const { data, error } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: ['jakub.tiuchty@gmail.com'], // ← Tu można dodać więcej adresów
+      from: 'kontakt@rejestratory.info',
+      to: ['jakub.tiuchty@takma.com.pl'], // ← Tu można dodać więcej adresów
       replyTo: email, // Odpowiedź trafi do klienta
       subject: `📦 Zapytanie ofertowe - ${items.length} ${items.length === 1 ? 'produkt' : items.length < 5 ? 'produkty' : 'produktów'} | ${firstName} ${lastName}`,
       html: emailHTML,

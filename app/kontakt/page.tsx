@@ -2,6 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import {
   Card,
   CardContent,
@@ -111,7 +113,8 @@ const ContactPage = () => {
   return (
     <>
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+      <Header activeTab="kontakt" />
+      {/* STARY_HEADER_START
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">

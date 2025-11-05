@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
 
     // Wysyłka email
     const { data, error } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'kontakt@rejestratory.info',
       to: ['serwis@takma.com.pl'],
       replyTo: email,
       subject: `🔧 Zgłoszenie serwisowe - ${displayDeviceType} | ${firstName} ${lastName}`,
