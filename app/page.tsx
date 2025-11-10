@@ -237,7 +237,7 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
             >
               <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-                Rejestartory.info,
+                Rejestartory.info
                 <span className="block text-emerald-200">jedyne takie miejsce w internecie</span>
               </h1>
               <p className="text-xl text-emerald-100 mb-8">

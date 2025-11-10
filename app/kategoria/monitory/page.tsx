@@ -33,7 +33,7 @@ import {
 const products = [
   {
     id: 1,
-    name: "HP Pro S5 QHD USB-C 527pu",
+    name: "HP Pro S5 QHD USB-C 527pv",
     category: "Monitory",
     description: "Profesjonalny monitor QHD 27 cali do pracy biurowej",
     specifications: "27\" QHD 2560x1440, IPS, 75Hz, HDMI, DisplayPort, USB-A",
@@ -76,7 +76,7 @@ const products = [
   },
   {
     id: 4,
-    name: "Dell Pro 24 Plus P2425HE",
+    name: "Dell Pro 24 Plus P2425H",
     category: "Monitory",
     description: "Kompaktowy monitor biznesowy 24 cale do codziennej pracy",
     specifications: "24\" FHD 1920x1080, IPS, 60Hz, HDMI, DisplayPort, USB-A",
@@ -106,7 +106,7 @@ const products = [
   },
   {
     id: 6,
-    name: "Dell Pro 27 Plus P2725HE",
+    name: "Dell Pro 27 Plus P2725H",
     category: "Monitory",
     description: "Profesjonalny monitor 27 cali QHD do zastosowań biurowych",
     specifications: "27\" QHD 2560x1440, IPS, 60Hz, HDMI, DisplayPort, USB-A",
