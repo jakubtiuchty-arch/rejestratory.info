@@ -6,6 +6,7 @@ import InquiryCartPanel from '@/components/InquiryCartPanel'
 import CrispChat from '@/components/CrispChat'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({
   variable: "--font-inter",
@@ -38,6 +39,7 @@ export default function RootLayout({
       </InquiryProvider>
       <GoogleAnalytics gaId="G-FDR8NNEMJN" />
       <Analytics />
+      <SpeedInsights />
       <CrispChat />
     </body>
   </html>
