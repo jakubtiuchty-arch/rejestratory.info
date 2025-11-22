@@ -5,6 +5,7 @@ import { InquiryProvider } from '@/components/InquiryContext'
 import InquiryCartPanel from '@/components/InquiryCartPanel'
 import CrispChat from '@/components/CrispChat'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,6 +37,7 @@ export default function RootLayout({
         <InquiryCartPanel />
       </InquiryProvider>
       <GoogleAnalytics gaId="G-FDR8NNEMJN" />
+      <Analytics />
       <CrispChat />
     </body>
   </html>
