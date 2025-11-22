@@ -5,7 +5,7 @@ import { InquiryProvider } from '@/components/InquiryContext'
 import InquiryCartPanel from '@/components/InquiryCartPanel'
 import CrispChat from '@/components/CrispChat'
 import { GoogleAnalytics } from '@next/third-parties/google'
-import { Analytics } from '@vercel/analytics/react'
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
   variable: "--font-inter",
