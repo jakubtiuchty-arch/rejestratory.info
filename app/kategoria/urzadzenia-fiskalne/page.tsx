@@ -3,12 +3,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { 
-  Search, 
-  ShoppingCart, 
-  Shield, 
-  Truck, 
-  Headphones, 
+import {
+  Search,
+  ShoppingCart,
+  Shield,
+  Truck,
+  Headphones,
   Phone,
   Mail,
   MapPin,
@@ -26,13 +26,30 @@ import {
   SortAsc,
   Eye,
   Heart,
-  ArrowUpDown
+  ArrowUpDown,
+  FileText,
+  Calendar,
+  CheckCircle2
 } from "lucide-react";
 
 // Produkty dla kategorii Urządzenia fiskalne
 const products = [
   {
     id: 1,
+    name: "Posnet Pospay 2",
+    category: "Urządzenia fiskalne",
+    description: "Fiskalny terminal płatniczy",
+    specifications: "Płatność kartą, BLIK, kompatybilny z Leśnik+",
+    price: "2 100 PLN",
+    availability: "Dostępny",
+    whereToBuy: "TAKMA",
+    image: "/pospay_3.png",
+    badge: "Terminal",
+    featured: true,
+    link: "/produkt/posnet-pospay-2"
+  },
+  {
+    id: 2,
     name: "Posnet Temo Online",
     category: "Urządzenia fiskalne",
     description: "Mobilna kasa fiskalna online do rozliczeń w terenie",
@@ -46,23 +63,25 @@ const products = [
     link: "/produkt/posnet-temo-online"
   },
   {
-    id: 2,
-    name: "Posnet Pospay 2",
-    category: "Urządzenia fiskalne", 
-    description: "Fiskalny terminal płatniczy",
-    specifications: "Płatność kartą, BLIK, kompatybilny z Leśnik+",
-    price: "2 100 PLN",
+    id: 3,
+    name: "Panel Klienta",
+    category: "Urządzenia fiskalne",
+    description: "Sprawdź status swoich urządzeń i historię przeglądów",
+    specifications: "Dostęp do protokołów, terminów przeglądów i statusu urządzeń",
+    price: "",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
-    image: "/pospay_3.png",
-    badge: "Terminal",
+    whereToBuy: "",
+    image: "",
+    badge: "Nowość",
     featured: true,
-    link: "/produkt/posnet-pospay-2"
+    link: "/panel-klienta",
+    isDashboard: true
   }
 ];
 
 // Opcje filtrowania i sortowania
 const sortOptions = [
+  { value: "default", label: "Domyślne" },
   { value: "name", label: "Nazwa A-Z" },
   { value: "price-asc", label: "Cena rosnąco" },
   { value: "price-desc", label: "Cena malejąco" },
@@ -76,7 +95,7 @@ const availabilityOptions = [
 
 export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [sortBy, setSortBy] = React.useState("name");
+  const [sortBy, setSortBy] = React.useState("default");
   const [availabilityFilter, setAvailabilityFilter] = React.useState("all");
   const [viewMode, setViewMode] = React.useState("grid"); // grid lub list
   const [showFilters, setShowFilters] = React.useState(false);
@@ -102,20 +121,22 @@ export default function CategoryPage() {
     }
 
     // Sortowanie
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case "name":
-          return a.name.localeCompare(b.name, "pl");
-        case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
-        case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
-        case "newest":
-          return b.id - a.id;
-        default:
-          return 0;
-      }
-    });
+    if (sortBy !== "default") {
+      filtered.sort((a, b) => {
+        switch (sortBy) {
+          case "name":
+            return a.name.localeCompare(b.name, "pl");
+          case "price-asc":
+            return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          case "price-desc":
+            return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          case "newest":
+            return b.id - a.id;
+          default:
+            return 0;
+        }
+      });
+    }
 
     return filtered;
   }, [searchQuery, sortBy, availabilityFilter]);
@@ -269,14 +290,65 @@ export default function CategoryPage() {
                     viewMode === "list" ? "flex gap-6" : "flex flex-col"
                   }`}
                 >
-                  {/* Obrazek */}
-                  <div className={`relative border-b border-gray-200 ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
-                    <img 
-                      src={product.image} 
-                      alt={product.name}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
+                  {/* Obrazek lub grafika dla Panelu Klienta */}
+                  {product.isDashboard ? (
+                    <div className={`relative bg-gradient-to-br from-emerald-500 via-emerald-600 to-green-600 ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"} flex items-center justify-center p-8`}>
+                      <div className="text-center">
+                        <div className="grid grid-cols-3 gap-3">
+                          <motion.div
+                            className="bg-white/20 backdrop-blur-sm rounded-lg p-3"
+                            animate={{
+                              opacity: [0.5, 1, 0.5],
+                              scale: [0.95, 1.05, 0.95]
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              delay: 0
+                            }}
+                          >
+                            <FileText className="h-8 w-8 text-white/90 mx-auto" />
+                          </motion.div>
+                          <motion.div
+                            className="bg-white/20 backdrop-blur-sm rounded-lg p-3"
+                            animate={{
+                              opacity: [0.5, 1, 0.5],
+                              scale: [0.95, 1.05, 0.95]
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              delay: 0.4
+                            }}
+                          >
+                            <Calendar className="h-8 w-8 text-white/90 mx-auto" />
+                          </motion.div>
+                          <motion.div
+                            className="bg-white/20 backdrop-blur-sm rounded-lg p-3"
+                            animate={{
+                              opacity: [0.5, 1, 0.5],
+                              scale: [0.95, 1.05, 0.95]
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              delay: 0.8
+                            }}
+                          >
+                            <CheckCircle2 className="h-8 w-8 text-white/90 mx-auto" />
+                          </motion.div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={`relative border-b border-gray-200 ${viewMode === "list" ? "w-48 flex-shrink-0" : "aspect-square"}`}>
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  )}
 
                   {/* Treść */}
                   <div className="p-6 flex-1 flex flex-col">
@@ -284,21 +356,36 @@ export default function CategoryPage() {
                     <p className="text-gray-600 mb-3">{product.description}</p>
                     <p className="text-sm text-gray-500 mb-4">{product.specifications}</p>
                     
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <div className="text-sm text-gray-500">
-                          {product.availability} • {product.whereToBuy}
+                    {!product.isDashboard && (
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <div className="text-sm text-gray-500">
+                            {product.availability} • {product.whereToBuy}
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )}
 
                     <div className="flex gap-2 mt-auto">
-                      <a 
+                      <a
                         href={product.link}
-                        className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-center"
+                        className={`flex-1 ${
+                          product.isDashboard
+                            ? 'bg-emerald-600 hover:bg-emerald-700'
+                            : 'bg-emerald-600 hover:bg-emerald-700'
+                        } text-white px-4 py-2 rounded-lg font-medium transition-colors text-center`}
                       >
-                        <ShoppingCart className="h-4 w-4 inline mr-2" />
-                        Zobacz produkt
+                        {product.isDashboard ? (
+                          <>
+                            <Eye className="h-4 w-4 inline mr-2" />
+                            Przejdź do panelu
+                          </>
+                        ) : (
+                          <>
+                            <ShoppingCart className="h-4 w-4 inline mr-2" />
+                            Zobacz produkt
+                          </>
+                        )}
                       </a>
                     </div>
                   </div>
