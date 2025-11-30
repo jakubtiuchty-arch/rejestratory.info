@@ -105,7 +105,7 @@ export default function HomePage() {
       <motion.div
         className="text-white relative overflow-hidden"
         style={{
-          backgroundImage: "url('/baner_em45_header.jpeg')",
+          backgroundImage: "image-set(url('/baner_em45_header.webp') type('image/webp'), url('/baner_em45_header.jpeg') type('image/jpeg')), url('/baner_em45_header.jpeg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
