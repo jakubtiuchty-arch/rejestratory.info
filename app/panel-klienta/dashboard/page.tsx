@@ -159,13 +159,45 @@ export default function Dashboard() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-6"
+          className="mb-6 relative overflow-hidden rounded-xl shadow-lg"
         >
           <img
-            src="/em45_baner_panel.jpeg"
+            src="/baner_em45_1.png"
             alt="EM45 Banner"
-            className="w-full h-32 object-cover rounded-lg shadow-sm"
+            className="w-full h-40 object-cover"
           />
+
+          {/* Gradient zanikający po prawej stronie */}
+          <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-transparent to-transparent"
+               style={{
+                 background: 'linear-gradient(to left, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 20%, transparent 40%)'
+               }}>
+          </div>
+
+          {/* Treść banera */}
+          <div className="absolute inset-0 flex items-center justify-end px-8">
+            <div className="flex flex-col items-end gap-3">
+              <div className="text-right">
+                <p className="text-white text-xs uppercase tracking-wider font-semibold mb-1 drop-shadow-lg">
+                  Poznaj nasz Bestseller!
+                </p>
+                <h3 className="text-white text-2xl font-bold leading-tight drop-shadow-lg">
+                  Zebra EM45
+                </h3>
+                <p className="text-white text-xs font-light italic drop-shadow-lg">
+                  To nie tylko smartfon
+                </p>
+              </div>
+              <a
+                href="https://www.em45.info"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white hover:bg-emerald-50 text-emerald-700 font-bold px-6 py-2.5 rounded-lg shadow-xl hover:shadow-2xl transition-all text-sm"
+              >
+                Zobacz więcej →
+              </a>
+            </div>
+          </div>
         </motion.div>
 
         {/* Nagłówek */}
@@ -179,7 +211,7 @@ export default function Dashboard() {
             Twoje urządzenia fiskalne
           </h1>
           <p className="text-sm text-gray-600">
-            Nadleśnictwo {clientName} • {devices.length} urządzeń
+            {clientName} • {devices.length} urządzeń
           </p>
         </motion.div>
 
