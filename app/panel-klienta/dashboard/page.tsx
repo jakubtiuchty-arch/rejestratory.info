@@ -10,7 +10,8 @@ import {
   AlertCircle,
   CheckCircle2,
   Clock,
-  Loader2
+  Loader2,
+  LogOut
 } from "lucide-react";
 import { supabase, Device, Inspection } from '@/lib/supabase';
 
@@ -207,12 +208,27 @@ export default function Dashboard() {
           transition={{ delay: 0.1 }}
           className="mb-4"
         >
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">
-            Twoje urządzenia fiskalne
-          </h1>
-          <p className="text-sm text-gray-600">
-            {clientName} • {devices.length} urządzeń
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900 mb-1">
+                Twoje urządzenia fiskalne
+              </h1>
+              <p className="text-sm text-gray-600">
+                Nadleśnictwo {clientName} • {devices.length} urządzeń
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                localStorage.removeItem('client_name');
+                localStorage.removeItem('serial_number');
+                window.location.href = '/panel-klienta';
+              }}
+              className="flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-700 px-4 py-2 rounded-lg transition-colors text-sm font-medium border border-red-200"
+            >
+              <LogOut className="h-4 w-4" />
+              Wyloguj
+            </button>
+          </div>
         </motion.div>
 
         {/* Podsumowanie statusów */}
