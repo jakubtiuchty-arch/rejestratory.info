@@ -102,26 +102,57 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Banerek promocyjny */}
-      <motion.div 
+      <motion.div
         className="text-white relative overflow-hidden"
         style={{
-          background: "linear-gradient(90deg, #122F0b, #275F3E, #44785B, #6F9D87, #B5CABA)"
+          backgroundImage: "url('/baner_em45_header.jpeg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }}
+        animate={{
+          height: promoOpen ? 'auto' : 'auto'
+        }}
+        transition={{
+          duration: 0.5,
+          ease: "easeInOut"
         }}
       >
-        <div className="container mx-auto px-4">
+        {/* Ciemny overlay - tylko gdy zamknięte */}
+        <motion.div
+          className="absolute inset-0 bg-black/80"
+          animate={{
+            opacity: promoOpen ? 0 : 1
+          }}
+          transition={{
+            duration: 0.5,
+            ease: "easeInOut"
+          }}
+        ></motion.div>
+
+        {/* Subtelny gradient overlay dla lepszej czytelności CTA */}
+        {promoOpen && (
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          />
+        )}
+
+        <div className="container mx-auto px-4 relative z-10 h-full flex flex-col">
           <motion.button
             onClick={() => setPromoOpen(!promoOpen)}
             className="w-full py-3 flex items-center justify-center gap-3 transition-all relative"
-            whileHover={{ 
+            whileHover={{
               backgroundColor: "rgba(255, 255, 255, 0.1)"
             }}
             whileTap={{ scale: 0.98 }}
           >
-            <span className="font-semibold text-lg">
-              PROMOCJA NA LAPTOPY DELL!
+            <span className="font-semibold text-base sm:text-lg drop-shadow-lg">
+              Zobacz nasz bestseller - Zebra EM45
             </span>
             <motion.div
-              animate={{ 
+              animate={{
                 rotate: promoOpen ? 180 : 0,
                 scale: promoOpen ? 1 : [1, 1.3, 1]
               }}
@@ -146,7 +177,7 @@ export default function HomePage() {
               }}
               className="relative"
             >
-              <ChevronDown className="h-6 w-6" />
+              <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6" />
               <motion.div
                 className="absolute inset-0 rounded-full bg-white/20"
                 animate={{
@@ -161,48 +192,42 @@ export default function HomePage() {
               />
             </motion.div>
           </motion.button>
-        </div>
-        
-        {/* Dropdown z opisem promocji */}
-        <motion.div
-          initial={false}
-          animate={{ 
-            height: promoOpen ? 'auto' : 0,
-            opacity: promoOpen ? 1 : 0
-          }}
-          transition={{ 
-            height: { duration: 0.4, ease: "easeInOut" },
-            opacity: { duration: 0.3, ease: "easeInOut" }
-          }}
-          className="overflow-hidden"
-        >
-          <motion.div 
-            className="container mx-auto px-4 pb-4"
-            initial={false}
-            animate={{ 
-              y: promoOpen ? 0 : -20
-            }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-          >
-            <div className="bg-white/15 backdrop-blur-md rounded-lg p-6 max-w-3xl mx-auto border border-white/20 shadow-xl">
-              <h3 className="font-bold text-xl mb-3">Laptopy Dell w promocyjnych cenach!</h3>
-              <p className="mb-4">
-                Specjalna oferta na wybrane modele laptopów Dell dostępna w ZUP Łódź!
-              </p>
-              <motion.a 
-                href="/kategoria/laptopy"
-                className="inline-block bg-white text-emerald-600 font-semibold px-6 py-3 rounded-lg transition-colors shadow-lg"
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)"
+
+          {/* CTA Button - subtelny, elegancki design */}
+          {promoOpen && (
+            <motion.div
+              className="flex-1 flex items-end justify-center sm:justify-end pb-6 sm:pb-8 md:pb-12 pt-48 sm:pt-64 md:pt-80"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+            >
+              <motion.a
+                href="/produkt/zebra-em45"
+                className="inline-flex items-center gap-2 text-white font-medium px-6 py-2.5 rounded-full border-2 border-white/40 backdrop-blur-sm bg-white/10 hover:bg-white/20 transition-all shadow-lg"
+                whileHover={{
+                  scale: 1.03,
+                  borderColor: "rgba(255, 255, 255, 0.6)",
+                  backgroundColor: "rgba(255, 255, 255, 0.25)"
                 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.97 }}
               >
-                Zobacz laptopy Dell →
+                <span className="text-sm sm:text-base">Sprawdź</span>
+                <motion.span
+                  animate={{
+                    x: [0, 4, 0]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  →
+                </motion.span>
               </motion.a>
-            </div>
-          </motion.div>
-        </motion.div>
+            </motion.div>
+          )}
+        </div>
       </motion.div>
 
       {/* Header */}
