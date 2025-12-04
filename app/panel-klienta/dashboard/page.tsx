@@ -435,9 +435,14 @@ export default function Dashboard() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 + index * 0.05 }}
-                      className="flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
+                      className="relative group flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
+                      title="Problem z urządzeniem? Zamów kuriera po odbiór sprzętu"
                     >
                       <Truck className="h-4 w-4 text-orange-600" />
+                      <span className="absolute bottom-full right-0 mb-2 hidden group-hover:block w-48 bg-gray-900 text-white text-xs rounded-lg py-2 px-3 z-50">
+                        Problem z urządzeniem? Zamów kuriera po odbiór sprzętu
+                        <span className="absolute top-full right-4 -mt-1 border-4 border-transparent border-t-gray-900"></span>
+                      </span>
                     </motion.button>
                   </div>
                 );
@@ -504,9 +509,14 @@ export default function Dashboard() {
                           {/* Osobny mały box z przyciskiem kuriera */}
                           <button
                             onClick={() => handleOpenCourierModal(device)}
-                            className="flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
+                            className="relative group flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
+                            title="Problem z urządzeniem? Zamów kuriera po odbiór sprzętu"
                           >
                             <Truck className="h-4 w-4 text-orange-600" />
+                            <span className="absolute bottom-full right-0 mb-2 hidden group-hover:block w-48 bg-gray-900 text-white text-xs rounded-lg py-2 px-3 z-50">
+                              Problem z urządzeniem? Zamów kuriera po odbiór sprzętu
+                              <span className="absolute top-full right-4 -mt-1 border-4 border-transparent border-t-gray-900"></span>
+                            </span>
                           </button>
                         </motion.div>
                       );
