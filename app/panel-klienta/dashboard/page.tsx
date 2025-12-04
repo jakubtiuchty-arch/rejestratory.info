@@ -14,7 +14,9 @@ import {
   Truck,
   X,
   Check,
-  Info
+  Info,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 import { supabase, Device, Inspection } from '@/lib/supabase';
 
@@ -75,6 +77,7 @@ export default function Dashboard() {
   const [inspections, setInspections] = React.useState<Inspection[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [clientName, setClientName] = React.useState("");
+  const [showAllDevices, setShowAllDevices] = React.useState(false);
 
   // Courier modal states
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -372,80 +375,169 @@ export default function Dashboard() {
               <p className="text-gray-600">Brak urządzeń do wyświetlenia</p>
             </div>
           ) : (
-            devices.map((device, index) => {
-              const statusConfig = getStatusConfig(device.status);
-              const StatusIcon = statusConfig.icon;
+            <>
+              {/* Pierwsze 3 urządzenia - zawsze widoczne */}
+              {devices.slice(0, 3).map((device, index) => {
+                const statusConfig = getStatusConfig(device.status);
+                const StatusIcon = statusConfig.icon;
 
-              return (
-                <div key={device.id} className="flex gap-2">
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + index * 0.05 }}
-                    className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow transition-shadow"
-                  >
-                    <div className="p-3 flex items-center gap-3">
-                      {/* Ikona urządzenia */}
-                      <div className="bg-gray-50 p-1.5 rounded flex-shrink-0">
-                        <Printer className="h-4 w-4 text-gray-500" />
-                      </div>
+                return (
+                  <div key={device.id} className="flex gap-2">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + index * 0.05 }}
+                      className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow transition-shadow"
+                    >
+                      <div className="p-3 flex items-center gap-3">
+                        {/* Ikona urządzenia */}
+                        <div className="bg-gray-50 p-1.5 rounded flex-shrink-0">
+                          <Printer className="h-4 w-4 text-gray-500" />
+                        </div>
 
-                      {/* Nazwa i numer seryjny */}
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-sm font-semibold text-gray-900 truncate">
-                          {device.device_name}
-                        </h3>
-                        <p className="text-xs text-gray-500 truncate">
-                          {device.serial_number}
-                        </p>
-                      </div>
-
-                      {/* Status badge */}
-                      <div className={`flex items-center gap-1.5 ${statusConfig.bgColor} ${statusConfig.color} px-2 py-1 rounded-full text-xs font-medium flex-shrink-0`}>
-                        <StatusIcon className="h-3 w-3" />
-                        {statusConfig.label}
-                      </div>
-
-                      {/* Daty przeglądów */}
-                      <div className="hidden md:flex items-center gap-4 text-xs flex-shrink-0">
-                        <div>
-                          <p className="text-gray-400 text-xs">Ostatni</p>
-                          <p className="font-medium text-gray-900">
-                            {new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                        {/* Nazwa i numer seryjny */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-sm font-semibold text-gray-900 truncate">
+                            {device.device_name}
+                          </h3>
+                          <p className="text-xs text-gray-500 truncate">
+                            {device.serial_number}
                           </p>
                         </div>
-                        <div>
-                          <p className="text-gray-400 text-xs">Następny</p>
-                          <p className="font-medium text-gray-900">
-                            {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
-                          </p>
+
+                        {/* Status badge */}
+                        <div className={`flex items-center gap-1.5 ${statusConfig.bgColor} ${statusConfig.color} px-2 py-1 rounded-full text-xs font-medium flex-shrink-0`}>
+                          <StatusIcon className="h-3 w-3" />
+                          {statusConfig.label}
+                        </div>
+
+                        {/* Daty przeglądów */}
+                        <div className="hidden md:flex items-center gap-4 text-xs flex-shrink-0">
+                          <div>
+                            <p className="text-gray-400 text-xs">Ostatni</p>
+                            <p className="font-medium text-gray-900">
+                              {new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-gray-400 text-xs">Następny</p>
+                            <p className="font-medium text-gray-900">
+                              {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </motion.div>
+                    </motion.div>
 
-                  {/* Osobny mały box z przyciskiem kuriera */}
-                  <motion.button
-                    onClick={() => handleOpenCourierModal(device)}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + index * 0.05 }}
-                    className="group relative flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
-                  >
-                    <Truck className="h-4 w-4 text-orange-600" />
+                    {/* Osobny mały box z przyciskiem kuriera */}
+                    <motion.button
+                      onClick={() => handleOpenCourierModal(device)}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + index * 0.05 }}
+                      className="flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
+                    >
+                      <Truck className="h-4 w-4 text-orange-600" />
+                    </motion.button>
+                  </div>
+                );
+              })}
 
-                    {/* Tooltip - na desktop z lewej, na mobile nad przyciskiem */}
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 md:bottom-auto md:right-full md:left-auto md:top-1/2 md:-translate-y-1/2 md:translate-x-0 md:mr-2 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50">
-                      <div className="bg-gray-900 text-white text-xs px-3 py-2 rounded-lg shadow-lg whitespace-nowrap">
-                        Problem z urządzeniem?<br />Zamów kuriera po odbiór sprzętu do serwisu
-                        {/* Strzałka - na mobile w dół, na desktop w prawo */}
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900 md:border-t-transparent md:border-l-gray-900 md:top-1/2 md:left-full md:-translate-y-1/2 md:translate-x-0"></div>
-                      </div>
-                    </div>
-                  </motion.button>
-                </div>
-              );
-            })
+              {/* Rozwijana sekcja z pozostałymi urządzeniami */}
+              <AnimatePresence>
+                {showAllDevices && devices.length > 3 && (
+                  <>
+                    {devices.slice(3).map((device, index) => {
+                      const statusConfig = getStatusConfig(device.status);
+                      const StatusIcon = statusConfig.icon;
+
+                      return (
+                        <motion.div
+                          key={device.id}
+                          className="flex gap-2"
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                        >
+                          <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow transition-shadow">
+                            <div className="p-3 flex items-center gap-3">
+                              {/* Ikona urządzenia */}
+                              <div className="bg-gray-50 p-1.5 rounded flex-shrink-0">
+                                <Printer className="h-4 w-4 text-gray-500" />
+                              </div>
+
+                              {/* Nazwa i numer seryjny */}
+                              <div className="flex-1 min-w-0">
+                                <h3 className="text-sm font-semibold text-gray-900 truncate">
+                                  {device.device_name}
+                                </h3>
+                                <p className="text-xs text-gray-500 truncate">
+                                  {device.serial_number}
+                                </p>
+                              </div>
+
+                              {/* Status badge */}
+                              <div className={`flex items-center gap-1.5 ${statusConfig.bgColor} ${statusConfig.color} px-2 py-1 rounded-full text-xs font-medium flex-shrink-0`}>
+                                <StatusIcon className="h-3 w-3" />
+                                {statusConfig.label}
+                              </div>
+
+                              {/* Daty przeglądów */}
+                              <div className="hidden md:flex items-center gap-4 text-xs flex-shrink-0">
+                                <div>
+                                  <p className="text-gray-400 text-xs">Ostatni</p>
+                                  <p className="font-medium text-gray-900">
+                                    {new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="text-gray-400 text-xs">Następny</p>
+                                  <p className="font-medium text-gray-900">
+                                    {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Osobny mały box z przyciskiem kuriera */}
+                          <button
+                            onClick={() => handleOpenCourierModal(device)}
+                            className="flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
+                          >
+                            <Truck className="h-4 w-4 text-orange-600" />
+                          </button>
+                        </motion.div>
+                      );
+                    })}
+                  </>
+                )}
+              </AnimatePresence>
+
+              {/* Przycisk "Pokaż więcej / Pokaż mniej" */}
+              {devices.length > 3 && (
+                <motion.button
+                  onClick={() => setShowAllDevices(!showAllDevices)}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="w-full bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm font-medium text-gray-700 flex items-center justify-center gap-2 transition-colors"
+                >
+                  {showAllDevices ? (
+                    <>
+                      <ChevronUp className="h-4 w-4" />
+                      Pokaż mniej
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4" />
+                      Pokaż więcej ({devices.length - 3} urządzeń)
+                    </>
+                  )}
+                </motion.button>
+              )}
+            </>
           )}
         </div>
 
@@ -542,6 +634,9 @@ export default function Dashboard() {
                     Zgłoszenie wydania duplikatu książki serwisowej
                   </p>
                   <p className="text-xs text-gray-500">PDF • 91 KB</p>
+                  <p className="text-xs text-gray-700 mt-1">
+                    Wypełniony wniosek proszę wysłać na: <span className="font-semibold text-red-600">handel@wroclaw.posnet.com</span>
+                  </p>
                 </div>
               </div>
               <svg
