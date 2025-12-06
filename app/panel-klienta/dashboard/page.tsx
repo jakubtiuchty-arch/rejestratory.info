@@ -16,7 +16,12 @@ import {
   Check,
   Info,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  MapPin,
+  Pencil,
+  Search,
+  Filter,
+  Save
 } from "lucide-react";
 import { supabase, Device, Inspection } from '@/lib/supabase';
 
@@ -72,12 +77,34 @@ const formatDate = (dateString: string) => {
   });
 };
 
+// Mapowanie nazw urządzeń na zdjęcia
+const getDeviceImage = (deviceName: string): string | null => {
+  const name = deviceName.toLowerCase();
+  
+  if (name.includes('pospay')) return '/pospay_3.png';
+  if (name.includes('temo')) return '/temo_online_1.png';
+  // Dodaj więcej mapowań w miarę potrzeby
+  
+  return null; // Brak zdjęcia - użyj ikony
+};
+
 export default function Dashboard() {
   const [devices, setDevices] = React.useState<DeviceWithStatus[]>([]);
   const [inspections, setInspections] = React.useState<Inspection[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [clientName, setClientName] = React.useState("");
   const [showAllDevices, setShowAllDevices] = React.useState(false);
+
+  // Location (leśnictwo) editing states
+  const [editingDeviceId, setEditingDeviceId] = React.useState<string | null>(null);
+  const [editingLocation, setEditingLocation] = React.useState("");
+  const [isSavingLocation, setIsSavingLocation] = React.useState(false);
+  const [isLocationModalOpen, setIsLocationModalOpen] = React.useState(false);
+  const [selectedDeviceForLocation, setSelectedDeviceForLocation] = React.useState<DeviceWithStatus | null>(null);
+  
+  // Search and filter states
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [locationFilter, setLocationFilter] = React.useState<string>("all");
 
   // Courier modal states
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -110,6 +137,86 @@ export default function Dashboard() {
     } else {
       return "ok"; // Sprawny
     }
+  };
+
+  // Pobierz unikalne leśnictwa do filtrowania
+  const uniqueForestryUnits = React.useMemo(() => {
+    const units = devices
+      .map(d => d.forestry_unit)
+      .filter((unit): unit is string => Boolean(unit && unit.trim()));
+    return [...new Set(units)].sort((a, b) => a.localeCompare(b, 'pl'));
+  }, [devices]);
+
+  // Filtrowane i wyszukiwane urządzenia
+  const filteredDevices = React.useMemo(() => {
+    return devices.filter(device => {
+      // Filtr po leśnictwie
+      if (locationFilter !== "all") {
+        if (locationFilter === "unassigned") {
+          if (device.forestry_unit && device.forestry_unit.trim()) return false;
+        } else {
+          if (device.forestry_unit !== locationFilter) return false;
+        }
+      }
+      
+      // Wyszukiwanie
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase();
+        const matchesName = device.device_name.toLowerCase().includes(query);
+        const matchesSerial = device.serial_number.toLowerCase().includes(query);
+        const matchesForestryUnit = device.forestry_unit?.toLowerCase().includes(query) || false;
+        return matchesName || matchesSerial || matchesForestryUnit;
+      }
+      
+      return true;
+    });
+  }, [devices, locationFilter, searchQuery]);
+
+  // Funkcja zapisująca nazwę leśnictwa do Supabase
+  const saveForestryUnit = async (deviceId: string, newForestryUnit: string) => {
+    setIsSavingLocation(true);
+    try {
+      const { error } = await supabase
+        .from('devices')
+        .update({ forestry_unit: newForestryUnit.trim() })
+        .eq('id', deviceId);
+
+      if (error) throw error;
+
+      // Aktualizuj lokalny stan
+      setDevices(prev => prev.map(d => 
+        d.id === deviceId ? { ...d, forestry_unit: newForestryUnit.trim() } : d
+      ));
+
+      setEditingDeviceId(null);
+      setEditingLocation("");
+      setIsLocationModalOpen(false);
+      setSelectedDeviceForLocation(null);
+    } catch (error) {
+      console.error('Error saving forestry unit:', error);
+      alert('Błąd podczas zapisywania leśnictwa. Spróbuj ponownie.');
+    } finally {
+      setIsSavingLocation(false);
+    }
+  };
+
+  // Otwórz modal edycji leśnictwa
+  const openLocationModal = (device: DeviceWithStatus) => {
+    setSelectedDeviceForLocation(device);
+    setEditingLocation(device.forestry_unit || "");
+    setIsLocationModalOpen(true);
+  };
+
+  // Rozpocznij edycję inline
+  const startInlineEdit = (device: DeviceWithStatus) => {
+    setEditingDeviceId(device.id);
+    setEditingLocation(device.forestry_unit || "");
+  };
+
+  // Anuluj edycję inline
+  const cancelInlineEdit = () => {
+    setEditingDeviceId(null);
+    setEditingLocation("");
   };
 
   React.useEffect(() => {
@@ -167,10 +274,14 @@ export default function Dashboard() {
   // Handle opening courier modal for a device
   const handleOpenCourierModal = (device: DeviceWithStatus) => {
     setSelectedDevice(device);
+    // Jeśli urządzenie ma przypisane leśnictwo, użyj go w polu nadleśnictwo
+    const districtInfo = device.forestry_unit && device.forestry_unit.trim() 
+      ? `${clientName.replace('Nadleśnictwo ', '')} - ${device.forestry_unit}`
+      : clientName.replace('Nadleśnictwo ', '');
     setFormData({
       firstName: '',
       lastName: '',
-      forestDistrict: clientName.replace('Nadleśnictwo ', ''),
+      forestDistrict: districtInfo,
       city: '',
       street: '',
       number: '',
@@ -323,63 +434,104 @@ export default function Dashboard() {
           </div>
         </motion.div>
 
-        {/* Podsumowanie statusów */}
+        {/* Wyszukiwanie i filtrowanie */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="grid md:grid-cols-3 gap-3 mb-6"
+          transition={{ delay: 0.15 }}
+          className="mb-4 bg-white rounded-lg border border-gray-200 p-3"
         >
-          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5 text-emerald-600" />
-              <div>
-                <p className="text-xl font-bold text-emerald-900">
-                  {devices.filter(d => d.status === "ok").length}
-                </p>
-                <p className="text-xs text-emerald-700">Po przeglądzie</p>
-              </div>
+          <div className="flex flex-col md:flex-row gap-3">
+            {/* Wyszukiwarka */}
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Szukaj po nazwie, numerze seryjnym lub leśnictwie..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Filtr po leśnictwie */}
+            <div className="relative min-w-[200px]">
+              <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <select
+                value={locationFilter}
+                onChange={(e) => setLocationFilter(e.target.value)}
+                className="w-full pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm appearance-none bg-white"
+              >
+                <option value="all">Wszystkie leśnictwa ({devices.length})</option>
+                <option value="unassigned">
+                  Nieprzypisane ({devices.filter(d => !d.forestry_unit || !d.forestry_unit.trim()).length})
+                </option>
+                {uniqueForestryUnits.map(unit => (
+                  <option key={unit} value={unit}>
+                    {unit} ({devices.filter(d => d.forestry_unit === unit).length})
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
             </div>
           </div>
 
-          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-amber-600" />
-              <div>
-                <p className="text-xl font-bold text-amber-900">
-                  {devices.filter(d => d.status === "warning").length}
-                </p>
-                <p className="text-xs text-amber-700">Zbliża się przegląd</p>
-              </div>
+          {/* Info o filtrowanych wynikach */}
+          {(searchQuery || locationFilter !== "all") && (
+            <div className="mt-2 flex items-center justify-between text-sm">
+              <span className="text-gray-600">
+                Znaleziono: <strong>{filteredDevices.length}</strong> z {devices.length} urządzeń
+              </span>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setLocationFilter("all");
+                }}
+                className="text-emerald-600 hover:text-emerald-700 font-medium"
+              >
+                Wyczyść filtry
+              </button>
             </div>
-          </div>
-
-          <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-red-600" />
-              <div>
-                <p className="text-xl font-bold text-red-900">
-                  {devices.filter(d => d.status === "overdue").length}
-                </p>
-                <p className="text-xs text-red-700">Wymaga przeglądu</p>
-              </div>
-            </div>
-          </div>
+          )}
         </motion.div>
 
         {/* Lista urządzeń */}
         <div className="space-y-2">
-          {devices.length === 0 ? (
+          {filteredDevices.length === 0 ? (
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
               <Printer className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-              <p className="text-gray-600">Brak urządzeń do wyświetlenia</p>
+              <p className="text-gray-600">
+                {devices.length === 0 
+                  ? "Brak urządzeń do wyświetlenia" 
+                  : "Brak urządzeń pasujących do wyszukiwania"}
+              </p>
+              {(searchQuery || locationFilter !== "all") && (
+                <button
+                  onClick={() => {
+                    setSearchQuery("");
+                    setLocationFilter("all");
+                  }}
+                  className="mt-3 text-emerald-600 hover:text-emerald-700 font-medium text-sm"
+                >
+                  Wyczyść filtry
+                </button>
+              )}
             </div>
           ) : (
             <>
               {/* Pierwsze 3 urządzenia - zawsze widoczne */}
-              {devices.slice(0, 3).map((device, index) => {
+              {filteredDevices.slice(0, 3).map((device, index) => {
                 const statusConfig = getStatusConfig(device.status);
                 const StatusIcon = statusConfig.icon;
+                const isEditing = editingDeviceId === device.id;
 
                 return (
                   <div key={device.id} className="flex gap-2">
@@ -390,12 +542,22 @@ export default function Dashboard() {
                       className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow transition-shadow"
                     >
                       <div className="p-3 flex items-center gap-3">
-                        {/* Ikona urządzenia */}
-                        <div className="bg-gray-50 p-1.5 rounded flex-shrink-0">
-                          <Printer className="h-4 w-4 text-gray-500" />
-                        </div>
+                        {/* Zdjęcie lub ikona urządzenia */}
+                        {getDeviceImage(device.device_name) ? (
+                          <div className="bg-gray-50 rounded flex-shrink-0 overflow-hidden w-10 h-10">
+                            <img 
+                              src={getDeviceImage(device.device_name)!} 
+                              alt={device.device_name}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                        ) : (
+                          <div className="bg-gray-50 p-1.5 rounded flex-shrink-0">
+                            <Printer className="h-4 w-4 text-gray-500" />
+                          </div>
+                        )}
 
-                        {/* Nazwa i numer seryjny */}
+                        {/* Nazwa, numer seryjny i leśnictwo */}
                         <div className="flex-1 min-w-0">
                           <h3 className="text-sm font-semibold text-gray-900 truncate">
                             {device.device_name}
@@ -403,6 +565,61 @@ export default function Dashboard() {
                           <p className="text-xs text-gray-500 truncate">
                             {device.serial_number}
                           </p>
+                          
+                          {/* Leśnictwo - inline edit */}
+                          {isEditing ? (
+                            <div className="flex items-center gap-1 mt-1">
+                              <MapPin className="h-3 w-3 text-emerald-500 flex-shrink-0" />
+                              <input
+                                type="text"
+                                value={editingLocation}
+                                onChange={(e) => setEditingLocation(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') saveForestryUnit(device.id, editingLocation);
+                                  if (e.key === 'Escape') cancelInlineEdit();
+                                }}
+                                className="flex-1 text-xs px-1.5 py-0.5 border border-emerald-300 rounded focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
+                                placeholder="Wpisz nazwę leśnictwa..."
+                                autoFocus
+                                list={`forestry-units-${device.id}`}
+                              />
+                              <datalist id={`forestry-units-${device.id}`}>
+                                {uniqueForestryUnits.map(unit => (
+                                  <option key={unit} value={unit} />
+                                ))}
+                              </datalist>
+                              <button
+                                onClick={() => saveForestryUnit(device.id, editingLocation)}
+                                disabled={isSavingLocation}
+                                className="p-0.5 text-emerald-600 hover:text-emerald-700 disabled:opacity-50"
+                              >
+                                <Save className="h-3.5 w-3.5" />
+                              </button>
+                              <button
+                                onClick={cancelInlineEdit}
+                                className="p-0.5 text-gray-400 hover:text-gray-600"
+                              >
+                                <X className="h-3.5 w-3.5" />
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => startInlineEdit(device)}
+                              className="flex items-center gap-1 mt-1 group"
+                            >
+                              <MapPin className="h-3 w-3 text-emerald-500 flex-shrink-0" />
+                              {device.forestry_unit && device.forestry_unit.trim() ? (
+                                <span className="text-xs text-emerald-700 font-medium group-hover:text-emerald-800 truncate">
+                                  {device.forestry_unit}
+                                </span>
+                              ) : (
+                                <span className="text-xs text-gray-400 italic group-hover:text-emerald-600">
+                                  Przypisz leśnictwo...
+                                </span>
+                              )}
+                              <Pencil className="h-2.5 w-2.5 text-gray-300 group-hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </button>
+                          )}
                         </div>
 
                         {/* Status badge */}
@@ -450,11 +667,12 @@ export default function Dashboard() {
 
               {/* Rozwijana sekcja z pozostałymi urządzeniami */}
               <AnimatePresence>
-                {showAllDevices && devices.length > 3 && (
+                {showAllDevices && filteredDevices.length > 3 && (
                   <>
-                    {devices.slice(3).map((device, index) => {
+                    {filteredDevices.slice(3).map((device, index) => {
                       const statusConfig = getStatusConfig(device.status);
                       const StatusIcon = statusConfig.icon;
+                      const isEditing = editingDeviceId === device.id;
 
                       return (
                         <motion.div
@@ -467,12 +685,22 @@ export default function Dashboard() {
                         >
                           <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow transition-shadow">
                             <div className="p-3 flex items-center gap-3">
-                              {/* Ikona urządzenia */}
-                              <div className="bg-gray-50 p-1.5 rounded flex-shrink-0">
-                                <Printer className="h-4 w-4 text-gray-500" />
-                              </div>
+                              {/* Zdjęcie lub ikona urządzenia */}
+                              {getDeviceImage(device.device_name) ? (
+                                <div className="bg-gray-50 rounded flex-shrink-0 overflow-hidden w-10 h-10">
+                                  <img 
+                                    src={getDeviceImage(device.device_name)!} 
+                                    alt={device.device_name}
+                                    className="w-full h-full object-contain"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="bg-gray-50 p-1.5 rounded flex-shrink-0">
+                                  <Printer className="h-4 w-4 text-gray-500" />
+                                </div>
+                              )}
 
-                              {/* Nazwa i numer seryjny */}
+                              {/* Nazwa, numer seryjny i leśnictwo */}
                               <div className="flex-1 min-w-0">
                                 <h3 className="text-sm font-semibold text-gray-900 truncate">
                                   {device.device_name}
@@ -480,6 +708,61 @@ export default function Dashboard() {
                                 <p className="text-xs text-gray-500 truncate">
                                   {device.serial_number}
                                 </p>
+                                
+                                {/* Leśnictwo - inline edit */}
+                                {isEditing ? (
+                                  <div className="flex items-center gap-1 mt-1">
+                                    <MapPin className="h-3 w-3 text-emerald-500 flex-shrink-0" />
+                                    <input
+                                      type="text"
+                                      value={editingLocation}
+                                      onChange={(e) => setEditingLocation(e.target.value)}
+                                      onKeyDown={(e) => {
+                                        if (e.key === 'Enter') saveForestryUnit(device.id, editingLocation);
+                                        if (e.key === 'Escape') cancelInlineEdit();
+                                      }}
+                                      className="flex-1 text-xs px-1.5 py-0.5 border border-emerald-300 rounded focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
+                                      placeholder="Wpisz nazwę leśnictwa..."
+                                      autoFocus
+                                      list={`forestry-units-expanded-${device.id}`}
+                                    />
+                                    <datalist id={`forestry-units-expanded-${device.id}`}>
+                                      {uniqueForestryUnits.map(unit => (
+                                        <option key={unit} value={unit} />
+                                      ))}
+                                    </datalist>
+                                    <button
+                                      onClick={() => saveForestryUnit(device.id, editingLocation)}
+                                      disabled={isSavingLocation}
+                                      className="p-0.5 text-emerald-600 hover:text-emerald-700 disabled:opacity-50"
+                                    >
+                                      <Save className="h-3.5 w-3.5" />
+                                    </button>
+                                    <button
+                                      onClick={cancelInlineEdit}
+                                      className="p-0.5 text-gray-400 hover:text-gray-600"
+                                    >
+                                      <X className="h-3.5 w-3.5" />
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    onClick={() => startInlineEdit(device)}
+                                    className="flex items-center gap-1 mt-1 group"
+                                  >
+                                    <MapPin className="h-3 w-3 text-emerald-500 flex-shrink-0" />
+                                    {device.forestry_unit && device.forestry_unit.trim() ? (
+                                      <span className="text-xs text-emerald-700 font-medium group-hover:text-emerald-800 truncate">
+                                        {device.forestry_unit}
+                                      </span>
+                                    ) : (
+                                      <span className="text-xs text-gray-400 italic group-hover:text-emerald-600">
+                                        Przypisz leśnictwo...
+                                      </span>
+                                    )}
+                                    <Pencil className="h-2.5 w-2.5 text-gray-300 group-hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                  </button>
+                                )}
                               </div>
 
                               {/* Status badge */}
@@ -526,7 +809,7 @@ export default function Dashboard() {
               </AnimatePresence>
 
               {/* Przycisk "Pokaż więcej / Pokaż mniej" */}
-              {devices.length > 3 && (
+              {filteredDevices.length > 3 && (
                 <motion.button
                   onClick={() => setShowAllDevices(!showAllDevices)}
                   initial={{ opacity: 0 }}
@@ -542,7 +825,7 @@ export default function Dashboard() {
                   ) : (
                     <>
                       <ChevronDown className="h-4 w-4" />
-                      Pokaż więcej ({devices.length - 3} urządzeń)
+                      Pokaż więcej ({filteredDevices.length - 3} urządzeń)
                     </>
                   )}
                 </motion.button>
@@ -704,6 +987,158 @@ export default function Dashboard() {
           </a>
         </motion.div>
       </div>
+
+      {/* Location Edit Modal */}
+      <AnimatePresence>
+        {isLocationModalOpen && selectedDeviceForLocation && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => {
+              setIsLocationModalOpen(false);
+              setSelectedDeviceForLocation(null);
+              setEditingLocation("");
+            }}
+          >
+            <motion.div
+              className="bg-white rounded-lg max-w-md w-full shadow-xl"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                      <MapPin className="w-5 h-5 text-emerald-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900">Przypisz leśnictwo</h3>
+                      <p className="text-sm text-gray-600">{selectedDeviceForLocation.device_name}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setIsLocationModalOpen(false);
+                      setSelectedDeviceForLocation(null);
+                      setEditingLocation("");
+                    }}
+                    className="p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Informacja o urządzeniu */}
+                <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                  <div className="flex items-center gap-3">
+                    {getDeviceImage(selectedDeviceForLocation.device_name) ? (
+                      <div className="bg-white rounded-lg overflow-hidden w-12 h-12 flex-shrink-0 border border-gray-200">
+                        <img 
+                          src={getDeviceImage(selectedDeviceForLocation.device_name)!} 
+                          alt={selectedDeviceForLocation.device_name}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                    ) : (
+                      <Printer className="h-8 w-8 text-gray-400" />
+                    )}
+                    <div>
+                      <p className="font-medium text-gray-900">{selectedDeviceForLocation.device_name}</p>
+                      <p className="text-sm text-gray-500">{selectedDeviceForLocation.serial_number}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Input z autocomplete */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Nazwa leśnictwa
+                  </label>
+                  <input
+                    type="text"
+                    value={editingLocation}
+                    onChange={(e) => setEditingLocation(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && editingLocation.trim()) {
+                        saveForestryUnit(selectedDeviceForLocation.id, editingLocation);
+                      }
+                    }}
+                    placeholder="np. Leśnictwo Rybaki"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    autoFocus
+                    list="forestry-units-modal"
+                  />
+                  <datalist id="forestry-units-modal">
+                    {uniqueForestryUnits.map(unit => (
+                      <option key={unit} value={unit} />
+                    ))}
+                  </datalist>
+                  <p className="mt-2 text-xs text-gray-500">
+                    Zacznij pisać, aby zobaczyć podpowiedzi z wcześniej używanych nazw
+                  </p>
+                </div>
+
+                {/* Podpowiedzi - szybki wybór */}
+                {uniqueForestryUnits.length > 0 && (
+                  <div className="mb-6">
+                    <p className="text-xs font-medium text-gray-500 mb-2">Szybki wybór:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {uniqueForestryUnits.slice(0, 6).map(unit => (
+                        <button
+                          key={unit}
+                          onClick={() => setEditingLocation(unit)}
+                          className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                            editingLocation === unit
+                              ? 'bg-emerald-600 text-white'
+                              : 'bg-gray-100 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700'
+                          }`}
+                        >
+                          {unit}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Przyciski */}
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => {
+                      setIsLocationModalOpen(false);
+                      setSelectedDeviceForLocation(null);
+                      setEditingLocation("");
+                    }}
+                    className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                  >
+                    Anuluj
+                  </button>
+                  <button
+                    onClick={() => saveForestryUnit(selectedDeviceForLocation.id, editingLocation)}
+                    disabled={isSavingLocation || !editingLocation.trim()}
+                    className="flex-1 px-4 py-2.5 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {isSavingLocation ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Zapisywanie...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-4 w-4" />
+                        Zapisz
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Courier Form Modal */}
       <AnimatePresence>

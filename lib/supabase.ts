@@ -16,6 +16,7 @@ export interface Device {
   next_inspection_date: string;
   location: string;
   last_inspection_id: string | null;
+  forestry_unit: string | null; // Leśnictwo - jednostka terenowa w ramach nadleśnictwa
 }
 
 export interface Inspection {
