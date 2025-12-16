@@ -86,6 +86,17 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [categoriesView, setCategoriesView] = React.useState(0); // 0=4, 1=8, 2=all
   const [promoOpen, setPromoOpen] = React.useState(false);
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+
+  // Force video to play on mount
+  React.useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.play().catch((error) => {
+        console.log("Video autoplay was prevented:", error);
+      });
+    }
+  }, []);
   
   // Logika wyświetlania kategorii w trzech krokach
   const getVisibleCategories = () => {
@@ -238,10 +249,12 @@ export default function HomePage() {
         {/* Video Background */}
         <div className="absolute inset-0 overflow-hidden">
           <video
+            ref={videoRef}
             autoPlay
             loop
             muted
             playsInline
+            preload="auto"
             className="absolute inset-0 w-full h-full object-cover"
           >
             <source src="/las_video.mp4" type="video/mp4" />
