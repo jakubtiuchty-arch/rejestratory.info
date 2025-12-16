@@ -2,6 +2,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import {
   Printer,
   FileText,
@@ -1498,22 +1499,7 @@ export default function Dashboard() {
       </AnimatePresence>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50/20 py-7 mt-10">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center gap-3.5">
-            <div className="flex items-center justify-center gap-7 text-sm">
-              <img src="/takma_logo_footer.png" alt="TAKMA" className="h-10 w-auto" />
-              <span className="text-gray-600">takma@takma.com.pl</span>
-              <span className="text-gray-600">607 819 688</span>
-              <span className="text-gray-600">51-128 Wrocław, ul. Poświęcka 1a</span>
-            </div>
-            <div className="w-full max-w-3xl border-t border-gray-200"></div>
-            <div className="text-gray-400 text-sm">
-              © 2024 Rejestratory.info. Wszystkie prawa zastrzeżone.
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

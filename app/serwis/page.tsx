@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 import { 
-  ShoppingCart, 
   Phone, 
   Mail, 
   MapPin,
@@ -83,95 +84,7 @@ export default function ServicePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header - z hamburger menu dla mobile */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="container mx-auto px-4">
-          <nav className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
-            </div>
-            
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-8">
-              <ul className="flex items-center gap-8">
-                <li><a href="/" className="text-gray-700 hover:text-emerald-600 transition-colors">Strona główna</a></li>
-                <li><a href="/#produkty" className="text-gray-700 hover:text-emerald-600 transition-colors">Produkty</a></li>
-                <li><a href="/serwis" className="text-emerald-600 font-semibold">Serwis</a></li>
-                <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
-              </ul>
-              
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                <ShoppingCart className="h-4 w-4" />
-                Zapytanie (0)
-              </button>
-            </div>
-
-            {/* Mobile Menu Button & Cart */}
-            <div className="flex md:hidden items-center gap-3">
-              <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg flex items-center gap-2">
-                <ShoppingCart className="h-4 w-4" />
-                (0)
-              </button>
-              
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-gray-700 hover:text-emerald-600 transition-colors"
-              >
-                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-            </div>
-          </nav>
-
-          {/* Mobile Menu Dropdown */}
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t border-gray-200"
-            >
-              <ul className="py-4 space-y-2">
-                <li>
-                  <a 
-                    href="/" 
-                    className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Strona główna
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="/#produkty" 
-                    className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Produkty
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="/serwis" 
-                    className="block px-4 py-2 text-emerald-600 bg-emerald-50 font-semibold"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Serwis
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="/kontakt" 
-                    className="block px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Kontakt
-                  </a>
-                </li>
-              </ul>
-            </motion.div>
-          )}
-        </div>
-      </header>
+      <Header activeTab="serwis" />
 
       {/* Hero Section z Typewriter */}
       <section className="bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 text-white py-12">
@@ -990,22 +903,7 @@ export default function ServicePage() {
       </section>
 
      {/* Footer */}
-<footer className="bg-gradient-to-br from-emerald-50 via-white to-emerald-50/20 py-12">
-  <div className="container mx-auto px-4">
-    <div className="flex flex-col items-center gap-6">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 text-center md:text-left">
-        <img src="/takma_logo_footer.png" alt="TAKMA" className="h-14 w-auto" />
-        <span className="text-gray-700 text-lg">takma@takma.com.pl</span>
-        <span className="text-gray-700 text-lg">607 819 688</span>
-        <span className="text-gray-700 text-lg">51-128 Wrocław, ul. Poświęcka 1a</span>
-      </div>
-      <div className="w-full max-w-4xl border-t border-gray-300"></div>
-      <div className="text-gray-500 text-sm">
-        © 2024 Rejestratory.info. Wszystkie prawa zastrzeżone.
-      </div>
-    </div>
-  </div>
-</footer>
+<Footer />
 </div>
   );
 }

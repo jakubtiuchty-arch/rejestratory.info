@@ -283,33 +283,7 @@ export default function HPSeries5QHDUSBCProductPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header - IDENTYCZNY JAK STRONA GŁÓWNA */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="container mx-auto px-4">
-          <nav className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
-            </div>
-            
-            <div className="flex items-center gap-8">
-              <ul className="hidden md:flex items-center gap-8">
-                <li><a href="/" className="text-gray-700 hover:text-emerald-600 transition-colors">Strona główna</a></li>
-                <li><a href="#produkty" className="text-gray-700 hover:text-emerald-600 transition-colors">Produkty</a></li>
-                <li><a href="/serwis" className="text-gray-700 hover:text-emerald-600 transition-colors">Serwis</a></li>
-                <li><a href="/kontakt" className="text-gray-700 hover:text-emerald-600 transition-colors">Kontakt</a></li>
-              </ul>
-              
-              <button 
-                onClick={openCart}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
-              >
-                <ShoppingCart className="h-4 w-4" />
-                Zapytanie ({inquiryCount})
-              </button>
-            </div>
-          </nav>
-        </div>
-      </header>
+      <Header activeTab="produkty" />
       
       {/* Breadcrumbs */}
       <div className="container mx-auto px-4 py-4">
