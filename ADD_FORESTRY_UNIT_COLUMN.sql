@@ -30,3 +30,6 @@ CREATE INDEX IF NOT EXISTS idx_devices_forestry_unit ON devices(forestry_unit);
 -- - Użytkownicy będą mogli przypisywać leśnictwa przez Panel Klienta
 -- =============================================================
 
+
+
+
