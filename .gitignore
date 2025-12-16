@@ -40,5 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 *.mov
-*.mp4
 backup_*/
+
+# Allow specific video for hero section
+!public/las_video.mp4
