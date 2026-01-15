@@ -913,101 +913,141 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* Dokumenty - Umowy */}
-        {clientDocuments.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35 }}
-            className="mt-6"
-          >
-            <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-              <FileText className="h-4 w-4 text-blue-600" />
-              Dokumenty
-            </h2>
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-              <div className="divide-y divide-gray-100">
-                {clientDocuments.map((doc, index) => (
-                  <motion.div
-                    key={doc.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 + index * 0.1 }}
-                    className="p-3 hover:bg-blue-50 transition-colors flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="bg-blue-50 p-2 rounded">
-                        <FileText className="h-4 w-4 text-blue-600" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-gray-900">
-                          {doc.document_name}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {doc.document_type === 'contract' ? 'Umowa' : doc.document_type === 'protocol' ? 'Protokół' : 'Dokument'}
-                          {' • '}
-                          {new Date(doc.created_at).toLocaleDateString('pl-PL')}
-                        </p>
-                      </div>
-                    </div>
-                    <a
-                      href={doc.document_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors"
+        {/* Dokumenty - Umowy i inne (bez protokołów) */}
+        {(() => {
+          const nonProtocolDocuments = clientDocuments.filter(doc => doc.document_type !== 'protocol');
+          if (nonProtocolDocuments.length === 0) return null;
+          
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35 }}
+              className="mt-6"
+            >
+              <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                <FileText className="h-4 w-4 text-blue-600" />
+                Dokumenty
+              </h2>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div className="divide-y divide-gray-100">
+                  {nonProtocolDocuments.map((doc, index) => (
+                    <motion.div
+                      key={doc.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.4 + index * 0.1 }}
+                      className="p-3 hover:bg-blue-50 transition-colors flex items-center justify-between"
                     >
-                      <Download className="h-3 w-3" />
-                      Pobierz
-                    </a>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Protokoły przeglądów */}
-        {inspections.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="mt-6"
-          >
-            <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-              <FileText className="h-4 w-4 text-emerald-600" />
-              Protokoły przeglądów
-            </h2>
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-              {inspections.filter(i => i.pdf_url).length === 0 ? (
-                <div className="p-8 text-center">
-                  <FileText className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-600">Brak protokołów do wyświetlenia</p>
+                      <div className="flex items-center gap-3">
+                        <div className="bg-blue-50 p-2 rounded">
+                          <FileText className="h-4 w-4 text-blue-600" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900">
+                            {doc.document_name}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {doc.document_type === 'contract' ? 'Umowa' : 'Dokument'}
+                            {' • '}
+                            {new Date(doc.created_at).toLocaleDateString('pl-PL')}
+                          </p>
+                        </div>
+                      </div>
+                      <a
+                        href={doc.document_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors"
+                      >
+                        <Download className="h-3 w-3" />
+                        Pobierz
+                      </a>
+                    </motion.div>
+                  ))}
                 </div>
-              ) : (
-              <div className="divide-y divide-gray-100">
-                {inspections.map((inspection, index) => (
-                  <motion.div
-                    key={inspection.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
-                    className="p-3 hover:bg-emerald-50 transition-colors flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="bg-emerald-50 p-2 rounded">
-                        <FileText className="h-4 w-4 text-emerald-600" />
+              </div>
+            </motion.div>
+          );
+        })()}
+
+        {/* Protokoły przeglądów - z aplikacji terenowej + dodane przez admin */}
+        {(() => {
+          const protocolDocuments = clientDocuments.filter(doc => doc.document_type === 'protocol');
+          const hasInspections = inspections.filter(i => i.pdf_url).length > 0;
+          const hasProtocolDocuments = protocolDocuments.length > 0;
+          
+          if (!hasInspections && !hasProtocolDocuments) return null;
+          
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="mt-6"
+            >
+              <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                <FileText className="h-4 w-4 text-emerald-600" />
+                Protokoły przeglądów
+              </h2>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div className="divide-y divide-gray-100">
+                  {/* Protokoły dodane przez admin */}
+                  {protocolDocuments.map((doc, index) => (
+                    <motion.div
+                      key={`doc-${doc.id}`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.45 + index * 0.1 }}
+                      className="p-3 hover:bg-emerald-50 transition-colors flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="bg-emerald-50 p-2 rounded">
+                          <FileText className="h-4 w-4 text-emerald-600" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900">
+                            {doc.document_name}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            Protokół • {new Date(doc.created_at).toLocaleDateString('pl-PL')}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="text-sm font-semibold text-gray-900">
-                          {formatDate(inspection.inspection_date)}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {inspection.device_count} urządzeń
-                        </p>
+                      <a
+                        href={doc.document_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors"
+                      >
+                        <Download className="h-3 w-3" />
+                        PDF
+                      </a>
+                    </motion.div>
+                  ))}
+                  
+                  {/* Protokoły z aplikacji terenowej */}
+                  {inspections.filter(i => i.pdf_url).map((inspection, index) => (
+                    <motion.div
+                      key={`insp-${inspection.id}`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.5 + protocolDocuments.length * 0.1 + index * 0.1 }}
+                      className="p-3 hover:bg-emerald-50 transition-colors flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="bg-emerald-50 p-2 rounded">
+                          <FileText className="h-4 w-4 text-emerald-600" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900">
+                            Przegląd {formatDate(inspection.inspection_date)}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {inspection.device_count} urządzeń
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    {inspection.pdf_url ? (
                       <a
                         href={inspection.pdf_url}
                         target="_blank"
@@ -1017,23 +1057,13 @@ export default function Dashboard() {
                         <Download className="h-3 w-3" />
                         PDF
                       </a>
-                    ) : (
-                      <button
-                        disabled
-                        className="flex items-center gap-2 bg-gray-300 text-gray-500 px-3 py-1.5 rounded text-xs font-medium cursor-not-allowed"
-                        title="Protokół niedostępny"
-                      >
-                        <Download className="h-3 w-3" />
-                        PDF
-                      </button>
-                    )}
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-              )}
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          );
+        })()}
 
         {/* Instrukcje - Infografiki (tylko dla nowych urządzeń, max 1 miesiąc od fiskalizacji) */}
         {(() => {
