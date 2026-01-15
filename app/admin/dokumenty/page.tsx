@@ -211,10 +211,7 @@ export default function AdminDocuments() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-14 border-b border-gray-100">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-                <BarChart3 className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-bold text-gray-900">Panel Admin</span>
+              <span className="font-bold text-gray-900">Panel administratora</span>
             </div>
             <div className="flex items-center gap-4">
               <a href="/" className="text-gray-500 hover:text-emerald-600 text-sm flex items-center gap-1">
