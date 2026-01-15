@@ -42,6 +42,7 @@ export default function AdminRejestratory() {
   const [clientName, setClientName] = React.useState("");
   const [deviceType, setDeviceType] = React.useState(REGISTRATOR_TYPES[0].value);
   const [purchaseDate, setPurchaseDate] = React.useState("");
+  const [serviceContract, setServiceContract] = React.useState<number | null>(null); // null, 3 lub 5
   const [serialNumbersText, setSerialNumbersText] = React.useState("");
   const [parsedDevices, setParsedDevices] = React.useState<ParsedDevice[]>([]);
   
@@ -156,12 +157,22 @@ export default function AdminRejestratory() {
     setSubmitResult(null);
 
     try {
+      // Oblicz datę końca kontraktu jeśli wybrany
+      let contractEndDate = null;
+      if (serviceContract && purchaseDate) {
+        const endDate = new Date(purchaseDate);
+        endDate.setFullYear(endDate.getFullYear() + serviceContract);
+        contractEndDate = endDate.toISOString().split('T')[0];
+      }
+
       // Prepare registrators for insertion
       const registratorsToInsert = validDevices.map(d => ({
         client_name: clientName.trim(),
         device_name: deviceType,
         serial_number: d.serialNumber,
         purchase_date: purchaseDate,
+        service_contract_years: serviceContract,
+        service_contract_end: contractEndDate,
         created_at: new Date().toISOString(),
       }));
 
@@ -436,6 +447,73 @@ export default function AdminRejestratory() {
                     className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
                   />
+                </div>
+
+                {/* Kontrakt serwisowy */}
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Kontrakt serwisowy
+                  </label>
+                  <div className="space-y-2">
+                    <label
+                      className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition-colors ${
+                        serviceContract === null
+                          ? 'border-blue-500 bg-blue-50'
+                          : 'border-gray-200 hover:border-blue-200'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="serviceContract"
+                        checked={serviceContract === null}
+                        onChange={() => setServiceContract(null)}
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                      />
+                      <span className="font-medium text-gray-900">Brak kontraktu</span>
+                    </label>
+                    <label
+                      className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition-colors ${
+                        serviceContract === 3
+                          ? 'border-blue-500 bg-blue-50'
+                          : 'border-gray-200 hover:border-blue-200'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="serviceContract"
+                        checked={serviceContract === 3}
+                        onChange={() => setServiceContract(3)}
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                      />
+                      <span className="font-medium text-gray-900">3 lata</span>
+                      {purchaseDate && serviceContract === 3 && (
+                        <span className="text-xs text-blue-600 ml-auto">
+                          do {new Date(new Date(purchaseDate).setFullYear(new Date(purchaseDate).getFullYear() + 3)).toLocaleDateString('pl-PL')}
+                        </span>
+                      )}
+                    </label>
+                    <label
+                      className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition-colors ${
+                        serviceContract === 5
+                          ? 'border-blue-500 bg-blue-50'
+                          : 'border-gray-200 hover:border-blue-200'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="serviceContract"
+                        checked={serviceContract === 5}
+                        onChange={() => setServiceContract(5)}
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                      />
+                      <span className="font-medium text-gray-900">5 lat</span>
+                      {purchaseDate && serviceContract === 5 && (
+                        <span className="text-xs text-blue-600 ml-auto">
+                          do {new Date(new Date(purchaseDate).setFullYear(new Date(purchaseDate).getFullYear() + 5)).toLocaleDateString('pl-PL')}
+                        </span>
+                      )}
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>

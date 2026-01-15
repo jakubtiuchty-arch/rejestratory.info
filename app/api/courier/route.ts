@@ -21,7 +21,8 @@ export async function POST(request: NextRequest) {
       postalCode,
       deviceName,
       serialNumber,
-      faultDescription
+      faultDescription,
+      activeContract
     } = body
 
     // Walidacja
@@ -100,6 +101,26 @@ export async function POST(request: NextRequest) {
       </table>
     </div>
 
+    ${activeContract ? `
+    <!-- Kontrakt serwisowy -->
+    <div style="background: #dcfce7; padding: 20px; border-radius: 8px; border-left: 4px solid #22c55e; margin-bottom: 30px;">
+      <h2 style="color: #166534; margin-top: 0; font-size: 18px;">🛡️ KONTRAKT SERWISOWY - AKTYWNY</h2>
+      <table style="width: 100%; font-size: 14px;">
+        <tr>
+          <td style="padding: 8px 0; color: #6b7280; width: 140px;"><strong>Okres kontraktu:</strong></td>
+          <td style="padding: 8px 0; font-weight: bold; color: #166534;">${activeContract.years} lata</td>
+        </tr>
+        <tr>
+          <td style="padding: 8px 0; color: #6b7280;"><strong>Ważny do:</strong></td>
+          <td style="padding: 8px 0; font-weight: bold; color: #166534;">${new Date(activeContract.endDate).toLocaleDateString('pl-PL')}</td>
+        </tr>
+      </table>
+      <p style="color: #166534; margin: 15px 0 0 0; font-size: 13px;">
+        ✓ Serwis w ramach kontraktu • ✓ Priorytetowa obsługa
+      </p>
+    </div>
+    ` : ''}
+
     <!-- Opis usterki -->
     <div style="background: #fef3c7; padding: 20px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 20px;">
       <h3 style="color: #92400e; margin-top: 0; font-size: 16px;">⚠️ Opis usterki</h3>
@@ -122,7 +143,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: 'kontakt@rejestratory.info',
       to: ['handlowy@takma.com.pl'],
-      subject: `🚚 Zamówienie kuriera - ${deviceName} | ${firstName} ${lastName}`,
+      subject: `🚚 Zamówienie kuriera${activeContract ? ' 🛡️ KONTRAKT' : ''} - ${deviceName} | ${firstName} ${lastName}`,
       html: emailHTML,
     })
 

@@ -56,6 +56,18 @@ export interface ClientDocument {
   notes?: string;
 }
 
+export interface Registrator {
+  id: string;
+  created_at: string;
+  client_name: string;
+  device_name: string;
+  serial_number: string;
+  purchase_date: string;
+  service_contract_years: number | null; // null = brak, 3 lub 5
+  service_contract_end: string | null;
+  notes?: string;
+}
+
 // Typy urządzeń fiskalnych
 export const DEVICE_TYPES = [
   { value: 'Posnet Pospay', label: 'Posnet Pospay' },

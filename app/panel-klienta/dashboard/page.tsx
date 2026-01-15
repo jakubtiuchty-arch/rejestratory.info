@@ -24,9 +24,12 @@ import {
   Filter,
   Save,
   BookOpen,
-  ZoomIn
+  ZoomIn,
+  Smartphone,
+  Shield,
+  ShieldCheck,
 } from "lucide-react";
-import { supabase, Device, Inspection, ClientDocument } from '@/lib/supabase';
+import { supabase, Device, Inspection, ClientDocument, Registrator } from '@/lib/supabase';
 
 type DeviceStatus = "new" | "ok" | "warning" | "overdue";
 
@@ -101,11 +104,13 @@ const getDeviceImage = (deviceName: string): string | null => {
 
 export default function Dashboard() {
   const [devices, setDevices] = React.useState<DeviceWithStatus[]>([]);
+  const [registrators, setRegistrators] = React.useState<Registrator[]>([]);
   const [inspections, setInspections] = React.useState<Inspection[]>([]);
   const [clientDocuments, setClientDocuments] = React.useState<ClientDocument[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [clientName, setClientName] = React.useState("");
   const [showAllDevices, setShowAllDevices] = React.useState(false);
+  const [showAllRegistrators, setShowAllRegistrators] = React.useState(false);
 
   // Location (leśnictwo) editing states
   const [editingDeviceId, setEditingDeviceId] = React.useState<string | null>(null);
@@ -138,6 +143,7 @@ export default function Dashboard() {
     serialNumber: '',
     faultDescription: ''
   });
+  const [activeContract, setActiveContract] = React.useState<{years: number, endDate: string} | null>(null);
 
   // Funkcja obliczająca status urządzenia na podstawie daty następnego przeglądu i czy był przegląd
   const calculateDeviceStatus = (nextInspectionDate: string, lastInspectionDate: string | null): DeviceStatus => {
@@ -294,6 +300,19 @@ export default function Dashboard() {
         } else {
           setClientDocuments(documentsData || []);
         }
+
+        // Pobierz rejestratory klienta
+        const { data: registratorsData, error: registratorsError } = await supabase
+          .from('registrators')
+          .select('*')
+          .eq('client_name', storedClientName)
+          .order('purchase_date', { ascending: false });
+
+        if (registratorsError) {
+          console.log('Rejestratory nie dostępne (tabela może nie istnieć):', registratorsError);
+        } else {
+          setRegistrators(registratorsData || []);
+        }
       } catch (error) {
         console.error('Error loading data:', error);
       } finally {
@@ -307,6 +326,7 @@ export default function Dashboard() {
   // Handle opening courier modal for a device
   const handleOpenCourierModal = (device: DeviceWithStatus) => {
     setSelectedDevice(device);
+    setActiveContract(null); // Urządzenia fiskalne nie mają kontraktu
     // Jeśli urządzenie ma przypisane leśnictwo, użyj go w polu nadleśnictwo
     const districtInfo = device.forestry_unit && device.forestry_unit.trim() 
       ? `${clientName.replace('Nadleśnictwo ', '')} - ${device.forestry_unit}`
@@ -321,6 +341,35 @@ export default function Dashboard() {
       postalCode: '',
       deviceName: device.device_name,
       serialNumber: device.serial_number,
+      faultDescription: ''
+    });
+    setIsModalOpen(true);
+  };
+
+  // Handle opening courier modal for a registrator
+  const handleOpenCourierModalForRegistrator = (reg: Registrator) => {
+    setSelectedDevice(null);
+    
+    // Sprawdź czy ma aktywny kontrakt
+    if (reg.service_contract_years && reg.service_contract_end && new Date(reg.service_contract_end) > new Date()) {
+      setActiveContract({
+        years: reg.service_contract_years,
+        endDate: reg.service_contract_end
+      });
+    } else {
+      setActiveContract(null);
+    }
+    
+    setFormData({
+      firstName: '',
+      lastName: '',
+      forestDistrict: clientName.replace('Nadleśnictwo ', ''),
+      city: '',
+      street: '',
+      number: '',
+      postalCode: '',
+      deviceName: reg.device_name,
+      serialNumber: reg.serial_number,
       faultDescription: ''
     });
     setIsModalOpen(true);
@@ -341,7 +390,13 @@ export default function Dashboard() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          activeContract: activeContract ? {
+            years: activeContract.years,
+            endDate: activeContract.endDate
+          } : null
+        }),
       });
 
       if (!response.ok) {
@@ -913,6 +968,128 @@ export default function Dashboard() {
           )}
         </div>
 
+        {/* Sekcja Rejestratory */}
+        {registrators.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="mt-6"
+          >
+            <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+              <Smartphone className="h-4 w-4 text-blue-600" />
+              Rejestratory ({registrators.length})
+            </h2>
+            <div className="space-y-2">
+              {(showAllRegistrators ? registrators : registrators.slice(0, 3)).map((reg, index) => {
+                const isContractActive = reg.service_contract_end && new Date(reg.service_contract_end) > new Date();
+                const contractDaysLeft = reg.service_contract_end 
+                  ? Math.ceil((new Date(reg.service_contract_end).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+                  : 0;
+
+                return (
+                  <div key={reg.id} className="flex gap-2">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 + index * 0.05 }}
+                      className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 p-3"
+                    >
+                      <div className="flex items-center gap-3">
+                        {/* Ikona */}
+                        <div className="bg-blue-50 p-2 rounded flex-shrink-0">
+                          <Smartphone className="h-5 w-5 text-blue-600" />
+                        </div>
+
+                        {/* Info o urządzeniu */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-sm font-semibold text-gray-900">
+                            {reg.device_name}
+                          </h3>
+                          <p className="text-xs text-gray-500">
+                            {reg.serial_number}
+                          </p>
+                        </div>
+
+                        {/* Kontrakt badge */}
+                        {reg.service_contract_years && (
+                          <div className={`flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
+                            isContractActive 
+                              ? 'bg-green-50 text-green-700' 
+                              : 'bg-gray-100 text-gray-500'
+                          }`}>
+                            {isContractActive ? (
+                              <ShieldCheck className="h-3 w-3" />
+                            ) : (
+                              <Shield className="h-3 w-3" />
+                            )}
+                            {isContractActive 
+                              ? `Kontrakt ${reg.service_contract_years}L (${contractDaysLeft} dni)` 
+                              : `Kontrakt wygasł`}
+                          </div>
+                        )}
+
+                        {/* Data zakupu */}
+                        <div className="hidden md:block text-right flex-shrink-0">
+                          <p className="text-xs text-gray-400">Zakup</p>
+                          <p className="text-sm font-medium text-gray-900">
+                            {new Date(reg.purchase_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Szczegóły kontraktu - rozwinięte */}
+                      {reg.service_contract_years && isContractActive && (
+                        <div className="mt-2 pt-2 border-t border-gray-100">
+                          <div className="bg-green-50 rounded-lg p-2 flex items-center gap-2">
+                            <ShieldCheck className="h-4 w-4 text-green-600 flex-shrink-0" />
+                            <p className="text-xs text-green-700">
+                              <strong>Kontrakt serwisowy aktywny</strong> do {new Date(reg.service_contract_end!).toLocaleDateString('pl-PL')} 
+                              {' '}• Serwis w ramach kontraktu
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+
+                    {/* Przycisk kuriera */}
+                    <motion.button
+                      onClick={() => handleOpenCourierModalForRegistrator(reg)}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 + index * 0.05 }}
+                      className="relative group flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
+                      title="Problem z urządzeniem? Zamów kuriera"
+                    >
+                      <Truck className="h-4 w-4 text-orange-600" />
+                    </motion.button>
+                  </div>
+                );
+              })}
+
+              {/* Pokaż więcej/mniej */}
+              {registrators.length > 3 && (
+                <button
+                  onClick={() => setShowAllRegistrators(!showAllRegistrators)}
+                  className="w-full bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm font-medium text-gray-700 flex items-center justify-center gap-2 transition-colors"
+                >
+                  {showAllRegistrators ? (
+                    <>
+                      <ChevronUp className="h-4 w-4" />
+                      Pokaż mniej
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4" />
+                      Pokaż więcej ({registrators.length - 3} rejestratorów)
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
+          </motion.div>
+        )}
+
         {/* Dokumenty - Umowy i inne (bez protokołów) */}
         {(() => {
           const nonProtocolDocuments = clientDocuments.filter(doc => doc.document_type !== 'protocol');
@@ -1441,6 +1618,27 @@ export default function Dashboard() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Info o aktywnym kontrakcie */}
+                  {activeContract && (
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                      <div className="flex items-start gap-3">
+                        <ShieldCheck className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <h4 className="font-bold text-green-800">
+                            Aktywny kontrakt serwisowy ({activeContract.years} lata)
+                          </h4>
+                          <p className="text-sm text-green-700 mt-1">
+                            Twoje urządzenie jest objęte kontraktem serwisowym ważnym do{' '}
+                            <strong>{new Date(activeContract.endDate).toLocaleDateString('pl-PL')}</strong>.
+                          </p>
+                          <p className="text-sm text-green-600 mt-2">
+                            ✓ Serwis w ramach kontraktu • ✓ Priorytetowa obsługa
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Personal Data */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">Dane kontaktowe</h4>
