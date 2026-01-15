@@ -378,7 +378,6 @@ export default function AdminDashboard() {
                 <Smartphone className="w-4 h-4 text-orange-600" />
                 Rejestratory
               </h2>
-              <span className="text-xs text-gray-500">Bez prowizji</span>
             </div>
 
             {isLoading ? (
