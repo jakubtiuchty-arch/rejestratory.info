@@ -112,6 +112,18 @@ export default function Dashboard() {
   const [showAllDevices, setShowAllDevices] = React.useState(false);
   const [showAllRegistrators, setShowAllRegistrators] = React.useState(false);
 
+  // Mapowanie obrazków dla rejestratorów
+  const getRegistratorImage = (deviceName: string): string | null => {
+    const imageMap: Record<string, string> = {
+      'Zebra EM45': '/em45_1.webp',
+      'Zebra TC27': '/tc27_1.png',
+      'Samsung A56': '/a56_1.png',
+      'Samsung S25 Ultra': '/s25ultra_1.png',
+      'Samsung S25 FE': '/s25plus_1.png', // używamy s25plus jako placeholder
+    };
+    return imageMap[deviceName] || null;
+  };
+
   // Location (leśnictwo) editing states
   const [editingDeviceId, setEditingDeviceId] = React.useState<string | null>(null);
   const [editingLocation, setEditingLocation] = React.useState("");
@@ -996,10 +1008,18 @@ export default function Dashboard() {
                       className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 p-3"
                     >
                       <div className="flex items-center gap-3">
-                        {/* Ikona */}
-                        <div className="bg-blue-50 p-2 rounded flex-shrink-0">
+                      {/* Zdjęcie urządzenia */}
+                      <div className="bg-gray-50 rounded flex-shrink-0 w-12 h-12 flex items-center justify-center overflow-hidden">
+                        {getRegistratorImage(reg.device_name) ? (
+                          <img 
+                            src={getRegistratorImage(reg.device_name)!} 
+                            alt={reg.device_name}
+                            className="w-10 h-10 object-contain"
+                          />
+                        ) : (
                           <Smartphone className="h-5 w-5 text-blue-600" />
-                        </div>
+                        )}
+                      </div>
 
                         {/* Info o urządzeniu */}
                         <div className="flex-1 min-w-0">
