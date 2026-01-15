@@ -72,7 +72,7 @@ export async function GET(request: Request) {
         await resend.emails.send({
           from: 'Rejestratory.info <przypomnienia@rejestratory.info>',
           to: [process.env.ADMIN_EMAIL || 'jakub.tiuchty@gmail.com'],
-          subject: `Przypomnienie o przegladzie - ${clientName}`,
+          subject: `Przypomnienie o przeglądzie - ${clientName}`,
           html: `
 <!DOCTYPE html>
 <html>
@@ -90,7 +90,7 @@ export async function GET(request: Request) {
           <tr>
             <td style="background-color: #059669; padding: 30px 40px;">
               <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: bold;">
-                🔔 Przypomnienie o przegladzie
+                🔔 Przypomnienie o przeglądzie
               </h1>
             </td>
           </tr>
@@ -99,7 +99,7 @@ export async function GET(request: Request) {
           <tr>
             <td style="padding: 30px 40px;">
               <p style="font-size: 16px; color: #374151; margin: 0 0 20px 0; line-height: 1.5;">
-                <strong>${clientName}</strong> ma urzadzenia wymagajace ${isFirstInspection ? 'pierwszego przegladu' : 'przegladu okresowego'}:
+                <strong>${clientName}</strong> ma urządzenia wymagające ${isFirstInspection ? 'pierwszego przeglądu' : 'przeglądu okresowego'}:
               </p>
               
               <!-- Device list -->
@@ -107,7 +107,7 @@ export async function GET(request: Request) {
                 <tr>
                   <td style="padding: 20px;">
                     <p style="font-size: 14px; color: #6b7280; margin: 0 0 10px 0;">
-                      <strong>Liczba urzadzen:</strong> ${(clientReminders as PendingReminder[]).length}
+                      <strong>Liczba urządzeń:</strong> ${(clientReminders as PendingReminder[]).length}
                     </p>
                     <p style="font-size: 13px; color: #374151; margin: 0; line-height: 1.8; white-space: pre-line;">${deviceList}</p>
                   </td>
@@ -119,7 +119,7 @@ export async function GET(request: Request) {
                 <tr>
                   <td style="padding: 15px 20px;">
                     <p style="margin: 0; color: #92400e; font-size: 14px;">
-                      ⏰ <strong>Uwaga:</strong> Termin przegladu zbliza sie za mniej niz 14 dni!
+                      ⏰ <strong>Uwaga:</strong> Termin przeglądu zbliża się za mniej niż 14 dni!
                     </p>
                   </td>
                 </tr>
@@ -131,7 +131,7 @@ export async function GET(request: Request) {
                   <td align="center">
                     <a href="https://rejestratory.info/admin/dashboard" 
                        style="display: inline-block; background-color: #059669; color: #ffffff; padding: 14px 35px; font-size: 14px; font-weight: bold; text-decoration: none; border-radius: 6px;">
-                      Otworz Panel Admin
+                      Otwórz Panel Admin
                     </a>
                   </td>
                 </tr>
@@ -143,7 +143,7 @@ export async function GET(request: Request) {
           <tr>
             <td style="background-color: #374151; padding: 20px 40px; text-align: center;">
               <p style="color: #9ca3af; margin: 0; font-size: 12px;">
-                Rejestratory.info - System zarzadzania urzadzeniami fiskalnymi
+                Rejestratory.info - System zarządzania urządzeniami fiskalnymi
               </p>
             </td>
           </tr>
