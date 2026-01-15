@@ -2,7 +2,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Printer,
+  Smartphone,
   Plus,
   LogOut,
   Calendar,
@@ -16,9 +16,17 @@ import {
   TrendingUp,
   BarChart3,
   Home,
-  Smartphone,
 } from "lucide-react";
-import { supabase, DEVICE_TYPES, DeviceType } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
+
+// Typy rejestratorów
+const REGISTRATOR_TYPES = [
+  { value: "Zebra EM45", label: "Zebra EM45" },
+  { value: "Zebra TC27", label: "Zebra TC27" },
+  { value: "Samsung A56", label: "Samsung A56" },
+  { value: "Samsung S25 FE", label: "Samsung S25 FE" },
+  { value: "Samsung S25 Ultra", label: "Samsung S25 Ultra" },
+];
 
 interface ParsedDevice {
   serialNumber: string;
@@ -26,15 +34,14 @@ interface ParsedDevice {
   isDuplicate: boolean;
 }
 
-export default function AdminDevices() {
+export default function AdminRejestratory() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   
   // Form states
   const [clientName, setClientName] = React.useState("");
-  const [deviceType, setDeviceType] = React.useState<DeviceType>("Posnet Temo Online");
-  const [fiscalizationDate, setFiscalizationDate] = React.useState("");
+  const [deviceType, setDeviceType] = React.useState(REGISTRATOR_TYPES[0].value);
+  const [purchaseDate, setPurchaseDate] = React.useState("");
   const [serialNumbersText, setSerialNumbersText] = React.useState("");
   const [parsedDevices, setParsedDevices] = React.useState<ParsedDevice[]>([]);
   
@@ -63,15 +70,22 @@ export default function AdminDevices() {
   // Fetch existing clients for autocomplete
   const fetchExistingClients = async () => {
     try {
-      const { data } = await supabase
+      // Pobierz klientów z devices i registrators
+      const { data: devicesData } = await supabase
         .from('devices')
-        .select('client_name')
-        .order('client_name');
+        .select('client_name');
       
-      if (data) {
-        const uniqueClients = [...new Set(data.map(d => d.client_name))];
-        setExistingClients(uniqueClients);
-      }
+      const { data: registratorsData } = await supabase
+        .from('registrators')
+        .select('client_name');
+      
+      const allClients = [
+        ...(devicesData || []).map(d => d.client_name),
+        ...(registratorsData || []).map(d => d.client_name),
+      ];
+      
+      const uniqueClients = [...new Set(allClients)].sort((a, b) => a.localeCompare(b, 'pl'));
+      setExistingClients(uniqueClients);
     } catch (error) {
       console.error('Error fetching clients:', error);
     }
@@ -93,7 +107,7 @@ export default function AdminDevices() {
       
       parsed.push({
         serialNumber: line,
-        isValid: line.length >= 5, // Minimum 5 characters
+        isValid: line.length >= 5,
         isDuplicate,
       });
     }
@@ -108,14 +122,7 @@ export default function AdminDevices() {
     setSubmitResult(null);
   };
 
-  // Calculate next inspection date (fiscalization + 24 months)
-  const calculateNextInspectionDate = (fiscDate: string): string => {
-    const date = new Date(fiscDate);
-    date.setMonth(date.getMonth() + 24);
-    return date.toISOString().split('T')[0];
-  };
-
-  // Submit devices
+  // Submit registrators
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -137,10 +144,10 @@ export default function AdminDevices() {
       return;
     }
 
-    if (!fiscalizationDate) {
+    if (!purchaseDate) {
       setSubmitResult({
         success: false,
-        message: "Wybierz datę fiskalizacji",
+        message: "Wybierz datę zakupu",
       });
       return;
     }
@@ -149,30 +156,26 @@ export default function AdminDevices() {
     setSubmitResult(null);
 
     try {
-      const nextInspectionDate = calculateNextInspectionDate(fiscalizationDate);
-      
-      // Prepare devices for insertion
-      const devicesToInsert = validDevices.map(d => ({
+      // Prepare registrators for insertion
+      const registratorsToInsert = validDevices.map(d => ({
         client_name: clientName.trim(),
         device_name: deviceType,
         serial_number: d.serialNumber,
-        fiscalization_date: fiscalizationDate,
-        last_inspection_date: null, // NULL for new devices
-        next_inspection_date: nextInspectionDate,
+        purchase_date: purchaseDate,
         created_at: new Date().toISOString(),
       }));
 
       // Check for existing serial numbers
       const serialNumbers = validDevices.map(d => d.serialNumber);
       const { data: existing } = await supabase
-        .from('devices')
+        .from('registrators')
         .select('serial_number')
         .in('serial_number', serialNumbers);
 
       const existingSerials = new Set(existing?.map(e => e.serial_number) || []);
-      const newDevices = devicesToInsert.filter(d => !existingSerials.has(d.serial_number));
+      const newRegistrators = registratorsToInsert.filter(d => !existingSerials.has(d.serial_number));
 
-      if (newDevices.length === 0) {
+      if (newRegistrators.length === 0) {
         setSubmitResult({
           success: false,
           message: "Wszystkie podane numery seryjne już istnieją w bazie",
@@ -181,30 +184,30 @@ export default function AdminDevices() {
         return;
       }
 
-      // Insert devices
+      // Insert registrators
       const { error } = await supabase
-        .from('devices')
-        .insert(newDevices);
+        .from('registrators')
+        .insert(newRegistrators);
 
       if (error) throw error;
 
       // Success!
       setSubmitResult({
         success: true,
-        message: `Pomyślnie dodano ${newDevices.length} urządzeń dla ${clientName}`,
-        addedCount: newDevices.length,
+        message: `Pomyślnie dodano ${newRegistrators.length} rejestratorów dla ${clientName}`,
+        addedCount: newRegistrators.length,
       });
 
       // Reset form
       setSerialNumbersText("");
       setParsedDevices([]);
-      fetchExistingClients(); // Refresh client list
+      fetchExistingClients();
 
     } catch (error) {
-      console.error('Error adding devices:', error);
+      console.error('Error adding registrators:', error);
       setSubmitResult({
         success: false,
-        message: "Błąd podczas dodawania urządzeń. Spróbuj ponownie.",
+        message: "Błąd podczas dodawania rejestratorów. Upewnij się, że tabela registrators istnieje w bazie.",
       });
     } finally {
       setIsSubmitting(false);
@@ -279,7 +282,7 @@ export default function AdminDevices() {
             </a>
             <a
               href="/admin/urzadzenia"
-              className="px-4 py-3 text-sm font-medium border-b-2 border-emerald-600 text-emerald-600 bg-emerald-50"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition-colors"
             >
               <span className="flex items-center gap-2">
                 <Plus className="w-4 h-4" />
@@ -288,7 +291,7 @@ export default function AdminDevices() {
             </a>
             <a
               href="/admin/rejestratory"
-              className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition-colors"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-emerald-600 text-emerald-600 bg-emerald-50"
             >
               <span className="flex items-center gap-2">
                 <Smartphone className="w-4 h-4" />
@@ -326,7 +329,7 @@ export default function AdminDevices() {
             className="bg-white rounded-lg border border-gray-200 p-6 mb-6"
           >
             <div className="flex items-center gap-2 mb-4">
-              <Users className="w-5 h-5 text-emerald-600" />
+              <Users className="w-5 h-5 text-blue-600" />
               <h2 className="text-lg font-bold text-gray-900">Klient</h2>
             </div>
 
@@ -344,7 +347,7 @@ export default function AdminDevices() {
                 onFocus={() => setShowClientSuggestions(true)}
                 onBlur={() => setTimeout(() => setShowClientSuggestions(false), 200)}
                 placeholder="np. Nadleśnictwo Mrągowo"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 required
               />
               
@@ -365,7 +368,7 @@ export default function AdminDevices() {
                           setClientName(client);
                           setShowClientSuggestions(false);
                         }}
-                        className="w-full px-4 py-2 text-left hover:bg-emerald-50 text-gray-900 text-sm"
+                        className="w-full px-4 py-2 text-left hover:bg-blue-50 text-gray-900 text-sm"
                       >
                         {client}
                       </button>
@@ -376,7 +379,7 @@ export default function AdminDevices() {
             </div>
           </motion.div>
 
-          {/* Typ urządzenia i data fiskalizacji */}
+          {/* Typ rejestratora i data zakupu */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -384,24 +387,24 @@ export default function AdminDevices() {
             className="bg-white rounded-lg border border-gray-200 p-6 mb-6"
           >
             <div className="flex items-center gap-2 mb-4">
-              <Printer className="w-5 h-5 text-emerald-600" />
-              <h2 className="text-lg font-bold text-gray-900">Informacje o urządzeniach</h2>
+              <Smartphone className="w-5 h-5 text-blue-600" />
+              <h2 className="text-lg font-bold text-gray-900">Informacje o rejestratorach</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Typ urządzenia */}
+              {/* Typ rejestratora */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Typ urządzenia *
+                  Typ rejestratora *
                 </label>
                 <div className="space-y-2">
-                  {DEVICE_TYPES.map((type) => (
+                  {REGISTRATOR_TYPES.map((type) => (
                     <label
                       key={type.value}
                       className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition-colors ${
                         deviceType === type.value
-                          ? 'border-emerald-500 bg-emerald-50'
-                          : 'border-gray-200 hover:border-emerald-200'
+                          ? 'border-blue-500 bg-blue-50'
+                          : 'border-gray-200 hover:border-blue-200'
                       }`}
                     >
                       <input
@@ -409,8 +412,8 @@ export default function AdminDevices() {
                         name="deviceType"
                         value={type.value}
                         checked={deviceType === type.value}
-                        onChange={(e) => setDeviceType(e.target.value as DeviceType)}
-                        className="w-4 h-4 text-emerald-600 focus:ring-emerald-500"
+                        onChange={(e) => setDeviceType(e.target.value)}
+                        className="w-4 h-4 text-blue-600 focus:ring-blue-500"
                       />
                       <span className="font-medium text-gray-900">{type.label}</span>
                     </label>
@@ -418,37 +421,22 @@ export default function AdminDevices() {
                 </div>
               </div>
 
-              {/* Data fiskalizacji */}
+              {/* Data zakupu */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Data fiskalizacji *
+                  Data zakupu *
                 </label>
                 <div className="relative">
                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <input
                     type="date"
-                    value={fiscalizationDate}
-                    onChange={(e) => setFiscalizationDate(e.target.value)}
+                    value={purchaseDate}
+                    onChange={(e) => setPurchaseDate(e.target.value)}
                     max={new Date().toISOString().split('T')[0]}
-                    className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
                   />
                 </div>
-                {fiscalizationDate && (
-                  <div className="mt-3 p-3 bg-blue-50 rounded-lg">
-                    <p className="text-sm text-blue-800">
-                      <span className="font-medium">Przegląd wymagany do:</span>{' '}
-                      {new Date(calculateNextInspectionDate(fiscalizationDate)).toLocaleDateString('pl-PL', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </p>
-                    <p className="text-xs text-blue-600 mt-1">
-                      (24 miesiące od daty fiskalizacji)
-                    </p>
-                  </div>
-                )}
               </div>
             </div>
           </motion.div>
@@ -462,12 +450,12 @@ export default function AdminDevices() {
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Copy className="w-5 h-5 text-emerald-600" />
-                <h2 className="text-lg font-bold text-gray-900">Numery unikatowe (N/U)</h2>
+                <Copy className="w-5 h-5 text-blue-600" />
+                <h2 className="text-lg font-bold text-gray-900">Numery seryjne</h2>
               </div>
               {parsedDevices.length > 0 && (
                 <div className="flex items-center gap-3 text-sm">
-                  <span className="text-emerald-600 font-medium">
+                  <span className="text-blue-600 font-medium">
                     ✓ Poprawne: {validCount}
                   </span>
                   {duplicateCount > 0 && (
@@ -491,12 +479,11 @@ export default function AdminDevices() {
               <textarea
                 value={serialNumbersText}
                 onChange={(e) => handleSerialNumbersChange(e.target.value)}
-                placeholder="CAZ 1802291857
-CAZ 1802291772
-CAZ 1802291813
+                placeholder="IMEI lub numer seryjny...
+np. 123456789012345
 ..."
                 rows={8}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 font-mono text-sm"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
               />
               <p className="mt-2 text-xs text-gray-500">
                 Możesz skopiować numery z Excela lub innego źródła - system automatycznie je rozpozna
@@ -507,7 +494,7 @@ CAZ 1802291813
             {parsedDevices.length > 0 && (
               <div className="mt-4">
                 <p className="text-sm font-medium text-gray-700 mb-2">
-                  Podgląd urządzeń do dodania:
+                  Podgląd rejestratorów do dodania:
                 </p>
                 <div className="max-h-64 overflow-auto border border-gray-200 rounded-lg">
                   <table className="w-full text-sm">
@@ -528,7 +515,7 @@ CAZ 1802291813
                             ) : !device.isValid ? (
                               <span className="text-red-600 text-xs">Za krótki</span>
                             ) : (
-                              <span className="text-emerald-600 text-xs">OK</span>
+                              <span className="text-blue-600 text-xs">OK</span>
                             )}
                           </td>
                           <td className="px-4 py-2 text-right">
@@ -558,20 +545,20 @@ CAZ 1802291813
                 exit={{ opacity: 0, y: -10 }}
                 className={`mb-6 p-4 rounded-lg flex items-start gap-3 ${
                   submitResult.success
-                    ? 'bg-emerald-50 border border-emerald-200'
+                    ? 'bg-blue-50 border border-blue-200'
                     : 'bg-red-50 border border-red-200'
                 }`}
               >
                 {submitResult.success ? (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
                 ) : (
                   <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
                 )}
                 <div>
-                  <p className={`font-medium ${submitResult.success ? 'text-emerald-900' : 'text-red-900'}`}>
+                  <p className={`font-medium ${submitResult.success ? 'text-blue-900' : 'text-red-900'}`}>
                     {submitResult.success ? 'Sukces!' : 'Błąd'}
                   </p>
-                  <p className={`text-sm ${submitResult.success ? 'text-emerald-700' : 'text-red-700'}`}>
+                  <p className={`text-sm ${submitResult.success ? 'text-blue-700' : 'text-red-700'}`}>
                     {submitResult.message}
                   </p>
                 </div>
@@ -588,17 +575,17 @@ CAZ 1802291813
             <button
               type="submit"
               disabled={isSubmitting || validCount === 0}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isSubmitting ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Dodawanie urządzeń...
+                  Dodawanie rejestratorów...
                 </>
               ) : (
                 <>
                   <Plus className="w-5 h-5" />
-                  Dodaj {validCount} urządzeń
+                  Dodaj {validCount} rejestratorów
                 </>
               )}
             </button>
@@ -613,14 +600,13 @@ CAZ 1802291813
           className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4"
         >
           <div className="flex items-start gap-3">
-            <FileText className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+            <Smartphone className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
             <div className="text-sm text-blue-800">
               <p className="font-semibold mb-1">Informacje:</p>
               <ul className="space-y-1 text-blue-700">
-                <li>• Urządzenia zostaną dodane ze statusem <strong>NOWE</strong></li>
-                <li>• Termin pierwszego przeglądu: 24 miesiące od daty fiskalizacji</li>
-                <li>• Automatyczne przypomnienie zostanie ustawione na 14 dni przed terminem</li>
-                <li>• Klient zobaczy urządzenia w swoim Panelu Klienta po zalogowaniu numerem seryjnym</li>
+                <li>• Rejestratory nie mają przeglądów - zapisywana jest tylko data zakupu</li>
+                <li>• Numery seryjne muszą być unikalne</li>
+                <li>• Klient zobaczy rejestratory w swoim Panelu Klienta</li>
               </ul>
             </div>
           </div>

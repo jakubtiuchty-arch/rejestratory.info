@@ -37,8 +37,14 @@ export default function AdminLogin() {
         className="w-full max-w-md"
       >
         <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-8">
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
+              <Lock className="w-8 h-8 text-emerald-600" />
+            </div>
+          </div>
+
           <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">
-            Panel administratora
+            Panel Administratora
           </h1>
           <p className="text-gray-600 text-center mb-8">
             Wprowadź hasło aby uzyskać dostęp

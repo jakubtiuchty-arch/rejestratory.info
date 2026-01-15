@@ -17,6 +17,7 @@ import {
   TrendingUp,
   BarChart3,
   Home,
+  Smartphone,
 } from "lucide-react";
 import { supabase, ClientDocument } from '@/lib/supabase';
 
@@ -243,7 +244,16 @@ export default function AdminDocuments() {
             >
               <span className="flex items-center gap-2">
                 <Plus className="w-4 h-4" />
-                Dodaj urządzenia
+                Urządzenia fiskalne
+              </span>
+            </a>
+            <a
+              href="/admin/rejestratory"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <Smartphone className="w-4 h-4" />
+                Rejestratory
               </span>
             </a>
             <a
