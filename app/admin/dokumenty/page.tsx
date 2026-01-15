@@ -4,11 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   FileText,
   LogOut,
-  ArrowLeft,
   Plus,
   Trash2,
   Users,
-  Upload,
   Link as LinkIcon,
   AlertCircle,
   CheckCircle2,
@@ -16,6 +14,9 @@ import {
   ExternalLink,
   Search,
   Filter,
+  TrendingUp,
+  BarChart3,
+  Home,
 } from "lucide-react";
 import { supabase, ClientDocument } from '@/lib/supabase';
 
@@ -206,49 +207,71 @@ export default function AdminDocuments() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <a
-                href="/admin/dashboard"
-                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </a>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-blue-600" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-gray-900">
-                    Dokumenty klientów
-                  </h1>
-                  <p className="text-sm text-gray-600">Umowy i inne dokumenty</p>
-                </div>
-              </div>
-            </div>
+      <header className="bg-white shadow-sm sticky top-0 z-10">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-14 border-b border-gray-100">
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium"
-              >
-                <Plus className="h-4 w-4" />
-                Dodaj dokument
-              </button>
+              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+                <BarChart3 className="w-4 h-4 text-white" />
+              </div>
+              <span className="font-bold text-gray-900">Panel Admin</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <a href="/" className="text-gray-500 hover:text-emerald-600 text-sm flex items-center gap-1">
+                <Home className="w-4 h-4" />
+                Strona główna
+              </a>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-700 px-4 py-2 rounded-lg transition-colors text-sm font-medium border border-red-200"
+                className="text-red-600 hover:text-red-700 text-sm flex items-center gap-1"
               >
-                <LogOut className="h-4 w-4" />
+                <LogOut className="w-4 h-4" />
                 Wyloguj
               </button>
             </div>
           </div>
+          <nav className="flex gap-1">
+            <a
+              href="/admin/dashboard"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <BarChart3 className="w-4 h-4" />
+                Dashboard
+              </span>
+            </a>
+            <a
+              href="/admin/urzadzenia"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <Plus className="w-4 h-4" />
+                Dodaj urządzenia
+              </span>
+            </a>
+            <a
+              href="/admin/dokumenty"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-emerald-600 text-emerald-600 bg-emerald-50"
+            >
+              <span className="flex items-center gap-2">
+                <FileText className="w-4 h-4" />
+                Dokumenty
+              </span>
+            </a>
+            <a
+              href="/admin/sprzedaz"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <TrendingUp className="w-4 h-4" />
+                Sprzedaż
+              </span>
+            </a>
+          </nav>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-6">
         {/* Filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -264,7 +287,7 @@ export default function AdminDocuments() {
                 placeholder="Szukaj dokumentów..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm"
               />
             </div>
 
@@ -274,7 +297,7 @@ export default function AdminDocuments() {
               <select
                 value={clientFilter}
                 onChange={(e) => setClientFilter(e.target.value)}
-                className="w-full pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none bg-white"
+                className="w-full pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm appearance-none bg-white"
               >
                 <option value="all">Wszyscy klienci</option>
                 {documentClients.map(client => (
@@ -282,6 +305,15 @@ export default function AdminDocuments() {
                 ))}
               </select>
             </div>
+
+            {/* Dodaj dokument */}
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium whitespace-nowrap"
+            >
+              <Plus className="h-4 w-4" />
+              Dodaj dokument
+            </button>
           </div>
         </motion.div>
 

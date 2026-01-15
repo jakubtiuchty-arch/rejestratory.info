@@ -5,17 +5,17 @@ import {
   Printer,
   Plus,
   LogOut,
-  ArrowLeft,
   Calendar,
   AlertCircle,
   CheckCircle2,
   Loader2,
   Trash2,
   Users,
-  X,
   Copy,
   FileText,
-  Upload,
+  TrendingUp,
+  BarChart3,
+  Home,
 } from "lucide-react";
 import { supabase, DEVICE_TYPES, DeviceType } from '@/lib/supabase';
 
@@ -246,40 +246,71 @@ export default function AdminDevices() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <a
-                href="/admin/dashboard"
-                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </a>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
-                  <Printer className="w-5 h-5 text-emerald-600" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-gray-900">
-                    Dodaj urządzenia
-                  </h1>
-                  <p className="text-sm text-gray-600">Masowe dodawanie nowych urządzeń fiskalnych</p>
-                </div>
+      <header className="bg-white shadow-sm sticky top-0 z-10">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-14 border-b border-gray-100">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+                <BarChart3 className="w-4 h-4 text-white" />
               </div>
+              <span className="font-bold text-gray-900">Panel Admin</span>
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-700 px-4 py-2 rounded-lg transition-colors text-sm font-medium border border-red-200"
-            >
-              <LogOut className="h-4 w-4" />
-              Wyloguj
-            </button>
+            <div className="flex items-center gap-4">
+              <a href="/" className="text-gray-500 hover:text-emerald-600 text-sm flex items-center gap-1">
+                <Home className="w-4 h-4" />
+                Strona główna
+              </a>
+              <button
+                onClick={handleLogout}
+                className="text-red-600 hover:text-red-700 text-sm flex items-center gap-1"
+              >
+                <LogOut className="w-4 h-4" />
+                Wyloguj
+              </button>
+            </div>
           </div>
+          <nav className="flex gap-1">
+            <a
+              href="/admin/dashboard"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <BarChart3 className="w-4 h-4" />
+                Dashboard
+              </span>
+            </a>
+            <a
+              href="/admin/urzadzenia"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-emerald-600 text-emerald-600 bg-emerald-50"
+            >
+              <span className="flex items-center gap-2">
+                <Plus className="w-4 h-4" />
+                Dodaj urządzenia
+              </span>
+            </a>
+            <a
+              href="/admin/dokumenty"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <FileText className="w-4 h-4" />
+                Dokumenty
+              </span>
+            </a>
+            <a
+              href="/admin/sprzedaz"
+              className="px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <TrendingUp className="w-4 h-4" />
+                Sprzedaż
+              </span>
+            </a>
+          </nav>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <div className="container mx-auto px-4 py-6 max-w-4xl">
         <form onSubmit={handleSubmit}>
           {/* Klient */}
           <motion.div
