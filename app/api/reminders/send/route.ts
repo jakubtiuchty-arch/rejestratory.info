@@ -72,47 +72,88 @@ export async function GET(request: Request) {
         await resend.emails.send({
           from: 'Rejestratory.info <przypomnienia@rejestratory.info>',
           to: [process.env.ADMIN_EMAIL || 'jakub.tiuchty@gmail.com'],
-          subject: `🔔 Przypomnienie o przeglądzie - ${clientName}`,
+          subject: `Przypomnienie o przegladzie - ${clientName}`,
           html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-              <div style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); padding: 30px; border-radius: 12px 12px 0 0;">
-                <h1 style="color: white; margin: 0; font-size: 24px;">
-                  🔔 Przypomnienie o przeglądzie
-                </h1>
-              </div>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: Arial, Helvetica, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 20px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #059669; padding: 30px 40px;">
+              <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: bold;">
+                🔔 Przypomnienie o przegladzie
+              </h1>
+            </td>
+          </tr>
+          
+          <!-- Content -->
+          <tr>
+            <td style="padding: 30px 40px;">
+              <p style="font-size: 16px; color: #374151; margin: 0 0 20px 0; line-height: 1.5;">
+                <strong>${clientName}</strong> ma urzadzenia wymagajace ${isFirstInspection ? 'pierwszego przegladu' : 'przegladu okresowego'}:
+              </p>
               
-              <div style="background: #f9fafb; padding: 30px; border: 1px solid #e5e7eb; border-top: none;">
-                <p style="font-size: 16px; color: #374151; margin-top: 0;">
-                  <strong>${clientName}</strong> ma urządzenia wymagające ${isFirstInspection ? 'pierwszego przeglądu' : 'przeglądu okresowego'}:
-                </p>
-                
-                <div style="background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 20px 0;">
-                  <p style="font-size: 14px; color: #6b7280; margin: 0 0 10px 0;">
-                    <strong>Liczba urządzeń:</strong> ${(clientReminders as PendingReminder[]).length}
-                  </p>
-                  <pre style="font-size: 13px; color: #374151; white-space: pre-wrap; margin: 0; font-family: inherit;">${deviceList}</pre>
-                </div>
-
-                <div style="background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 15px; margin-top: 20px;">
-                  <p style="margin: 0; color: #92400e; font-size: 14px;">
-                    ⏰ <strong>Uwaga:</strong> Termin przeglądu zbliża się za mniej niż 14 dni!
-                  </p>
-                </div>
-
-                <div style="margin-top: 30px; text-align: center;">
-                  <a href="https://rejestratory.info/admin/dashboard" 
-                     style="background: #059669; color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">
-                    Otwórz Panel Admin
-                  </a>
-                </div>
-              </div>
+              <!-- Device list -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; margin-bottom: 20px;">
+                <tr>
+                  <td style="padding: 20px;">
+                    <p style="font-size: 14px; color: #6b7280; margin: 0 0 10px 0;">
+                      <strong>Liczba urzadzen:</strong> ${(clientReminders as PendingReminder[]).length}
+                    </p>
+                    <p style="font-size: 13px; color: #374151; margin: 0; line-height: 1.8; white-space: pre-line;">${deviceList}</p>
+                  </td>
+                </tr>
+              </table>
               
-              <div style="background: #374151; padding: 20px; border-radius: 0 0 12px 12px; text-align: center;">
-                <p style="color: #9ca3af; margin: 0; font-size: 12px;">
-                  Rejestratory.info - System zarządzania urządzeniami fiskalnymi
-                </p>
-              </div>
-            </div>
+              <!-- Warning -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px; margin-bottom: 25px;">
+                <tr>
+                  <td style="padding: 15px 20px;">
+                    <p style="margin: 0; color: #92400e; font-size: 14px;">
+                      ⏰ <strong>Uwaga:</strong> Termin przegladu zbliza sie za mniej niz 14 dni!
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              
+              <!-- Button -->
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center">
+                    <a href="https://rejestratory.info/admin/dashboard" 
+                       style="display: inline-block; background-color: #059669; color: #ffffff; padding: 14px 35px; font-size: 14px; font-weight: bold; text-decoration: none; border-radius: 6px;">
+                      Otworz Panel Admin
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #374151; padding: 20px 40px; text-align: center;">
+              <p style="color: #9ca3af; margin: 0; font-size: 12px;">
+                Rejestratory.info - System zarzadzania urzadzeniami fiskalnymi
+              </p>
+            </td>
+          </tr>
+          
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
           `,
         });
 
