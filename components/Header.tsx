@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart, Menu, X } from "lucide-react";
+import { ShoppingCart, Menu, X, User } from "lucide-react";
 import { useInquiry } from '@/components/InquiryContext';
 
 interface HeaderProps {
@@ -76,6 +76,14 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
                 </a>
               </li>
             </ul>
+            
+            <a 
+              href="/panel-klienta"
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center gap-2 border border-gray-300 transition-colors"
+            >
+              <User className="h-4 w-4" />
+              Panel Klienta
+            </a>
             
             <button 
               onClick={openCart}
@@ -164,6 +172,16 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Kontakt
+                </a>
+              </li>
+              <li className="pt-2 border-t border-gray-200 mt-2">
+                <a 
+                  href="/panel-klienta" 
+                  className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <User className="h-4 w-4" />
+                  Panel Klienta
                 </a>
               </li>
             </ul>

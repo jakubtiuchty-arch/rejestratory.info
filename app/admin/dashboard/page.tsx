@@ -12,6 +12,9 @@ import {
   Clock,
   RefreshCw,
   AlertCircle,
+  Printer,
+  FileText,
+  Plus,
 } from "lucide-react";
 
 // Typy dla danych z API
@@ -192,6 +195,38 @@ export default function AdminDashboard() {
       </header>
 
       <div className="container mx-auto px-4 py-8">
+        {/* Szybkie akcje */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
+          <a
+            href="/admin/urzadzenia"
+            className="flex items-center gap-4 bg-white border border-gray-200 rounded-lg p-4 hover:border-emerald-300 hover:shadow-md transition-all group"
+          >
+            <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center group-hover:bg-emerald-200 transition-colors">
+              <Plus className="w-6 h-6 text-emerald-600" />
+            </div>
+            <div>
+              <h3 className="font-bold text-gray-900">Dodaj urządzenia</h3>
+              <p className="text-sm text-gray-600">Masowe dodawanie nowych urządzeń fiskalnych</p>
+            </div>
+          </a>
+          <a
+            href="/admin/dokumenty"
+            className="flex items-center gap-4 bg-white border border-gray-200 rounded-lg p-4 hover:border-emerald-300 hover:shadow-md transition-all group"
+          >
+            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+              <FileText className="w-6 h-6 text-blue-600" />
+            </div>
+            <div>
+              <h3 className="font-bold text-gray-900">Dokumenty klientów</h3>
+              <p className="text-sm text-gray-600">Zarządzanie umowami i protokołami</p>
+            </div>
+          </a>
+        </motion.div>
+
         {/* Błąd lub Info o Google Analytics */}
         {error ? (
           <motion.div

@@ -22,11 +22,13 @@ import {
   Pencil,
   Search,
   Filter,
-  Save
+  Save,
+  BookOpen,
+  ZoomIn
 } from "lucide-react";
-import { supabase, Device, Inspection } from '@/lib/supabase';
+import { supabase, Device, Inspection, ClientDocument } from '@/lib/supabase';
 
-type DeviceStatus = "ok" | "warning" | "overdue";
+type DeviceStatus = "new" | "ok" | "warning" | "overdue";
 
 interface DeviceWithStatus extends Device {
   status: DeviceStatus;
@@ -34,6 +36,14 @@ interface DeviceWithStatus extends Device {
 
 const getStatusConfig = (status: string) => {
   switch (status) {
+    case "new":
+      return {
+        icon: Printer,
+        color: "text-blue-600",
+        bgColor: "bg-blue-50",
+        label: "NOWE",
+        borderColor: "border-blue-200"
+      };
     case "ok":
       return {
         icon: CheckCircle2,
@@ -92,6 +102,7 @@ const getDeviceImage = (deviceName: string): string | null => {
 export default function Dashboard() {
   const [devices, setDevices] = React.useState<DeviceWithStatus[]>([]);
   const [inspections, setInspections] = React.useState<Inspection[]>([]);
+  const [clientDocuments, setClientDocuments] = React.useState<ClientDocument[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [clientName, setClientName] = React.useState("");
   const [showAllDevices, setShowAllDevices] = React.useState(false);
@@ -110,6 +121,9 @@ export default function Dashboard() {
   // Courier modal states
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isConfirmationOpen, setIsConfirmationOpen] = React.useState(false);
+  
+  // Image preview modal state
+  const [previewImage, setPreviewImage] = React.useState<{src: string, title: string} | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [selectedDevice, setSelectedDevice] = React.useState<DeviceWithStatus | null>(null);
   const [formData, setFormData] = React.useState({
@@ -125,18 +139,23 @@ export default function Dashboard() {
     faultDescription: ''
   });
 
-  // Funkcja obliczająca status urządzenia na podstawie daty następnego przeglądu
-  const calculateDeviceStatus = (nextInspectionDate: string): DeviceStatus => {
+  // Funkcja obliczająca status urządzenia na podstawie daty następnego przeglądu i czy był przegląd
+  const calculateDeviceStatus = (nextInspectionDate: string, lastInspectionDate: string | null): DeviceStatus => {
     const today = new Date();
     const nextDate = new Date(nextInspectionDate);
     const daysUntilInspection = Math.floor((nextDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+    // Jeśli nie było przeglądu - urządzenie jest NOWE
+    const isNewDevice = !lastInspectionDate;
 
     if (daysUntilInspection < 0) {
       return "overdue"; // Przeterminowany
     } else if (daysUntilInspection <= 90) {
       return "warning"; // Zbliża się termin (3 miesiące)
+    } else if (isNewDevice) {
+      return "new"; // Nowe urządzenie bez przeglądu
     } else {
-      return "ok"; // Sprawny
+      return "ok"; // Po przeglądzie
     }
   };
 
@@ -246,7 +265,7 @@ export default function Dashboard() {
         // Dodaj status do każdego urządzenia
         const devicesWithStatus: DeviceWithStatus[] = (devicesData || []).map(device => ({
           ...device,
-          status: calculateDeviceStatus(device.next_inspection_date)
+          status: calculateDeviceStatus(device.next_inspection_date, device.last_inspection_date)
         }));
 
         setDevices(devicesWithStatus);
@@ -262,6 +281,19 @@ export default function Dashboard() {
 
         console.log('Pobrane protokoły dla klienta:', storedClientName, inspectionsData);
         setInspections(inspectionsData || []);
+
+        // Pobierz dokumenty klienta (umowy itp.)
+        const { data: documentsData, error: documentsError } = await supabase
+          .from('client_documents')
+          .select('*')
+          .eq('client_name', storedClientName)
+          .order('created_at', { ascending: false });
+
+        if (documentsError) {
+          console.log('Dokumenty nie dostępne (tabela może nie istnieć):', documentsError);
+        } else {
+          setClientDocuments(documentsData || []);
+        }
       } catch (error) {
         console.error('Error loading data:', error);
       } finally {
@@ -631,18 +663,41 @@ export default function Dashboard() {
 
                         {/* Daty przeglądów */}
                         <div className="hidden md:flex items-center gap-4 text-xs flex-shrink-0">
-                          <div>
-                            <p className="text-gray-400 text-xs">Ostatni</p>
-                            <p className="font-medium text-gray-900">
-                              {new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-gray-400 text-xs">Następny</p>
-                            <p className="font-medium text-gray-900">
-                              {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
-                            </p>
-                          </div>
+                          {device.status === 'new' ? (
+                            <>
+                              <div>
+                                <p className="text-gray-400 text-xs">Fiskalizacja</p>
+                                <p className="font-medium text-gray-900">
+                                  {device.fiscalization_date 
+                                    ? new Date(device.fiscalization_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
+                                    : '-'}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-gray-400 text-xs">Przegląd do</p>
+                                <p className="font-medium text-blue-600">
+                                  {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                                </p>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div>
+                                <p className="text-gray-400 text-xs">Ostatni</p>
+                                <p className="font-medium text-gray-900">
+                                  {device.last_inspection_date 
+                                    ? new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
+                                    : '-'}
+                                </p>
+                              </div>
+                              <div>
+                                <p className="text-gray-400 text-xs">Następny</p>
+                                <p className="font-medium text-gray-900">
+                                  {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                                </p>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     </motion.div>
@@ -774,18 +829,41 @@ export default function Dashboard() {
 
                               {/* Daty przeglądów */}
                               <div className="hidden md:flex items-center gap-4 text-xs flex-shrink-0">
-                                <div>
-                                  <p className="text-gray-400 text-xs">Ostatni</p>
-                                  <p className="font-medium text-gray-900">
-                                    {new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
-                                  </p>
-                                </div>
-                                <div>
-                                  <p className="text-gray-400 text-xs">Następny</p>
-                                  <p className="font-medium text-gray-900">
-                                    {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
-                                  </p>
-                                </div>
+                                {device.status === 'new' ? (
+                                  <>
+                                    <div>
+                                      <p className="text-gray-400 text-xs">Fiskalizacja</p>
+                                      <p className="font-medium text-gray-900">
+                                        {device.fiscalization_date 
+                                          ? new Date(device.fiscalization_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
+                                          : '-'}
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <p className="text-gray-400 text-xs">Przegląd do</p>
+                                      <p className="font-medium text-blue-600">
+                                        {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                                      </p>
+                                    </div>
+                                  </>
+                                ) : (
+                                  <>
+                                    <div>
+                                      <p className="text-gray-400 text-xs">Ostatni</p>
+                                      <p className="font-medium text-gray-900">
+                                        {device.last_inspection_date 
+                                          ? new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
+                                          : '-'}
+                                      </p>
+                                    </div>
+                                    <div>
+                                      <p className="text-gray-400 text-xs">Następny</p>
+                                      <p className="font-medium text-gray-900">
+                                        {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                                      </p>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -835,24 +913,78 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* Protokoły przeglądów */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mt-6"
-        >
-          <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-            <FileText className="h-4 w-4 text-emerald-600" />
-            Protokoły przeglądów
-          </h2>
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            {inspections.length === 0 ? (
-              <div className="p-8 text-center">
-                <FileText className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                <p className="text-gray-600">Brak protokołów do wyświetlenia</p>
+        {/* Dokumenty - Umowy */}
+        {clientDocuments.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="mt-6"
+          >
+            <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+              <FileText className="h-4 w-4 text-blue-600" />
+              Dokumenty
+            </h2>
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="divide-y divide-gray-100">
+                {clientDocuments.map((doc, index) => (
+                  <motion.div
+                    key={doc.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4 + index * 0.1 }}
+                    className="p-3 hover:bg-blue-50 transition-colors flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="bg-blue-50 p-2 rounded">
+                        <FileText className="h-4 w-4 text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">
+                          {doc.document_name}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {doc.document_type === 'contract' ? 'Umowa' : doc.document_type === 'protocol' ? 'Protokół' : 'Dokument'}
+                          {' • '}
+                          {new Date(doc.created_at).toLocaleDateString('pl-PL')}
+                        </p>
+                      </div>
+                    </div>
+                    <a
+                      href={doc.document_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors"
+                    >
+                      <Download className="h-3 w-3" />
+                      Pobierz
+                    </a>
+                  </motion.div>
+                ))}
               </div>
-            ) : (
+            </div>
+          </motion.div>
+        )}
+
+        {/* Protokoły przeglądów */}
+        {inspections.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-6"
+          >
+            <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+              <FileText className="h-4 w-4 text-emerald-600" />
+              Protokoły przeglądów
+            </h2>
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              {inspections.filter(i => i.pdf_url).length === 0 ? (
+                <div className="p-8 text-center">
+                  <FileText className="h-12 w-12 text-gray-400 mx-auto mb-3" />
+                  <p className="text-gray-600">Brak protokołów do wyświetlenia</p>
+                </div>
+              ) : (
               <div className="divide-y divide-gray-100">
                 {inspections.map((inspection, index) => (
                   <motion.div
@@ -898,15 +1030,116 @@ export default function Dashboard() {
                   </motion.div>
                 ))}
               </div>
-            )}
-          </div>
-        </motion.div>
+              )}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Instrukcje - Infografiki (tylko dla nowych urządzeń, max 1 miesiąc od fiskalizacji) */}
+        {(() => {
+          // Sprawdź czy są nowe urządzenia sfiskalizowane w ciągu ostatniego miesiąca
+          const today = new Date();
+          const oneMonthAgo = new Date(today);
+          oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+          
+          const hasRecentNewDevices = devices.some(device => {
+            // Urządzenie musi być NOWE (bez przeglądu)
+            if (device.last_inspection_date) return false;
+            
+            // Sprawdź datę fiskalizacji (musi być w ciągu ostatniego miesiąca)
+            if (!device.fiscalization_date) return false;
+            const fiscDate = new Date(device.fiscalization_date);
+            return fiscDate >= oneMonthAgo;
+          });
+          
+          if (!hasRecentNewDevices) return null;
+          
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mt-6"
+            >
+              <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                <BookOpen className="h-4 w-4 text-purple-600" />
+                Instrukcje dla nowych urządzeń
+                <span className="text-xs font-normal text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                  Widoczne przez 30 dni
+                </span>
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Instrukcja 1 - Kod autoryzacyjny */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.55 }}
+                  className="bg-white rounded-lg border border-purple-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
+                  onClick={() => setPreviewImage({
+                    src: '/instrukcja-kod-autoryzacyjny.png',
+                    title: 'Wprowadzenie kodu autoryzacyjnego'
+                  })}
+                >
+                  <div className="relative">
+                    <img 
+                      src="/instrukcja-kod-autoryzacyjny.png" 
+                      alt="Wprowadzenie kodu autoryzacyjnego"
+                      className="w-full h-40 object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                  </div>
+                  <div className="p-3">
+                    <h3 className="font-semibold text-gray-900 text-sm">
+                      Wprowadzenie kodu autoryzacyjnego
+                    </h3>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Kliknij aby powiększyć
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Instrukcja 2 - Aktualizacja menu */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 }}
+                  className="bg-white rounded-lg border border-purple-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
+                  onClick={() => setPreviewImage({
+                    src: '/instrukcja-aktualizacja-menu-pospay.png',
+                    title: 'Aktualizacja menu aplikacji płatniczej - Posnet Pospay 2'
+                  })}
+                >
+                  <div className="relative">
+                    <img 
+                      src="/instrukcja-aktualizacja-menu-pospay.png" 
+                      alt="Aktualizacja menu aplikacji płatniczej"
+                      className="w-full h-40 object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                  </div>
+                  <div className="p-3">
+                    <h3 className="font-semibold text-gray-900 text-sm">
+                      Aktualizacja menu aplikacji płatniczej
+                    </h3>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Posnet Pospay 2 • Kliknij aby powiększyć
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+          );
+        })()}
 
         {/* Do pobrania */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.65 }}
           className="mt-6"
         >
           <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
@@ -1493,6 +1726,48 @@ export default function Dashboard() {
                   </motion.button>
                 </div>
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Image Preview Modal */}
+      <AnimatePresence>
+        {previewImage && (
+          <motion.div
+            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setPreviewImage(null)}
+          >
+            <motion.div
+              className="relative max-w-4xl w-full max-h-[90vh]"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setPreviewImage(null)}
+                className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors flex items-center gap-2"
+              >
+                <span className="text-sm">Zamknij</span>
+                <X className="w-6 h-6" />
+              </button>
+              
+              {/* Title */}
+              <h3 className="absolute -top-12 left-0 text-white font-semibold text-lg">
+                {previewImage.title}
+              </h3>
+              
+              {/* Image */}
+              <img
+                src={previewImage.src}
+                alt={previewImage.title}
+                className="w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-2xl"
+              />
             </motion.div>
           </motion.div>
         )}

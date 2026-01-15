@@ -12,11 +12,12 @@ export interface Device {
   client_name: string;
   device_name: string;
   serial_number: string;
-  last_inspection_date: string;
+  last_inspection_date: string | null; // NULL dla nowych urządzeń
   next_inspection_date: string;
   location: string;
   last_inspection_id: string | null;
-  forestry_unit: string | null; // Leśnictwo - jednostka terenowa w ramach nadleśnictwa
+  forestry_unit?: string;
+  fiscalization_date?: string; // Data fiskalizacji dla nowych urządzeń
 }
 
 export interface Inspection {
@@ -31,3 +32,34 @@ export interface Inspection {
   device_count: number;
   pdf_url: string | null;
 }
+
+export interface Reminder {
+  id: string;
+  created_at: string;
+  device_id: string;
+  client_name: string;
+  serial_number: string;
+  reminder_date: string;
+  reminder_type: 'inspection_due' | 'first_inspection';
+  is_sent: boolean;
+  sent_at: string | null;
+}
+
+export interface ClientDocument {
+  id: string;
+  created_at: string;
+  client_name: string;
+  document_type: 'contract' | 'protocol' | 'other';
+  document_name: string;
+  document_url: string;
+  uploaded_by?: string;
+  notes?: string;
+}
+
+// Typy urządzeń fiskalnych
+export const DEVICE_TYPES = [
+  { value: 'Posnet Pospay', label: 'Posnet Pospay' },
+  { value: 'Posnet Temo Online', label: 'Posnet Temo Online' },
+] as const;
+
+export type DeviceType = typeof DEVICE_TYPES[number]['value'];
