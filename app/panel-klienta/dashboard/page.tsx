@@ -787,20 +787,20 @@ export default function Dashboard() {
                             </>
                           ) : (
                             <>
-                              <div>
-                                <p className="text-gray-400 text-xs">Ostatni</p>
-                                <p className="font-medium text-gray-900">
+                          <div>
+                            <p className="text-gray-400 text-xs">Ostatni</p>
+                            <p className="font-medium text-gray-900">
                                   {device.last_inspection_date 
                                     ? new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
                                     : '-'}
-                                </p>
-                              </div>
-                              <div>
-                                <p className="text-gray-400 text-xs">Następny</p>
-                                <p className="font-medium text-gray-900">
-                                  {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
-                                </p>
-                              </div>
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-gray-400 text-xs">Następny</p>
+                            <p className="font-medium text-gray-900">
+                              {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                            </p>
+                          </div>
                             </>
                           )}
                         </div>
@@ -953,20 +953,20 @@ export default function Dashboard() {
                                   </>
                                 ) : (
                                   <>
-                                    <div>
-                                      <p className="text-gray-400 text-xs">Ostatni</p>
-                                      <p className="font-medium text-gray-900">
+                                <div>
+                                  <p className="text-gray-400 text-xs">Ostatni</p>
+                                  <p className="font-medium text-gray-900">
                                         {device.last_inspection_date 
                                           ? new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
                                           : '-'}
-                                      </p>
-                                    </div>
-                                    <div>
-                                      <p className="text-gray-400 text-xs">Następny</p>
-                                      <p className="font-medium text-gray-900">
-                                        {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
-                                      </p>
-                                    </div>
+                                  </p>
+                                </div>
+                                <div>
+                                  <p className="text-gray-400 text-xs">Następny</p>
+                                  <p className="font-medium text-gray-900">
+                                    {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
+                                  </p>
+                                </div>
                                   </>
                                 )}
                               </div>
@@ -1067,7 +1067,7 @@ export default function Dashboard() {
                             {reg.device_name}
                           </h3>
                           <p className="text-xs text-gray-500">
-                            {reg.serial_number}
+                            SN: {reg.serial_number}
                           </p>
                           
                           {/* Leśnictwo - inline edit */}
@@ -1281,40 +1281,40 @@ export default function Dashboard() {
           if (!hasInspections && !hasProtocolDocuments) return null;
           
           return (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="mt-6"
-            >
-              <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <FileText className="h-4 w-4 text-emerald-600" />
-                Protokoły przeglądów
-              </h2>
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                <div className="divide-y divide-gray-100">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-6"
+        >
+          <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <FileText className="h-4 w-4 text-emerald-600" />
+            Protokoły przeglądów
+          </h2>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="divide-y divide-gray-100">
                   {/* Protokoły dodane przez admin */}
                   {protocolDocuments.map((doc, index) => (
-                    <motion.div
+                  <motion.div
                       key={`doc-${doc.id}`}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.45 + index * 0.1 }}
-                      className="p-3 hover:bg-emerald-50 transition-colors flex items-center justify-between"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="bg-emerald-50 p-2 rounded">
-                          <FileText className="h-4 w-4 text-emerald-600" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-gray-900">
-                            {doc.document_name}
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            Protokół • {new Date(doc.created_at).toLocaleDateString('pl-PL')}
-                          </p>
-                        </div>
+                    className="p-3 hover:bg-emerald-50 transition-colors flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="bg-emerald-50 p-2 rounded">
+                        <FileText className="h-4 w-4 text-emerald-600" />
                       </div>
+                      <div>
+                        <p className="text-sm font-semibold text-gray-900">
+                            {doc.document_name}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                            Protokół • {new Date(doc.created_at).toLocaleDateString('pl-PL')}
+                        </p>
+                      </div>
+                    </div>
                       <a
                         href={doc.document_url}
                         target="_blank"
@@ -1358,11 +1358,11 @@ export default function Dashboard() {
                         <Download className="h-3 w-3" />
                         PDF
                       </a>
-                    </motion.div>
-                  ))}
-                </div>
+                  </motion.div>
+                ))}
               </div>
-            </motion.div>
+          </div>
+        </motion.div>
           );
         })()}
 
@@ -1386,9 +1386,9 @@ export default function Dashboard() {
           if (!hasRecentNewDevices) return null;
           
           return (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
               className="mt-6"
             >
@@ -1435,7 +1435,7 @@ export default function Dashboard() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6 }}
+          transition={{ delay: 0.6 }}
                   className="bg-white rounded-lg border border-purple-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
                   onClick={() => setPreviewImage({
                     src: '/instrukcja-aktualizacja-menu-pospay.png',
@@ -1472,65 +1472,65 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65 }}
-            className="mt-6"
-          >
-            <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-              <Download className="h-4 w-4 text-gray-600" />
-              Przydatne dokumenty
-            </h2>
-            <div className="bg-white rounded-lg border border-gray-300 p-4">
-              <a
-                href="/zgloszenie-wydania-duplikatu-ksiazki-kasy.pdf"
-                download
-                className="flex items-center justify-between hover:bg-gray-50 -m-4 p-4 rounded-lg transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-gray-100 p-2 rounded">
-                    <FileText className="h-4 w-4 text-gray-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-gray-900">
-                      Zgłoszenie wydania duplikatu książki serwisowej
-                    </p>
-                    <p className="text-xs text-gray-500">PDF • 91 KB</p>
-                    <p className="text-xs text-gray-700 mt-1">
-                      Wypełniony wniosek proszę wysłać na: <span className="font-semibold text-red-600">handel@wroclaw.posnet.com</span>
-                    </p>
-                  </div>
+          className="mt-6"
+        >
+          <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+            <Download className="h-4 w-4 text-gray-600" />
+            Przydatne dokumenty
+          </h2>
+          <div className="bg-white rounded-lg border border-gray-300 p-4">
+            <a
+              href="/zgloszenie-wydania-duplikatu-ksiazki-kasy.pdf"
+              download
+              className="flex items-center justify-between hover:bg-gray-50 -m-4 p-4 rounded-lg transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="bg-gray-100 p-2 rounded">
+                  <FileText className="h-4 w-4 text-gray-600" />
                 </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-emerald-600"
-                >
-                  <path d="M12 15V3"></path>
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <motion.path
-                    d="m7 10 5 5 5-5"
-                    animate={{
-                      d: [
-                        "m7 10 5 5 5-5",
-                        "m7 12 5 5 5-5",
-                        "m7 10 5 5 5-5"
-                      ]
-                    }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  />
-                </svg>
-              </a>
-            </div>
-          </motion.div>
+                <div>
+                  <p className="text-sm font-semibold text-gray-900">
+                    Zgłoszenie wydania duplikatu książki serwisowej
+                  </p>
+                  <p className="text-xs text-gray-500">PDF • 91 KB</p>
+                  <p className="text-xs text-gray-700 mt-1">
+                    Wypełniony wniosek proszę wysłać na: <span className="font-semibold text-red-600">handel@wroclaw.posnet.com</span>
+                  </p>
+                </div>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-emerald-600"
+              >
+                <path d="M12 15V3"></path>
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <motion.path
+                  d="m7 10 5 5 5-5"
+                  animate={{
+                    d: [
+                      "m7 10 5 5 5-5",
+                      "m7 12 5 5 5-5",
+                      "m7 10 5 5 5-5"
+                    ]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </svg>
+            </a>
+          </div>
+        </motion.div>
         )}
 
         {/* Pomoc */}
