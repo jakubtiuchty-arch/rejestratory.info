@@ -514,10 +514,12 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 mb-1">
-                Twoje urządzenia fiskalne
+                Twoje urządzenia
               </h1>
               <p className="text-sm text-gray-600">
-                {clientName} • {devices.length} urządzeń
+                {clientName}
+                {devices.length > 0 && ` • ${devices.length} ${devices.length === 1 ? 'urządzenie fiskalne' : 'urządzeń fiskalnych'}`}
+                {registrators.length > 0 && ` • ${registrators.length} ${registrators.length === 1 ? 'rejestrator' : 'rejestratorów'}`}
               </p>
             </div>
             <button
@@ -533,6 +535,15 @@ export default function Dashboard() {
             </button>
           </div>
         </motion.div>
+
+        {/* Sekcja urządzeń fiskalnych - tylko jeśli są */}
+        {devices.length > 0 && (
+          <>
+        {/* Nagłówek sekcji fiskalnych */}
+        <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+          <Printer className="h-4 w-4 text-emerald-600" />
+          Urządzenia fiskalne ({devices.length})
+        </h2>
 
         {/* Wyszukiwanie i filtrowanie */}
         <motion.div
@@ -979,6 +990,8 @@ export default function Dashboard() {
             </>
           )}
         </div>
+          </>
+        )}
 
         {/* Sekcja Rejestratory */}
         {registrators.length > 0 && (
@@ -1362,70 +1375,72 @@ export default function Dashboard() {
           );
         })()}
 
-        {/* Do pobrania */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.65 }}
-          className="mt-6"
-        >
-          <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-            <Download className="h-4 w-4 text-gray-600" />
-            Przydatne dokumenty
-          </h2>
-          <div className="bg-white rounded-lg border border-gray-300 p-4">
-            <a
-              href="/zgloszenie-wydania-duplikatu-ksiazki-kasy.pdf"
-              download
-              className="flex items-center justify-between hover:bg-gray-50 -m-4 p-4 rounded-lg transition-colors"
-            >
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 p-2 rounded">
-                  <FileText className="h-4 w-4 text-gray-600" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-gray-900">
-                    Zgłoszenie wydania duplikatu książki serwisowej
-                  </p>
-                  <p className="text-xs text-gray-500">PDF • 91 KB</p>
-                  <p className="text-xs text-gray-700 mt-1">
-                    Wypełniony wniosek proszę wysłać na: <span className="font-semibold text-red-600">handel@wroclaw.posnet.com</span>
-                  </p>
-                </div>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-emerald-600"
+        {/* Do pobrania - tylko dla klientów z urządzeniami fiskalnymi */}
+        {devices.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.65 }}
+            className="mt-6"
+          >
+            <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+              <Download className="h-4 w-4 text-gray-600" />
+              Przydatne dokumenty
+            </h2>
+            <div className="bg-white rounded-lg border border-gray-300 p-4">
+              <a
+                href="/zgloszenie-wydania-duplikatu-ksiazki-kasy.pdf"
+                download
+                className="flex items-center justify-between hover:bg-gray-50 -m-4 p-4 rounded-lg transition-colors"
               >
-                <path d="M12 15V3"></path>
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <motion.path
-                  d="m7 10 5 5 5-5"
-                  animate={{
-                    d: [
-                      "m7 10 5 5 5-5",
-                      "m7 12 5 5 5-5",
-                      "m7 10 5 5 5-5"
-                    ]
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </svg>
-            </a>
-          </div>
-        </motion.div>
+                <div className="flex items-center gap-3">
+                  <div className="bg-gray-100 p-2 rounded">
+                    <FileText className="h-4 w-4 text-gray-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900">
+                      Zgłoszenie wydania duplikatu książki serwisowej
+                    </p>
+                    <p className="text-xs text-gray-500">PDF • 91 KB</p>
+                    <p className="text-xs text-gray-700 mt-1">
+                      Wypełniony wniosek proszę wysłać na: <span className="font-semibold text-red-600">handel@wroclaw.posnet.com</span>
+                    </p>
+                  </div>
+                </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-emerald-600"
+                >
+                  <path d="M12 15V3"></path>
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <motion.path
+                    d="m7 10 5 5 5-5"
+                    animate={{
+                      d: [
+                        "m7 10 5 5 5-5",
+                        "m7 12 5 5 5-5",
+                        "m7 10 5 5 5-5"
+                      ]
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                </svg>
+              </a>
+            </div>
+          </motion.div>
+        )}
 
         {/* Pomoc */}
         <motion.div
