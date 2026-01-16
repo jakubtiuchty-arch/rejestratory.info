@@ -17,10 +17,11 @@ CREATE TABLE IF NOT EXISTS registrators (
   notes TEXT
 );
 
--- 2. Dodanie kolumn kontraktu do istniejącej tabeli (jeśli tabela już istnieje)
+-- 2. Dodanie kolumn kontraktu i leśnictwa do istniejącej tabeli (jeśli tabela już istnieje)
 ALTER TABLE registrators 
   ADD COLUMN IF NOT EXISTS service_contract_years INTEGER,
-  ADD COLUMN IF NOT EXISTS service_contract_end DATE;
+  ADD COLUMN IF NOT EXISTS service_contract_end DATE,
+  ADD COLUMN IF NOT EXISTS forestry_unit TEXT;
 
 -- 3. Indeksy dla szybszego wyszukiwania
 CREATE INDEX IF NOT EXISTS idx_registrators_client_name ON registrators(client_name);

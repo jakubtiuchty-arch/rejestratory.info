@@ -126,6 +126,7 @@ export default function Dashboard() {
 
   // Location (leśnictwo) editing states
   const [editingDeviceId, setEditingDeviceId] = React.useState<string | null>(null);
+  const [editingRegistratorId, setEditingRegistratorId] = React.useState<string | null>(null);
   const [editingLocation, setEditingLocation] = React.useState("");
   const [isSavingLocation, setIsSavingLocation] = React.useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = React.useState(false);
@@ -210,7 +211,7 @@ export default function Dashboard() {
     });
   }, [devices, locationFilter, searchQuery]);
 
-  // Funkcja zapisująca nazwę leśnictwa do Supabase
+  // Funkcja zapisująca nazwę leśnictwa do Supabase (dla urządzeń fiskalnych)
   const saveForestryUnit = async (deviceId: string, newForestryUnit: string) => {
     setIsSavingLocation(true);
     try {
@@ -232,6 +233,32 @@ export default function Dashboard() {
       setSelectedDeviceForLocation(null);
     } catch (error) {
       console.error('Error saving forestry unit:', error);
+      alert('Błąd podczas zapisywania leśnictwa. Spróbuj ponownie.');
+    } finally {
+      setIsSavingLocation(false);
+    }
+  };
+
+  // Funkcja zapisująca nazwę leśnictwa dla rejestratorów
+  const saveRegistratorForestryUnit = async (registratorId: string, newForestryUnit: string) => {
+    setIsSavingLocation(true);
+    try {
+      const { error } = await supabase
+        .from('registrators')
+        .update({ forestry_unit: newForestryUnit.trim() })
+        .eq('id', registratorId);
+
+      if (error) throw error;
+
+      // Aktualizuj lokalny stan
+      setRegistrators(prev => prev.map(r => 
+        r.id === registratorId ? { ...r, forestry_unit: newForestryUnit.trim() } : r
+      ));
+
+      setEditingRegistratorId(null);
+      setEditingLocation("");
+    } catch (error) {
+      console.error('Error saving registrator forestry unit:', error);
       alert('Błąd podczas zapisywania leśnictwa. Spróbuj ponownie.');
     } finally {
       setIsSavingLocation(false);
@@ -1042,6 +1069,70 @@ export default function Dashboard() {
                           <p className="text-xs text-gray-500">
                             {reg.serial_number}
                           </p>
+                          
+                          {/* Leśnictwo - inline edit */}
+                          {editingRegistratorId === reg.id ? (
+                            <div className="flex items-center gap-1 mt-1">
+                              <MapPin className="h-3 w-3 text-blue-500 flex-shrink-0" />
+                              <input
+                                type="text"
+                                value={editingLocation}
+                                onChange={(e) => setEditingLocation(e.target.value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') saveRegistratorForestryUnit(reg.id, editingLocation);
+                                  if (e.key === 'Escape') {
+                                    setEditingRegistratorId(null);
+                                    setEditingLocation("");
+                                  }
+                                }}
+                                className="flex-1 text-xs px-1.5 py-0.5 border border-blue-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Wpisz nazwę leśnictwa..."
+                                autoFocus
+                                list={`forestry-units-reg-${reg.id}`}
+                              />
+                              <datalist id={`forestry-units-reg-${reg.id}`}>
+                                {uniqueForestryUnits.map(unit => (
+                                  <option key={unit} value={unit} />
+                                ))}
+                              </datalist>
+                              <button
+                                onClick={() => saveRegistratorForestryUnit(reg.id, editingLocation)}
+                                disabled={isSavingLocation}
+                                className="p-0.5 text-blue-600 hover:text-blue-700 disabled:opacity-50"
+                              >
+                                <Save className="h-3.5 w-3.5" />
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setEditingRegistratorId(null);
+                                  setEditingLocation("");
+                                }}
+                                className="p-0.5 text-gray-400 hover:text-gray-600"
+                              >
+                                <X className="h-3.5 w-3.5" />
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                setEditingRegistratorId(reg.id);
+                                setEditingLocation(reg.forestry_unit || "");
+                              }}
+                              className="flex items-center gap-1 mt-1 group"
+                            >
+                              <MapPin className="h-3 w-3 text-blue-500 flex-shrink-0" />
+                              {reg.forestry_unit && reg.forestry_unit.trim() ? (
+                                <span className="text-xs text-blue-700 font-medium group-hover:text-blue-800 truncate">
+                                  {reg.forestry_unit}
+                                </span>
+                              ) : (
+                                <span className="text-xs text-gray-400 italic group-hover:text-blue-600">
+                                  Przypisz leśnictwo...
+                                </span>
+                              )}
+                              <Pencil className="h-2.5 w-2.5 text-gray-300 group-hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </button>
+                          )}
                         </div>
 
                         {/* Kontrakt badge */}

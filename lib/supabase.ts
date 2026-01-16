@@ -65,6 +65,7 @@ export interface Registrator {
   purchase_date: string;
   service_contract_years: number | null; // null = brak, 3 lub 5
   service_contract_end: string | null;
+  forestry_unit?: string; // Leśnictwo
   notes?: string;
 }
 
