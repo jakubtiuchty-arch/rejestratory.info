@@ -16,26 +16,42 @@ export default function PanelKlienta() {
     setIsLoading(true);
     setError("");
 
+    const serialTrimmed = serialNumber.trim().toUpperCase();
+
     try {
-      // Szukamy urządzenia po numerze seryjnym
-      const { data: device, error: dbError } = await supabase
+      // 1. Najpierw szukamy w urządzeniach fiskalnych
+      const { data: device, error: deviceError } = await supabase
         .from('devices')
         .select('client_name, serial_number')
-        .eq('serial_number', serialNumber.trim().toUpperCase())
+        .eq('serial_number', serialTrimmed)
         .single();
 
-      if (dbError || !device) {
-        setError("Nie znaleziono urządzenia o podanym numerze unikatowym. Sprawdź poprawność numeru lub skontaktuj się z nami.");
-        setIsLoading(false);
+      if (device && !deviceError) {
+        // Znaleziono urządzenie fiskalne
+        localStorage.setItem('client_name', device.client_name);
+        localStorage.setItem('serial_number', device.serial_number);
+        window.location.href = "/panel-klienta/dashboard";
         return;
       }
 
-      // Zapisujemy dane klienta do localStorage
-      localStorage.setItem('client_name', device.client_name);
-      localStorage.setItem('serial_number', device.serial_number);
+      // 2. Jeśli nie znaleziono w devices, szukamy w rejestratorach
+      const { data: registrator, error: regError } = await supabase
+        .from('registrators')
+        .select('client_name, serial_number')
+        .eq('serial_number', serialTrimmed)
+        .single();
 
-      // Przekierowanie do dashboardu
-      window.location.href = "/panel-klienta/dashboard";
+      if (registrator && !regError) {
+        // Znaleziono rejestrator
+        localStorage.setItem('client_name', registrator.client_name);
+        localStorage.setItem('serial_number', registrator.serial_number);
+        window.location.href = "/panel-klienta/dashboard";
+        return;
+      }
+
+      // 3. Nie znaleziono w żadnej tabeli
+      setError("Nie znaleziono urządzenia o podanym numerze seryjnym. Sprawdź poprawność numeru lub skontaktuj się z nami.");
+      setIsLoading(false);
     } catch (err) {
       console.error('Login error:', err);
       setError("Wystąpił błąd podczas logowania. Spróbuj ponownie później.");
@@ -60,7 +76,7 @@ export default function PanelKlienta() {
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Panel Klienta</h1>
             <p className="text-gray-600">
-              Sprawdź status swoich urządzeń fiskalnych
+              Sprawdź status swoich urządzeń
             </p>
           </div>
 
@@ -69,7 +85,7 @@ export default function PanelKlienta() {
             <form onSubmit={handleLogin} className="space-y-6">
               <div>
                 <label htmlFor="serial" className="block text-sm font-medium text-gray-700 mb-2">
-                  Numer unikatowy urządzenia (N/U)
+                  Numer seryjny urządzenia
                 </label>
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -84,7 +100,7 @@ export default function PanelKlienta() {
                   />
                 </div>
                 <p className="mt-2 text-sm text-gray-500">
-                  Znajdziesz go na naklejce na Twoim urządzeniu fiskalnym
+                  Znajdziesz go na naklejce na Twoim urządzeniu
                 </p>
               </div>
 
@@ -112,11 +128,11 @@ export default function PanelKlienta() {
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 mt-0.5">✓</span>
-                  <span>Listę wszystkich Twoich urządzeń fiskalnych</span>
+                  <span>Listę urządzeń fiskalnych i rejestratorów</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 mt-0.5">✓</span>
-                  <span>Terminy ostatnich i następnych przeglądów</span>
+                  <span>Terminy przeglądów i status kontraktów</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 mt-0.5">✓</span>
@@ -124,7 +140,7 @@ export default function PanelKlienta() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 mt-0.5">✓</span>
-                  <span>Status techniczny każdego urządzenia</span>
+                  <span>Formularz zgłoszenia serwisowego</span>
                 </li>
               </ul>
             </div>
