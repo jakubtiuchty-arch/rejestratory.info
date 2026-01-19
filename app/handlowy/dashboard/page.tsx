@@ -123,6 +123,13 @@ const DEVICE_TYPES: Record<string, string[]> = {
   all_in_one: ["Dell AIO Pro 24", "HP Pro 324pv", "HP Pro 527pq"],
 };
 
+interface AccessoryItem {
+  name: string;
+  quantity: number;
+  hasSerialNumbers?: boolean;
+  serialNumbers?: string[];
+}
+
 interface SalesProduct {
   id: string;
   created_at: string;
@@ -131,7 +138,7 @@ interface SalesProduct {
   serial_number: string;
   client_name: string;
   sale_date: string;
-  accessories: string[];
+  accessories: (string | AccessoryItem)[];
   notes?: string;
   added_by: string;
 }
