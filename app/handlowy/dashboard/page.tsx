@@ -1237,7 +1237,6 @@ export default function HandlowyDashboard() {
           {
             columns: [
               {
-                width: 'auto',
                 image: takmaLogoBase64,
                 width: 120,
               },
