@@ -158,11 +158,23 @@ const PRODUCT_CATEGORIES = [
   { id: "all_in_one", name: "All in One", icon: LayoutGrid, color: "indigo" },
 ];
 
-// Domyślne składnice (umowy ramowe)
-const DEFAULT_SKLADNICE = [
-  { id: "zup_lodz", name: "ZUP LP w Łodzi", contractNumber: "" },
-  { id: "zslp_stargard", name: "ZSLP Stargard", contractNumber: "" },
-  { id: "zpuh_olsztyn", name: "ZPUH Olsztyn", contractNumber: "" },
+// Domyślne składnice (umowy ramowe) - teraz z wieloma umowami
+interface Contract {
+  id: string;
+  number: string;
+  addedAt: string;
+}
+
+interface Skladnica {
+  id: string;
+  name: string;
+  contracts: Contract[];
+}
+
+const DEFAULT_SKLADNICE: Skladnica[] = [
+  { id: "zup_lodz", name: "ZUP LP w Łodzi", contracts: [] },
+  { id: "zslp_stargard", name: "ZSLP Stargard", contracts: [] },
+  { id: "zpuh_olsztyn", name: "ZPUH Olsztyn", contracts: [] },
 ];
 
 // Typy urządzeń w kategoriach
@@ -204,13 +216,27 @@ export default function HandlowyDashboard() {
   const [activeView, setActiveView] = React.useState<"dashboard" | "products">("dashboard");
   const [activeCategory, setActiveCategory] = React.useState("rejestratory");
   
-  // Składnice - ładowane z localStorage
-  const [skladnice, setSkladnice] = React.useState(() => {
+  // Składnice - ładowane z localStorage (z migracją ze starego formatu)
+  const [skladnice, setSkladnice] = React.useState<Skladnica[]>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('handlowy_skladnice');
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          // Migracja ze starego formatu (contractNumber: string) do nowego (contracts: [])
+          return parsed.map((s: any) => {
+            if (s.contracts) return s; // Już nowy format
+            // Stary format - migruj
+            const contracts: Contract[] = [];
+            if (s.contractNumber) {
+              contracts.push({
+                id: crypto.randomUUID(),
+                number: s.contractNumber,
+                addedAt: new Date().toISOString()
+              });
+            }
+            return { id: s.id, name: s.name, contracts };
+          });
         } catch {
           return DEFAULT_SKLADNICE;
         }
@@ -275,6 +301,7 @@ export default function HandlowyDashboard() {
     clientName: "",
     clientCity: "", // Miejscowość siedziby nadleśnictwa
     skladnicaId: "zup_lodz",
+    selectedContractId: "", // ID wybranej umowy
     invoiceNumber: "",
     invoiceDate: new Date().toISOString().split("T")[0],
   });
@@ -843,11 +870,51 @@ export default function HandlowyDashboard() {
     }
   };
 
-  const updateSkladnicaContract = (id: string, contractNumber: string) => {
-    const updated = skladnice.map((s: any) => 
-      s.id === id ? { ...s, contractNumber } : s
-    );
+  const [newContractNumber, setNewContractNumber] = React.useState<Record<string, string>>({});
+
+  const addContractToSkladnica = (skladnicaId: string) => {
+    const contractNum = newContractNumber[skladnicaId]?.trim();
+    if (!contractNum) {
+      showToast("Wpisz numer umowy", "error");
+      return;
+    }
+    
+    const updated = skladnice.map((s: Skladnica) => {
+      if (s.id === skladnicaId) {
+        // Check if contract already exists
+        if (s.contracts.some(c => c.number === contractNum)) {
+          showToast("Ta umowa już istnieje", "error");
+          return s;
+        }
+        return {
+          ...s,
+          contracts: [...s.contracts, {
+            id: crypto.randomUUID(),
+            number: contractNum,
+            addedAt: new Date().toISOString()
+          }]
+        };
+      }
+      return s;
+    });
+    
     saveSkladnice(updated);
+    setNewContractNumber(prev => ({ ...prev, [skladnicaId]: "" }));
+    showToast("Umowa została dodana!", "success");
+  };
+
+  const removeContractFromSkladnica = (skladnicaId: string, contractId: string) => {
+    const updated = skladnice.map((s: Skladnica) => {
+      if (s.id === skladnicaId) {
+        return {
+          ...s,
+          contracts: s.contracts.filter(c => c.id !== contractId)
+        };
+      }
+      return s;
+    });
+    saveSkladnice(updated);
+    showToast("Umowa została usunięta", "success");
   };
 
   // Kolory dla wykresu kołowego
@@ -1306,9 +1373,15 @@ export default function HandlowyDashboard() {
       return;
     }
 
-      const skladnica = skladnice.find((s: any) => s.id === protocolData.skladnicaId);
+      const skladnica = skladnice.find((s: Skladnica) => s.id === protocolData.skladnicaId);
     if (!skladnica) {
       showToast("Wybierz składnicę", "error");
+      return;
+    }
+
+    const selectedContract = skladnica.contracts.find((c: Contract) => c.id === protocolData.selectedContractId);
+    if (!selectedContract) {
+      showToast("Wybierz umowę", "error");
       return;
     }
 
@@ -1486,7 +1559,7 @@ export default function HandlowyDashboard() {
               ' z dnia ',
               { text: invoiceDateFormatted, bold: true },
               ' oraz z Umową nr ',
-              { text: skladnica.contractNumber, bold: true },
+              { text: selectedContract.number, bold: true },
               ' z ',
               { text: skladnica.name, bold: true },
               ' dostarczyła do ',
@@ -1682,6 +1755,7 @@ export default function HandlowyDashboard() {
         clientName: "",
         clientCity: "",
         skladnicaId: "zup_lodz",
+        selectedContractId: "",
         invoiceNumber: "",
         invoiceDate: new Date().toISOString().split("T")[0],
       });
@@ -2106,33 +2180,61 @@ export default function HandlowyDashboard() {
               ) : (
                 /* ========== SKŁADNICE ========== */
                 <div className="p-6">
-                  <p className="text-sm text-gray-500 mb-4">Wprowadź numery umów dla każdej składnicy. Będą używane przy generowaniu protokołów.</p>
-                  <div className="space-y-3">
-                    {skladnice.map((s: any) => (
-                      <div key={s.id} className="flex items-center justify-between gap-4 p-4 bg-gray-50 rounded-lg">
-                        <div className="flex items-center gap-3">
+                  <p className="text-sm text-gray-500 mb-4">Zarządzaj umowami dla każdej składnicy. Możesz dodać wiele umów - będą dostępne przy generowaniu protokołów.</p>
+                  <div className="space-y-4">
+                    {skladnice.map((s: Skladnica) => (
+                      <div key={s.id} className="p-4 bg-gray-50 rounded-xl">
+                        <div className="flex items-center gap-3 mb-3">
                           <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
                             <Building2 className="w-5 h-5 text-emerald-600" />
                           </div>
-                          <h3 className="font-medium text-gray-900">{s.name}</h3>
+                          <div>
+                            <h3 className="font-medium text-gray-900">{s.name}</h3>
+                            <p className="text-xs text-gray-500">{s.contracts.length} {s.contracts.length === 1 ? 'umowa' : s.contracts.length > 1 && s.contracts.length < 5 ? 'umowy' : 'umów'}</p>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-3">
+                        
+                        {/* Lista umów */}
+                        {s.contracts.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mb-3">
+                            {s.contracts.map((contract) => (
+                              <div 
+                                key={contract.id}
+                                className="inline-flex items-center gap-2 bg-white border border-emerald-200 text-emerald-700 px-3 py-1.5 rounded-lg text-sm"
+                              >
+                                <span className="font-medium">{contract.number}</span>
+                                <button
+                                  onClick={() => removeContractFromSkladnica(s.id, contract.id)}
+                                  className="text-emerald-400 hover:text-red-500 transition-colors"
+                                  title="Usuń umowę"
+                                >
+                                  <X className="w-4 h-4" />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        
+                        {/* Dodaj nową umowę */}
+                        <div className="flex items-center gap-2">
                           <input
                             type="text"
-                            value={s.contractNumber || ''}
-                            onChange={(e) => updateSkladnicaContract(s.id, e.target.value)}
-                            placeholder="Numer umowy..."
-                            className="w-64 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                            value={newContractNumber[s.id] || ''}
+                            onChange={(e) => setNewContractNumber(prev => ({ ...prev, [s.id]: e.target.value }))}
+                            placeholder="Numer nowej umowy..."
+                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                addContractToSkladnica(s.id);
+                              }
+                            }}
                           />
-                          {s.contractNumber ? (
-                            <span className="text-xs bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">
-                              ✓ Aktywna
-                            </span>
-                          ) : (
-                            <span className="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">
-                              Brak umowy
-                            </span>
-                          )}
+                          <button
+                            onClick={() => addContractToSkladnica(s.id)}
+                            className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-medium transition-colors"
+                          >
+                            Dodaj
+                          </button>
                         </div>
                       </div>
                     ))}
@@ -2818,23 +2920,59 @@ GHI345678
                   {/* Składnica */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Składnica (umowa) <span className="text-red-500">*</span>
+                      Składnica <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <select
                         value={protocolData.skladnicaId}
-                        onChange={(e) => setProtocolData({ ...protocolData, skladnicaId: e.target.value })}
+                        onChange={(e) => setProtocolData({ ...protocolData, skladnicaId: e.target.value, selectedContractId: "" })}
                         className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 appearance-none"
                       >
-                        {skladnice.map((s: any) => (
+                        {skladnice.map((s: Skladnica) => (
                           <option key={s.id} value={s.id}>
-                            {s.name} • Umowa {s.contractNumber}
+                            {s.name} ({s.contracts.length} {s.contracts.length === 1 ? 'umowa' : 'umów'})
                           </option>
                         ))}
                       </select>
                       <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                     </div>
                   </div>
+
+                  {/* Wybór umowy */}
+                  {(() => {
+                    const selectedSkladnica = skladnice.find((s: Skladnica) => s.id === protocolData.skladnicaId);
+                    if (!selectedSkladnica || selectedSkladnica.contracts.length === 0) {
+                      return (
+                        <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                          <p className="text-sm text-amber-700">
+                            ⚠️ Brak umów dla wybranej składnicy. Dodaj umowę w zakładce "Składnice".
+                          </p>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Numer umowy <span className="text-red-500">*</span>
+                        </label>
+                        <div className="relative">
+                          <select
+                            value={protocolData.selectedContractId}
+                            onChange={(e) => setProtocolData({ ...protocolData, selectedContractId: e.target.value })}
+                            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 appearance-none"
+                          >
+                            <option value="">-- Wybierz umowę --</option>
+                            {selectedSkladnica.contracts.map((c: Contract) => (
+                              <option key={c.id} value={c.id}>
+                                {c.number}
+                              </option>
+                            ))}
+                          </select>
+                          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                        </div>
+                      </div>
+                    );
+                  })()}
 
                   {/* Numer faktury */}
                   <div>
@@ -2937,8 +3075,8 @@ GHI345678
                         Firma <strong>TAKMA</strong> z siedzibą we Wrocławiu przy ulicy Poświęckiej 1a, 
                         zgodnie z fakturą nr <strong>{protocolData.invoiceNumber}</strong> z dnia{" "}
                         <strong>{new Date(protocolData.invoiceDate).toLocaleDateString('pl-PL')}</strong> oraz z Umową nr{" "}
-                        <strong>{skladnice.find((s: any) => s.id === protocolData.skladnicaId)?.contractNumber}</strong> z{" "}
-                        <strong>{skladnice.find((s: any) => s.id === protocolData.skladnicaId)?.name}</strong> dostarczyła do{" "}
+                        <strong>{skladnice.find((s: Skladnica) => s.id === protocolData.skladnicaId)?.contracts.find((c: Contract) => c.id === protocolData.selectedContractId)?.number || '---'}</strong> z{" "}
+                        <strong>{skladnice.find((s: Skladnica) => s.id === protocolData.skladnicaId)?.name}</strong> dostarczyła do{" "}
                         <strong>{protocolData.clientName.toLowerCase().startsWith('nadleśnictwo ') 
                           ? protocolData.clientName.replace(/^Nadleśnictwo\s+/i, 'Nadleśnictwa ')
                           : `Nadleśnictwa ${protocolData.clientName}`}</strong> następujący sprzęt:
