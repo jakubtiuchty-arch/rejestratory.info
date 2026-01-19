@@ -734,7 +734,7 @@ export default function HandlowyDashboard() {
     }
   };
 
-  const handleRemoveAccessory = async (productId: string, accessoryIndex: number) => {
+  const handleRemoveAccessoryFromProduct = async (productId: string, accessoryIndex: number) => {
     const product = editingProducts.find(p => p.id === productId);
     if (!product) return;
 
@@ -2627,7 +2627,7 @@ GHI345678
                                   >
                                     {name} {qty > 1 && `(${qty})`}
                                     <button
-                                      onClick={() => handleRemoveAccessory(product.id, i)}
+                                      onClick={() => handleRemoveAccessoryFromProduct(product.id, i)}
                                       className="ml-1 text-gray-400 hover:text-red-500"
                                     >
                                       <X className="w-3 h-3" />
