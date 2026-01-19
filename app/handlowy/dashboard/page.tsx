@@ -84,7 +84,61 @@ const NADLESNICTWO_TO_RDLP: Record<string, string> = {
   "Szczecinek": "RDLP Szczecinek",
   "Koszalin": "RDLP Szczecinek",
   "Słupsk": "RDLP Szczecinek",
-  // Inne
+  // RDLP Krosno
+  "Krasiczyn": "RDLP Krosno",
+  "Krosno": "RDLP Krosno",
+  "Lesko": "RDLP Krosno",
+  "Przemyśl": "RDLP Krosno",
+  "Bircza": "RDLP Krosno",
+  "Cisna": "RDLP Krosno",
+  "Ustrzyki Dolne": "RDLP Krosno",
+  "Baligród": "RDLP Krosno",
+  "Lutowiska": "RDLP Krosno",
+  "Rymanów": "RDLP Krosno",
+  "Dukla": "RDLP Krosno",
+  "Brzozów": "RDLP Krosno",
+  "Dynów": "RDLP Krosno",
+  "Jarosław": "RDLP Krosno",
+  // RDLP Lublin
+  "Lublin": "RDLP Lublin",
+  "Biłgoraj": "RDLP Lublin",
+  "Zamość": "RDLP Lublin",
+  "Janów Lubelski": "RDLP Lublin",
+  "Puławy": "RDLP Lublin",
+  // RDLP Kraków
+  "Kraków": "RDLP Kraków",
+  "Nowy Sącz": "RDLP Kraków",
+  "Nowy Targ": "RDLP Kraków",
+  "Limanowa": "RDLP Kraków",
+  "Myślenice": "RDLP Kraków",
+  // RDLP Katowice
+  "Katowice": "RDLP Katowice",
+  "Bielsko": "RDLP Katowice",
+  "Wisła": "RDLP Katowice",
+  "Ustroń": "RDLP Katowice",
+  // RDLP Poznań
+  "Poznań": "RDLP Poznań",
+  "Kalisz": "RDLP Poznań",
+  "Jarocin": "RDLP Poznań",
+  // RDLP Piła
+  "Piła": "RDLP Piła",
+  "Trzcianka": "RDLP Piła",
+  // RDLP Łódź
+  "Łódź": "RDLP Łódź",
+  "Piotrków": "RDLP Łódź",
+  "Radomsko": "RDLP Łódź",
+  // RDLP Radom
+  "Radom": "RDLP Radom",
+  "Kielce": "RDLP Radom",
+  "Starachowice": "RDLP Radom",
+  // RDLP Warszawa
+  "Warszawa": "RDLP Warszawa",
+  "Płock": "RDLP Warszawa",
+  "Ostrołęka": "RDLP Warszawa",
+  // RDLP Zielona Góra (uzupełnienie)
+  "Przytok": "RDLP Zielona Góra",
+  "Żagań": "RDLP Zielona Góra",
+  "Lubsko": "RDLP Zielona Góra",
 };
 
 function getRDLPFromClient(clientName: string): string {
