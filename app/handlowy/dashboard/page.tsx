@@ -1275,6 +1275,11 @@ export default function HandlowyDashboard() {
       return;
     }
 
+    // Normalizuj nazwę klienta - zawsze z "Nadleśnictwo"
+    const normalizedClientName = formData.clientName.toLowerCase().startsWith('nadleśnictwo')
+      ? formData.clientName
+      : `Nadleśnictwo ${formData.clientName}`;
+
     setIsSaving(true);
     try {
       // Przygotuj wszystkie produkty do dodania
@@ -1282,7 +1287,7 @@ export default function HandlowyDashboard() {
         category: activeCategory,
         device_type: formData.deviceType,
         serial_number: serial,
-        client_name: formData.clientName,
+        client_name: normalizedClientName,
         sale_date: formData.saleDate,
         accessories: accessories,
         notes: formData.notes,
@@ -1295,7 +1300,7 @@ export default function HandlowyDashboard() {
 
       // Also insert into registrators table (for panel-klienta) - ALL categories
       const registratorsToInsert = parsedSerials.map(serial => ({
-        client_name: formData.clientName,
+        client_name: normalizedClientName,
         device_name: formData.deviceType,
         serial_number: serial,
         purchase_date: formData.saleDate,
