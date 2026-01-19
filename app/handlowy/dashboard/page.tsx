@@ -680,7 +680,7 @@ export default function HandlowyDashboard() {
     }
   };
 
-  const handleAddAccessory = async (productId: string) => {
+  const handleAddAccessoryToProduct = async (productId: string) => {
     if (!newAccessoryName.trim()) {
       alert("Wpisz nazwę akcesorium");
       return;
@@ -2656,7 +2656,7 @@ GHI345678
                                 className="w-16 px-2 py-1.5 border border-gray-300 rounded-lg text-sm text-center focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                               />
                               <button
-                                onClick={() => handleAddAccessory(product.id)}
+                                onClick={() => handleAddAccessoryToProduct(product.id)}
                                 className="px-3 py-1.5 bg-amber-500 text-white rounded-lg hover:bg-amber-600 text-sm font-medium"
                               >
                                 Dodaj
