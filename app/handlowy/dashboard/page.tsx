@@ -2624,9 +2624,14 @@ GHI345678
                               <span className="text-sm text-gray-400">Brak akcesoriów</span>
                             ) : (
                               accs.map((acc: any, i: number) => {
-                                const isObject = typeof acc === 'object' && acc !== null;
-                                const name = isObject ? acc.name : String(acc);
-                                const qty = isObject ? acc.quantity : 1;
+                                // Parse if it's a JSON string
+                                let parsedAcc = acc;
+                                if (typeof acc === 'string') {
+                                  try { parsedAcc = JSON.parse(acc); } catch { parsedAcc = { name: acc, quantity: 1 }; }
+                                }
+                                const isObject = typeof parsedAcc === 'object' && parsedAcc !== null;
+                                const name = isObject ? parsedAcc.name : String(parsedAcc);
+                                const qty = isObject ? (parsedAcc.quantity || 1) : 1;
                                 return (
                                   <span 
                                     key={i} 
