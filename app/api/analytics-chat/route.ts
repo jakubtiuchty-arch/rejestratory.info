@@ -414,7 +414,7 @@ function extractNadlesnictwoName(clientName: string): string {
 }
 
 // Funkcja do przypisania RDLP
-export function getRDLP(clientName: string): string {
+function getRDLP(clientName: string): string {
   const name = extractNadlesnictwoName(clientName);
   return NADLESNICTWO_TO_RDLP[name] || "Nieznane RDLP";
 }
