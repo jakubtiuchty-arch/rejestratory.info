@@ -28,12 +28,14 @@
     "cmdk": "^1.1.1",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.548.0",
+    "mammoth": "^1.11.0",
     "next": "14.2.15",
     "pdfmake": "^0.3.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "resend": "^6.7.0",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "word-extractor": "^1.0.4"
   },
   "devDependencies": {
     "@types/node": "^20",

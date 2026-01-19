@@ -251,7 +251,7 @@ export default function AdminDevices() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-14 border-b border-gray-100">
             <div className="flex items-center gap-3">
-              <span className="font-bold text-gray-900">Panel administratora</span>
+              <span className="font-bold text-gray-900">Panel SuperAdmin</span>
             </div>
             <div className="flex items-center gap-4">
               <a href="/" className="text-gray-500 hover:text-emerald-600 text-sm flex items-center gap-1">

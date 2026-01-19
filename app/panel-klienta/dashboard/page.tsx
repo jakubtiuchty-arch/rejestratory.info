@@ -544,7 +544,7 @@ export default function Dashboard() {
                 Twoje urządzenia
               </h1>
               <p className="text-sm text-gray-600">
-                {clientName}
+                {clientName.toLowerCase().startsWith('nadleśnictwo') ? clientName : `Nadleśnictwo ${clientName}`}
                 {devices.length > 0 && ` • ${devices.length} ${devices.length === 1 ? 'urządzenie fiskalne' : 'urządzeń fiskalnych'}`}
                 {registrators.length > 0 && ` • ${registrators.length} ${registrators.length === 1 ? 'rejestrator' : 'rejestratorów'}`}
               </p>
@@ -1176,16 +1176,40 @@ export default function Dashboard() {
                       )}
                     </motion.div>
 
-                    {/* Przycisk kuriera */}
+                    {/* Przycisk kuriera / serwisu Zebra */}
                     <motion.button
-                      onClick={() => handleOpenCourierModalForRegistrator(reg)}
+                      onClick={() => {
+                        // Dla urządzeń Zebra → przekieruj do serwis-zebry.pl
+                        if (reg.device_name?.toLowerCase().includes('zebra')) {
+                          const params = new URLSearchParams({
+                            serial: reg.serial_number || '',
+                            model: reg.device_name || '',
+                            klient: reg.client_name || '',
+                          });
+                          // Parametry PRZED hashem, żeby strona je odczytała
+                          window.open(`https://www.serwis-zebry.pl/?${params.toString()}#formularz`, '_blank');
+                        } else {
+                          // Dla innych urządzeń → standardowy modal kuriera
+                          handleOpenCourierModalForRegistrator(reg);
+                        }
+                      }}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 + index * 0.05 }}
-                      className="relative group flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
-                      title="Problem z urządzeniem? Zamów kuriera"
+                      className={`relative group flex-shrink-0 w-12 border rounded-lg transition-colors flex items-center justify-center ${
+                        reg.device_name?.toLowerCase().includes('zebra')
+                          ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200'
+                          : 'bg-orange-50 hover:bg-orange-100 border-orange-200'
+                      }`}
+                      title={reg.device_name?.toLowerCase().includes('zebra') 
+                        ? "Zgłoś naprawę w autoryzowanym serwisie Zebra" 
+                        : "Problem z urządzeniem? Zamów kuriera"}
                     >
-                      <Truck className="h-4 w-4 text-orange-600" />
+                      <Truck className={`h-4 w-4 ${
+                        reg.device_name?.toLowerCase().includes('zebra')
+                          ? 'text-emerald-600'
+                          : 'text-orange-600'
+                      }`} />
                     </motion.button>
                   </div>
                 );
