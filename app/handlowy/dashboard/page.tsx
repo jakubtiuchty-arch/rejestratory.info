@@ -678,10 +678,10 @@ export default function HandlowyDashboard() {
 
     try {
       const pdfMakeModule = await import('pdfmake/build/pdfmake');
-      const pdfFontsModule = await import('pdfmake/build/vfs_fonts');
+      const pdfFontsModule = await import('pdfmake/build/vfs_fonts') as any;
       
       const pdfMake = pdfMakeModule.default || pdfMakeModule;
-      pdfMake.vfs = pdfFontsModule.default?.pdfMake?.vfs || pdfFontsModule.pdfMake?.vfs;
+      pdfMake.vfs = pdfFontsModule.default?.pdfMake?.vfs || pdfFontsModule.pdfMake?.vfs || pdfFontsModule.vfs;
 
       // Pobierz logo
       let logoBase64 = '';
@@ -1115,7 +1115,7 @@ export default function HandlowyDashboard() {
     // Generowanie PDF
     try {
       const pdfMakeModule = await import('pdfmake/build/pdfmake');
-      const pdfFontsModule = await import('pdfmake/build/vfs_fonts');
+      const pdfFontsModule = await import('pdfmake/build/vfs_fonts') as any;
       
       const pdfMake = pdfMakeModule.default || pdfMakeModule;
       const pdfFonts = pdfFontsModule.default || pdfFontsModule;

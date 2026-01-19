@@ -138,9 +138,9 @@ export default function SzefDashboardPage() {
 
     try {
       const pdfMakeModule = await import('pdfmake/build/pdfmake');
-      const pdfFontsModule = await import('pdfmake/build/vfs_fonts');
+      const pdfFontsModule = await import('pdfmake/build/vfs_fonts') as any;
       const pdfMake = pdfMakeModule.default || pdfMakeModule;
-      pdfMake.vfs = pdfFontsModule.default?.pdfMake?.vfs || pdfFontsModule.pdfMake?.vfs;
+      pdfMake.vfs = pdfFontsModule.default?.pdfMake?.vfs || pdfFontsModule.pdfMake?.vfs || pdfFontsModule.vfs;
 
       const deviceRows = Object.entries(analyticsData.byDevice).sort(([,a], [,b]) => b - a)
         .map(([device, count]) => [{ text: device }, { text: String(count), alignment: 'center', bold: true }, 
