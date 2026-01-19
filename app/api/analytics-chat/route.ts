@@ -561,6 +561,28 @@ Odpowiadaj po polsku, zwięźle i konkretnie. Podawaj liczby i statystyki.
   }
 }
 
+// Śmieszne odpowiedzi gdy brak danych
+const funnyNoDataResponses = [
+  "Ej ej... przecież nie ma takiego Nadleśnictwa! 😅 Sprawdź pisownię albo pytaj o coś co istnieje!",
+  "Hmm, szukam, szukam... i nic! 🔍 Takiego Nadleśnictwa nie znam. Może literówka?",
+  "No nie no... 🤔 Nie ma czegoś takiego w moich danych. Jesteś pewien pisowni?",
+  "Hola hola! 🛑 Nie znam takiego Nadleśnictwa. Może chodziło Ci o inne?",
+];
+
+const funnyNoSalesResponses = [
+  "A niestety! 😔 Nadleśnictwo istnieje, ale jeszcze tam nic nie sprzedaliśmy. Może czas to zmienić? 💪",
+  "Jest takie Nadleśnictwo, owszem... ale 0 sztuk u nich! 📊 Czekamy na pierwszy deal!",
+  "Nadleśnictwo jest, sprzedaży brak! 🎯 Może warto zadzwonić?",
+  "Znam to miejsce! Ale niestety - pusto w kolumnie sprzedaży. Jeszcze... 😉",
+];
+
+const funnyGreetings = [
+  "O, to ciekawe pytanie! 🌲",
+  "Sprawdzam, sprawdzam... 📈",
+  "Dobra, mam to! 💡",
+  "No to lecimy z danymi! 🚀",
+];
+
 // Podstawowa odpowiedź bez AI
 function generateBasicAnswer(
   question: string,
@@ -571,37 +593,47 @@ function generateBasicAnswer(
 ): string {
   const q = question.toLowerCase();
   
+  // Losowa funkcja
+  const randomFrom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+  
   // Pytania o konkretne Nadleśnictwo
-  const nadlesnictwoMatch = q.match(/nadleśnictw[aouy]?\s+(\w+)/i) || q.match(/do\s+(\w+)/i);
+  const nadlesnictwoMatch = q.match(/nadleśnictw[aouy]?\s+(\w+)/i) || q.match(/do\s+(\w+)/i) || q.match(/ile\s+(?:do\s+)?(\w+)/i);
   if (nadlesnictwoMatch) {
     const searchName = nadlesnictwoMatch[1];
-    // Szukaj w produktach
-    const matchingProducts = products.filter(p => 
-      p.client_name.toLowerCase().includes(searchName.toLowerCase())
-    );
     
-    if (matchingProducts.length === 0) {
-      // Sprawdź czy Nadleśnictwo istnieje w mapowaniu RDLP
-      const existsInMapping = Object.keys(NADLESNICTWO_TO_RDLP).some(
-        name => name.toLowerCase().includes(searchName.toLowerCase())
+    // Ignoruj słowa kluczowe które nie są nazwami
+    const ignoredWords = ['ile', 'do', 'rdlp', 'rejestratorów', 'urządzeń', 'sztuk', 'sprzedano'];
+    if (ignoredWords.includes(searchName.toLowerCase())) {
+      // To nie jest nazwa Nadleśnictwa, kontynuuj do innych sprawdzeń
+    } else {
+      // Szukaj w produktach
+      const matchingProducts = products.filter(p => 
+        p.client_name.toLowerCase().includes(searchName.toLowerCase())
       );
       
-      if (existsInMapping) {
-        return `Nie mamy jeszcze żadnych sprzedaży do Nadleśnictwa ${searchName.charAt(0).toUpperCase() + searchName.slice(1)}. To Nadleśnictwo istnieje, ale nie dostarczaliśmy tam urządzeń.`;
+      if (matchingProducts.length === 0) {
+        // Sprawdź czy Nadleśnictwo istnieje w mapowaniu RDLP
+        const existsInMapping = Object.keys(NADLESNICTWO_TO_RDLP).some(
+          name => name.toLowerCase().includes(searchName.toLowerCase())
+        );
+        
+        if (existsInMapping) {
+          return randomFrom(funnyNoSalesResponses);
+        } else {
+          return randomFrom(funnyNoDataResponses);
+        }
       } else {
-        return `Nie znaleziono Nadleśnictwa "${searchName.charAt(0).toUpperCase() + searchName.slice(1)}" w naszych danych. Sprawdź pisownię lub zapytaj o inne Nadleśnictwo.`;
+        const clientName = matchingProducts[0].client_name;
+        const rdlp = getRDLP(clientName);
+        const deviceBreakdown: Record<string, number> = {};
+        matchingProducts.forEach(p => {
+          deviceBreakdown[p.device_type] = (deviceBreakdown[p.device_type] || 0) + 1;
+        });
+        
+        return `${randomFrom(funnyGreetings)}\n\nDo ${clientName} (${rdlp || 'RDLP nieznane'}) sprzedano łącznie ${matchingProducts.length} urządzeń:\n${
+          Object.entries(deviceBreakdown).map(([d, c]) => `• ${d}: ${c} szt.`).join('\n')
+        }`;
       }
-    } else {
-      const clientName = matchingProducts[0].client_name;
-      const rdlp = getRDLP(clientName);
-      const deviceBreakdown: Record<string, number> = {};
-      matchingProducts.forEach(p => {
-        deviceBreakdown[p.device_type] = (deviceBreakdown[p.device_type] || 0) + 1;
-      });
-      
-      return `Do ${clientName} (${rdlp || 'RDLP nieznane'}) sprzedano łącznie ${matchingProducts.length} urządzeń:\n${
-        Object.entries(deviceBreakdown).map(([d, c]) => `• ${d}: ${c} szt.`).join('\n')
-      }`;
     }
   }
   
@@ -611,11 +643,12 @@ function generateBasicAnswer(
     const rdlpName = `RDLP ${rdlpMatch[1].charAt(0).toUpperCase() + rdlpMatch[1].slice(1)}`;
     const stats = rdlpStats[rdlpName];
     if (stats) {
-      return `Do ${rdlpName} sprzedano łącznie ${stats.total} urządzeń:\n${
+      return `${randomFrom(funnyGreetings)}\n\nDo ${rdlpName} sprzedano łącznie ${stats.total} urządzeń:\n${
         Object.entries(stats.devices).map(([d, c]) => `• ${d}: ${c} szt.`).join('\n')
       }`;
     } else {
-      return `Nie mamy sprzedaży do ${rdlpName}. Dostępne RDLP: ${Object.keys(rdlpStats).join(', ')}`;
+      const availableRDLPs = Object.keys(rdlpStats);
+      return `Hmm, ${rdlpName}? 🤔 Nie mamy tam sprzedaży.\n\nMamy dane dla: ${availableRDLPs.length > 0 ? availableRDLPs.join(', ') : 'żadnego RDLP jeszcze'}`;
     }
   }
 
@@ -627,18 +660,22 @@ function generateBasicAnswer(
       .filter(([_, stats]) => stats.devices[deviceMatch])
       .map(([rdlp, stats]) => `${rdlp}: ${stats.devices[deviceMatch]}`)
       .join(', ');
-    return `Sprzedano ${count} urządzeń ${deviceMatch}.\nPodział według RDLP: ${rdlpBreakdown || 'brak danych'}`;
+    return `${randomFrom(funnyGreetings)}\n\nSprzedano ${count} szt. ${deviceMatch}! 🎉\n\nPodział: ${rdlpBreakdown || 'brak szczegółów'}`;
   }
 
   // Pytania o kategorię
   if (q.includes('rejestr')) {
     const count = byCategory['rejestratory'] || 0;
-    return `Sprzedano łącznie ${count} rejestratorów.`;
+    return `${randomFrom(funnyGreetings)}\n\nRejestratory: ${count} szt. w systemie! 📱`;
   }
 
   // Domyślna odpowiedź z listą klientów
   const uniqueClients = [...new Set(products.map(p => p.client_name))];
-  return `Łącznie sprzedano ${products.length} urządzeń do ${uniqueClients.length} Nadleśnictw w ${Object.keys(rdlpStats).length} RDLP.\n\nDostępne Nadleśnictwa: ${uniqueClients.slice(0, 10).join(', ')}${uniqueClients.length > 10 ? '...' : ''}\n\nZadaj pytanie o konkretne Nadleśnictwo lub RDLP.`;
+  if (uniqueClients.length === 0) {
+    return "Hej! 👋 Jeszcze nie mamy żadnych danych sprzedażowych. Dodaj pierwsze urządzenia, a potem pogadamy! 😉";
+  }
+  
+  return `Hej! 👋 Mam dane o ${products.length} urządzeniach dla ${uniqueClients.length} Nadleśnictw.\n\nPytaj śmiało! Np.:\n• "Ile do Nadleśnictwa Wipsowo?"\n• "Pokaż sprzedaż Zebra EM45"\n• "Ile do RDLP Olsztyn?"`;
 }
 
 // Endpoint GET do pobierania mapowania RDLP
