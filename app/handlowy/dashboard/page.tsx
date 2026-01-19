@@ -32,6 +32,8 @@ import {
   Upload,
   CheckCircle,
   AlertCircle,
+  Pencil,
+  Trash,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -191,6 +193,13 @@ export default function HandlowyDashboard() {
   const [isSaving, setIsSaving] = React.useState(false);
   const [parsedSerials, setParsedSerials] = React.useState<string[]>([]);
   const [expandedClients, setExpandedClients] = React.useState<Set<string>>(new Set());
+
+  // Edit mode state
+  const [editingClient, setEditingClient] = React.useState<string | null>(null);
+  const [editingProducts, setEditingProducts] = React.useState<SalesProduct[]>([]);
+  const [newAccessoryName, setNewAccessoryName] = React.useState("");
+  const [newAccessoryQuantity, setNewAccessoryQuantity] = React.useState(1);
+  const [addingAccessoryToProductId, setAddingAccessoryToProductId] = React.useState<string | null>(null);
 
   // Protocol form
   const [protocolData, setProtocolData] = React.useState({
@@ -621,6 +630,140 @@ export default function HandlowyDashboard() {
     });
     fetchClientProducts(clientName);
     setIsProtocolModalOpen(true);
+  };
+
+  // === EDYCJA PRODUKTÓW ===
+  const handleEditClient = (clientName: string, clientProducts: SalesProduct[]) => {
+    setEditingClient(clientName);
+    setEditingProducts([...clientProducts]);
+    setAddingAccessoryToProductId(null);
+    setNewAccessoryName("");
+    setNewAccessoryQuantity(1);
+  };
+
+  const handleCloseEditModal = () => {
+    setEditingClient(null);
+    setEditingProducts([]);
+    setAddingAccessoryToProductId(null);
+  };
+
+  const handleDeleteProduct = async (productId: string) => {
+    if (!confirm("Czy na pewno chcesz usunąć to urządzenie?")) return;
+    
+    try {
+      // Usuń z sales_products
+      const { error: salesError } = await supabase
+        .from("sales_products")
+        .delete()
+        .eq("id", productId);
+      
+      if (salesError) throw salesError;
+
+      // Usuń też z registrators jeśli istnieje
+      const productToDelete = editingProducts.find(p => p.id === productId);
+      if (productToDelete) {
+        await supabase
+          .from("registrators")
+          .delete()
+          .eq("serial_number", productToDelete.serial_number)
+          .eq("client_name", productToDelete.client_name);
+      }
+
+      // Aktualizuj lokalny stan
+      setEditingProducts(prev => prev.filter(p => p.id !== productId));
+      setProducts(prev => prev.filter(p => p.id !== productId));
+      
+      alert("Urządzenie zostało usunięte!");
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      alert("Błąd podczas usuwania urządzenia");
+    }
+  };
+
+  const handleAddAccessory = async (productId: string) => {
+    if (!newAccessoryName.trim()) {
+      alert("Wpisz nazwę akcesorium");
+      return;
+    }
+
+    const product = editingProducts.find(p => p.id === productId);
+    if (!product) return;
+
+    // Parse existing accessories
+    let existingAccs = product.accessories;
+    if (typeof existingAccs === 'string') {
+      try { existingAccs = JSON.parse(existingAccs); } catch { existingAccs = []; }
+    }
+    if (!Array.isArray(existingAccs)) existingAccs = [];
+
+    // Add new accessory
+    const newAccessory = {
+      name: newAccessoryName.trim(),
+      quantity: newAccessoryQuantity,
+      hasSerialNumbers: false,
+      serialNumbers: []
+    };
+    
+    const updatedAccs = [...existingAccs, newAccessory];
+
+    try {
+      const { error } = await supabase
+        .from("sales_products")
+        .update({ accessories: updatedAccs })
+        .eq("id", productId);
+
+      if (error) throw error;
+
+      // Update local state
+      setEditingProducts(prev => prev.map(p => 
+        p.id === productId ? { ...p, accessories: updatedAccs } : p
+      ));
+      setProducts(prev => prev.map(p => 
+        p.id === productId ? { ...p, accessories: updatedAccs } : p
+      ));
+
+      // Reset form
+      setNewAccessoryName("");
+      setNewAccessoryQuantity(1);
+      setAddingAccessoryToProductId(null);
+
+      alert("Akcesorium zostało dodane!");
+    } catch (error) {
+      console.error("Error adding accessory:", error);
+      alert("Błąd podczas dodawania akcesorium");
+    }
+  };
+
+  const handleRemoveAccessory = async (productId: string, accessoryIndex: number) => {
+    const product = editingProducts.find(p => p.id === productId);
+    if (!product) return;
+
+    let existingAccs = product.accessories;
+    if (typeof existingAccs === 'string') {
+      try { existingAccs = JSON.parse(existingAccs); } catch { existingAccs = []; }
+    }
+    if (!Array.isArray(existingAccs)) return;
+
+    const updatedAccs = existingAccs.filter((_, i) => i !== accessoryIndex);
+
+    try {
+      const { error } = await supabase
+        .from("sales_products")
+        .update({ accessories: updatedAccs })
+        .eq("id", productId);
+
+      if (error) throw error;
+
+      setEditingProducts(prev => prev.map(p => 
+        p.id === productId ? { ...p, accessories: updatedAccs } : p
+      ));
+      setProducts(prev => prev.map(p => 
+        p.id === productId ? { ...p, accessories: updatedAccs } : p
+      ));
+    } catch (error) {
+      console.error("Error removing accessory:", error);
+      alert("Błąd podczas usuwania akcesorium");
+    }
   };
 
   // Zapisz składnice do localStorage
@@ -2022,6 +2165,13 @@ export default function HandlowyDashboard() {
                     </div>
                     <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                       <button
+                        onClick={() => handleEditClient(clientName, clientProducts)}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors text-sm font-medium"
+                      >
+                        <Pencil className="w-4 h-4" />
+                        Edytuj
+                      </button>
+                      <button
                         onClick={() => handleGenerateProtocolForClient(clientName)}
                         className="flex items-center gap-2 px-3 py-1.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors text-sm font-medium"
                       >
@@ -2396,6 +2546,161 @@ GHI345678
                     )}
                   </button>
                 </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Modal edycji produktów klienta */}
+      <AnimatePresence>
+        {editingClient && (
+          <motion.div
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleCloseEditModal}
+          >
+            <motion.div
+              className="bg-white rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-amber-50">
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900">Edycja produktów</h2>
+                  <p className="text-sm text-gray-600">{editingClient}</p>
+                </div>
+                <button
+                  onClick={handleCloseEditModal}
+                  className="p-2 hover:bg-amber-100 rounded-lg transition-colors"
+                >
+                  <X className="w-5 h-5 text-gray-500" />
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+                <div className="space-y-4">
+                  {editingProducts.map((product) => {
+                    let accs = product.accessories;
+                    if (typeof accs === 'string') {
+                      try { accs = JSON.parse(accs); } catch { accs = []; }
+                    }
+                    if (!Array.isArray(accs)) accs = [];
+
+                    return (
+                      <div key={product.id} className="border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h3 className="font-semibold text-gray-900">{product.device_type}</h3>
+                            <p className="text-sm text-gray-500 font-mono">{product.serial_number}</p>
+                          </div>
+                          <button
+                            onClick={() => handleDeleteProduct(product.id)}
+                            className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Usuń urządzenie"
+                          >
+                            <Trash className="w-4 h-4" />
+                          </button>
+                        </div>
+
+                        {/* Akcesoria */}
+                        <div className="mt-3">
+                          <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Akcesoria</p>
+                          <div className="flex flex-wrap gap-2 mb-3">
+                            {accs.length === 0 ? (
+                              <span className="text-sm text-gray-400">Brak akcesoriów</span>
+                            ) : (
+                              accs.map((acc: any, i: number) => {
+                                const isObject = typeof acc === 'object' && acc !== null;
+                                const name = isObject ? acc.name : String(acc);
+                                const qty = isObject ? acc.quantity : 1;
+                                return (
+                                  <span 
+                                    key={i} 
+                                    className="inline-flex items-center gap-1 text-sm px-2 py-1 bg-gray-100 rounded group"
+                                  >
+                                    {name} {qty > 1 && `(${qty})`}
+                                    <button
+                                      onClick={() => handleRemoveAccessory(product.id, i)}
+                                      className="ml-1 text-gray-400 hover:text-red-500"
+                                    >
+                                      <X className="w-3 h-3" />
+                                    </button>
+                                  </span>
+                                );
+                              })
+                            )}
+                          </div>
+
+                          {/* Dodaj akcesorium */}
+                          {addingAccessoryToProductId === product.id ? (
+                            <div className="flex items-center gap-2 mt-2">
+                              <input
+                                type="text"
+                                value={newAccessoryName}
+                                onChange={(e) => setNewAccessoryName(e.target.value)}
+                                placeholder="Nazwa akcesorium"
+                                className="flex-1 px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                              />
+                              <input
+                                type="number"
+                                value={newAccessoryQuantity}
+                                onChange={(e) => setNewAccessoryQuantity(parseInt(e.target.value) || 1)}
+                                min={1}
+                                className="w-16 px-2 py-1.5 border border-gray-300 rounded-lg text-sm text-center focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                              />
+                              <button
+                                onClick={() => handleAddAccessory(product.id)}
+                                className="px-3 py-1.5 bg-amber-500 text-white rounded-lg hover:bg-amber-600 text-sm font-medium"
+                              >
+                                Dodaj
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setAddingAccessoryToProductId(null);
+                                  setNewAccessoryName("");
+                                  setNewAccessoryQuantity(1);
+                                }}
+                                className="px-3 py-1.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 text-sm"
+                              >
+                                Anuluj
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => setAddingAccessoryToProductId(product.id)}
+                              className="text-sm text-amber-600 hover:text-amber-700 font-medium"
+                            >
+                              + Dodaj akcesorium
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {editingProducts.length === 0 && (
+                    <div className="text-center py-8 text-gray-500">
+                      Brak produktów do edycji
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">
+                <button
+                  onClick={handleCloseEditModal}
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-medium transition-colors"
+                >
+                  Zamknij
+                </button>
               </div>
             </motion.div>
           </motion.div>
