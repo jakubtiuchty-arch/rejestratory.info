@@ -208,6 +208,14 @@ export default function HandlowyDashboard() {
   const [newAccessoryQuantity, setNewAccessoryQuantity] = React.useState(1);
   const [addingAccessoryToProductId, setAddingAccessoryToProductId] = React.useState<string | null>(null);
 
+  // Toast notification state
+  const [toast, setToast] = React.useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+
+  const showToast = (message: string, type: 'success' | 'error' | 'info' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000); // Auto-hide after 3 seconds
+  };
+
   // Protocol form
   const [protocolData, setProtocolData] = React.useState({
     clientName: "",
@@ -680,16 +688,16 @@ export default function HandlowyDashboard() {
       setEditingProducts(prev => prev.filter(p => p.id !== productId));
       setProducts(prev => prev.filter(p => p.id !== productId));
       
-      alert("Urządzenie zostało usunięte!");
+      showToast("Urządzenie zostało usunięte!", "success");
     } catch (error) {
       console.error("Error deleting product:", error);
-      alert("Błąd podczas usuwania urządzenia");
+      showToast("Błąd podczas usuwania urządzenia", "error");
     }
   };
 
   const handleAddAccessoryToProduct = async (productId: string) => {
     if (!newAccessoryName.trim()) {
-      alert("Wpisz nazwę akcesorium");
+      showToast("Wpisz nazwę akcesorium", "error");
       return;
     }
 
@@ -734,10 +742,10 @@ export default function HandlowyDashboard() {
       setNewAccessoryQuantity(1);
       setAddingAccessoryToProductId(null);
 
-      alert("Akcesorium zostało dodane!");
+      showToast("Akcesorium zostało dodane!", "success");
     } catch (error) {
       console.error("Error adding accessory:", error);
-      alert("Błąd podczas dodawania akcesorium");
+      showToast("Błąd podczas dodawania akcesorium", "error");
     }
   };
 
@@ -769,7 +777,7 @@ export default function HandlowyDashboard() {
       ));
     } catch (error) {
       console.error("Error removing accessory:", error);
-      alert("Błąd podczas usuwania akcesorium");
+      showToast("Błąd podczas usuwania akcesorium", "error");
     }
   };
 
@@ -1122,7 +1130,7 @@ export default function HandlowyDashboard() {
       pdfMake.createPdf(docDefinition).download(`raport_${analyticsCategory}_${analyticsYear}${analyticsMonth ? '_' + String(analyticsMonth).padStart(2, '0') : ''}.pdf`);
     } catch (error) {
       console.error('Błąd generowania PDF:', error);
-      alert('Błąd podczas generowania PDF');
+      showToast("Błąd podczas generowania PDF", "error");
     }
   };
 
@@ -1142,7 +1150,7 @@ export default function HandlowyDashboard() {
 
   const handleSaveProduct = async () => {
     if (!formData.deviceType || parsedSerials.length === 0 || !formData.clientName) {
-      alert("Wypełnij wszystkie wymagane pola (typ urządzenia, numery seryjne, klient)");
+      showToast("Wypełnij wszystkie wymagane pola (typ urządzenia, numery seryjne, klient)", "error");
       return;
     }
 
@@ -1235,18 +1243,18 @@ export default function HandlowyDashboard() {
 
   const handleGenerateProtocol = async () => {
     if (!protocolData.clientName || !protocolData.invoiceNumber || !protocolData.invoiceDate || !protocolData.clientCity) {
-      alert("Wypełnij wszystkie wymagane pola (w tym miejscowość)");
+      showToast("Wypełnij wszystkie wymagane pola (w tym miejscowość)", "error");
       return;
     }
 
     if (clientProducts.length === 0) {
-      alert("Brak produktów dla tego klienta");
+      showToast("Brak produktów dla tego klienta", "error");
       return;
     }
 
       const skladnica = skladnice.find((s: any) => s.id === protocolData.skladnicaId);
     if (!skladnica) {
-      alert("Wybierz składnicę");
+      showToast("Wybierz składnicę", "error");
       return;
     }
 
@@ -1627,7 +1635,7 @@ export default function HandlowyDashboard() {
       
     } catch (error) {
       console.error("Error generating PDF:", error);
-      alert("Błąd podczas generowania PDF");
+      showToast("Błąd podczas generowania PDF", "error");
     }
   };
 
@@ -3355,6 +3363,35 @@ GHI345678
           </div>
         </div>
       )}
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: -50, x: "-50%" }}
+            className={`fixed top-4 left-1/2 z-[100] px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 ${
+              toast.type === 'success' 
+                ? 'bg-green-600 text-white' 
+                : toast.type === 'error' 
+                  ? 'bg-red-600 text-white' 
+                  : 'bg-blue-600 text-white'
+            }`}
+          >
+            {toast.type === 'success' && <CheckCircle className="w-5 h-5" />}
+            {toast.type === 'error' && <AlertCircle className="w-5 h-5" />}
+            {toast.type === 'info' && <AlertCircle className="w-5 h-5" />}
+            <span className="font-medium">{toast.message}</span>
+            <button 
+              onClick={() => setToast(null)}
+              className="ml-2 hover:bg-white/20 rounded-full p-1 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
