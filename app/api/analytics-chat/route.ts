@@ -571,6 +571,40 @@ function generateBasicAnswer(
 ): string {
   const q = question.toLowerCase();
   
+  // Pytania o konkretne Nadleśnictwo
+  const nadlesnictwoMatch = q.match(/nadleśnictw[aouy]?\s+(\w+)/i) || q.match(/do\s+(\w+)/i);
+  if (nadlesnictwoMatch) {
+    const searchName = nadlesnictwoMatch[1];
+    // Szukaj w produktach
+    const matchingProducts = products.filter(p => 
+      p.client_name.toLowerCase().includes(searchName.toLowerCase())
+    );
+    
+    if (matchingProducts.length === 0) {
+      // Sprawdź czy Nadleśnictwo istnieje w mapowaniu RDLP
+      const existsInMapping = Object.keys(NADLESNICTWO_TO_RDLP).some(
+        name => name.toLowerCase().includes(searchName.toLowerCase())
+      );
+      
+      if (existsInMapping) {
+        return `Nie mamy jeszcze żadnych sprzedaży do Nadleśnictwa ${searchName.charAt(0).toUpperCase() + searchName.slice(1)}. To Nadleśnictwo istnieje, ale nie dostarczaliśmy tam urządzeń.`;
+      } else {
+        return `Nie znaleziono Nadleśnictwa "${searchName.charAt(0).toUpperCase() + searchName.slice(1)}" w naszych danych. Sprawdź pisownię lub zapytaj o inne Nadleśnictwo.`;
+      }
+    } else {
+      const clientName = matchingProducts[0].client_name;
+      const rdlp = getRDLP(clientName);
+      const deviceBreakdown: Record<string, number> = {};
+      matchingProducts.forEach(p => {
+        deviceBreakdown[p.device_type] = (deviceBreakdown[p.device_type] || 0) + 1;
+      });
+      
+      return `Do ${clientName} (${rdlp || 'RDLP nieznane'}) sprzedano łącznie ${matchingProducts.length} urządzeń:\n${
+        Object.entries(deviceBreakdown).map(([d, c]) => `• ${d}: ${c} szt.`).join('\n')
+      }`;
+    }
+  }
+  
   // Pytania o RDLP
   const rdlpMatch = q.match(/rdlp\s+(\w+)/i);
   if (rdlpMatch) {
@@ -580,6 +614,8 @@ function generateBasicAnswer(
       return `Do ${rdlpName} sprzedano łącznie ${stats.total} urządzeń:\n${
         Object.entries(stats.devices).map(([d, c]) => `• ${d}: ${c} szt.`).join('\n')
       }`;
+    } else {
+      return `Nie mamy sprzedaży do ${rdlpName}. Dostępne RDLP: ${Object.keys(rdlpStats).join(', ')}`;
     }
   }
 
@@ -600,8 +636,9 @@ function generateBasicAnswer(
     return `Sprzedano łącznie ${count} rejestratorów.`;
   }
 
-  // Domyślna odpowiedź
-  return `Łącznie sprzedano ${products.length} urządzeń do ${Object.keys(rdlpStats).length} RDLP. Zadaj bardziej szczegółowe pytanie, np. "Ile rejestratorów Zebra EM45 sprzedaliśmy do RDLP Olsztyn?"`;
+  // Domyślna odpowiedź z listą klientów
+  const uniqueClients = [...new Set(products.map(p => p.client_name))];
+  return `Łącznie sprzedano ${products.length} urządzeń do ${uniqueClients.length} Nadleśnictw w ${Object.keys(rdlpStats).length} RDLP.\n\nDostępne Nadleśnictwa: ${uniqueClients.slice(0, 10).join(', ')}${uniqueClients.length > 10 ? '...' : ''}\n\nZadaj pytanie o konkretne Nadleśnictwo lub RDLP.`;
 }
 
 // Endpoint GET do pobierania mapowania RDLP
