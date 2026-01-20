@@ -637,18 +637,59 @@ function generateBasicAnswer(
     }
   }
   
-  // Pytania o RDLP
-  const rdlpMatch = q.match(/rdlp\s+(\w+)/i);
-  if (rdlpMatch) {
-    const rdlpName = `RDLP ${rdlpMatch[1].charAt(0).toUpperCase() + rdlpMatch[1].slice(1)}`;
-    const stats = rdlpStats[rdlpName];
-    if (stats) {
-      return `${randomFrom(funnyGreetings)}\n\nDo ${rdlpName} sprzedano łącznie ${stats.total} urządzeń:\n${
-        Object.entries(stats.devices).map(([d, c]) => `• ${d}: ${c} szt.`).join('\n')
+  // Pytania o ranking RDLP (które kupiło najwięcej/najmniej)
+  if ((q.includes('rdlp') || q.includes('dyrekcj')) && (q.includes('najwięcej') || q.includes('najmniej') || q.includes('które') || q.includes('ranking') || q.includes('top'))) {
+    const sortedRDLPs = Object.entries(rdlpStats)
+      .sort((a, b) => b[1].total - a[1].total);
+    
+    if (sortedRDLPs.length === 0) {
+      return "Hmm, nie mam jeszcze żadnych danych o RDLP. Dodaj sprzedaże, a potem pogadamy! 📊";
+    }
+    
+    if (q.includes('najmniej')) {
+      const [rdlp, stats] = sortedRDLPs[sortedRDLPs.length - 1];
+      return `${randomFrom(funnyGreetings)}\n\n📉 Najmniej kupiło ${rdlp} - tylko ${stats.total} szt.\n\nPełny ranking:\n${
+        sortedRDLPs.map(([r, s], i) => `${i + 1}. ${r}: ${s.total} szt.`).join('\n')
       }`;
     } else {
-      const availableRDLPs = Object.keys(rdlpStats);
-      return `Hmm, ${rdlpName}? 🤔 Nie mamy tam sprzedaży.\n\nMamy dane dla: ${availableRDLPs.length > 0 ? availableRDLPs.join(', ') : 'żadnego RDLP jeszcze'}`;
+      const [rdlp, stats] = sortedRDLPs[0];
+      return `${randomFrom(funnyGreetings)}\n\n🏆 Najwięcej kupiło ${rdlp} - aż ${stats.total} szt.!\n\nPełny ranking:\n${
+        sortedRDLPs.map(([r, s], i) => `${i + 1}. ${r}: ${s.total} szt.`).join('\n')
+      }`;
+    }
+  }
+  
+  // Pytania o konkretne RDLP (z nazwą miasta)
+  const knownRDLPs = ['olsztyn', 'białystok', 'gdańsk', 'katowice', 'kraków', 'krosno', 'lublin', 'łódź', 'piła', 'poznań', 'radom', 'szczecin', 'szczecinek', 'toruń', 'warszawa', 'wrocław', 'zielona góra'];
+  const rdlpCityMatch = knownRDLPs.find(city => q.includes(city));
+  
+  if (rdlpCityMatch || q.match(/rdlp\s+([a-ząćęłńóśźż]+)/i)) {
+    let rdlpName: string;
+    
+    if (rdlpCityMatch) {
+      rdlpName = `RDLP ${rdlpCityMatch.charAt(0).toUpperCase() + rdlpCityMatch.slice(1)}`;
+    } else {
+      const match = q.match(/rdlp\s+([a-ząćęłńóśźż]+)/i);
+      if (!match) return '';
+      const potentialName = match[1].toLowerCase();
+      // Sprawdź czy to nie jest słowo kluczowe
+      if (['kupiło', 'kupił', 'sprzedało', 'które', 'ile', 'co', 'jak'].includes(potentialName)) {
+        // To nie jest nazwa RDLP, kontynuuj do innych sprawdzeń
+      } else {
+        rdlpName = `RDLP ${potentialName.charAt(0).toUpperCase() + potentialName.slice(1)}`;
+      }
+    }
+    
+    if (rdlpName!) {
+      const stats = rdlpStats[rdlpName];
+      if (stats) {
+        return `${randomFrom(funnyGreetings)}\n\nDo ${rdlpName} sprzedano łącznie ${stats.total} urządzeń:\n${
+          Object.entries(stats.devices).map(([d, c]) => `• ${d}: ${c} szt.`).join('\n')
+        }`;
+      } else {
+        const availableRDLPs = Object.keys(rdlpStats);
+        return `Hmm, ${rdlpName}? 🤔 Nie mamy tam sprzedaży.\n\nMamy dane dla: ${availableRDLPs.length > 0 ? availableRDLPs.join(', ') : 'żadnego RDLP jeszcze'}`;
+      }
     }
   }
 
