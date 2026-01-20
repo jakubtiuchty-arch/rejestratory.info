@@ -7,6 +7,45 @@ export const runtime = 'nodejs'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+// 🛡️ SPAM PROTECTION FUNCTIONS
+function isSpamName(name: string): boolean {
+  // Sprawdź czy nazwa wygląda jak losowy ciąg znaków
+  const hasNoSpaces = !name.includes(' ');
+  const tooManyUppercase = (name.match(/[A-Z]/g) || []).length > 5;
+  const randomPattern = /[A-Z][a-z][A-Z][a-z]/; // CamelCase pattern
+  const longWithoutSpaces = name.length > 15 && hasNoSpaces;
+  
+  return (hasNoSpaces && name.length > 10) || tooManyUppercase || randomPattern.test(name) || longWithoutSpaces;
+}
+
+function isSpamEmail(email: string): boolean {
+  // Sprawdź podejrzane wzorce emaila
+  const localPart = email.split('@')[0];
+  const hasManyDots = (localPart.match(/\./g) || []).length > 3;
+  const hasRandomPattern = /[a-z]\.[a-z]{2}\.[a-z]\.[a-z]{2}/i.test(localPart); // a.bc.d.ef pattern
+  const suspiciousDomains = ['temp', 'fake', 'spam', 'test'];
+  const isSuspiciousDomain = suspiciousDomains.some(d => email.toLowerCase().includes(d));
+  
+  return hasManyDots || hasRandomPattern || isSuspiciousDomain;
+}
+
+function isSpamContent(text: string): boolean {
+  // Sprawdź czy treść wygląda jak spam
+  const randomCharsPattern = /[A-Z][a-z][A-Z][a-z][A-Z]/; // aBcDe pattern
+  const hasLinks = /(http|www\.|\.com|\.ru|\.cn)/i.test(text);
+  const tooManyUppercase = (text.match(/[A-Z]/g) || []).length > text.length * 0.4;
+  
+  return randomCharsPattern.test(text) || tooManyUppercase;
+}
+
+function isSpamPhone(phone: string): boolean {
+  if (!phone) return false;
+  // Polski numer powinien mieć 9 cyfr lub +48 i 9 cyfr
+  const digitsOnly = phone.replace(/\D/g, '');
+  const isPolishFormat = digitsOnly.length === 9 || (digitsOnly.length === 11 && digitsOnly.startsWith('48'));
+  return !isPolishFormat;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -18,15 +57,40 @@ export async function POST(request: NextRequest) {
       company,
       subject,
       department,
-      message
+      message,
+      website // 🍯 HONEYPOT FIELD - jeśli wypełnione = bot
     } = body
 
-    // Walidacja
+    // 🍯 HONEYPOT CHECK - boty wypełniają ukryte pola
+    if (website) {
+      console.log('🚫 SPAM DETECTED: Honeypot field filled');
+      // Zwróć sukces żeby bot myślał że wysłał
+      return NextResponse.json({ success: true, messageId: 'blocked' });
+    }
+
+    // Walidacja podstawowa
     if (!name || !email || !subject || !message) {
       return NextResponse.json(
         { error: 'Wszystkie pola wymagane są obowiązkowe' },
         { status: 400 }
       )
+    }
+
+    // 🛡️ SPAM DETECTION
+    const spamReasons: string[] = [];
+    
+    if (isSpamName(name)) spamReasons.push('suspicious_name');
+    if (isSpamEmail(email)) spamReasons.push('suspicious_email');
+    if (isSpamContent(subject)) spamReasons.push('suspicious_subject');
+    if (isSpamContent(message)) spamReasons.push('suspicious_message');
+    if (company && isSpamContent(company)) spamReasons.push('suspicious_company');
+    if (isSpamPhone(phone)) spamReasons.push('suspicious_phone');
+    
+    // Jeśli więcej niż 2 podejrzane elementy = spam
+    if (spamReasons.length >= 2) {
+      console.log(`🚫 SPAM DETECTED: ${spamReasons.join(', ')} | Name: ${name} | Email: ${email}`);
+      // Zwróć sukces żeby bot myślał że wysłał
+      return NextResponse.json({ success: true, messageId: 'blocked' });
     }
 
     const departmentLabels: Record<string, string> = {

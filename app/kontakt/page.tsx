@@ -50,7 +50,8 @@ const ContactPage = () => {
     company: '',
     subject: '',
     department: 'general',
-    message: ''
+    message: '',
+    website: '' // 🍯 Honeypot field - hidden from humans, bots fill it
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -89,14 +90,15 @@ const ContactPage = () => {
       // Reset po 5 sekundach
       setTimeout(() => {
         setFormState('idle');
-        setFormData({
+          setFormData({
           name: '',
           email: '',
           phone: '',
           company: '',
           subject: '',
           department: 'general',
-          message: ''
+          message: '',
+          website: ''
         });
       }, 5000);
     } catch (error) {
@@ -314,6 +316,20 @@ const ContactPage = () => {
               <form onSubmit={handleSubmit}>
                 <Card>
                   <CardContent className="p-6">
+                    {/* 🍯 Honeypot field - ukryte przed ludźmi, boty je wypełniają */}
+                    <div style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+                      <label htmlFor="website">Website (nie wypełniaj tego pola)</label>
+                      <input
+                        type="text"
+                        id="website"
+                        name="website"
+                        value={formData.website}
+                        onChange={handleChange}
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
+                    
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <Label htmlFor="name">Imię i nazwisko *</Label>
