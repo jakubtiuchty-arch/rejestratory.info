@@ -2672,122 +2672,124 @@ GHI345678
                     </select>
                   </div>
 
-                  {/* Akcesoria */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Akcesoria
-                    </label>
-                    
-                    {/* Formularz dodawania akcesoriów */}
-                    <div className="bg-gray-50 p-3 rounded-lg border border-gray-200 mb-3">
-                      <div className="grid grid-cols-12 gap-2 mb-2">
-                        {/* Nazwa */}
-                        <div className="col-span-5">
-                          <input
-                            type="text"
-                            value={newAccessory.name}
-                            onChange={(e) => setNewAccessory({ ...newAccessory, name: e.target.value })}
-                            placeholder="Nazwa akcesoria..."
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                          />
-                        </div>
-                        {/* Ilość */}
-                        <div className="col-span-2">
-                          <input
-                            type="number"
-                            min="1"
-                            value={newAccessory.quantity}
-                            onChange={(e) => setNewAccessory({ ...newAccessory, quantity: parseInt(e.target.value) || 1 })}
-                            placeholder="Ilość"
-                            disabled={newAccessory.hasSerialNumbers}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm disabled:bg-gray-100 disabled:text-gray-500"
-                          />
-                        </div>
-                        {/* Checkbox S/N */}
-                        <div className="col-span-3 flex items-center">
-                          <label className="flex items-center gap-2 cursor-pointer">
+                  {/* Akcesoria - ukryte dla kategorii "akcesoria" */}
+                  {activeCategory !== "akcesoria" && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Akcesoria
+                      </label>
+                      
+                      {/* Formularz dodawania akcesoriów */}
+                      <div className="bg-gray-50 p-3 rounded-lg border border-gray-200 mb-3">
+                        <div className="grid grid-cols-12 gap-2 mb-2">
+                          {/* Nazwa */}
+                          <div className="col-span-5">
                             <input
-                              type="checkbox"
-                              checked={newAccessory.hasSerialNumbers}
-                              onChange={(e) => setNewAccessory({ ...newAccessory, hasSerialNumbers: e.target.checked })}
-                              className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                              type="text"
+                              value={newAccessory.name}
+                              onChange={(e) => setNewAccessory({ ...newAccessory, name: e.target.value })}
+                              placeholder="Nazwa akcesoria..."
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                             />
-                            <span className="text-sm text-gray-700">S/N</span>
-                          </label>
+                          </div>
+                          {/* Ilość */}
+                          <div className="col-span-2">
+                            <input
+                              type="number"
+                              min="1"
+                              value={newAccessory.quantity}
+                              onChange={(e) => setNewAccessory({ ...newAccessory, quantity: parseInt(e.target.value) || 1 })}
+                              placeholder="Ilość"
+                              disabled={newAccessory.hasSerialNumbers}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm disabled:bg-gray-100 disabled:text-gray-500"
+                            />
+                          </div>
+                          {/* Checkbox S/N */}
+                          <div className="col-span-3 flex items-center">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={newAccessory.hasSerialNumbers}
+                                onChange={(e) => setNewAccessory({ ...newAccessory, hasSerialNumbers: e.target.checked })}
+                                className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                              />
+                              <span className="text-sm text-gray-700">S/N</span>
+                            </label>
+                          </div>
+                          {/* Przycisk dodaj */}
+                          <div className="col-span-2">
+                            <button
+                              type="button"
+                              onClick={handleAddAccessory}
+                              disabled={!newAccessory.name.trim()}
+                              className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg transition-colors text-sm font-medium"
+                            >
+                              Dodaj
+                            </button>
+                          </div>
                         </div>
-                        {/* Przycisk dodaj */}
-                        <div className="col-span-2">
-                          <button
-                            type="button"
-                            onClick={handleAddAccessory}
-                            disabled={!newAccessory.name.trim()}
-                            className="w-full px-3 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-lg transition-colors text-sm font-medium"
-                          >
-                            Dodaj
-                          </button>
-                        </div>
+                        
+                        {/* Pole na numery seryjne - pokazuje się gdy S/N zaznaczone */}
+                        {newAccessory.hasSerialNumbers && (
+                          <div className="mt-2">
+                            <label className="block text-xs text-gray-600 mb-1">
+                              Numery seryjne akcesoriów (każdy w nowej linii):
+                            </label>
+                            <textarea
+                              value={newAccessory.serialNumbersText}
+                              onChange={(e) => setNewAccessory({ ...newAccessory, serialNumbersText: e.target.value })}
+                              placeholder="Wklej numery seryjne - każdy w nowej linii lub oddzielone przecinkiem..."
+                              rows={4}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm font-mono"
+                            />
+                            {newAccessory.serialNumbersText && (
+                              <p className="text-xs text-blue-600 mt-1">
+                                Rozpoznano: {newAccessory.serialNumbersText.split(/[\n,;\s]+/).filter(s => s.trim().length > 0).length} numerów seryjnych
+                              </p>
+                            )}
+                          </div>
+                        )}
                       </div>
                       
-                      {/* Pole na numery seryjne - pokazuje się gdy S/N zaznaczone */}
-                      {newAccessory.hasSerialNumbers && (
-                        <div className="mt-2">
-                          <label className="block text-xs text-gray-600 mb-1">
-                            Numery seryjne akcesoriów (każdy w nowej linii):
-                          </label>
-                          <textarea
-                            value={newAccessory.serialNumbersText}
-                            onChange={(e) => setNewAccessory({ ...newAccessory, serialNumbersText: e.target.value })}
-                            placeholder="Wklej numery seryjne - każdy w nowej linii lub oddzielone przecinkiem..."
-                            rows={4}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm font-mono"
-                          />
-                          {newAccessory.serialNumbersText && (
-                            <p className="text-xs text-blue-600 mt-1">
-                              Rozpoznano: {newAccessory.serialNumbersText.split(/[\n,;\s]+/).filter(s => s.trim().length > 0).length} numerów seryjnych
-                            </p>
-                          )}
+                      {/* Lista dodanych akcesoriów */}
+                      {accessories.length > 0 && (
+                        <div className="space-y-2">
+                          {accessories.map((acc, i) => (
+                            <div
+                              key={i}
+                              className={`flex items-start justify-between p-2 rounded-lg ${activeColors.light} border border-gray-200`}
+                            >
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <span className={`font-medium text-sm ${activeColors.text}`}>{acc.name}</span>
+                                  <span className="text-xs bg-white px-2 py-0.5 rounded-full text-gray-600">
+                                    {acc.quantity} szt.
+                                  </span>
+                                  {acc.hasSerialNumbers && (
+                                    <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
+                                      S/N
+                                    </span>
+                                  )}
+                                </div>
+                                {acc.hasSerialNumbers && acc.serialNumbers.length > 0 && (
+                                  <div className="mt-1 text-xs text-gray-500 font-mono">
+                                    {acc.serialNumbers.slice(0, 3).join(', ')}
+                                    {acc.serialNumbers.length > 3 && ` ... +${acc.serialNumbers.length - 3} więcej`}
+                                  </div>
+                                )}
+                              </div>
+                              <button
+                                onClick={() => handleRemoveAccessory(i)}
+                                className="text-gray-400 hover:text-red-500 p-1"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ))}
                         </div>
                       )}
                     </div>
-                    
-                    {/* Lista dodanych akcesoriów */}
-                    {accessories.length > 0 && (
-                      <div className="space-y-2">
-                        {accessories.map((acc, i) => (
-                          <div
-                            key={i}
-                            className={`flex items-start justify-between p-2 rounded-lg ${activeColors.light} border border-gray-200`}
-                          >
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2">
-                                <span className={`font-medium text-sm ${activeColors.text}`}>{acc.name}</span>
-                                <span className="text-xs bg-white px-2 py-0.5 rounded-full text-gray-600">
-                                  {acc.quantity} szt.
-                                </span>
-                                {acc.hasSerialNumbers && (
-                                  <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
-                                    S/N
-                                  </span>
-                                )}
-                              </div>
-                              {acc.hasSerialNumbers && acc.serialNumbers.length > 0 && (
-                                <div className="mt-1 text-xs text-gray-500 font-mono">
-                                  {acc.serialNumbers.slice(0, 3).join(', ')}
-                                  {acc.serialNumbers.length > 3 && ` ... +${acc.serialNumbers.length - 3} więcej`}
-                                </div>
-                              )}
-                            </div>
-                            <button
-                              onClick={() => handleRemoveAccessory(i)}
-                              className="text-gray-400 hover:text-red-500 p-1"
-                            >
-                              <X className="w-4 h-4" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                  )}
 
                   {/* Notatki */}
                   <div>
