@@ -163,8 +163,6 @@ export default function SzefDashboardPage() {
           ], margin: [0, 0, 0, 25] },
           { text: 'ROZKŁAD WEDŁUG MODELI', fontSize: 11, bold: true, margin: [0, 0, 0, 10] },
           deviceRows.length > 0 ? { table: { widths: ['*', 60, 60], body: deviceRows }, layout: { fillColor: (i: number) => i % 2 === 0 ? '#f9fafb' : null, hLineWidth: () => 0.5, vLineWidth: () => 0, hLineColor: () => '#e5e7eb', paddingLeft: () => 10, paddingRight: () => 10, paddingTop: () => 8, paddingBottom: () => 8 }, margin: [0, 0, 0, 25] } : { text: 'Brak danych', italics: true, color: '#9ca3af', margin: [0, 0, 0, 25] },
-          { text: 'DOSTAWY DO KLIENTÓW', fontSize: 11, bold: true, margin: [0, 0, 0, 10] },
-          clientRows.length > 0 ? { table: { headerRows: 1, widths: ['*', 80, '*', 40], body: [[{ text: 'Klient', bold: true, fontSize: 9, color: '#6b7280' }, { text: 'RDLP', bold: true, fontSize: 9, color: '#6b7280' }, { text: 'Modele', bold: true, fontSize: 9, color: '#6b7280' }, { text: 'Szt.', bold: true, fontSize: 9, color: '#6b7280', alignment: 'center' }], ...clientRows] }, layout: { fillColor: (i: number) => i === 0 ? '#f3f4f6' : (i % 2 === 1 ? '#f9fafb' : null), hLineWidth: (i: number) => i === 1 ? 1 : 0.5, vLineWidth: () => 0, hLineColor: (i: number) => i === 1 ? '#d1d5db' : '#e5e7eb', paddingLeft: () => 8, paddingRight: () => 8, paddingTop: () => 6, paddingBottom: () => 6 } } : { text: 'Brak danych', italics: true, color: '#9ca3af' },
         ],
         footer: { columns: [{ text: 'TAKMA • Panel Szefa', fontSize: 8, color: '#9ca3af', margin: [40, 0, 0, 0] }, { text: new Date().toLocaleDateString('pl-PL'), fontSize: 8, color: '#9ca3af', alignment: 'right', margin: [0, 0, 40, 0] }] },
         defaultStyle: { fontSize: 10 }

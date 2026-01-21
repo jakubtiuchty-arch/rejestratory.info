@@ -1209,48 +1209,6 @@ export default function HandlowyDashboard() {
             },
             margin: [0, 0, 0, 30]
           } : { text: 'Brak danych dla wybranego okresu', italics: true, color: '#9ca3af', margin: [10, 15, 0, 30] },
-
-          // Sekcja: Dostawy do klientów
-          {
-            table: {
-              widths: ['*'],
-              body: [[{
-                text: 'DOSTAWY DO KLIENTÓW',
-                fontSize: 11,
-                bold: true,
-                color: 'white',
-                fillColor: '#374151',
-                margin: [10, 8, 10, 8]
-              }]]
-            },
-            layout: 'noBorders',
-            margin: [0, 0, 0, 0]
-          },
-          clientRows.length > 0 ? {
-            table: {
-              headerRows: 1,
-              widths: ['*', '*', 45, 70],
-              body: [
-                [
-                  { text: 'Klient', bold: true, fontSize: 9, color: '#6b7280' },
-                  { text: 'Modele', bold: true, fontSize: 9, color: '#6b7280' },
-                  { text: 'Szt.', bold: true, fontSize: 9, color: '#6b7280', alignment: 'center' },
-                  { text: 'Data', bold: true, fontSize: 9, color: '#6b7280', alignment: 'center' }
-                ],
-                ...clientRows
-              ]
-            },
-            layout: {
-              fillColor: (rowIndex: number) => rowIndex === 0 ? '#f3f4f6' : (rowIndex % 2 === 1 ? '#f9fafb' : null),
-              hLineWidth: (i: number, node: any) => i === 1 ? 1 : 0.5,
-              vLineWidth: () => 0,
-              hLineColor: (i: number) => i === 1 ? '#d1d5db' : '#e5e7eb',
-              paddingLeft: () => 10,
-              paddingRight: () => 10,
-              paddingTop: () => 8,
-              paddingBottom: () => 8,
-            }
-          } : { text: 'Brak danych dla wybranego okresu', italics: true, color: '#9ca3af', margin: [10, 15, 0, 0] },
         ],
 
         footer: (currentPage: number, pageCount: number) => ({
