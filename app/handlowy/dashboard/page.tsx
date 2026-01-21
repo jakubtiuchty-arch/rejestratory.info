@@ -179,14 +179,39 @@ const DEFAULT_SKLADNICE: Skladnica[] = [
 
 // Typy urządzeń w kategoriach
 const DEVICE_TYPES: Record<string, string[]> = {
-  rejestratory: ["Zebra EM45", "Zebra TC27", "Samsung A56", "Samsung S25 FE", "Samsung S25 Ultra", "Samsung XCover Pro 6", "Honeywell CT47", "Unitech EA660"],
-  drukarki_termiczne: ["Bixolon SPP-R410", "Zebra ZQ521", "Honeywell RP4", "Seiko MPA40", "Sewoo LKP400"],
-  drukarki_laserowe: ["Brother HL-L6210DW", "Brother HL-L6410DN", "HP LaserJet Pro"],
-  laptopy: ["Dell Pro 14 Plus", "Dell Pro 16", "HP EliteBook", "Lenovo ThinkPad"],
-  urzadzenia_wielofunkcyjne: ["Brother MFC-L5710DW", "Brother MFC-L6710DW", "Brother MFC-L8390CDW"],
-  monitory: ["Dell Pro 24 Plus", "Dell Pro 27 Plus", "HP Serie 5 Pro"],
+  rejestratory: [
+    "Zebra EM45", "Zebra TC27", "Zebra TC58e", 
+    "Samsung A36", "Samsung A56", "Samsung S25 Plus", "Samsung S25 Ultra", "Samsung XCover 7", "Samsung XCover Pro 6",
+    "Honeywell CT30", "Honeywell CT40XP", "Honeywell CT47", "Honeywell EDA52",
+    "Unitech EA660", "Unitech PA768",
+    "M3 SL20"
+  ],
+  drukarki_termiczne: [
+    "Bixolon SPP-R410", 
+    "Zebra ZQ521", "Zebra ZD421c",
+    "Honeywell RP4", "Honeywell PC45t",
+    "Seiko MPA40", 
+    "Sewoo LKP400", "Sewoo LKP43"
+  ],
+  drukarki_laserowe: [
+    "Brother HL-L6210DW", "Brother HL-L6410DN",
+    "Brother DCP-B7620DW", "Brother DCP-L5510DW"
+  ],
+  laptopy: [
+    "Dell Pro 14 Plus", "Dell Pro 16", "Dell Pro 16 Plus",
+    "HP EliteBook 6 G1ah 16", "HP 655"
+  ],
+  urzadzenia_wielofunkcyjne: [
+    "Brother MFC-L5710DW", "Brother MFC-L6710DW", 
+    "Brother MFC-L8390CDW", "Brother MFC-L8690CDW", "Brother MFC-L8900CDW"
+  ],
+  monitory: [
+    "Dell P2424HEB", "Dell P2425HE", "Dell P2425HE USB-C",
+    "Dell P2724HEB", "Dell P2725HE", "Dell P2725HE USB-C",
+    "HP Serie 5 Pro 527pq", "HP Serie 5 Pro 527pu"
+  ],
   serwery: ["Dell PowerEdge R360", "Dell PowerEdge R550", "Dell PowerEdge R660xs"],
-  all_in_one: ["Dell AIO Pro 24", "HP Pro 324pv", "HP Pro 527pq"],
+  all_in_one: ["Dell AIO Pro 24", "HP Pro 324pv", "HP Pro 527pq", "HP Pro 527pu"],
 };
 
 interface AccessoryItem {
