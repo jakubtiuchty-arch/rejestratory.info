@@ -2299,6 +2299,7 @@ export default function HandlowyDashboard() {
                   deviceType: DEVICE_TYPES[activeCategory]?.[0] || "",
                   serialNumbersText: "",
                   clientName: "",
+                  clientEmail: "",
                   saleDate: new Date().toISOString().split("T")[0],
                   notes: "",
                 });
