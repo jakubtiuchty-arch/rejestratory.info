@@ -34,6 +34,7 @@ import {
   AlertCircle,
   Pencil,
   Trash,
+  Shield,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -288,6 +289,7 @@ export default function HandlowyDashboard() {
     clientName: "",
     clientEmail: "", // Opcjonalny email administratora/osoby kontaktowej
     saleDate: new Date().toISOString().split("T")[0],
+    warranty: "", // Gwarancja: "", "12", "24", "36", "60" miesięcy
     notes: "",
   });
   // Nowa struktura akcesoriów
@@ -1354,6 +1356,7 @@ export default function HandlowyDashboard() {
         clientName: "",
         clientEmail: "",
         saleDate: new Date().toISOString().split("T")[0],
+        warranty: "",
         notes: "",
       });
       const addedCount = parsedSerials.length;
@@ -2301,6 +2304,7 @@ export default function HandlowyDashboard() {
                   clientName: "",
                   clientEmail: "",
                   saleDate: new Date().toISOString().split("T")[0],
+                  warranty: "",
                   notes: "",
                 });
                 setAccessories([]);
@@ -2328,6 +2332,7 @@ export default function HandlowyDashboard() {
                   clientName: "",
                   clientEmail: "",
                   saleDate: new Date().toISOString().split("T")[0],
+                  warranty: "",
                   notes: "",
                 });
                 setAccessories([]);
@@ -2618,6 +2623,27 @@ GHI345678
                         onChange={(e) => setFormData({ ...formData, saleDate: e.target.value })}
                         className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
+                    </div>
+                  </div>
+
+                  {/* Gwarancja */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Gwarancja <span className="text-gray-400 text-xs">(opcjonalna)</span>
+                    </label>
+                    <div className="relative">
+                      <Shield className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <select
+                        value={formData.warranty}
+                        onChange={(e) => setFormData({ ...formData, warranty: e.target.value })}
+                        className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                      >
+                        <option value="">Brak / Nie dotyczy</option>
+                        <option value="12">12 miesięcy</option>
+                        <option value="24">24 miesiące (2 lata)</option>
+                        <option value="36">36 miesięcy (3 lata)</option>
+                        <option value="60">60 miesięcy (5 lat)</option>
+                      </select>
                     </div>
                   </div>
 
