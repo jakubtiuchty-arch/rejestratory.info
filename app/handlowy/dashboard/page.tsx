@@ -34,7 +34,6 @@ import {
   AlertCircle,
   Pencil,
   Trash,
-  Shield,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -231,6 +230,7 @@ interface SalesProduct {
   client_name: string;
   client_email?: string;
   sale_date: string;
+  warranty?: string; // Gwarancja w miesiącach: "12", "24", "36", "60"
   accessories: (string | AccessoryItem)[];
   notes?: string;
   added_by: string;
@@ -1321,6 +1321,7 @@ export default function HandlowyDashboard() {
         client_name: normalizedClientName,
         client_email: formData.clientEmail || null,
         sale_date: formData.saleDate,
+        warranty: formData.warranty || null, // Gwarancja w miesiącach: "12", "24", "36", "60" lub null
         accessories: accessories,
         notes: formData.notes,
         added_by: localStorage.getItem("handlowy_user_email") || "unknown",
@@ -1337,6 +1338,7 @@ export default function HandlowyDashboard() {
         device_name: formData.deviceType,
         serial_number: serial,
         purchase_date: formData.saleDate,
+        warranty: formData.warranty || null,
         notes: formData.notes,
       }));
 
@@ -1520,11 +1522,17 @@ export default function HandlowyDashboard() {
             accessoriesText = formattedAccs.join(', ');
           }
           
+          // Format warranty
+          const warrantyText = p.warranty 
+            ? `${p.warranty} mies.` 
+            : '-';
+          
           productRows.push([
             { text: lp.toString(), alignment: 'center' },
             { text: p.device_type },
             { text: p.serial_number, bold: true },
             { text: accessoriesText, fontSize: 8 },
+            { text: warrantyText, alignment: 'center', fontSize: 9 },
           ]);
           lp++;
         });
@@ -1625,13 +1633,14 @@ export default function HandlowyDashboard() {
           {
             table: {
               headerRows: 1,
-              widths: [25, '*', 130, '*'],
+              widths: [22, '*', 115, '*', 50],
               body: [
                 [
                   { text: 'Lp.', style: 'tableHeader', alignment: 'center' },
                   { text: 'Nazwa urządzenia', style: 'tableHeader' },
                   { text: 'Numer seryjny', style: 'tableHeader' },
                   { text: 'Akcesoria', style: 'tableHeader' },
+                  { text: 'Gwarancja', style: 'tableHeader', alignment: 'center' },
                 ],
                 ...productRows.map((row, idx) => row.map((cell: any, cellIdx: number) => ({
                   ...cell,
@@ -2631,20 +2640,17 @@ GHI345678
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Gwarancja <span className="text-gray-400 text-xs">(opcjonalna)</span>
                     </label>
-                    <div className="relative">
-                      <Shield className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                      <select
-                        value={formData.warranty}
-                        onChange={(e) => setFormData({ ...formData, warranty: e.target.value })}
-                        className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
-                      >
-                        <option value="">Brak / Nie dotyczy</option>
-                        <option value="12">12 miesięcy</option>
-                        <option value="24">24 miesiące (2 lata)</option>
-                        <option value="36">36 miesięcy (3 lata)</option>
-                        <option value="60">60 miesięcy (5 lat)</option>
-                      </select>
-                    </div>
+                    <select
+                      value={formData.warranty}
+                      onChange={(e) => setFormData({ ...formData, warranty: e.target.value })}
+                      className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                    >
+                      <option value="">Brak / Nie dotyczy</option>
+                      <option value="12">12 miesięcy</option>
+                      <option value="24">24 miesiące (2 lata)</option>
+                      <option value="36">36 miesięcy (3 lata)</option>
+                      <option value="60">60 miesięcy (5 lat)</option>
+                    </select>
                   </div>
 
                   {/* Akcesoria */}
