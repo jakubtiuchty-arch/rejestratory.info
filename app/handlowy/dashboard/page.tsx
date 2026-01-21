@@ -179,7 +179,7 @@ const DEFAULT_SKLADNICE: Skladnica[] = [
 
 // Typy urządzeń w kategoriach
 const DEVICE_TYPES: Record<string, string[]> = {
-  rejestratory: ["Zebra EM45", "Zebra TC27", "Samsung A56", "Samsung S25 FE", "Samsung S25 Ultra", "Honeywell CT47", "Unitech EA660"],
+  rejestratory: ["Zebra EM45", "Zebra TC27", "Samsung A56", "Samsung S25 FE", "Samsung S25 Ultra", "Samsung XCover Pro 6", "Honeywell CT47", "Unitech EA660"],
   drukarki_termiczne: ["Bixolon SPP-R410", "Zebra ZQ521", "Honeywell RP4", "Seiko MPA40", "Sewoo LKP400"],
   drukarki_laserowe: ["Brother HL-L6210DW", "Brother HL-L6410DN", "HP LaserJet Pro"],
   laptopy: ["Dell Pro 14 Plus", "Dell Pro 16", "HP EliteBook", "Lenovo ThinkPad"],
