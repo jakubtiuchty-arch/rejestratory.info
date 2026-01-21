@@ -60,6 +60,7 @@ export interface Registrator {
   id: string;
   created_at: string;
   client_name: string;
+  client_email?: string; // Email administratora / osoby kontaktowej
   device_name: string;
   serial_number: string;
   purchase_date: string;

@@ -28,6 +28,7 @@ import {
   Smartphone,
   Shield,
   ShieldCheck,
+  User,
 } from "lucide-react";
 import { supabase, Device, Inspection, ClientDocument, Registrator } from '@/lib/supabase';
 
@@ -548,6 +549,13 @@ export default function Dashboard() {
                 {devices.length > 0 && ` • ${devices.length} ${devices.length === 1 ? 'urządzenie fiskalne' : 'urządzeń fiskalnych'}`}
                 {registrators.length > 0 && ` • ${registrators.length} ${registrators.length === 1 ? 'rejestrator' : 'rejestratorów'}`}
               </p>
+              {/* Osoba kontaktowa - email z rejestratorów */}
+              {registrators.length > 0 && registrators[0]?.client_email && (
+                <p className="text-xs text-blue-600 mt-1 flex items-center gap-1">
+                  <User className="h-3 w-3" />
+                  Osoba kontaktowa: {registrators[0].client_email}
+                </p>
+              )}
             </div>
             <button
               onClick={() => {

@@ -203,6 +203,7 @@ interface SalesProduct {
   device_type: string;
   serial_number: string;
   client_name: string;
+  client_email?: string;
   sale_date: string;
   accessories: (string | AccessoryItem)[];
   notes?: string;
@@ -260,6 +261,7 @@ export default function HandlowyDashboard() {
     deviceType: "",
     serialNumbersText: "", // Masowe dodawanie - textarea
     clientName: "",
+    clientEmail: "", // Opcjonalny email administratora/osoby kontaktowej
     saleDate: new Date().toISOString().split("T")[0],
     notes: "",
   });
@@ -1288,6 +1290,7 @@ export default function HandlowyDashboard() {
         device_type: formData.deviceType,
         serial_number: serial,
         client_name: normalizedClientName,
+        client_email: formData.clientEmail || null,
         sale_date: formData.saleDate,
         accessories: accessories,
         notes: formData.notes,
@@ -1301,6 +1304,7 @@ export default function HandlowyDashboard() {
       // Also insert into registrators table (for panel-klienta) - ALL categories
       const registratorsToInsert = parsedSerials.map(serial => ({
         client_name: normalizedClientName,
+        client_email: formData.clientEmail || null,
         device_name: formData.deviceType,
         serial_number: serial,
         purchase_date: formData.saleDate,
@@ -1321,6 +1325,7 @@ export default function HandlowyDashboard() {
         deviceType: "",
         serialNumbersText: "",
         clientName: "",
+        clientEmail: "",
         saleDate: new Date().toISOString().split("T")[0],
         notes: "",
       });
@@ -2312,6 +2317,7 @@ export default function HandlowyDashboard() {
               const isExpanded = expandedClients.has(clientName);
               const firstProduct = clientProducts[0];
               const saleDate = firstProduct ? new Date(firstProduct.sale_date).toLocaleDateString("pl-PL") : '';
+              const clientEmail = firstProduct?.client_email;
               
               return (
                 <motion.div
@@ -2336,6 +2342,11 @@ export default function HandlowyDashboard() {
                         <h3 className="font-semibold text-gray-900">{clientName}</h3>
                         <p className="text-sm text-gray-500">
                           {clientProducts.length} urządzeń • {saleDate}
+                          {clientEmail && (
+                            <span className="ml-2 text-blue-600">
+                              • Administrator: {clientEmail}
+                            </span>
+                          )}
                         </p>
                       </div>
                     </div>
@@ -2543,6 +2554,23 @@ GHI345678
                         value={formData.clientName}
                         onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
                         placeholder="Nadleśnictwo..."
+                        className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Email klienta (opcjonalny) */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Email administratora <span className="text-gray-400 text-xs">(opcjonalny)</span>
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <input
+                        type="email"
+                        value={formData.clientEmail}
+                        onChange={(e) => setFormData({ ...formData, clientEmail: e.target.value })}
+                        placeholder="admin@nadlesnictwo.pl"
                         className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
