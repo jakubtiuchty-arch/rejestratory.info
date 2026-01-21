@@ -1132,30 +1132,6 @@ export default function HandlowyDashboard() {
                       widths: ['*'],
                       body: [[{
                         stack: [
-                          { text: String(analyticsData.uniqueClients), fontSize: 32, bold: true, color: '#10b981', alignment: 'center' },
-                          { text: 'KLIENTÓW', fontSize: 9, color: '#6b7280', alignment: 'center', margin: [0, 5, 0, 0] }
-                        ],
-                        margin: [0, 15, 0, 15]
-                      }]]
-                    },
-                    layout: {
-                      hLineWidth: () => 1,
-                      vLineWidth: () => 1,
-                      hLineColor: () => '#e5e7eb',
-                      vLineColor: () => '#e5e7eb',
-                    }
-                  }
-                ]
-              },
-              { width: 15, text: '' },
-              {
-                width: '*',
-                stack: [
-                  { 
-                    table: {
-                      widths: ['*'],
-                      body: [[{
-                        stack: [
                           { text: String(Object.keys(analyticsData.byDevice).length), fontSize: 32, bold: true, color: '#8b5cf6', alignment: 'center' },
                           { text: 'MODELI', fontSize: 9, color: '#6b7280', alignment: 'center', margin: [0, 5, 0, 0] }
                         ],
@@ -2001,14 +1977,10 @@ export default function HandlowyDashboard() {
                   </div>
 
                   {/* Statystyki dla kategorii */}
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-4 text-white">
                       <p className="text-sm opacity-80">Łącznie</p>
                       <p className="text-3xl font-bold">{analyticsData.total}</p>
-                    </div>
-                    <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl p-4 text-white">
-                      <p className="text-sm opacity-80">Klientów</p>
-                      <p className="text-3xl font-bold">{analyticsData.uniqueClients}</p>
                     </div>
                     <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-4 text-white">
                       <p className="text-sm opacity-80">Modeli</p>

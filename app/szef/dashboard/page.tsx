@@ -158,7 +158,6 @@ export default function SzefDashboardPage() {
           { text: `${categoryName} • ${periodText}`, fontSize: 12, color: '#6b7280', margin: [0, 0, 0, 20] },
           { columns: [
             { width: '*', stack: [{ text: String(analyticsData.total), fontSize: 28, bold: true, color: '#3b82f6', alignment: 'center' }, { text: 'urządzeń', fontSize: 10, color: '#6b7280', alignment: 'center' }]},
-            { width: '*', stack: [{ text: String(analyticsData.uniqueClients), fontSize: 28, bold: true, color: '#10b981', alignment: 'center' }, { text: 'klientów', fontSize: 10, color: '#6b7280', alignment: 'center' }]},
             { width: '*', stack: [{ text: String(Object.keys(analyticsData.byDevice).length), fontSize: 28, bold: true, color: '#8b5cf6', alignment: 'center' }, { text: 'modeli', fontSize: 10, color: '#6b7280', alignment: 'center' }]},
           ], margin: [0, 0, 0, 25] },
           { text: 'ROZKŁAD WEDŁUG MODELI', fontSize: 11, bold: true, margin: [0, 0, 0, 10] },
@@ -246,14 +245,10 @@ export default function SzefDashboardPage() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-2 md:gap-4">
+            <div className="grid grid-cols-2 gap-2 md:gap-4">
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-3 md:p-4 text-white">
                 <p className="text-xs md:text-sm opacity-80">Łącznie</p>
                 <p className="text-xl md:text-3xl font-bold">{analyticsData.total}</p>
-              </div>
-              <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl p-3 md:p-4 text-white">
-                <p className="text-xs md:text-sm opacity-80">Klientów</p>
-                <p className="text-xl md:text-3xl font-bold">{analyticsData.uniqueClients}</p>
               </div>
               <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-3 md:p-4 text-white">
                 <p className="text-xs md:text-sm opacity-80">Modeli</p>
