@@ -59,6 +59,7 @@ const NADLESNICTWO_TO_RDLP: Record<string, string> = {
   "Hajnówka": "RDLP Białystok",
   "Białowieża": "RDLP Białystok",
   "Łomża": "RDLP Białystok",
+  "Płaska": "RDLP Białystok",
   // RDLP Szczecin
   "Barlinek": "RDLP Szczecin",
   "Chojna": "RDLP Szczecin",
@@ -76,6 +77,7 @@ const NADLESNICTWO_TO_RDLP: Record<string, string> = {
   "Toruń": "RDLP Toruń",
   "Bydgoszcz": "RDLP Toruń",
   "Włocławek": "RDLP Toruń",
+  "Rytel": "RDLP Toruń",
   // RDLP Gdańsk
   "Gdańsk": "RDLP Gdańsk",
   "Wejherowo": "RDLP Gdańsk",
@@ -111,11 +113,13 @@ const NADLESNICTWO_TO_RDLP: Record<string, string> = {
   "Nowy Targ": "RDLP Kraków",
   "Limanowa": "RDLP Kraków",
   "Myślenice": "RDLP Kraków",
+  "Gorlice": "RDLP Kraków",
   // RDLP Katowice
   "Katowice": "RDLP Katowice",
   "Bielsko": "RDLP Katowice",
   "Wisła": "RDLP Katowice",
   "Ustroń": "RDLP Katowice",
+  "Lubliniec": "RDLP Katowice",
   // RDLP Poznań
   "Poznań": "RDLP Poznań",
   "Kalisz": "RDLP Poznań",
