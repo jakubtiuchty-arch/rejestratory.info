@@ -211,7 +211,7 @@ const DEVICE_TYPES: Record<string, string[]> = {
     "HP Serie 5 Pro 527pq", "HP Serie 5 Pro 527pu"
   ],
   serwery: ["Dell PowerEdge R360", "Dell PowerEdge R550", "Dell PowerEdge R660xs"],
-  all_in_one: ["Dell AIO Pro 24", "HP Pro 324pv", "HP Pro 527pq", "HP Pro 527pu"],
+  all_in_one: ["Dell AIO Pro 24"],
 };
 
 interface AccessoryItem {
