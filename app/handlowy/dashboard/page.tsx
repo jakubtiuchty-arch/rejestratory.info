@@ -925,14 +925,16 @@ export default function HandlowyDashboard() {
     '#ec4899', '#06b6d4', '#84cc16', '#f97316', '#6366f1'
   ];
 
-  // Funkcja do generowania ścieżki SVG dla wykresu kołowego
-  const generatePieSlice = (startAngle: number, endAngle: number, radius: number = 100) => {
-    const x1 = radius + radius * Math.cos((Math.PI * startAngle) / 180);
-    const y1 = radius + radius * Math.sin((Math.PI * startAngle) / 180);
-    const x2 = radius + radius * Math.cos((Math.PI * endAngle) / 180);
-    const y2 = radius + radius * Math.sin((Math.PI * endAngle) / 180);
+  // Funkcja do generowania ścieżki SVG dla wykresu kołowego (donut chart)
+  const generatePieSlice = (startAngle: number, endAngle: number, radius: number = 80) => {
+    const centerX = 100;
+    const centerY = 100;
+    const x1 = centerX + radius * Math.cos((Math.PI * startAngle) / 180);
+    const y1 = centerY + radius * Math.sin((Math.PI * startAngle) / 180);
+    const x2 = centerX + radius * Math.cos((Math.PI * endAngle) / 180);
+    const y2 = centerY + radius * Math.sin((Math.PI * endAngle) / 180);
     const largeArc = endAngle - startAngle > 180 ? 1 : 0;
-    return `M${radius},${radius} L${x1},${y1} A${radius},${radius} 0 ${largeArc},1 ${x2},${y2} Z`;
+    return `M${centerX},${centerY} L${x1},${y1} A${radius},${radius} 0 ${largeArc},1 ${x2},${y2} Z`;
   };
 
   // Generuj PDF z analityką
