@@ -188,8 +188,8 @@ const DEVICE_TYPES: Record<string, string[]> = {
   ],
   drukarki_termiczne: [
     "Bixolon SPP-R410", 
-    "Zebra ZQ521", "Zebra ZD421c",
-    "Honeywell RP4", "Honeywell PC45t",
+    "Zebra ZQ521",
+    "Honeywell RP4",
     "Seiko MPA40", 
     "Sewoo LKP400", "Sewoo LKP43"
   ],
