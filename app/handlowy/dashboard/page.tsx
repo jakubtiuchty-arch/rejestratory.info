@@ -160,6 +160,7 @@ const PRODUCT_CATEGORIES = [
   { id: "monitory", name: "Monitory", icon: Monitor, color: "cyan" },
   { id: "serwery", name: "Serwery", icon: Server, color: "red" },
   { id: "all_in_one", name: "All in One", icon: LayoutGrid, color: "indigo" },
+  { id: "akcesoria", name: "Akcesoria", icon: Package, color: "amber" },
 ];
 
 // Domyślne składnice (umowy ramowe) - teraz z wieloma umowami
@@ -216,6 +217,7 @@ const DEVICE_TYPES: Record<string, string[]> = {
   ],
   serwery: ["Dell PowerEdge R360", "Dell PowerEdge R550", "Dell PowerEdge R660xs"],
   all_in_one: ["Dell AIO Pro 24"],
+  akcesoria: [], // Puste - wpisywane ręcznie "z palca"
 };
 
 interface AccessoryItem {
@@ -1836,6 +1838,7 @@ export default function HandlowyDashboard() {
       cyan: { bg: "bg-cyan-600", text: "text-cyan-600", border: "border-cyan-600", light: "bg-cyan-50" },
       red: { bg: "bg-red-600", text: "text-red-600", border: "border-red-600", light: "bg-red-50" },
       indigo: { bg: "bg-indigo-600", text: "text-indigo-600", border: "border-indigo-600", light: "bg-indigo-50" },
+      amber: { bg: "bg-amber-600", text: "text-amber-600", border: "border-amber-600", light: "bg-amber-50" },
       gray: { bg: "bg-gray-600", text: "text-gray-600", border: "border-gray-600", light: "bg-gray-50" },
     };
     return colors[color] || colors.gray;
@@ -2528,23 +2531,35 @@ export default function HandlowyDashboard() {
                   {/* Typ urządzenia */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Typ urządzenia <span className="text-red-500">*</span>
+                      {activeCategory === "akcesoria" ? "Nazwa produktu" : "Typ urządzenia"} <span className="text-red-500">*</span>
                     </label>
-                    <div className="relative">
-                      <select
+                    {activeCategory === "akcesoria" ? (
+                      // Dla akcesoriów - pole tekstowe "z palca"
+                      <input
+                        type="text"
                         value={formData.deviceType}
                         onChange={(e) => setFormData({ ...formData, deviceType: e.target.value })}
-                        className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none"
-                      >
-                        <option value="">Wybierz...</option>
-                        {DEVICE_TYPES[activeCategory]?.map((type) => (
-                          <option key={type} value={type}>
-                            {type}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                    </div>
+                        placeholder="np. Dysk SSD Samsung 1TB, Klawiatura Dell KB216..."
+                        className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    ) : (
+                      // Dla pozostałych kategorii - dropdown
+                      <div className="relative">
+                        <select
+                          value={formData.deviceType}
+                          onChange={(e) => setFormData({ ...formData, deviceType: e.target.value })}
+                          className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none"
+                        >
+                          <option value="">Wybierz...</option>
+                          {DEVICE_TYPES[activeCategory]?.map((type) => (
+                            <option key={type} value={type}>
+                              {type}
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                      </div>
+                    )}
                   </div>
 
                   {/* Numery seryjne - masowe dodawanie */}
