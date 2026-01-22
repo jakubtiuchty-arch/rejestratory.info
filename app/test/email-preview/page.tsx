@@ -26,36 +26,32 @@ export default function EmailPreview() {
             margin: '0'
           }}
         >
-          {/* Header - minimalistyczny */}
+          {/* Header z logotypami */}
           <div style={{ 
             background: '#ffffff',
-            padding: '32px 40px',
+            padding: '24px 40px',
             borderBottom: '1px solid #e5e7eb'
           }}>
             <table style={{ width: '100%' }}>
               <tbody>
                 <tr>
-                  <td>
+                  <td style={{ verticalAlign: 'middle' }}>
+                    <img 
+                      src="https://rejestratory.info/takma_logo.png" 
+                      alt="TAKMA" 
+                      style={{ height: '36px', verticalAlign: 'middle' }}
+                    />
                     <span style={{ 
-                      fontSize: '20px', 
-                      fontWeight: 'bold', 
-                      color: '#111827',
-                      letterSpacing: '-0.5px'
-                    }}>
-                      TAKMA
-                    </span>
-                    <span style={{ 
-                      color: '#9ca3af', 
-                      margin: '0 12px',
-                      fontSize: '14px'
-                    }}>|</span>
-                    <span style={{ 
-                      fontSize: '14px', 
-                      color: '#059669',
-                      fontWeight: '600'
-                    }}>
-                      rejestratory.info
-                    </span>
+                      color: '#d1d5db', 
+                      margin: '0 16px',
+                      fontSize: '20px',
+                      verticalAlign: 'middle'
+                    }}>×</span>
+                    <img 
+                      src="https://rejestratory.info/rejestratory_logo_footer_header.png" 
+                      alt="rejestratory.info" 
+                      style={{ height: '32px', verticalAlign: 'middle' }}
+                    />
                   </td>
                 </tr>
               </tbody>
