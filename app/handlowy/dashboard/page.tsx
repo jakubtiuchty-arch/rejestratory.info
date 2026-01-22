@@ -377,6 +377,23 @@ export default function HandlowyDashboard() {
   const [isChatOpen, setIsChatOpen] = React.useState(false);
   const chatEndRef = React.useRef<HTMLDivElement>(null);
 
+  // Internal Team Chat state
+  interface TeamChatMessage {
+    id: string;
+    created_at: string;
+    sender_email: string;
+    sender_name: string;
+    message: string;
+    read_by: string[];
+  }
+  const [teamChatMessages, setTeamChatMessages] = React.useState<TeamChatMessage[]>([]);
+  const [teamChatInput, setTeamChatInput] = React.useState("");
+  const [isTeamChatOpen, setIsTeamChatOpen] = React.useState(false);
+  const [isTeamChatLoading, setIsTeamChatLoading] = React.useState(false);
+  const teamChatEndRef = React.useRef<HTMLDivElement>(null);
+  const [userEmail, setUserEmail] = React.useState("");
+  const [unreadCount, setUnreadCount] = React.useState(0);
+
   const fetchAllProducts = React.useCallback(async () => {
     const { data, error } = await supabase
       .from("sales_products")
@@ -387,6 +404,87 @@ export default function HandlowyDashboard() {
       setAllProducts(data);
     }
   }, []);
+
+  // Team Chat Functions
+  const fetchTeamChatMessages = React.useCallback(async () => {
+    const { data, error } = await supabase
+      .from("internal_chat")
+      .select("*")
+      .order("created_at", { ascending: true })
+      .limit(100);
+    
+    if (!error && data) {
+      setTeamChatMessages(data);
+      // Oblicz nieprzeczytane wiadomości
+      const email = localStorage.getItem("handlowy_user_email") || "";
+      const unread = data.filter(msg => 
+        msg.sender_email !== email && !msg.read_by?.includes(email)
+      ).length;
+      setUnreadCount(unread);
+    }
+  }, []);
+
+  const sendTeamChatMessage = async () => {
+    if (!teamChatInput.trim() || isTeamChatLoading) return;
+    
+    const email = localStorage.getItem("handlowy_user_email") || "";
+    const name = localStorage.getItem("handlowy_user_name") || "Użytkownik";
+    
+    setIsTeamChatLoading(true);
+    
+    const { error } = await supabase.from("internal_chat").insert({
+      sender_email: email,
+      sender_name: name,
+      message: teamChatInput.trim(),
+      read_by: [email]
+    });
+    
+    if (!error) {
+      setTeamChatInput("");
+      fetchTeamChatMessages();
+    }
+    
+    setIsTeamChatLoading(false);
+  };
+
+  const markTeamChatAsRead = async () => {
+    const email = localStorage.getItem("handlowy_user_email") || "";
+    if (!email) return;
+    
+    // Znajdź nieprzeczytane wiadomości
+    const unreadMessages = teamChatMessages.filter(
+      msg => msg.sender_email !== email && !msg.read_by?.includes(email)
+    );
+    
+    // Oznacz każdą jako przeczytaną
+    for (const msg of unreadMessages) {
+      await supabase
+        .from("internal_chat")
+        .update({ read_by: [...(msg.read_by || []), email] })
+        .eq("id", msg.id);
+    }
+    
+    setUnreadCount(0);
+  };
+
+  // Auto-refresh team chat
+  React.useEffect(() => {
+    if (!isAuthenticated) return;
+    
+    const interval = setInterval(() => {
+      fetchTeamChatMessages();
+    }, 5000); // Odświeżaj co 5 sekund
+    
+    return () => clearInterval(interval);
+  }, [isAuthenticated, fetchTeamChatMessages]);
+
+  // Scroll to bottom when new messages arrive
+  React.useEffect(() => {
+    if (isTeamChatOpen) {
+      teamChatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      markTeamChatAsRead();
+    }
+  }, [teamChatMessages, isTeamChatOpen]);
 
   // Funkcja do wysyłania wiadomości do AI
   const sendChatMessage = async () => {
@@ -609,12 +707,15 @@ export default function HandlowyDashboard() {
   React.useEffect(() => {
     const authenticated = localStorage.getItem("handlowy_authenticated");
     const name = localStorage.getItem("handlowy_user_name");
+    const email = localStorage.getItem("handlowy_user_email");
     
     if (authenticated === "true") {
       setIsAuthenticated(true);
       setUserName(name || "Użytkownik");
+      setUserEmail(email || "");
       fetchProducts();
       fetchAllProducts();
+      fetchTeamChatMessages();
     } else {
       window.location.href = "/handlowy";
     }
@@ -3600,6 +3701,128 @@ GHI345678
           </div>
         </div>
       )}
+
+      {/* Team Chat - prawy dolny róg */}
+      <AnimatePresence>
+        {isTeamChatOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="fixed bottom-24 right-6 w-80 h-[450px] bg-white rounded-2xl shadow-2xl border border-gray-200 z-50 flex flex-col overflow-hidden"
+          >
+            {/* Header */}
+            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                  <MessageCircle className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold text-sm">Czat zespołu</h3>
+                  <p className="text-emerald-100 text-xs">Komunikacja wewnętrzna</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsTeamChatOpen(false)}
+                className="text-white/80 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-3 space-y-3 bg-gray-50">
+              {teamChatMessages.length === 0 && (
+                <div className="text-center py-8 text-gray-400">
+                  <MessageCircle className="w-10 h-10 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">Brak wiadomości</p>
+                  <p className="text-xs">Napisz coś, aby rozpocząć rozmowę!</p>
+                </div>
+              )}
+              
+              {teamChatMessages.map((msg) => {
+                const isMe = msg.sender_email === userEmail;
+                return (
+                  <div
+                    key={msg.id}
+                    className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div className={`max-w-[85%] ${isMe ? 'order-2' : ''}`}>
+                      {!isMe && (
+                        <p className="text-xs text-gray-500 mb-1 ml-1">{msg.sender_name}</p>
+                      )}
+                      <div className={`px-3 py-2 rounded-2xl text-sm ${
+                        isMe
+                          ? 'bg-emerald-600 text-white rounded-br-md'
+                          : 'bg-white border border-gray-200 text-gray-700 rounded-bl-md shadow-sm'
+                      }`}>
+                        <p className="whitespace-pre-wrap">{msg.message}</p>
+                      </div>
+                      <p className={`text-[10px] text-gray-400 mt-0.5 ${isMe ? 'text-right mr-1' : 'ml-1'}`}>
+                        {new Date(msg.created_at).toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+              
+              <div ref={teamChatEndRef} />
+            </div>
+
+            {/* Input */}
+            <div className="p-3 border-t border-gray-200 bg-white">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={teamChatInput}
+                  onChange={(e) => setTeamChatInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && sendTeamChatMessage()}
+                  placeholder="Napisz wiadomość..."
+                  className="flex-1 px-4 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
+                />
+                <button
+                  onClick={sendTeamChatMessage}
+                  disabled={!teamChatInput.trim() || isTeamChatLoading}
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 text-white rounded-xl transition-colors"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Team Chat Button */}
+      <motion.button
+        onClick={() => {
+          setIsTeamChatOpen(!isTeamChatOpen);
+          if (!isTeamChatOpen) {
+            markTeamChatAsRead();
+          }
+        }}
+        className={`fixed bottom-6 right-6 w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-colors z-50 ${
+          isTeamChatOpen 
+            ? 'bg-gray-600 hover:bg-gray-700' 
+            : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700'
+        }`}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        {isTeamChatOpen ? (
+          <X className="w-6 h-6 text-white" />
+        ) : (
+          <>
+            <MessageCircle className="w-6 h-6 text-white" />
+            {unreadCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                {unreadCount > 9 ? '9+' : unreadCount}
+              </span>
+            )}
+          </>
+        )}
+      </motion.button>
 
       {/* Toast Notification */}
       <AnimatePresence>
