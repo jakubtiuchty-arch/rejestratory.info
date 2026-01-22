@@ -596,13 +596,50 @@ function generateBasicAnswer(
   // Losowa funkcja
   const randomFrom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
   
+  // Pytania o najwięcej/najmniej sprzedane urządzenia
+  if ((q.includes('urządze') || q.includes('model') || q.includes('sprzęt') || q.includes('jakich')) && 
+      (q.includes('najwięcej') || q.includes('najmniej') || q.includes('top') || q.includes('ranking') || q.includes('popularn'))) {
+    const sortedDevices = Object.entries(byDevice).sort((a, b) => b[1] - a[1]);
+    
+    if (sortedDevices.length === 0) {
+      return "Hmm, nie mam jeszcze żadnych danych o urządzeniach. Dodaj sprzedaże! 📊";
+    }
+    
+    if (q.includes('najmniej')) {
+      const top5Least = sortedDevices.slice(-5).reverse();
+      return `${randomFrom(funnyGreetings)}\n\n📉 Najmniej sprzedane urządzenia:\n${
+        top5Least.map(([d, c], i) => `${i + 1}. ${d}: ${c} szt.`).join('\n')
+      }`;
+    } else {
+      const top5 = sortedDevices.slice(0, 5);
+      return `${randomFrom(funnyGreetings)}\n\n🏆 TOP 5 najczęściej dostarczanych urządzeń:\n${
+        top5.map(([d, c], i) => `${i + 1}. ${d}: ${c} szt.`).join('\n')
+      }\n\n📊 Łącznie ${products.length} urządzeń w ${sortedDevices.length} modelach.`;
+    }
+  }
+  
+  // Pytania o łączną liczbę, statystyki, podsumowanie
+  if (q.includes('ile') && (q.includes('wszystki') || q.includes('łącznie') || q.includes('razem') || q.includes('ogółem') || q.includes('suma'))) {
+    const sortedDevices = Object.entries(byDevice).sort((a, b) => b[1] - a[1]);
+    const sortedClients = Object.entries(products.reduce((acc: Record<string, number>, p) => {
+      acc[p.client_name] = (acc[p.client_name] || 0) + 1;
+      return acc;
+    }, {})).sort((a, b) => b[1] - a[1]);
+    
+    return `${randomFrom(funnyGreetings)}\n\n📊 Podsumowanie sprzedaży:\n\n• Łącznie urządzeń: ${products.length} szt.\n• Liczba modeli: ${sortedDevices.length}\n• Liczba klientów: ${sortedClients.length}\n\n🏆 Top 3 urządzenia:\n${
+      sortedDevices.slice(0, 3).map(([d, c], i) => `${i + 1}. ${d}: ${c} szt.`).join('\n')
+    }\n\n🏢 Top 3 klienci:\n${
+      sortedClients.slice(0, 3).map(([c, cnt], i) => `${i + 1}. ${c}: ${cnt} szt.`).join('\n')
+    }`;
+  }
+  
   // Pytania o konkretne Nadleśnictwo
   const nadlesnictwoMatch = q.match(/nadleśnictw[aouy]?\s+(\w+)/i) || q.match(/do\s+(\w+)/i) || q.match(/ile\s+(?:do\s+)?(\w+)/i);
   if (nadlesnictwoMatch) {
     const searchName = nadlesnictwoMatch[1];
     
     // Ignoruj słowa kluczowe które nie są nazwami
-    const ignoredWords = ['ile', 'do', 'rdlp', 'rejestratorów', 'urządzeń', 'sztuk', 'sprzedano'];
+    const ignoredWords = ['ile', 'do', 'rdlp', 'rejestratorów', 'urządzeń', 'sztuk', 'sprzedano', 'wszystkich', 'ogółem', 'razem', 'łącznie'];
     if (ignoredWords.includes(searchName.toLowerCase())) {
       // To nie jest nazwa Nadleśnictwa, kontynuuj do innych sprawdzeń
     } else {
@@ -710,13 +747,44 @@ function generateBasicAnswer(
     return `${randomFrom(funnyGreetings)}\n\nRejestratory: ${count} szt. w systemie! 📱`;
   }
 
-  // Domyślna odpowiedź z listą klientów
+  // Pytania o klientów/nadleśnictwa - kto kupił najwięcej
+  if ((q.includes('klient') || q.includes('nadleśnictw') || q.includes('kto')) && 
+      (q.includes('najwięcej') || q.includes('najmniej') || q.includes('top') || q.includes('ranking'))) {
+    const sortedClients = Object.entries(products.reduce((acc: Record<string, number>, p) => {
+      acc[p.client_name] = (acc[p.client_name] || 0) + 1;
+      return acc;
+    }, {})).sort((a, b) => b[1] - a[1]);
+    
+    if (sortedClients.length === 0) {
+      return "Hmm, nie mam jeszcze żadnych klientów w bazie. Dodaj sprzedaże! 📊";
+    }
+    
+    if (q.includes('najmniej')) {
+      const bottom5 = sortedClients.slice(-5).reverse();
+      return `${randomFrom(funnyGreetings)}\n\n📉 Nadleśnictwa z najmniejszą liczbą urządzeń:\n${
+        bottom5.map(([c, cnt], i) => `${i + 1}. ${c}: ${cnt} szt.`).join('\n')
+      }`;
+    } else {
+      const top5 = sortedClients.slice(0, 5);
+      return `${randomFrom(funnyGreetings)}\n\n🏆 TOP 5 klientów z największą liczbą urządzeń:\n${
+        top5.map(([c, cnt], i) => `${i + 1}. ${c}: ${cnt} szt.`).join('\n')
+      }`;
+    }
+  }
+  
+  // Domyślna odpowiedź - pokaż podsumowanie
   const uniqueClients = [...new Set(products.map(p => p.client_name))];
   if (uniqueClients.length === 0) {
     return "Hej! 👋 Jeszcze nie mamy żadnych danych sprzedażowych. Dodaj pierwsze urządzenia, a potem pogadamy! 😉";
   }
   
-  return `Hej! 👋 Mam dane o ${products.length} urządzeniach dla ${uniqueClients.length} Nadleśnictw.\n\nPytaj śmiało! Np.:\n• "Ile do Nadleśnictwa Wipsowo?"\n• "Pokaż sprzedaż Zebra EM45"\n• "Ile do RDLP Olsztyn?"`;
+  // Jeśli pytanie nie pasuje do wzorców, daj sensowne podsumowanie
+  const sortedDevices = Object.entries(byDevice).sort((a, b) => b[1] - a[1]);
+  const top3Devices = sortedDevices.slice(0, 3);
+  
+  return `${randomFrom(funnyGreetings)}\n\n📊 Mam dane o ${products.length} urządzeniach dla ${uniqueClients.length} Nadleśnictw.\n\n🏆 TOP 3 urządzenia:\n${
+    top3Devices.map(([d, c], i) => `${i + 1}. ${d}: ${c} szt.`).join('\n')
+  }\n\n💡 Możesz zapytać np.:\n• "Jakich urządzeń sprzedaliśmy najwięcej?"\n• "Ile do Nadleśnictwa Wipsowo?"\n• "Które RDLP kupiło najwięcej?"`;
 }
 
 // Endpoint GET do pobierania mapowania RDLP
