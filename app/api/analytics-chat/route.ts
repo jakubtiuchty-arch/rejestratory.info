@@ -791,7 +791,7 @@ function generateBasicAnswer(
   
   return `${randomFrom(funnyGreetings)}\n\n📊 Mam dane o ${products.length} urządzeniach dla ${uniqueClients.length} Nadleśnictw.\n\n🏆 TOP 3 urządzenia:\n${
     top3Devices.map(([d, c], i) => `${i + 1}. ${d}: ${c} szt.`).join('\n')
-  }\n\n💡 Możesz zapytać np.:\n• "Jakich urządzeń sprzedaliśmy najwięcej?"\n• "Ile do Nadleśnictwa Wipsowo?"\n• "Które RDLP kupiło najwięcej?"`;
+  }`;
 }
 
 // Endpoint GET do pobierania mapowania RDLP
