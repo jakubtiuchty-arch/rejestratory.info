@@ -237,6 +237,7 @@ interface SalesProduct {
   client_email?: string;
   sale_date: string;
   warranty?: string; // Gwarancja w miesiącach: "12", "24", "36", "60"
+  service_contract?: string; // Kontrakt serwisowy: "3" lub "5" lat
   accessories: (string | AccessoryItem)[];
   notes?: string;
   added_by: string;
@@ -296,6 +297,7 @@ export default function HandlowyDashboard() {
     clientEmail: "", // Opcjonalny email administratora/osoby kontaktowej
     saleDate: new Date().toISOString().split("T")[0],
     warranty: "", // Gwarancja: "", "12", "24", "36", "60" miesięcy
+    serviceContract: "", // Kontrakt serwisowy: "", "3", "5" lat
     notes: "",
   });
   // Nowa struktura akcesoriów
@@ -1363,6 +1365,7 @@ export default function HandlowyDashboard() {
         client_email: formData.clientEmail || null,
         sale_date: formData.saleDate,
         warranty: formData.warranty || null, // Gwarancja w miesiącach: "12", "24", "36", "60" lub null
+        service_contract: formData.serviceContract || null, // Kontrakt serwisowy: "3" lub "5" lat
         accessories: accessories,
         notes: formData.notes,
         added_by: localStorage.getItem("handlowy_user_email") || "unknown",
@@ -1380,6 +1383,7 @@ export default function HandlowyDashboard() {
         serial_number: serial,
         purchase_date: formData.saleDate,
         warranty: formData.warranty || null,
+        service_contract: formData.serviceContract || null,
         notes: formData.notes,
       }));
 
@@ -1400,6 +1404,7 @@ export default function HandlowyDashboard() {
         clientEmail: "",
         saleDate: new Date().toISOString().split("T")[0],
         warranty: "",
+        serviceContract: "",
         notes: "",
       });
       const addedCount = parsedSerials.length;
@@ -1563,10 +1568,13 @@ export default function HandlowyDashboard() {
             accessoriesText = formattedAccs.join(', ');
           }
           
-          // Format warranty
-          const warrantyText = p.warranty 
-            ? `${p.warranty} mies.` 
-            : '-';
+          // Format warranty or service contract
+          let warrantyText = '-';
+          if (p.service_contract) {
+            warrantyText = `Kontrakt ${p.service_contract}L`;
+          } else if (p.warranty) {
+            warrantyText = `${p.warranty} mies.`;
+          }
           
           // Format notes
           const notesText = p.notes || '-';
@@ -2357,6 +2365,7 @@ export default function HandlowyDashboard() {
                   clientEmail: "",
                   saleDate: new Date().toISOString().split("T")[0],
                   warranty: "",
+                  serviceContract: "",
                   notes: "",
                 });
                 setAccessories([]);
@@ -2385,6 +2394,7 @@ export default function HandlowyDashboard() {
                   clientEmail: "",
                   saleDate: new Date().toISOString().split("T")[0],
                   warranty: "",
+                  serviceContract: "",
                   notes: "",
                 });
                 setAccessories([]);
@@ -2697,8 +2707,9 @@ GHI345678
                     </label>
                     <select
                       value={formData.warranty}
-                      onChange={(e) => setFormData({ ...formData, warranty: e.target.value })}
-                      className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                      onChange={(e) => setFormData({ ...formData, warranty: e.target.value, serviceContract: e.target.value ? "" : formData.serviceContract })}
+                      disabled={!!formData.serviceContract}
+                      className={`w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${formData.serviceContract ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''}`}
                     >
                       <option value="">Brak / Nie dotyczy</option>
                       <option value="12">12 miesięcy</option>
@@ -2707,6 +2718,28 @@ GHI345678
                       <option value="60">60 miesięcy (5 lat)</option>
                     </select>
                   </div>
+
+                  {/* Kontrakt serwisowy - tylko dla rejestratorów */}
+                  {activeCategory === "rejestratory" && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Kontrakt serwisowy <span className="text-gray-400 text-xs">(zamiast gwarancji)</span>
+                      </label>
+                      <select
+                        value={formData.serviceContract}
+                        onChange={(e) => setFormData({ ...formData, serviceContract: e.target.value, warranty: e.target.value ? "" : formData.warranty })}
+                        disabled={!!formData.warranty}
+                        className={`w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${formData.warranty ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : ''}`}
+                      >
+                        <option value="">Brak</option>
+                        <option value="3">3-letni</option>
+                        <option value="5">5-letni</option>
+                      </select>
+                      {formData.serviceContract && (
+                        <p className="text-xs text-green-600 mt-1">✓ Kontrakt serwisowy zastąpi gwarancję na protokole</p>
+                      )}
+                    </div>
+                  )}
 
                   {/* Akcesoria - ukryte dla kategorii "akcesoria" */}
                   {activeCategory !== "akcesoria" && (
