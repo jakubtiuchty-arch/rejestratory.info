@@ -13,7 +13,25 @@ declare global {
 export default function CrispChat() {
   const pathname = usePathname();
 
+  // Ukryj CrispChat na stronach dashboardów
+  const hiddenPaths = ['/handlowy', '/szef', '/admin', '/panel-klienta/dashboard'];
+  const shouldHide = hiddenPaths.some(path => pathname?.startsWith(path));
+
   useEffect(() => {
+    // Nie ładuj Crisp na dashboardach
+    if (shouldHide) {
+      // Ukryj widget jeśli już istnieje
+      if (typeof window !== 'undefined' && window.$crisp) {
+        window.$crisp.push(['do', 'chat:hide']);
+      }
+      return;
+    }
+
+    // Pokaż widget jeśli istnieje
+    if (typeof window !== 'undefined' && window.$crisp) {
+      window.$crisp.push(['do', 'chat:show']);
+    }
+
     // Sprawdź czy Crisp już nie został załadowany
     if (typeof window !== 'undefined' && !window.$crisp) {
       // Inicjalizacja Crisp
@@ -27,7 +45,7 @@ export default function CrispChat() {
       
       document.getElementsByTagName("head")[0].appendChild(script);
     }
-  }, []);
+  }, [shouldHide]);
 
   // Aktualizuj dane sesji przy zmianie strony
   useEffect(() => {
