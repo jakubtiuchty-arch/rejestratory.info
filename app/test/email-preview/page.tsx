@@ -14,7 +14,7 @@ export default function EmailPreview() {
         <div className="bg-gray-800 text-white px-4 py-2 rounded-t-lg text-sm">
           <p><strong>Od:</strong> TAKMA &lt;serwis@takma.com.pl&gt;</p>
           <p><strong>Do:</strong> {sampleData.contactEmail}</p>
-          <p><strong>Temat:</strong> Twoje urządzenia zostały dodane do Panelu Klienta | TAKMA</p>
+          <p><strong>Temat:</strong> Urządzenia zostały dodane do Panelu Klienta | TAKMA</p>
         </div>
         
         {/* Email Content */}
@@ -32,16 +32,28 @@ export default function EmailPreview() {
             padding: '30px 40px',
             textAlign: 'center' as const
           }}>
-            <h1 style={{ 
-              color: '#ffffff', 
-              margin: '0 0 8px 0', 
-              fontSize: '24px',
-              fontWeight: 'bold'
+            {/* Logos */}
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              gap: '20px',
+              marginBottom: '16px'
             }}>
-              🌲 Panel Klienta TAKMA
-            </h1>
-            <p style={{ color: '#d1fae5', margin: 0, fontSize: '14px' }}>
-              Twoje urządzenia zostały zarejestrowane
+              <img 
+                src="https://rejestratory.info/takma_logo_footer.png" 
+                alt="TAKMA" 
+                style={{ height: '40px' }}
+              />
+              <span style={{ color: '#ffffff', fontSize: '24px', opacity: 0.5 }}>×</span>
+              <img 
+                src="https://rejestratory.info/rejestratory_logo.svg" 
+                alt="rejestratory.info" 
+                style={{ height: '35px' }}
+              />
+            </div>
+            <p style={{ color: '#d1fae5', margin: 0, fontSize: '15px' }}>
+              Urządzenia zostały dodane do Panelu Klienta
             </p>
           </div>
 
@@ -63,8 +75,8 @@ export default function EmailPreview() {
               margin: '0 0 30px 0',
               lineHeight: '1.6'
             }}>
-              Informujemy, że Wasze nowe urządzenia zostały zarejestrowane w <strong>Panelu Klienta TAKMA</strong>. 
-              Od teraz macie pełną kontrolę nad ewidencją urządzeń oraz możliwość szybkiego zgłaszania serwisu.
+              Informujemy, że urządzenia dla Państwa Nadleśnictwa zostały zarejestrowane w <strong>Panelu Klienta</strong>. 
+              Od teraz mają Państwo pełną kontrolę nad ewidencją urządzeń oraz możliwość szybkiego zgłaszania serwisu.
             </p>
 
             {/* Device Info Box */}
@@ -78,7 +90,7 @@ export default function EmailPreview() {
               <table style={{ width: '100%', borderCollapse: 'collapse' as const }}>
                 <tbody>
                   <tr>
-                    <td style={{ padding: '8px 0', color: '#6b7280', fontSize: '14px', width: '140px' }}>Nadleśnictwo:</td>
+                    <td style={{ padding: '8px 0', color: '#6b7280', fontSize: '14px', width: '140px' }}>Klient:</td>
                     <td style={{ padding: '8px 0', color: '#111827', fontSize: '14px', fontWeight: 'bold' }}>{sampleData.clientName}</td>
                   </tr>
                   <tr>
@@ -142,7 +154,7 @@ export default function EmailPreview() {
                   Ewidencja urządzeń
                 </h3>
                 <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
-                  Pełna lista wszystkich Waszych urządzeń w jednym miejscu z datami zakupu i gwarancjami.
+                  Pełna lista wszystkich urządzeń Nadleśnictwa w jednym miejscu z datami zakupu i gwarancjami.
                 </p>
               </div>
             </div>
@@ -175,7 +187,7 @@ export default function EmailPreview() {
                   Przypisanie do leśnictwa
                 </h3>
                 <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
-                  Przypisz każde urządzenie do konkretnego leśnictwa, aby łatwo zarządzać sprzętem.
+                  Możliwość przypisania każdego urządzenia do konkretnego leśnictwa dla łatwego zarządzania sprzętem.
                 </p>
               </div>
             </div>
@@ -208,7 +220,7 @@ export default function EmailPreview() {
                   Serwis jednym kliknięciem
                 </h3>
                 <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
-                  W razie awarii wyślij urządzenie do serwisu bez dzwonienia i pisania maili - zamów kuriera online.
+                  W razie awarii możliwość wysłania urządzenia do serwisu bez dzwonienia - zamówienie kuriera online.
                 </p>
               </div>
             </div>
@@ -235,7 +247,7 @@ export default function EmailPreview() {
                 fontSize: '14px',
                 lineHeight: '1.5'
               }}>
-                Wejdź na stronę panelu i wpisz dowolny numer seryjny Waszego urządzenia.
+                Wystarczy wejść na stronę panelu i wpisać dowolny numer seryjny urządzenia Nadleśnictwa.
               </p>
               <a 
                 href="https://rejestratory.info/panel-klienta"
@@ -263,8 +275,8 @@ export default function EmailPreview() {
               marginBottom: '30px'
             }}>
               <p style={{ margin: 0, fontSize: '14px', color: '#92400e', lineHeight: '1.5' }}>
-                💡 <strong>Wskazówka:</strong> Zapisz link do panelu w zakładkach przeglądarki, 
-                aby mieć do niego szybki dostęp.
+                💡 <strong>Wskazówka:</strong> Warto zapisać link do panelu w zakładkach przeglądarki 
+                dla szybkiego dostępu.
               </p>
             </div>
 
@@ -291,7 +303,7 @@ export default function EmailPreview() {
                 <tr>
                   <td style={{ textAlign: 'left' as const }}>
                     <p style={{ margin: '0 0 8px 0', fontSize: '14px', color: '#374151', fontWeight: 'bold' }}>
-                      TAKMA Tadeusz Tiuchty
+                      TAKMA
                     </p>
                     <p style={{ margin: '0', fontSize: '13px', color: '#6b7280', lineHeight: '1.6' }}>
                       📞 601 619 898<br />
