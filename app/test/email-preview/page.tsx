@@ -26,36 +26,17 @@ export default function EmailPreview() {
             margin: '0'
           }}
         >
-          {/* Header z logotypami */}
+          {/* Header z logo */}
           <div style={{ 
             background: '#ffffff',
             padding: '24px 40px',
             borderBottom: '1px solid #e5e7eb'
           }}>
-            <table style={{ width: '100%' }}>
-              <tbody>
-                <tr>
-                  <td style={{ verticalAlign: 'middle' }}>
-                    <img 
-                      src="https://rejestratory.info/takma_logo.png" 
-                      alt="TAKMA" 
-                      style={{ height: '36px', verticalAlign: 'middle' }}
-                    />
-                    <span style={{ 
-                      color: '#d1d5db', 
-                      margin: '0 16px',
-                      fontSize: '20px',
-                      verticalAlign: 'middle'
-                    }}>×</span>
-                    <img 
-                      src="https://rejestratory.info/rejestratory_logo_footer_header.png" 
-                      alt="rejestratory.info" 
-                      style={{ height: '32px', verticalAlign: 'middle' }}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <img 
+              src="https://rejestratory.info/rejestratory_logo_footer_header.png" 
+              alt="rejestratory.info" 
+              style={{ height: '38px' }}
+            />
           </div>
 
           {/* Banner */}
