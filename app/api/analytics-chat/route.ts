@@ -640,13 +640,37 @@ function generateBasicAnswer(
     }`;
   }
   
+  // NAJPIERW sprawdź pytania o konkretne urządzenie (np. "Do jakich nadleśnictw dostarczyliśmy EM45?")
+  // Szukaj częściowych dopasowań urządzeń (np. "EM45" -> "Zebra EM45")
+  const deviceMatchEarly = Object.keys(byDevice).find(d => {
+    const deviceLower = d.toLowerCase();
+    if (q.includes(deviceLower)) return true;
+    const deviceParts = deviceLower.split(/[\s\-]+/);
+    return deviceParts.some(part => part.length >= 2 && q.includes(part));
+  });
+  
+  if (deviceMatchEarly) {
+    const count = byDevice[deviceMatchEarly];
+    const clientsWithDevice = products.filter(p => p.device_type === deviceMatchEarly);
+    const clientBreakdown: Record<string, number> = {};
+    clientsWithDevice.forEach(p => {
+      clientBreakdown[p.client_name] = (clientBreakdown[p.client_name] || 0) + 1;
+    });
+    const clientsList = Object.entries(clientBreakdown)
+      .sort((a, b) => b[1] - a[1])
+      .map(([client, cnt]) => `• ${client}: ${cnt} szt.`)
+      .join('\n');
+    
+    return `${randomFrom(funnyGreetings)}\n\n📦 ${deviceMatchEarly}: sprzedano ${count} szt.\n\nDo Nadleśnictw:\n${clientsList}`;
+  }
+  
   // Pytania o konkretne Nadleśnictwo
   const nadlesnictwoMatch = q.match(/nadleśnictw[aouy]?\s+(\w+)/i) || q.match(/do\s+(\w+)/i) || q.match(/ile\s+(?:do\s+)?(\w+)/i);
   if (nadlesnictwoMatch) {
     const searchName = nadlesnictwoMatch[1];
     
     // Ignoruj słowa kluczowe które nie są nazwami
-    const ignoredWords = ['ile', 'do', 'rdlp', 'rejestratorów', 'urządzeń', 'sztuk', 'sprzedano', 'wszystkich', 'ogółem', 'razem', 'łącznie'];
+    const ignoredWords = ['ile', 'do', 'rdlp', 'rejestratorów', 'urządzeń', 'sztuk', 'sprzedano', 'wszystkich', 'ogółem', 'razem', 'łącznie', 'jakich', 'których', 'dostarczyliśmy', 'sprzedaliśmy', 'wysłaliśmy'];
     if (ignoredWords.includes(searchName.toLowerCase())) {
       // To nie jest nazwa Nadleśnictwa, kontynuuj do innych sprawdzeń
     } else {
@@ -735,17 +759,6 @@ function generateBasicAnswer(
         return `Hmm, ${rdlpName}? 🤔 Nie mamy tam sprzedaży.\n\nMamy dane dla: ${availableRDLPs.length > 0 ? availableRDLPs.join(', ') : 'żadnego RDLP jeszcze'}`;
       }
     }
-  }
-
-  // Pytania o konkretne urządzenie
-  const deviceMatch = Object.keys(byDevice).find(d => q.includes(d.toLowerCase()));
-  if (deviceMatch) {
-    const count = byDevice[deviceMatch];
-    const rdlpBreakdown = Object.entries(rdlpStats)
-      .filter(([_, stats]) => stats.devices[deviceMatch])
-      .map(([rdlp, stats]) => `${rdlp}: ${stats.devices[deviceMatch]}`)
-      .join(', ');
-    return `${randomFrom(funnyGreetings)}\n\nSprzedano ${count} szt. ${deviceMatch}! 🎉\n\nPodział: ${rdlpBreakdown || 'brak szczegółów'}`;
   }
 
   // Pytania o kategorię
