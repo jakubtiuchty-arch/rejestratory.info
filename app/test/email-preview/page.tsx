@@ -26,35 +26,55 @@ export default function EmailPreview() {
             margin: '0'
           }}
         >
-          {/* Header */}
+          {/* Header - minimalistyczny */}
+          <div style={{ 
+            background: '#ffffff',
+            padding: '32px 40px',
+            borderBottom: '1px solid #e5e7eb'
+          }}>
+            <table style={{ width: '100%' }}>
+              <tbody>
+                <tr>
+                  <td>
+                    <span style={{ 
+                      fontSize: '20px', 
+                      fontWeight: 'bold', 
+                      color: '#111827',
+                      letterSpacing: '-0.5px'
+                    }}>
+                      TAKMA
+                    </span>
+                    <span style={{ 
+                      color: '#9ca3af', 
+                      margin: '0 12px',
+                      fontSize: '14px'
+                    }}>|</span>
+                    <span style={{ 
+                      fontSize: '14px', 
+                      color: '#059669',
+                      fontWeight: '600'
+                    }}>
+                      rejestratory.info
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          {/* Banner */}
           <div style={{ 
             background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
-            padding: '30px 40px',
-            textAlign: 'center' as const
+            padding: '28px 40px',
           }}>
-            {/* Logos */}
-            <div style={{ 
-              display: 'flex', 
-              justifyContent: 'center', 
-              alignItems: 'center', 
-              gap: '20px',
-              marginBottom: '16px'
+            <h1 style={{ 
+              color: '#ffffff', 
+              margin: 0, 
+              fontSize: '22px',
+              fontWeight: 'bold'
             }}>
-              <img 
-                src="https://rejestratory.info/takma_logo_footer.png" 
-                alt="TAKMA" 
-                style={{ height: '40px' }}
-              />
-              <span style={{ color: '#ffffff', fontSize: '24px', opacity: 0.5 }}>×</span>
-              <img 
-                src="https://rejestratory.info/rejestratory_logo.svg" 
-                alt="rejestratory.info" 
-                style={{ height: '35px' }}
-              />
-            </div>
-            <p style={{ color: '#d1fae5', margin: 0, fontSize: '15px' }}>
-              Urządzenia zostały dodane do Panelu Klienta
-            </p>
+              ✓ Urządzenia dodane do Panelu Klienta
+            </h1>
           </div>
 
           {/* Main Content */}
