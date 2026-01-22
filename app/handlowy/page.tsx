@@ -5,7 +5,8 @@ import { Lock, Mail, Eye, EyeOff, Loader2, AlertCircle, Package } from "lucide-r
 
 // Dane logowania dla działu handlowego
 const SALES_USERS = [
-  { email: "dyk@takma.com.pl", password: "Takma4884", name: "Dział Handlowy" }
+  { email: "dyk@takma.com.pl", password: "Takma4884", name: "Dział Handlowy" },
+  { email: "jakub.tiuchty@takma.com.pl", password: "CIUkus4884", name: "Jakub Tiuchty" }
 ];
 
 export default function HandlowyLogin() {
