@@ -187,7 +187,7 @@ const DEVICE_TYPES: Record<string, string[]> = {
   rejestratory: [
     "Zebra EM45", "Zebra TC27", "Zebra TC58e", 
     "Samsung A36", "Samsung A56", "Samsung S25 Plus", "Samsung S25 Ultra", "Samsung XCover 7", "Samsung XCover Pro 6",
-    "Honeywell CT30", "Honeywell CT40XP", "Honeywell CT47", "Honeywell EDA52",
+    "Honeywell CT30", "Honeywell CT30P", "Honeywell CT32", "Honeywell CT40XP", "Honeywell CT47", "Honeywell EDA52",
     "Unitech EA660", "Unitech PA768",
     "M3 SL20"
   ],
@@ -1568,12 +1568,16 @@ export default function HandlowyDashboard() {
             ? `${p.warranty} mies.` 
             : '-';
           
+          // Format notes
+          const notesText = p.notes || '-';
+          
           productRows.push([
             { text: lp.toString(), alignment: 'center' },
             { text: p.device_type },
             { text: p.serial_number, bold: true },
             { text: accessoriesText, fontSize: 8 },
             { text: warrantyText, alignment: 'center', fontSize: 9 },
+            { text: notesText, fontSize: 8 },
           ]);
           lp++;
         });
@@ -1674,14 +1678,15 @@ export default function HandlowyDashboard() {
           {
             table: {
               headerRows: 1,
-              widths: [22, '*', 115, '*', 50],
+              widths: [20, 90, 100, 80, 40, '*'],
               body: [
                 [
                   { text: 'Lp.', style: 'tableHeader', alignment: 'center' },
                   { text: 'Nazwa urządzenia', style: 'tableHeader' },
                   { text: 'Numer seryjny', style: 'tableHeader' },
                   { text: 'Akcesoria', style: 'tableHeader' },
-                  { text: 'Gwarancja', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Gwar.', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Uwagi', style: 'tableHeader' },
                 ],
                 ...productRows.map((row, idx) => row.map((cell: any, cellIdx: number) => ({
                   ...cell,

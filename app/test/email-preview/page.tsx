@@ -50,7 +50,7 @@ export default function EmailPreview() {
               fontSize: '22px',
               fontWeight: 'bold'
             }}>
-              ✓ Urządzenia dodane do Panelu Klienta
+              Urządzenia dodane do Panelu Klienta
             </h1>
           </div>
 
@@ -120,7 +120,7 @@ export default function EmailPreview() {
               margin: '0 0 20px 0',
               fontWeight: 'bold'
             }}>
-              ✨ Co daje Panel Klienta?
+              Co daje Panel Klienta?
             </h2>
 
             {/* Feature 1 */}
@@ -222,6 +222,17 @@ export default function EmailPreview() {
               </div>
             </div>
 
+            {/* Note about new features */}
+            <p style={{ 
+              fontSize: '13px', 
+              color: '#6b7280', 
+              margin: '0 0 30px 0',
+              fontStyle: 'italic',
+              textAlign: 'center' as const
+            }}>
+              Stale pracujemy nad nowymi funkcjami - kolejne udogodnienia będą sukcesywnie dodawane.
+            </p>
+
             {/* CTA Section */}
             <div style={{ 
               background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
@@ -236,7 +247,7 @@ export default function EmailPreview() {
                 fontSize: '16px',
                 fontWeight: 'bold'
               }}>
-                🔐 Jak się zalogować?
+                Jak się zalogować?
               </h3>
               <p style={{ 
                 color: '#d1fae5', 
@@ -244,7 +255,7 @@ export default function EmailPreview() {
                 fontSize: '14px',
                 lineHeight: '1.5'
               }}>
-                Wystarczy wejść na stronę panelu i wpisać dowolny numer seryjny urządzenia Nadleśnictwa.
+                Wystarczy wejść na stronę panelu i wpisać numer seryjny jednego z dostarczonych urządzeń.
               </p>
               <a 
                 href="https://rejestratory.info/panel-klienta"
@@ -292,32 +303,16 @@ export default function EmailPreview() {
           {/* Footer */}
           <div style={{ 
             background: '#f3f4f6',
-            padding: '24px 40px',
-            borderTop: '1px solid #e5e7eb'
+            padding: '20px 40px',
+            borderTop: '1px solid #e5e7eb',
+            textAlign: 'center' as const
           }}>
-            <table style={{ width: '100%' }}>
-              <tbody>
-                <tr>
-                  <td style={{ textAlign: 'left' as const }}>
-                    <p style={{ margin: '0 0 8px 0', fontSize: '14px', color: '#374151', fontWeight: 'bold' }}>
-                      TAKMA
-                    </p>
-                    <p style={{ margin: '0', fontSize: '13px', color: '#6b7280', lineHeight: '1.6' }}>
-                      📞 601 619 898<br />
-                      📧 serwis@takma.com.pl<br />
-                      🌐 rejestratory.info
-                    </p>
-                  </td>
-                  <td style={{ textAlign: 'right' as const, verticalAlign: 'top' }}>
-                    <p style={{ margin: 0, fontSize: '12px', color: '#9ca3af' }}>
-                      ul. Poświęcka 1a<br />
-                      51-128 Wrocław<br />
-                      NIP: 9151004377
-                    </p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <p style={{ margin: '0 0 8px 0', fontSize: '14px', color: '#374151', fontWeight: 'bold' }}>
+              TAKMA
+            </p>
+            <p style={{ margin: '0', fontSize: '13px', color: '#6b7280' }}>
+              📞 601 619 898 &nbsp;•&nbsp; 📧 serwis@takma.com.pl &nbsp;•&nbsp; 🌐 rejestratory.info
+            </p>
           </div>
         </div>
       </div>
