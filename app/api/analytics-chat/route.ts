@@ -477,34 +477,41 @@ export async function POST(request: NextRequest) {
       });
     });
 
+    // Sortuj urządzenia od największej liczby do najmniejszej
+    const sortedDevices = Object.entries(byDevice).sort((a, b) => b[1] - a[1]);
+    const sortedClients = Object.entries(byClient).sort((a, b) => b[1] - a[1]);
+    const sortedRDLPs = Object.entries(rdlpStats).sort((a, b) => b[1].total - a[1].total);
+
     // Kontekst dla AI
     const context = `
 Jesteś asystentem analitycznym firmy TAKMA, która sprzedaje sprzęt IT do Lasów Państwowych.
+ZAWSZE odpowiadaj KONKRETNIE na pytanie, podając liczby!
 
-DANE SPRZEDAŻY:
+PODSUMOWANIE:
 - Łączna liczba urządzeń: ${productsWithRDLP.length}
+- Liczba modeli: ${sortedDevices.length}
 - Liczba klientów: ${Object.keys(byClient).length}
 
-SPRZEDAŻ WEDŁUG RDLP:
-${Object.entries(rdlpStats).map(([rdlp, stats]) => 
-  `${rdlp}: ${stats.total} urządzeń (${Object.entries(stats.devices).map(([d, c]) => `${d}: ${c}`).join(', ')})`
-).join('\n')}
+TOP 5 URZĄDZEŃ (od największej sprzedaży):
+${sortedDevices.slice(0, 5).map(([d, c], i) => `${i + 1}. ${d}: ${c} szt.`).join('\n')}
 
-SPRZEDAŻ WEDŁUG KATEGORII:
-${Object.entries(byCategory).map(([cat, count]) => `${cat}: ${count}`).join('\n')}
+TOP 5 KLIENTÓW:
+${sortedClients.slice(0, 5).map(([c, cnt], i) => `${i + 1}. ${c}: ${cnt} szt.`).join('\n')}
 
-SPRZEDAŻ WEDŁUG MODELU URZĄDZENIA:
-${Object.entries(byDevice).map(([device, count]) => `${device}: ${count}`).join('\n')}
+TOP 5 RDLP:
+${sortedRDLPs.slice(0, 5).map(([r, s], i) => `${i + 1}. ${r}: ${s.total} szt.`).join('\n')}
 
-SPRZEDAŻ WEDŁUG KLIENTA (Nadleśnictwo):
-${Object.entries(byClient).map(([client, count]) => `${client} (${getRDLP(client)}): ${count}`).join('\n')}
+WSZYSTKIE URZĄDZENIA:
+${sortedDevices.map(([device, count]) => `${device}: ${count}`).join('\n')}
 
-SZCZEGÓŁOWE DANE PRODUKTÓW:
-${productsWithRDLP.slice(0, 100).map(p => 
-  `- ${p.device_type} (${p.category}) -> ${p.client_name} (${p.rdlp}), data: ${p.sale_date}`
-).join('\n')}
+WSZYSTKIE KLIENTY:
+${sortedClients.map(([client, count]) => `${client} (${getRDLP(client)}): ${count}`).join('\n')}
 
-Odpowiadaj po polsku, zwięźle i konkretnie. Podawaj liczby i statystyki.
+ZASADY:
+- Odpowiadaj po polsku, zwięźle i ZAWSZE z konkretnymi liczbami
+- Na pytanie "jakich urządzeń najwięcej" - podaj TOP 5 urządzeń z liczbami
+- Na pytanie "kto kupił najwięcej" - podaj TOP 5 klientów
+- Używaj emoji dla lepszej czytelności
 `;
 
     // Wywołaj OpenAI
@@ -597,8 +604,8 @@ function generateBasicAnswer(
   const randomFrom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
   
   // Pytania o najwięcej/najmniej sprzedane urządzenia
-  if ((q.includes('urządze') || q.includes('model') || q.includes('sprzęt') || q.includes('jakich')) && 
-      (q.includes('najwięcej') || q.includes('najmniej') || q.includes('top') || q.includes('ranking') || q.includes('popularn'))) {
+  if ((q.includes('urządze') || q.includes('model') || q.includes('sprzęt') || q.includes('jakich') || q.includes('dostarczy') || q.includes('sprzeda')) && 
+      (q.includes('najwięcej') || q.includes('najmniej') || q.includes('top') || q.includes('ranking') || q.includes('popularn') || q.includes('często'))) {
     const sortedDevices = Object.entries(byDevice).sort((a, b) => b[1] - a[1]);
     
     if (sortedDevices.length === 0) {
