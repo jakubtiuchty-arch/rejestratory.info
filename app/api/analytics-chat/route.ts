@@ -347,6 +347,7 @@ const NADLESNICTWO_TO_RDLP: Record<string, string> = {
   "Siedlce": "RDLP Warszawa",
   "Sokołów": "RDLP Warszawa",
   "Wyszków": "RDLP Warszawa",
+  "Łochów": "RDLP Warszawa",
   
   // RDLP Wrocław
   "Bardo Śląskie": "RDLP Wrocław",
