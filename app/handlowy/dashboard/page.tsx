@@ -405,7 +405,6 @@ export default function HandlowyDashboard() {
   const [isTeamChatOpen, setIsTeamChatOpen] = React.useState(false);
   const [isTeamChatLoading, setIsTeamChatLoading] = React.useState(false);
   const teamChatEndRef = React.useRef<HTMLDivElement>(null);
-  const [userEmail, setUserEmail] = React.useState("");
   const [unreadCount, setUnreadCount] = React.useState(0);
 
   const fetchAllProducts = React.useCallback(async () => {
