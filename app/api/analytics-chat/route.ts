@@ -401,16 +401,120 @@ const NADLESNICTWO_TO_RDLP: Record<string, string> = {
   "Pieńsk": "RDLP Wrocław",
 };
 
+// Cache dla dynamicznie wykrytych RDLP (w pamięci serwera)
+const dynamicRDLPCache: Record<string, string> = {};
+
 // Funkcja do wyciągnięcia nazwy Nadleśnictwa z pełnej nazwy klienta
 function extractNadlesnictwoName(clientName: string): string {
   // Usuń "Nadleśnictwo " z nazwy
   return clientName.replace(/^Nadleśnictwo\s+/i, '').trim();
 }
 
-// Funkcja do przypisania RDLP
+// Lista wszystkich RDLP w Polsce
+const ALL_RDLPS = [
+  "RDLP Białystok", "RDLP Gdańsk", "RDLP Katowice", "RDLP Kraków", 
+  "RDLP Krosno", "RDLP Lublin", "RDLP Łódź", "RDLP Olsztyn", 
+  "RDLP Piła", "RDLP Poznań", "RDLP Radom", "RDLP Szczecin", 
+  "RDLP Szczecinek", "RDLP Toruń", "RDLP Warszawa", "RDLP Wrocław", 
+  "RDLP Zielona Góra"
+];
+
+// Funkcja do automatycznego wykrywania RDLP przez OpenAI
+async function detectRDLPWithAI(nadlesnictwoName: string): Promise<string> {
+  const openaiKey = process.env.OPENAI_API_KEY;
+  
+  if (!openaiKey) {
+    return "Nieznane RDLP";
+  }
+  
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${openaiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          { 
+            role: "system", 
+            content: `Jesteś ekspertem od struktury Lasów Państwowych w Polsce. 
+Masz za zadanie określić, do której Regionalnej Dyrekcji Lasów Państwowych (RDLP) należy dane Nadleśnictwo.
+
+Lista wszystkich RDLP: ${ALL_RDLPS.join(", ")}
+
+Odpowiedz TYLKO nazwą RDLP (np. "RDLP Olsztyn"). Nic więcej, żadnych wyjaśnień.
+Jeśli nie jesteś pewien, odpowiedz najbardziej prawdopodobną RDLP na podstawie lokalizacji geograficznej.`
+          },
+          { 
+            role: "user", 
+            content: `Do której RDLP należy Nadleśnictwo ${nadlesnictwoName}?` 
+          }
+        ],
+        max_tokens: 30,
+        temperature: 0.1
+      })
+    });
+
+    if (!response.ok) {
+      console.error("OpenAI RDLP detection failed");
+      return "Nieznane RDLP";
+    }
+
+    const data = await response.json();
+    const detectedRDLP = data.choices?.[0]?.message?.content?.trim() || "Nieznane RDLP";
+    
+    // Sprawdź czy odpowiedź jest prawidłową RDLP
+    const matchedRDLP = ALL_RDLPS.find(r => detectedRDLP.includes(r.replace("RDLP ", "")));
+    
+    if (matchedRDLP) {
+      console.log(`🤖 AI wykryło RDLP dla "${nadlesnictwoName}": ${matchedRDLP}`);
+      // Zapisz do cache
+      dynamicRDLPCache[nadlesnictwoName] = matchedRDLP;
+      return matchedRDLP;
+    }
+    
+    return "Nieznane RDLP";
+  } catch (error) {
+    console.error("Error detecting RDLP with AI:", error);
+    return "Nieznane RDLP";
+  }
+}
+
+// Funkcja do przypisania RDLP (synchroniczna - używa cache)
 function getRDLP(clientName: string): string {
   const name = extractNadlesnictwoName(clientName);
-  return NADLESNICTWO_TO_RDLP[name] || "Nieznane RDLP";
+  
+  // Najpierw sprawdź statyczne mapowanie
+  if (NADLESNICTWO_TO_RDLP[name]) {
+    return NADLESNICTWO_TO_RDLP[name];
+  }
+  
+  // Potem sprawdź dynamiczny cache
+  if (dynamicRDLPCache[name]) {
+    return dynamicRDLPCache[name];
+  }
+  
+  return "Nieznane RDLP";
+}
+
+// Asynchroniczna wersja getRDLP z automatycznym wykrywaniem
+async function getRDLPAsync(clientName: string): Promise<string> {
+  const name = extractNadlesnictwoName(clientName);
+  
+  // Najpierw sprawdź statyczne mapowanie
+  if (NADLESNICTWO_TO_RDLP[name]) {
+    return NADLESNICTWO_TO_RDLP[name];
+  }
+  
+  // Potem sprawdź dynamiczny cache
+  if (dynamicRDLPCache[name]) {
+    return dynamicRDLPCache[name];
+  }
+  
+  // Jeśli nie znaleziono, wykryj przez AI
+  return await detectRDLPWithAI(name);
 }
 
 // Funkcja do grupowania danych według RDLP
@@ -426,6 +530,28 @@ function groupByRDLP(products: any[]) {
   });
   
   return grouped;
+}
+
+// Funkcja do automatycznego uzupełnienia RDLP dla wszystkich produktów
+async function enrichProductsWithRDLP(products: any[]): Promise<any[]> {
+  const uniqueClients = [...new Set(products.map(p => extractNadlesnictwoName(p.client_name)))];
+  
+  // Wykryj RDLP dla nieznanych nadleśnictw (równolegle, max 5 na raz)
+  const unknownClients = uniqueClients.filter(name => 
+    !NADLESNICTWO_TO_RDLP[name] && !dynamicRDLPCache[name]
+  );
+  
+  // Wykryj RDLP dla nieznanych (po 5 równolegle)
+  for (let i = 0; i < unknownClients.length; i += 5) {
+    const batch = unknownClients.slice(i, i + 5);
+    await Promise.all(batch.map(name => detectRDLPWithAI(name)));
+  }
+  
+  // Teraz wszystkie RDLP powinny być w cache
+  return products.map(p => ({
+    ...p,
+    rdlp: getRDLP(p.client_name)
+  }));
 }
 
 export async function POST(request: NextRequest) {
@@ -447,11 +573,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Błąd pobierania danych" }, { status: 500 });
     }
 
-    // Przygotuj kontekst dla AI
-    const productsWithRDLP = (products || []).map(p => ({
-      ...p,
-      rdlp: getRDLP(p.client_name)
-    }));
+    // Przygotuj kontekst dla AI - automatycznie wykryj RDLP dla nieznanych nadleśnictw
+    const productsWithRDLP = await enrichProductsWithRDLP(products || []);
 
     // Grupuj dane
     const byRDLP = groupByRDLP(productsWithRDLP);
