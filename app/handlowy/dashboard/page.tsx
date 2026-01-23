@@ -717,8 +717,8 @@ export default function HandlowyDashboard() {
     }
   }, [activeCategory]);
 
-  // Funkcja do aktualizacji własnej aktywności
-  const updateMyActivity = React.useCallback(async (email: string, name: string) => {
+  // Funkcja do aktualizacji własnej aktywności (bez blokowania)
+  const updateMyActivity = async (email: string, name: string) => {
     if (!email) return;
     try {
       await supabase
@@ -730,12 +730,13 @@ export default function HandlowyDashboard() {
           is_online: true
         }, { onConflict: 'email' });
     } catch (error) {
-      console.error("Error updating activity:", error);
+      // Ignoruj błędy - tabela może nie istnieć
+      console.log("Activity update skipped:", error);
     }
-  }, []);
+  };
 
-  // Funkcja do pobierania aktywności innych użytkowników
-  const fetchOtherUsersActivity = React.useCallback(async (myEmail: string) => {
+  // Funkcja do pobierania aktywności innych użytkowników (bez blokowania)
+  const fetchOtherUsersActivity = async (myEmail: string) => {
     if (!myEmail) return;
     try {
       const { data, error } = await supabase
@@ -743,7 +744,11 @@ export default function HandlowyDashboard() {
         .select("*")
         .neq("email", myEmail);
       
-      if (error) throw error;
+      if (error) {
+        // Ignoruj błędy - tabela może nie istnieć
+        console.log("Activity fetch skipped:", error);
+        return;
+      }
       
       // Sprawdź kto był aktywny w ciągu ostatnich 2 minut
       const now = new Date();
@@ -754,9 +759,9 @@ export default function HandlowyDashboard() {
       
       setOtherUsers(usersWithStatus);
     } catch (error) {
-      console.error("Error fetching user activity:", error);
+      console.log("Activity fetch error:", error);
     }
-  }, []);
+  };
 
   React.useEffect(() => {
     const authenticated = localStorage.getItem("handlowy_authenticated");
@@ -767,11 +772,13 @@ export default function HandlowyDashboard() {
       setIsAuthenticated(true);
       setUserName(name || "Użytkownik");
       setUserEmail(email || "");
+      setIsLoading(false);
+      
       fetchProducts();
       fetchAllProducts();
       fetchTeamChatMessages();
       
-      // Aktualizuj aktywność i pobierz status innych
+      // Aktualizuj aktywność i pobierz status innych (nie blokuje ładowania)
       updateMyActivity(email || "", name || "Użytkownik");
       fetchOtherUsersActivity(email || "");
       
@@ -785,8 +792,7 @@ export default function HandlowyDashboard() {
     } else {
       window.location.href = "/handlowy";
     }
-    setIsLoading(false);
-  }, [fetchProducts, updateMyActivity, fetchOtherUsersActivity]);
+  }, [fetchProducts]);
 
   React.useEffect(() => {
     if (isAuthenticated) {
