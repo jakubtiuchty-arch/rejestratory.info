@@ -243,12 +243,24 @@ interface SalesProduct {
   added_by: string;
 }
 
+// Interfejs dla aktywności użytkowników
+interface UserActivity {
+  email: string;
+  user_name: string;
+  last_seen: string;
+  is_online: boolean;
+}
+
 export default function HandlowyDashboard() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [userName, setUserName] = React.useState("");
+  const [userEmail, setUserEmail] = React.useState("");
   const [activeView, setActiveView] = React.useState<"dashboard" | "products">("dashboard");
   const [activeCategory, setActiveCategory] = React.useState("rejestratory");
+  
+  // Śledzenie aktywności innych użytkowników
+  const [otherUsers, setOtherUsers] = React.useState<UserActivity[]>([]);
   
   // Składnice - ładowane z localStorage (z migracją ze starego formatu)
   const [skladnice, setSkladnice] = React.useState<Skladnica[]>(() => {
@@ -706,6 +718,47 @@ export default function HandlowyDashboard() {
     }
   }, [activeCategory]);
 
+  // Funkcja do aktualizacji własnej aktywności
+  const updateMyActivity = React.useCallback(async (email: string, name: string) => {
+    if (!email) return;
+    try {
+      await supabase
+        .from("user_activity")
+        .upsert({
+          email,
+          user_name: name,
+          last_seen: new Date().toISOString(),
+          is_online: true
+        }, { onConflict: 'email' });
+    } catch (error) {
+      console.error("Error updating activity:", error);
+    }
+  }, []);
+
+  // Funkcja do pobierania aktywności innych użytkowników
+  const fetchOtherUsersActivity = React.useCallback(async (myEmail: string) => {
+    if (!myEmail) return;
+    try {
+      const { data, error } = await supabase
+        .from("user_activity")
+        .select("*")
+        .neq("email", myEmail);
+      
+      if (error) throw error;
+      
+      // Sprawdź kto był aktywny w ciągu ostatnich 2 minut
+      const now = new Date();
+      const usersWithStatus = (data || []).map(user => ({
+        ...user,
+        is_online: (now.getTime() - new Date(user.last_seen).getTime()) < 2 * 60 * 1000
+      }));
+      
+      setOtherUsers(usersWithStatus);
+    } catch (error) {
+      console.error("Error fetching user activity:", error);
+    }
+  }, []);
+
   React.useEffect(() => {
     const authenticated = localStorage.getItem("handlowy_authenticated");
     const name = localStorage.getItem("handlowy_user_name");
@@ -718,11 +771,23 @@ export default function HandlowyDashboard() {
       fetchProducts();
       fetchAllProducts();
       fetchTeamChatMessages();
+      
+      // Aktualizuj aktywność i pobierz status innych
+      updateMyActivity(email || "", name || "Użytkownik");
+      fetchOtherUsersActivity(email || "");
+      
+      // Aktualizuj aktywność co 30 sekund
+      const activityInterval = setInterval(() => {
+        updateMyActivity(email || "", name || "Użytkownik");
+        fetchOtherUsersActivity(email || "");
+      }, 30000);
+      
+      return () => clearInterval(activityInterval);
     } else {
       window.location.href = "/handlowy";
     }
     setIsLoading(false);
-  }, [fetchProducts]);
+  }, [fetchProducts, updateMyActivity, fetchOtherUsersActivity]);
 
   React.useEffect(() => {
     if (isAuthenticated) {
@@ -1912,6 +1977,19 @@ export default function HandlowyDashboard() {
             <div className="flex items-center gap-3">
               <span className="font-bold text-gray-900">Panel handlowy</span>
               <span className="text-sm text-gray-500">• {userName}</span>
+              {/* Status innych użytkowników */}
+              {otherUsers.length > 0 && (
+                <div className="flex items-center gap-2 ml-4 pl-4 border-l border-gray-200">
+                  {otherUsers.map(user => (
+                    <div key={user.email} className="flex items-center gap-1.5" title={`${user.user_name} - ${user.is_online ? 'Online' : 'Offline'}`}>
+                      <div className={`w-2 h-2 rounded-full ${user.is_online ? 'bg-green-500 animate-pulse' : 'bg-gray-300'}`} />
+                      <span className={`text-xs ${user.is_online ? 'text-green-600 font-medium' : 'text-gray-400'}`}>
+                        {user.user_name.split(' ')[0]}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="flex items-center gap-4">
               <a href="/" className="text-gray-500 hover:text-blue-600 text-sm flex items-center gap-1">
