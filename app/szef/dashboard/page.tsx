@@ -39,13 +39,14 @@ function getRDLPFromClient(clientName: string): string {
 
 const CATEGORIES = [
   { id: "rejestratory", name: "Rejestratory" },
-  { id: "drukarki-termiczne", name: "Drukarki termiczne" },
-  { id: "drukarki-laserowe", name: "Drukarki laserowe" },
+  { id: "drukarki_termiczne", name: "Drukarki termiczne" },
+  { id: "drukarki_laserowe", name: "Drukarki laserowe" },
   { id: "laptopy", name: "Laptopy" },
-  { id: "urzadzenia-wielofunkcyjne", name: "Urządzenia wielofunkcyjne" },
+  { id: "urzadzenia_wielofunkcyjne", name: "Urządzenia wielofunkcyjne" },
   { id: "monitory", name: "Monitory" },
   { id: "serwery", name: "Serwery" },
-  { id: "all-in-one", name: "All in One" },
+  { id: "all_in_one", name: "All in One" },
+  { id: "akcesoria", name: "Akcesoria" },
 ];
 
 const pieColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
