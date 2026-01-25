@@ -34,6 +34,7 @@ import {
   AlertCircle,
   Pencil,
   Trash,
+  Mail,
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -934,6 +935,49 @@ export default function HandlowyDashboard() {
     });
     fetchClientProducts(clientName);
     setIsProtocolModalOpen(true);
+  };
+
+  // === WYSYŁANIE EMAILA DO KLIENTA ===
+  const [sendingEmailTo, setSendingEmailTo] = React.useState<string | null>(null);
+  
+  const handleSendClientEmail = async (clientName: string, clientEmail: string, clientProducts: SalesProduct[]) => {
+    if (sendingEmailTo) return; // Już wysyłamy
+    
+    const confirmed = confirm(`Wysłać email o Panelu Klienta do:\n${clientEmail}\n\nKlient: ${clientName}\nLiczba urządzeń: ${clientProducts.length}`);
+    if (!confirmed) return;
+    
+    setSendingEmailTo(clientName);
+    
+    try {
+      // Przygotuj dane do wysłania
+      const deviceType = clientProducts[0]?.device_type || "Urządzenie";
+      const serialNumbers = clientProducts.map(p => p.serial_number);
+      const exampleSerialNumber = serialNumbers[0] || "SN123456";
+      
+      const response = await fetch("/api/send-client-panel-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          clientName,
+          clientEmail,
+          deviceType,
+          serialNumber: exampleSerialNumber,
+          allSerialNumbers: serialNumbers
+        })
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Błąd wysyłania emaila");
+      }
+      
+      showToast(`Email wysłany do ${clientEmail}!`, "success");
+    } catch (error) {
+      console.error("Error sending email:", error);
+      showToast(`Błąd: ${error instanceof Error ? error.message : "Nie udało się wysłać emaila"}`, "error");
+    } finally {
+      setSendingEmailTo(null);
+    }
   };
 
   // === EDYCJA PRODUKTÓW ===
@@ -2530,6 +2574,29 @@ export default function HandlowyDashboard() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                      {clientEmail && (
+                        <button
+                          onClick={() => handleSendClientEmail(clientName, clientEmail, clientProducts)}
+                          disabled={sendingEmailTo === clientName}
+                          className={`flex items-center gap-2 px-3 py-1.5 text-white rounded-lg transition-colors text-sm font-medium ${
+                            sendingEmailTo === clientName 
+                              ? 'bg-blue-400 cursor-not-allowed' 
+                              : 'bg-blue-500 hover:bg-blue-600'
+                          }`}
+                        >
+                          {sendingEmailTo === clientName ? (
+                            <>
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                              Wysyłanie...
+                            </>
+                          ) : (
+                            <>
+                              <Mail className="w-4 h-4" />
+                              Wyślij email
+                            </>
+                          )}
+                        </button>
+                      )}
                       <button
                         onClick={() => handleEditClient(clientName, clientProducts)}
                         className="flex items-center gap-2 px-3 py-1.5 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors text-sm font-medium"
