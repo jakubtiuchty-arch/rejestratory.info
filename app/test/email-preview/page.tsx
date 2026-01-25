@@ -78,8 +78,8 @@ export default function EmailPreview() {
 
             {/* Device Info Box */}
             <div style={{ 
-              background: '#f0fdf4',
-              border: '1px solid #bbf7d0',
+              background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
+              border: '1px solid #86efac',
               borderRadius: '12px',
               padding: '20px',
               marginBottom: '30px'
@@ -128,14 +128,15 @@ export default function EmailPreview() {
               display: 'flex',
               alignItems: 'flex-start',
               marginBottom: '16px',
-              padding: '16px',
-              background: '#f9fafb',
-              borderRadius: '10px'
+              padding: '18px',
+              background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
+              borderRadius: '12px',
+              border: '1px solid #bfdbfe'
             }}>
               <div style={{ 
-                width: '40px', 
-                height: '40px', 
-                background: '#dbeafe',
+                width: '42px', 
+                height: '42px', 
+                background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
                 borderRadius: '10px',
                 display: 'flex',
                 alignItems: 'center',
@@ -144,15 +145,15 @@ export default function EmailPreview() {
                 flexShrink: 0,
                 fontSize: '16px',
                 fontWeight: 'bold',
-                color: '#2563eb'
+                color: '#ffffff'
               }}>
                 1
               </div>
               <div>
-                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#111827', fontWeight: 'bold' }}>
+                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#1e40af', fontWeight: 'bold' }}>
                   Ewidencja urządzeń
                 </h3>
-                <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
+                <p style={{ margin: 0, fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
                   Pełna lista wszystkich urządzeń Nadleśnictwa w jednym miejscu z datami zakupu i gwarancjami.
                 </p>
               </div>
@@ -163,14 +164,15 @@ export default function EmailPreview() {
               display: 'flex',
               alignItems: 'flex-start',
               marginBottom: '16px',
-              padding: '16px',
-              background: '#f9fafb',
-              borderRadius: '10px'
+              padding: '18px',
+              background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
+              borderRadius: '12px',
+              border: '1px solid #a7f3d0'
             }}>
               <div style={{ 
-                width: '40px', 
-                height: '40px', 
-                background: '#d1fae5',
+                width: '42px', 
+                height: '42px', 
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                 borderRadius: '10px',
                 display: 'flex',
                 alignItems: 'center',
@@ -179,15 +181,15 @@ export default function EmailPreview() {
                 flexShrink: 0,
                 fontSize: '16px',
                 fontWeight: 'bold',
-                color: '#059669'
+                color: '#ffffff'
               }}>
                 2
               </div>
               <div>
-                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#111827', fontWeight: 'bold' }}>
+                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#047857', fontWeight: 'bold' }}>
                   Przypisanie do leśnictwa
                 </h3>
-                <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
+                <p style={{ margin: 0, fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
                   Możliwość przypisania każdego urządzenia do konkretnego leśnictwa dla łatwego zarządzania sprzętem.
                 </p>
               </div>
@@ -198,14 +200,15 @@ export default function EmailPreview() {
               display: 'flex',
               alignItems: 'flex-start',
               marginBottom: '30px',
-              padding: '16px',
-              background: '#f9fafb',
-              borderRadius: '10px'
+              padding: '18px',
+              background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
+              borderRadius: '12px',
+              border: '1px solid #fde68a'
             }}>
               <div style={{ 
-                width: '40px', 
-                height: '40px', 
-                background: '#fef3c7',
+                width: '42px', 
+                height: '42px', 
+                background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
                 borderRadius: '10px',
                 display: 'flex',
                 alignItems: 'center',
@@ -214,15 +217,15 @@ export default function EmailPreview() {
                 flexShrink: 0,
                 fontSize: '16px',
                 fontWeight: 'bold',
-                color: '#d97706'
+                color: '#ffffff'
               }}>
                 3
               </div>
               <div>
-                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#111827', fontWeight: 'bold' }}>
+                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#b45309', fontWeight: 'bold' }}>
                   Serwis jednym kliknięciem
                 </h3>
-                <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
+                <p style={{ margin: 0, fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
                   W razie awarii możliwość wysłania urządzenia do serwisu bez dzwonienia - zamówienie kuriera online.
                 </p>
               </div>
