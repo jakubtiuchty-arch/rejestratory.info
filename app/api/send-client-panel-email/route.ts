@@ -24,7 +24,8 @@ export async function POST(request: NextRequest) {
 
     // Wyślij email przez Resend
     const { data, error } = await resend.emails.send({
-      from: "TAKMA <serwis@takma.com.pl>",
+      from: "TAKMA <noreply@rejestratory.info>",
+      replyTo: "serwis@takma.com.pl",
       to: clientEmail,
       subject: "Urządzenia zostały dodane do Panelu Klienta | TAKMA",
       html: emailHtml,
