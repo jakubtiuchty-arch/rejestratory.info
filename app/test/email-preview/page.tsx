@@ -142,9 +142,11 @@ export default function EmailPreview() {
                 justifyContent: 'center',
                 marginRight: '16px',
                 flexShrink: 0,
-                fontSize: '20px'
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: '#2563eb'
               }}>
-                📋
+                1
               </div>
               <div>
                 <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#111827', fontWeight: 'bold' }}>
@@ -175,9 +177,11 @@ export default function EmailPreview() {
                 justifyContent: 'center',
                 marginRight: '16px',
                 flexShrink: 0,
-                fontSize: '20px'
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: '#059669'
               }}>
-                🌲
+                2
               </div>
               <div>
                 <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#111827', fontWeight: 'bold' }}>
@@ -208,9 +212,11 @@ export default function EmailPreview() {
                 justifyContent: 'center',
                 marginRight: '16px',
                 flexShrink: 0,
-                fontSize: '20px'
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: '#d97706'
               }}>
-                🚚
+                3
               </div>
               <div>
                 <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#111827', fontWeight: 'bold' }}>
@@ -283,7 +289,7 @@ export default function EmailPreview() {
               marginBottom: '30px'
             }}>
               <p style={{ margin: 0, fontSize: '14px', color: '#92400e', lineHeight: '1.5' }}>
-                💡 <strong>Wskazówka:</strong> Warto zapisać link do panelu w zakładkach przeglądarki 
+                <strong>Wskazówka:</strong> Warto zapisać link do panelu w zakładkach przeglądarki 
                 dla szybkiego dostępu.
               </p>
             </div>
@@ -311,7 +317,7 @@ export default function EmailPreview() {
               TAKMA
             </p>
             <p style={{ margin: '0', fontSize: '13px', color: '#6b7280' }}>
-              📞 601 619 898 &nbsp;•&nbsp; 📧 serwis@takma.com.pl &nbsp;•&nbsp; 🌐 rejestratory.info
+              Tel: 601 619 898 &nbsp;•&nbsp; serwis@takma.com.pl &nbsp;•&nbsp; rejestratory.info
             </p>
           </div>
         </div>
