@@ -78,9 +78,9 @@ export default function EmailPreview() {
 
             {/* Device Info Box */}
             <div style={{ 
-              background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
-              border: '1px solid #86efac',
-              borderRadius: '12px',
+              background: 'linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%)',
+              border: '1px solid #e5e7eb',
+              borderRadius: '10px',
               padding: '20px',
               marginBottom: '30px'
             }}>
@@ -127,33 +127,33 @@ export default function EmailPreview() {
             <div style={{ 
               display: 'flex',
               alignItems: 'flex-start',
-              marginBottom: '16px',
-              padding: '18px',
-              background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
-              borderRadius: '12px',
-              border: '1px solid #bfdbfe'
+              marginBottom: '12px',
+              padding: '16px',
+              background: 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)',
+              borderRadius: '10px',
+              border: '1px solid #e5e7eb'
             }}>
               <div style={{ 
-                width: '42px', 
-                height: '42px', 
-                background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-                borderRadius: '10px',
+                width: '36px', 
+                height: '36px', 
+                background: 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
+                borderRadius: '8px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginRight: '16px',
+                marginRight: '14px',
                 flexShrink: 0,
-                fontSize: '16px',
+                fontSize: '14px',
                 fontWeight: 'bold',
                 color: '#ffffff'
               }}>
                 1
               </div>
               <div>
-                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#1e40af', fontWeight: 'bold' }}>
+                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#111827', fontWeight: 'bold' }}>
                   Ewidencja urządzeń
                 </h3>
-                <p style={{ margin: 0, fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
+                <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
                   Pełna lista wszystkich urządzeń Nadleśnictwa w jednym miejscu z datami zakupu i gwarancjami.
                 </p>
               </div>
@@ -163,33 +163,33 @@ export default function EmailPreview() {
             <div style={{ 
               display: 'flex',
               alignItems: 'flex-start',
-              marginBottom: '16px',
-              padding: '18px',
-              background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)',
-              borderRadius: '12px',
-              border: '1px solid #a7f3d0'
+              marginBottom: '12px',
+              padding: '16px',
+              background: 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)',
+              borderRadius: '10px',
+              border: '1px solid #e5e7eb'
             }}>
               <div style={{ 
-                width: '42px', 
-                height: '42px', 
-                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                borderRadius: '10px',
+                width: '36px', 
+                height: '36px', 
+                background: 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
+                borderRadius: '8px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginRight: '16px',
+                marginRight: '14px',
                 flexShrink: 0,
-                fontSize: '16px',
+                fontSize: '14px',
                 fontWeight: 'bold',
                 color: '#ffffff'
               }}>
                 2
               </div>
               <div>
-                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#047857', fontWeight: 'bold' }}>
+                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#111827', fontWeight: 'bold' }}>
                   Przypisanie do leśnictwa
                 </h3>
-                <p style={{ margin: 0, fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
+                <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
                   Możliwość przypisania każdego urządzenia do konkretnego leśnictwa dla łatwego zarządzania sprzętem.
                 </p>
               </div>
@@ -200,32 +200,32 @@ export default function EmailPreview() {
               display: 'flex',
               alignItems: 'flex-start',
               marginBottom: '30px',
-              padding: '18px',
-              background: 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)',
-              borderRadius: '12px',
-              border: '1px solid #fde68a'
+              padding: '16px',
+              background: 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)',
+              borderRadius: '10px',
+              border: '1px solid #e5e7eb'
             }}>
               <div style={{ 
-                width: '42px', 
-                height: '42px', 
-                background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-                borderRadius: '10px',
+                width: '36px', 
+                height: '36px', 
+                background: 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)',
+                borderRadius: '8px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginRight: '16px',
+                marginRight: '14px',
                 flexShrink: 0,
-                fontSize: '16px',
+                fontSize: '14px',
                 fontWeight: 'bold',
                 color: '#ffffff'
               }}>
                 3
               </div>
               <div>
-                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#b45309', fontWeight: 'bold' }}>
+                <h3 style={{ margin: '0 0 4px 0', fontSize: '15px', color: '#111827', fontWeight: 'bold' }}>
                   Serwis jednym kliknięciem
                 </h3>
-                <p style={{ margin: 0, fontSize: '14px', color: '#475569', lineHeight: '1.5' }}>
+                <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: '1.5' }}>
                   W razie awarii możliwość wysłania urządzenia do serwisu bez dzwonienia - zamówienie kuriera online.
                 </p>
               </div>
