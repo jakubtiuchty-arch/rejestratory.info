@@ -187,7 +187,7 @@ const DEFAULT_SKLADNICE: Skladnica[] = [
 const DEVICE_TYPES: Record<string, string[]> = {
   rejestratory: [
     "Zebra EM45", "Zebra TC27", "Zebra TC58e", 
-    "Samsung A36", "Samsung A56", "Samsung S25 Plus", "Samsung S25 Ultra", "Samsung XCover 7", "Samsung XCover Pro 6",
+    "Samsung A36", "Samsung A56", "Samsung S25 FE", "Samsung S25 Plus", "Samsung S25 Ultra", "Samsung XCover 7", "Samsung XCover Pro 6",
     "Honeywell CT30", "Honeywell CT30P", "Honeywell CT32", "Honeywell CT40XP", "Honeywell CT47", "Honeywell EDA52",
     "Unitech EA660", "Unitech PA768",
     "M3 SL20"
