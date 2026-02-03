@@ -64,6 +64,7 @@ export interface Registrator {
   device_name: string;
   serial_number: string;
   purchase_date: string;
+  category?: string; // rejestratory, drukarki_termiczne, drukarki_laserowe, etc.
   service_contract_years: number | null; // null = brak, 3 lub 5
   service_contract_end: string | null;
   forestry_unit?: string; // Leśnictwo

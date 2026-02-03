@@ -634,6 +634,7 @@ export default function HandlowyDashboard() {
               device_name: device.name,
               serial_number: serialNumber,
               purchase_date: saleDate,
+              category: category,
               notes: `Faktura: ${importData.invoiceNumber} | IMEI: ${imei || 'brak'}`,
             }).then(({ error: regError }) => {
               if (regError && !regError.message.includes('duplicate')) {
@@ -669,6 +670,7 @@ export default function HandlowyDashboard() {
               device_name: device.name,
               serial_number: autoSerial,
               purchase_date: saleDate,
+              category: category,
               notes: `Faktura: ${importData.invoiceNumber}`,
             });
 
@@ -1496,6 +1498,7 @@ export default function HandlowyDashboard() {
         device_name: formData.deviceType,
         serial_number: serial,
         purchase_date: formData.saleDate,
+        category: activeCategory,
         warranty: formData.warranty || null,
         service_contract: formData.serviceContract || null,
         notes: formData.notes,

@@ -29,6 +29,10 @@ import {
   Shield,
   ShieldCheck,
   User,
+  Laptop,
+  Monitor,
+  Server,
+  Package,
 } from "lucide-react";
 import { supabase, Device, Inspection, ClientDocument, Registrator } from '@/lib/supabase';
 
@@ -113,6 +117,42 @@ export default function Dashboard() {
   const [showAllDevices, setShowAllDevices] = React.useState(false);
   const [showAllRegistrators, setShowAllRegistrators] = React.useState(false);
 
+  // Mapowanie kategorii na polskie nazwy
+  const CATEGORY_NAMES: Record<string, string> = {
+    'rejestratory': 'Rejestratory',
+    'drukarki_termiczne': 'Drukarki termiczne',
+    'drukarki_laserowe': 'Drukarki laserowe',
+    'laptopy': 'Laptopy',
+    'monitory': 'Monitory',
+    'serwery': 'Serwery',
+    'all_in_one': 'All in One',
+    'urzadzenia_wielofunkcyjne': 'Urządzenia wielofunkcyjne',
+    'akcesoria': 'Akcesoria',
+  };
+
+  const getCategoryName = (category: string | undefined): string => {
+    if (!category) return 'Inne urządzenia';
+    return CATEGORY_NAMES[category] || category;
+  };
+
+  const getCategoryIcon = (category: string | undefined) => {
+    switch (category) {
+      case 'drukarki_termiczne':
+      case 'drukarki_laserowe':
+        return Printer;
+      case 'laptopy':
+        return Laptop;
+      case 'monitory':
+        return Monitor;
+      case 'serwery':
+        return Server;
+      case 'akcesoria':
+        return Package;
+      default:
+        return Smartphone;
+    }
+  };
+
   // Mapowanie obrazków dla rejestratorów
   const getRegistratorImage = (deviceName: string): string | null => {
     const imageMap: Record<string, string> = {
@@ -186,6 +226,27 @@ export default function Dashboard() {
       .filter((unit): unit is string => Boolean(unit && unit.trim()));
     return [...new Set(units)].sort((a, b) => a.localeCompare(b, 'pl'));
   }, [devices]);
+
+  // Grupowanie rejestratorów według kategorii
+  const registratorsByCategory = React.useMemo(() => {
+    const grouped: Record<string, Registrator[]> = {};
+    for (const reg of registrators) {
+      const cat = reg.category || 'rejestratory';
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push(reg);
+    }
+    // Sortuj kategorie - rejestratory na początku, potem alfabetycznie
+    const categoryOrder = ['rejestratory', 'drukarki_termiczne', 'drukarki_laserowe', 'laptopy', 'monitory', 'serwery', 'all_in_one', 'urzadzenia_wielofunkcyjne', 'akcesoria'];
+    const sortedCategories = Object.keys(grouped).sort((a, b) => {
+      const indexA = categoryOrder.indexOf(a);
+      const indexB = categoryOrder.indexOf(b);
+      if (indexA === -1 && indexB === -1) return a.localeCompare(b);
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
+      return indexA - indexB;
+    });
+    return { grouped, sortedCategories };
+  }, [registrators]);
 
   // Filtrowane i wyszukiwane urządzenia
   const filteredDevices = React.useMemo(() => {
@@ -1028,20 +1089,28 @@ export default function Dashboard() {
           </>
         )}
 
-        {/* Sekcja Rejestratory */}
-        {registrators.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
-            className="mt-6"
-          >
-            <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-              <Smartphone className="h-4 w-4 text-blue-600" />
-              Rejestratory ({registrators.length})
-            </h2>
-            <div className="space-y-2">
-              {(showAllRegistrators ? registrators : registrators.slice(0, 3)).map((reg, index) => {
+        {/* Sekcje urządzeń pogrupowane według kategorii */}
+        {registratorsByCategory.sortedCategories.map((category, catIndex) => {
+          const categoryDevices = registratorsByCategory.grouped[category];
+          if (!categoryDevices || categoryDevices.length === 0) return null;
+          
+          return (
+            <motion.div
+              key={category}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25 + catIndex * 0.1 }}
+              className="mt-6"
+            >
+              <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+                {(() => {
+                  const CategoryIcon = getCategoryIcon(category);
+                  return <CategoryIcon className="h-4 w-4 text-blue-600" />;
+                })()}
+                {getCategoryName(category)} ({categoryDevices.length})
+              </h2>
+              <div className="space-y-2">
+              {(showAllRegistrators ? categoryDevices : categoryDevices.slice(0, 3)).map((reg, index) => {
                 const isContractActive = reg.service_contract_end && new Date(reg.service_contract_end) > new Date();
                 const contractDaysLeft = reg.service_contract_end 
                   ? Math.ceil((new Date(reg.service_contract_end).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
@@ -1223,8 +1292,8 @@ export default function Dashboard() {
                 );
               })}
 
-              {/* Pokaż więcej/mniej */}
-              {registrators.length > 3 && (
+              {/* Pokaż więcej/mniej dla tej kategorii */}
+              {categoryDevices.length > 3 && (
                 <button
                   onClick={() => setShowAllRegistrators(!showAllRegistrators)}
                   className="w-full bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm font-medium text-gray-700 flex items-center justify-center gap-2 transition-colors"
@@ -1237,14 +1306,15 @@ export default function Dashboard() {
                   ) : (
                     <>
                       <ChevronDown className="h-4 w-4" />
-                      Pokaż więcej ({registrators.length - 3} rejestratorów)
+                      Pokaż więcej ({categoryDevices.length - 3})
                     </>
                   )}
                 </button>
               )}
-            </div>
-          </motion.div>
-        )}
+              </div>
+            </motion.div>
+          );
+        })}
 
         {/* Dokumenty - Umowy i inne (bez protokołów) */}
         {(() => {
