@@ -356,6 +356,7 @@ export default function HandlowyDashboard() {
     invoiceDate: new Date().toISOString().split("T")[0],
   });
   const [clientProducts, setClientProducts] = React.useState<SalesProduct[]>([]);
+  const [selectedProductIds, setSelectedProductIds] = React.useState<Set<string>>(new Set());
   
   // Analytics state
   const [allProducts, setAllProducts] = React.useState<SalesProduct[]>([]);
@@ -1553,6 +1554,7 @@ export default function HandlowyDashboard() {
   const fetchClientProducts = async (clientName: string) => {
     if (!clientName.trim()) {
       setClientProducts([]);
+      setSelectedProductIds(new Set());
       return;
     }
     
@@ -1560,10 +1562,12 @@ export default function HandlowyDashboard() {
       .from("sales_products")
       .select("*")
       .ilike("client_name", `%${clientName.trim()}%`)
-      .order("category", { ascending: true });
+      .order("sale_date", { ascending: false }); // Sortuj od najnowszych
     
     if (!error && data) {
       setClientProducts(data);
+      // Domyślnie NIE zaznaczaj żadnych - użytkownik sam wybierze
+      setSelectedProductIds(new Set());
     }
   };
 
@@ -1573,10 +1577,13 @@ export default function HandlowyDashboard() {
       return;
     }
 
-    if (clientProducts.length === 0) {
-      showToast("Brak produktów dla tego klienta", "error");
+    if (selectedProductIds.size === 0) {
+      showToast("Wybierz produkty do protokołu", "error");
       return;
     }
+
+    // Filtruj produkty - tylko wybrane
+    const selectedProducts = clientProducts.filter(p => selectedProductIds.has(p.id));
 
       const skladnica = skladnice.find((s: Skladnica) => s.id === protocolData.skladnicaId);
     if (!skladnica) {
@@ -1634,9 +1641,9 @@ export default function HandlowyDashboard() {
       // Formatowanie daty faktury
       const invoiceDateFormatted = new Date(protocolData.invoiceDate).toLocaleDateString('pl-PL');
 
-      // Grupowanie produktów po kategorii
+      // Grupowanie produktów po kategorii (tylko wybrane)
       const productsByCategory: Record<string, SalesProduct[]> = {};
-      clientProducts.forEach(p => {
+      selectedProducts.forEach(p => {
         if (!productsByCategory[p.category]) {
           productsByCategory[p.category] = [];
         }
@@ -3376,27 +3383,98 @@ GHI345678
                     </p>
                   </div>
 
-                  {/* Podgląd produktów */}
+                  {/* Wybór produktów do protokołu */}
                   {protocolData.clientName && (
                     <div className="bg-gray-50 rounded-lg p-3">
-                      <p className="text-sm font-medium text-gray-700 mb-2">
-                        Produkty do protokołu:
-                      </p>
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="text-sm font-medium text-gray-700">
+                          Wybierz produkty do protokołu:
+                        </p>
+                        {clientProducts.length > 0 && (
+                          <div className="flex gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setSelectedProductIds(new Set(clientProducts.map(p => p.id)))}
+                              className="text-xs text-emerald-600 hover:text-emerald-700 font-medium"
+                            >
+                              Zaznacz wszystkie
+                            </button>
+                            <span className="text-gray-300">|</span>
+                            <button
+                              type="button"
+                              onClick={() => setSelectedProductIds(new Set())}
+                              className="text-xs text-gray-500 hover:text-gray-700 font-medium"
+                            >
+                              Odznacz
+                            </button>
+                          </div>
+                        )}
+                      </div>
                       {clientProducts.length === 0 ? (
                         <p className="text-sm text-gray-500 italic">
                           Brak produktów dla tego klienta. Sprawdź poprawność nazwy.
                         </p>
                       ) : (
-                        <div className="space-y-1 max-h-32 overflow-y-auto">
-                          {clientProducts.map((p) => (
-                            <div key={p.id} className="flex items-center justify-between text-xs">
-                              <span className="text-gray-700">{p.device_type}</span>
-                              <span className="text-gray-500 font-mono">{p.serial_number}</span>
+                        <div className="space-y-1 max-h-48 overflow-y-auto">
+                          {/* Grupowanie po dacie sprzedaży */}
+                          {Object.entries(
+                            clientProducts.reduce((groups, product) => {
+                              const date = product.sale_date;
+                              if (!groups[date]) groups[date] = [];
+                              groups[date].push(product);
+                              return groups;
+                            }, {} as Record<string, SalesProduct[]>)
+                          ).map(([date, products]) => (
+                            <div key={date} className="mb-2">
+                              <div className="flex items-center gap-2 mb-1">
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const dateProductIds = products.map(p => p.id);
+                                    const allSelected = dateProductIds.every(id => selectedProductIds.has(id));
+                                    const newSet = new Set(selectedProductIds);
+                                    if (allSelected) {
+                                      dateProductIds.forEach(id => newSet.delete(id));
+                                    } else {
+                                      dateProductIds.forEach(id => newSet.add(id));
+                                    }
+                                    setSelectedProductIds(newSet);
+                                  }}
+                                  className="text-xs font-semibold text-gray-600 hover:text-emerald-600 flex items-center gap-1"
+                                >
+                                  <span className="w-4 h-4 border border-gray-400 rounded flex items-center justify-center text-emerald-600 text-[10px]">
+                                    {products.every(p => selectedProductIds.has(p.id)) && "✓"}
+                                  </span>
+                                  📅 {new Date(date).toLocaleDateString('pl-PL')} ({products.length} szt.)
+                                </button>
+                              </div>
+                              <div className="pl-6 space-y-0.5">
+                                {products.map((p) => (
+                                  <label key={p.id} className="flex items-center gap-2 text-xs cursor-pointer hover:bg-white rounded px-1 py-0.5">
+                                    <input
+                                      type="checkbox"
+                                      checked={selectedProductIds.has(p.id)}
+                                      onChange={(e) => {
+                                        const newSet = new Set(selectedProductIds);
+                                        if (e.target.checked) {
+                                          newSet.add(p.id);
+                                        } else {
+                                          newSet.delete(p.id);
+                                        }
+                                        setSelectedProductIds(newSet);
+                                      }}
+                                      className="w-3.5 h-3.5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
+                                    />
+                                    <span className="text-gray-700 flex-1">{p.device_type}</span>
+                                    <span className="text-gray-400 font-mono text-[10px]">{p.serial_number}</span>
+                                  </label>
+                                ))}
+                              </div>
                             </div>
                           ))}
                           <div className="pt-2 border-t border-gray-200 mt-2">
-                            <span className="text-sm font-semibold text-emerald-600">
-                              Łącznie: {clientProducts.length} szt.
+                            <span className={`text-sm font-semibold ${selectedProductIds.size > 0 ? 'text-emerald-600' : 'text-gray-400'}`}>
+                              Wybrano: {selectedProductIds.size} z {clientProducts.length} szt.
                             </span>
                           </div>
                         </div>
@@ -3434,11 +3512,11 @@ GHI345678
                   </button>
                   <button
                     onClick={handleGenerateProtocol}
-                    disabled={clientProducts.length === 0 || !protocolData.invoiceNumber}
+                    disabled={selectedProductIds.size === 0 || !protocolData.invoiceNumber}
                     className="flex-1 px-4 py-2.5 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Download className="w-4 h-4" />
-                    Generuj PDF ({clientProducts.length} szt.)
+                    Generuj PDF ({selectedProductIds.size} szt.)
                   </button>
                 </div>
               </div>
