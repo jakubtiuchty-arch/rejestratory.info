@@ -87,6 +87,20 @@ const products = [
   },
   {
     id: 5,
+    name: "Samsung Galaxy S25 FE",
+    category: "Telefony",
+    description: "Flagowe funkcje w przystępnej cenie — smartfon z AI i aparatem 50MP",
+    specifications: "Android 16, 6,7\" FHD+ AMOLED 120Hz, Exynos 2400, 8GB RAM, 128GB",
+    price: "2 800 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "s25fe_1.png",
+    badge: null,
+    featured: true,
+    customUrl: "/produkt/samsung-s25-fe"
+  },
+  {
+    id: 6,
     name: "Samsung Galaxy XCover Pro 7",
     category: "Telefony",
     description: "Wytrzymały smartfon przemysłowy z certyfikatem IP68 i wymienną baterią",
