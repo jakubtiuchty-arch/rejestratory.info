@@ -1766,9 +1766,10 @@ export default function HandlowyDashboard() {
           deviceDescription += `\nGWARANCJA ${item.warranty}msc`;
         }
         
-        // Formatowanie numerów seryjnych
-        const serialNumbersText = item.serialNumbers.length > 0 
-          ? item.serialNumbers.join('\n') 
+        // Formatowanie numerów seryjnych (filtruj auto-generowane BN-)
+        const realSerialNumbers = item.serialNumbers.filter(sn => !sn.startsWith('BN-'));
+        const serialNumbersText = realSerialNumbers.length > 0 
+          ? realSerialNumbers.join('\n') 
           : 'Bn';
         
         productRows.push([
@@ -1781,8 +1782,9 @@ export default function HandlowyDashboard() {
         
         // Dodaj akcesoria jako osobne wiersze
         item.accessories.forEach(acc => {
-          const accSNText = acc.serialNumbers.length > 0 
-            ? acc.serialNumbers.join('\n') 
+          const realAccSNs = acc.serialNumbers.filter(sn => !sn.startsWith('BN-'));
+          const accSNText = realAccSNs.length > 0 
+            ? realAccSNs.join('\n') 
             : 'Bn';
           
           productRows.push([
