@@ -1650,9 +1650,23 @@ export default function HandlowyDashboard() {
         productsByCategory[p.category].push(p);
       });
 
+      // Mapowanie kategorii na polskie nazwy produktów
+      const CATEGORY_TO_PRODUCT_NAME: Record<string, string> = {
+        'rejestratory': 'Rejestrator',
+        'drukarki_termiczne': 'Drukarka termiczna',
+        'drukarki_laserowe': 'Drukarka laserowa',
+        'laptopy': 'Laptop',
+        'monitory': 'Monitor',
+        'serwery': 'Serwer',
+        'all_in_one': 'Komputer All in One',
+        'urzadzenia_wielofunkcyjne': 'Urządzenie wielofunkcyjne',
+        'akcesoria': '', // bez prefiksu dla akcesoriów
+      };
+
       // Grupowanie produktów według typu urządzenia
       const productSummary: Record<string, {
         deviceType: string;
+        category: string;
         quantity: number;
         serialNumbers: string[];
         accessories: { name: string; quantity: number; serialNumbers: string[] }[];
@@ -1668,6 +1682,7 @@ export default function HandlowyDashboard() {
         if (!productSummary[key]) {
           productSummary[key] = {
             deviceType: p.device_type,
+            category: p.category,
             quantity: 0,
             serialNumbers: [],
             accessories: [],
@@ -1722,8 +1737,9 @@ export default function HandlowyDashboard() {
       let lp = 1;
       
       Object.values(productSummary).forEach(item => {
-        // Budowanie opisu produktu głównego (z gwarancją, akcesoriami w komplecie)
-        let deviceDescription = item.deviceType;
+        // Budowanie opisu produktu głównego (z kategorią, gwarancją, akcesoriami w komplecie)
+        const categoryPrefix = CATEGORY_TO_PRODUCT_NAME[item.category] || '';
+        let deviceDescription = categoryPrefix ? `${categoryPrefix} ${item.deviceType}` : item.deviceType;
         
         // Dodaj informację o akcesoriach w komplecie (jeśli są)
         if (item.includedItems.length > 0) {
