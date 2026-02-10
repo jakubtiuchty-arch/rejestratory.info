@@ -1650,48 +1650,20 @@ export default function HandlowyDashboard() {
         productsByCategory[p.category].push(p);
       });
 
-      // Tworzenie tabeli produktów
-      const productRows: any[] = [];
-      let lp = 1;
-      
-      Object.entries(productsByCategory).forEach(([category, prods]) => {
-        const categoryName = PRODUCT_CATEGORIES.find(c => c.id === category)?.name || category;
+      // Grupowanie produktów według typu urządzenia (dla podsumowania ilości)
+      const productSummary: Record<string, {
+        deviceType: string;
+        quantity: number;
+        serialNumbers: string[];
+        accessories: string[];
+        warranty: string;
+        notes: string;
+      }> = {};
+
+      selectedProducts.forEach(p => {
+        const key = p.device_type;
         
-        prods.forEach(p => {
-          // Formatowanie akcesoriów - obsługa wszystkich formatów
-          let accessoriesText = '-';
-          let accs = p.accessories;
-          
-          // Jeśli cała tablica to string JSON - parsuj
-          if (typeof accs === 'string') {
-            try {
-              accs = JSON.parse(accs);
-            } catch {
-              accs = [];
-            }
-          }
-          
-          if (accs && Array.isArray(accs) && accs.length > 0) {
-            const formattedAccs = accs.map((acc: any) => {
-              // Jeśli element to string JSON - parsuj
-              let parsedAcc = acc;
-              if (typeof acc === 'string') {
-                try {
-                  parsedAcc = JSON.parse(acc);
-                } catch {
-                  return acc; // Zwykły string
-                }
-              }
-              
-              // Obsługa obiektu
-              if (typeof parsedAcc === 'object' && parsedAcc !== null && parsedAcc.name) {
-                return parsedAcc.name;
-              }
-              return String(parsedAcc);
-            });
-            accessoriesText = formattedAccs.join(', ');
-          }
-          
+        if (!productSummary[key]) {
           // Format warranty or service contract
           let warrantyText = '-';
           if (p.service_contract) {
@@ -1700,18 +1672,68 @@ export default function HandlowyDashboard() {
             warrantyText = `${p.warranty} mies.`;
           }
           
-          // Format notes
-          const notesText = p.notes || '-';
-          
-          productRows.push([
-            { text: lp.toString(), alignment: 'center' },
-            { text: p.device_type },
-            { text: p.serial_number, bold: true },
-            { text: accessoriesText, fontSize: 8 },
-            { text: warrantyText, alignment: 'center', fontSize: 9 },
-            { text: notesText, fontSize: 8 },
+          productSummary[key] = {
+            deviceType: p.device_type,
+            quantity: 0,
+            serialNumbers: [],
+            accessories: [],
+            warranty: warrantyText,
+            notes: p.notes || '',
+          };
+        }
+        
+        productSummary[key].quantity++;
+        productSummary[key].serialNumbers.push(p.serial_number);
+        
+        // Zbierz akcesoria
+        let accs = p.accessories;
+        if (typeof accs === 'string') {
+          try { accs = JSON.parse(accs); } catch { accs = []; }
+        }
+        if (accs && Array.isArray(accs) && accs.length > 0) {
+          accs.forEach((acc: any) => {
+            let parsedAcc = acc;
+            if (typeof acc === 'string') {
+              try { parsedAcc = JSON.parse(acc); } catch { return; }
+            }
+            const accName = typeof parsedAcc === 'object' && parsedAcc?.name ? parsedAcc.name : String(parsedAcc);
+            if (!productSummary[key].accessories.includes(accName)) {
+              productSummary[key].accessories.push(accName);
+            }
+          });
+        }
+      });
+
+      // Tworzenie tabeli produktów (pogrupowane)
+      const productRows: any[] = [];
+      let lp = 1;
+      
+      Object.values(productSummary).forEach(item => {
+        const accessoriesText = item.accessories.length > 0 ? item.accessories.join(', ') : '-';
+        const notesText = item.notes || '-';
+        
+        productRows.push([
+          { text: lp.toString(), alignment: 'center' },
+          { text: item.deviceType },
+          { text: `${item.quantity} szt.`, bold: true, alignment: 'center' },
+          { text: accessoriesText, fontSize: 8 },
+          { text: item.warranty, alignment: 'center', fontSize: 9 },
+          { text: notesText, fontSize: 8 },
+        ]);
+        lp++;
+      });
+
+      // Tworzenie tabeli numerów seryjnych (szczegóły)
+      const serialNumberRows: any[] = [];
+      let snLp = 1;
+      Object.values(productSummary).forEach(item => {
+        item.serialNumbers.forEach(sn => {
+          serialNumberRows.push([
+            { text: snLp.toString(), alignment: 'center' },
+            { text: item.deviceType },
+            { text: sn, bold: true },
           ]);
-          lp++;
+          snLp++;
         });
       });
 
@@ -1801,7 +1823,7 @@ export default function HandlowyDashboard() {
             table: {
               widths: ['*'],
               body: [
-                [{ text: 'PRZEKAZANY SPRZĘT', style: 'sectionHeader' }],
+                [{ text: 'PRZEKAZANY SPRZĘT - PODSUMOWANIE', style: 'sectionHeader' }],
               ],
             },
             layout: 'noBorders',
@@ -1810,12 +1832,12 @@ export default function HandlowyDashboard() {
           {
             table: {
               headerRows: 1,
-              widths: [20, 90, 100, 80, 40, '*'],
+              widths: [20, '*', 45, 80, 50, 80],
               body: [
                 [
                   { text: 'Lp.', style: 'tableHeader', alignment: 'center' },
                   { text: 'Nazwa urządzenia', style: 'tableHeader' },
-                  { text: 'Numer seryjny', style: 'tableHeader' },
+                  { text: 'Ilość', style: 'tableHeader', alignment: 'center' },
                   { text: 'Akcesoria', style: 'tableHeader' },
                   { text: 'Gwar.', style: 'tableHeader', alignment: 'center' },
                   { text: 'Uwagi', style: 'tableHeader' },
@@ -1835,11 +1857,48 @@ export default function HandlowyDashboard() {
             margin: [0, 0, 0, 15],
           },
           
+          // === SZCZEGÓŁY - NUMERY SERYJNE ===
+          {
+            table: {
+              widths: ['*'],
+              body: [
+                [{ text: 'SZCZEGÓŁY - NUMERY SERYJNE', style: 'sectionHeader' }],
+              ],
+            },
+            layout: 'noBorders',
+            margin: [0, 10, 0, 0],
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: [25, '*', 150],
+              body: [
+                [
+                  { text: 'Lp.', style: 'tableHeader', alignment: 'center' },
+                  { text: 'Nazwa urządzenia', style: 'tableHeader' },
+                  { text: 'Numer seryjny', style: 'tableHeader' },
+                ],
+                ...serialNumberRows.map((row, idx) => row.map((cell: any, cellIdx: number) => ({
+                  ...cell,
+                  fillColor: idx % 2 === 0 ? '#f9fafb' : '#ffffff',
+                  margin: [cellIdx === 0 ? 0 : 5, 4, 5, 4],
+                  fontSize: 9,
+                }))),
+              ],
+            },
+            layout: {
+              hLineWidth: (i: number, node: any) => (i === 0 || i === 1 || i === node.table.body.length) ? 0.5 : 0,
+              vLineWidth: () => 0,
+              hLineColor: () => '#e5e7eb',
+            },
+            margin: [0, 0, 0, 15],
+          },
+          
           // === NUMERY SERYJNE AKCESORIÓW (jeśli są) ===
           ...(() => {
             // Zbierz wszystkie akcesoria z numerami seryjnymi
             const accessoriesWithSN: { name: string; serialNumbers: string[] }[] = [];
-            clientProducts.forEach(p => {
+            selectedProducts.forEach(p => {
               let accs = p.accessories;
               
               // Parsuj jeśli to string JSON
