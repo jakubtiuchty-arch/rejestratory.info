@@ -306,6 +306,8 @@ export default function HandlowyDashboard() {
   const [formData, setFormData] = React.useState({
     deviceType: "",
     serialNumbersText: "", // Masowe dodawanie - textarea
+    quantity: 1, // Ilość (dla akcesoriów bez numerów seryjnych)
+    hasSerialNumbers: true, // Czy ma numery seryjne (dla akcesoriów)
     clientName: "",
     clientEmail: "", // Opcjonalny email administratora/osoby kontaktowej
     saleDate: new Date().toISOString().split("T")[0],
@@ -1456,8 +1458,17 @@ export default function HandlowyDashboard() {
   }, [formData.serialNumbersText]);
 
   const handleSaveProduct = async () => {
-    if (!formData.deviceType || parsedSerials.length === 0 || !formData.clientName) {
-      showToast("Wypełnij wszystkie wymagane pola (typ urządzenia, numery seryjne, klient)", "error");
+    // Dla akcesoriów bez S/N - wymagana tylko nazwa, ilość i klient
+    // Dla innych kategorii - wymagane S/N
+    const isAccessoryWithoutSN = activeCategory === "akcesoria" && !formData.hasSerialNumbers;
+    
+    if (!formData.deviceType || !formData.clientName) {
+      showToast("Wypełnij wymagane pola (nazwa produktu, klient)", "error");
+      return;
+    }
+    
+    if (!isAccessoryWithoutSN && parsedSerials.length === 0) {
+      showToast("Podaj numery seryjne", "error");
       return;
     }
 
@@ -1468,16 +1479,21 @@ export default function HandlowyDashboard() {
 
     setIsSaving(true);
     try {
+      // Dla akcesoriów bez S/N - generuj automatyczne "BN" numery
+      const serialsToUse = isAccessoryWithoutSN 
+        ? Array.from({ length: formData.quantity }, (_, i) => `BN-${Date.now()}-${i}`)
+        : parsedSerials;
+
       // Przygotuj wszystkie produkty do dodania
-      const productsToInsert = parsedSerials.map(serial => ({
+      const productsToInsert = serialsToUse.map(serial => ({
         category: activeCategory,
         device_type: formData.deviceType,
         serial_number: serial,
         client_name: normalizedClientName,
         client_email: formData.clientEmail || null,
         sale_date: formData.saleDate,
-        warranty: formData.warranty || null, // Gwarancja w miesiącach: "12", "24", "36", "60" lub null
-        service_contract: formData.serviceContract || null, // Kontrakt serwisowy: "3" lub "5" lat
+        warranty: formData.warranty || null,
+        service_contract: formData.serviceContract || null,
         accessories: accessories,
         notes: formData.notes,
         added_by: localStorage.getItem("handlowy_user_email") || "unknown",
@@ -1488,7 +1504,7 @@ export default function HandlowyDashboard() {
       if (error) throw error;
 
       // Also insert into registrators table (for panel-klienta) - ALL categories
-      const registratorsToInsert = parsedSerials.map(serial => ({
+      const registratorsToInsert = serialsToUse.map(serial => ({
         client_name: normalizedClientName,
         client_email: formData.clientEmail || null,
         device_name: formData.deviceType,
@@ -1513,6 +1529,8 @@ export default function HandlowyDashboard() {
       setFormData({
         deviceType: "",
         serialNumbersText: "",
+        quantity: 1,
+        hasSerialNumbers: true,
         clientName: "",
         clientEmail: "",
         saleDate: new Date().toISOString().split("T")[0],
@@ -1520,7 +1538,7 @@ export default function HandlowyDashboard() {
         serviceContract: "",
         notes: "",
       });
-      const addedCount = parsedSerials.length;
+      const addedCount = isAccessoryWithoutSN ? formData.quantity : parsedSerials.length;
       setAccessories([]);
       setParsedSerials([]);
       setIsAddModalOpen(false);
@@ -2479,6 +2497,8 @@ export default function HandlowyDashboard() {
                 setFormData({
                   deviceType: DEVICE_TYPES[activeCategory]?.[0] || "",
                   serialNumbersText: "",
+                  quantity: 1,
+                  hasSerialNumbers: activeCategory !== "akcesoria", // Dla akcesoriów domyślnie bez S/N
                   clientName: "",
                   clientEmail: "",
                   saleDate: new Date().toISOString().split("T")[0],
@@ -2508,6 +2528,8 @@ export default function HandlowyDashboard() {
                 setFormData({
                   deviceType: DEVICE_TYPES[activeCategory]?.[0] || "",
                   serialNumbersText: "",
+                  quantity: 1,
+                  hasSerialNumbers: activeCategory !== "akcesoria",
                   clientName: "",
                   clientEmail: "",
                   saleDate: new Date().toISOString().split("T")[0],
@@ -2749,47 +2771,102 @@ export default function HandlowyDashboard() {
                     )}
                   </div>
 
-                  {/* Numery seryjne - masowe dodawanie */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Numery seryjne <span className="text-red-500">*</span>
-                      {parsedSerials.length > 0 && (
-                        <span className={`ml-2 px-2 py-0.5 rounded text-xs font-bold ${activeColors.light} ${activeColors.text}`}>
-                          {parsedSerials.length} szt.
-                        </span>
+                  {/* Ilość i Numery seryjne */}
+                  {activeCategory === "akcesoria" ? (
+                    // Dla akcesoriów: Ilość wymagana, S/N opcjonalne
+                    <div className="space-y-3">
+                      {/* Ilość */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Ilość <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="number"
+                          min="1"
+                          value={formData.quantity}
+                          onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) || 1 })}
+                          className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      </div>
+                      
+                      {/* Checkbox - czy ma numery seryjne */}
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="hasSerialNumbers"
+                          checked={formData.hasSerialNumbers}
+                          onChange={(e) => setFormData({ ...formData, hasSerialNumbers: e.target.checked })}
+                          className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                        />
+                        <label htmlFor="hasSerialNumbers" className="text-sm text-gray-700 cursor-pointer">
+                          Produkt ma numery seryjne
+                        </label>
+                      </div>
+                      
+                      {/* Numery seryjne - pokazuj tylko jeśli zaznaczone */}
+                      {formData.hasSerialNumbers && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">
+                            Numery seryjne
+                            {parsedSerials.length > 0 && (
+                              <span className={`ml-2 px-2 py-0.5 rounded text-xs font-bold ${activeColors.light} ${activeColors.text}`}>
+                                {parsedSerials.length} szt.
+                              </span>
+                            )}
+                          </label>
+                          <textarea
+                            value={formData.serialNumbersText}
+                            onChange={(e) => setFormData({ ...formData, serialNumbersText: e.target.value.toUpperCase() })}
+                            placeholder="Wklej numery seryjne (każdy w nowej linii)..."
+                            rows={4}
+                            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+                          />
+                        </div>
                       )}
-                    </label>
-                    <textarea
-                      value={formData.serialNumbersText}
-                      onChange={(e) => setFormData({ ...formData, serialNumbersText: e.target.value.toUpperCase() })}
-                      placeholder="Wklej numery seryjne (każdy w nowej linii lub rozdzielone przecinkami):
+                    </div>
+                  ) : (
+                    // Dla innych kategorii: S/N wymagane
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Numery seryjne <span className="text-red-500">*</span>
+                        {parsedSerials.length > 0 && (
+                          <span className={`ml-2 px-2 py-0.5 rounded text-xs font-bold ${activeColors.light} ${activeColors.text}`}>
+                            {parsedSerials.length} szt.
+                          </span>
+                        )}
+                      </label>
+                      <textarea
+                        value={formData.serialNumbersText}
+                        onChange={(e) => setFormData({ ...formData, serialNumbersText: e.target.value.toUpperCase() })}
+                        placeholder="Wklej numery seryjne (każdy w nowej linii lub rozdzielone przecinkami):
 
 ABC123456
 DEF789012
 GHI345678
 ..."
-                      rows={6}
-                      className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
-                    />
-                    <p className="mt-1 text-xs text-gray-500">
-                      Wklej numery seryjne z Excela lub wpisz ręcznie (każdy w nowej linii, lub rozdzielone przecinkami/spacjami)
-                    </p>
-                    {parsedSerials.length > 0 && (
-                      <div className="mt-2 p-2 bg-gray-50 rounded-lg max-h-24 overflow-y-auto">
-                        <p className="text-xs text-gray-600 mb-1">Rozpoznane numery:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {parsedSerials.slice(0, 10).map((serial, i) => (
-                            <span key={i} className="text-xs bg-white border border-gray-200 px-1.5 py-0.5 rounded font-mono">
-                              {serial}
-                            </span>
-                          ))}
-                          {parsedSerials.length > 10 && (
-                            <span className="text-xs text-gray-500">+{parsedSerials.length - 10} więcej...</span>
-                          )}
+                        rows={6}
+                        className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm"
+                      />
+                      <p className="mt-1 text-xs text-gray-500">
+                        Wklej numery seryjne z Excela lub wpisz ręcznie (każdy w nowej linii, lub rozdzielone przecinkami/spacjami)
+                      </p>
+                      {parsedSerials.length > 0 && (
+                        <div className="mt-2 p-2 bg-gray-50 rounded-lg max-h-24 overflow-y-auto">
+                          <p className="text-xs text-gray-600 mb-1">Rozpoznane numery:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {parsedSerials.slice(0, 10).map((serial, i) => (
+                              <span key={i} className="text-xs bg-white border border-gray-200 px-1.5 py-0.5 rounded font-mono">
+                                {serial}
+                              </span>
+                            ))}
+                            {parsedSerials.length > 10 && (
+                              <span className="text-xs text-gray-500">+{parsedSerials.length - 10} więcej...</span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    )}
-                  </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Klient */}
                   <div>
