@@ -820,18 +820,13 @@ export default function HandlowyDashboard() {
             .map(s => s.trim().toUpperCase())
             .filter(s => s.length > 0)
         : [];
-      
-      // Sprawdź czy ilość zgadza się z liczbą numerów seryjnych
-      const finalQuantity = newAccessory.hasSerialNumbers && serialNumbers.length > 0
-        ? serialNumbers.length
-        : newAccessory.quantity;
 
       setAccessories([
         ...accessories,
         {
           name: newAccessory.name.trim(),
-          quantity: finalQuantity,
-          hasSerialNumbers: newAccessory.hasSerialNumbers,
+          quantity: newAccessory.quantity, // Zawsze używaj podanej ilości
+          hasSerialNumbers: newAccessory.hasSerialNumbers && serialNumbers.length > 0,
           serialNumbers: serialNumbers,
         },
       ]);
@@ -2915,8 +2910,7 @@ GHI345678
                               value={newAccessory.quantity}
                               onChange={(e) => setNewAccessory({ ...newAccessory, quantity: parseInt(e.target.value) || 1 })}
                               placeholder="Ilość"
-                              disabled={newAccessory.hasSerialNumbers}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm disabled:bg-gray-100 disabled:text-gray-500"
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                             />
                           </div>
                           {/* Checkbox S/N */}
