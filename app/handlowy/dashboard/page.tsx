@@ -3102,7 +3102,7 @@ GHI345678
                   </button>
                   <button
                     onClick={handleSaveProduct}
-                    disabled={isSaving || parsedSerials.length === 0}
+                    disabled={isSaving || (activeCategory !== "akcesoria" && parsedSerials.length === 0) || (activeCategory === "akcesoria" && formData.hasSerialNumbers && parsedSerials.length === 0)}
                     className={`flex-1 px-4 py-2.5 ${activeColors.bg} text-white rounded-lg font-medium hover:opacity-90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2`}
                   >
                     {isSaving ? (
