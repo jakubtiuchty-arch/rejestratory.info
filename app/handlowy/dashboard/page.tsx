@@ -1706,42 +1706,35 @@ export default function HandlowyDashboard() {
           };
         }
         
+        const isFirstOfType = productSummary[key].quantity === 0;
         productSummary[key].quantity++;
         productSummary[key].serialNumbers.push(p.serial_number);
-        
-        // Zbierz akcesoria z ilościami i numerami seryjnymi
-        let accs = p.accessories;
-        if (typeof accs === 'string') {
-          try { accs = JSON.parse(accs); } catch { accs = []; }
-        }
-        if (accs && Array.isArray(accs) && accs.length > 0) {
-          accs.forEach((acc: any) => {
-            let parsedAcc = acc;
-            if (typeof acc === 'string') {
-              try { parsedAcc = JSON.parse(acc); } catch { return; }
-            }
-            const accName = typeof parsedAcc === 'object' && parsedAcc?.name ? parsedAcc.name : String(parsedAcc);
-            const accQty = typeof parsedAcc === 'object' && parsedAcc?.quantity ? parsedAcc.quantity : 1;
-            const accSNs = typeof parsedAcc === 'object' && parsedAcc?.serialNumbers ? parsedAcc.serialNumbers : [];
-            
-            const existing = productSummary[key].accessories.find(a => a.name === accName);
-            if (existing) {
-              existing.quantity += accQty;
-              if (accSNs.length > 0) {
-                accSNs.forEach((sn: string) => {
-                  if (!existing.serialNumbers.includes(sn)) {
-                    existing.serialNumbers.push(sn);
-                  }
-                });
+
+        // Zbierz akcesoria TYLKO z pierwszego rekordu danego typu urządzenia.
+        // Wszystkie rekordy mają identyczną kopię akcesoriów (z formularza),
+        // więc sumowanie z każdego rekordu powodowało podwajanie ilości.
+        if (isFirstOfType) {
+          let accs = p.accessories;
+          if (typeof accs === 'string') {
+            try { accs = JSON.parse(accs); } catch { accs = []; }
+          }
+          if (accs && Array.isArray(accs) && accs.length > 0) {
+            accs.forEach((acc: any) => {
+              let parsedAcc = acc;
+              if (typeof acc === 'string') {
+                try { parsedAcc = JSON.parse(acc); } catch { return; }
               }
-            } else {
+              const accName = typeof parsedAcc === 'object' && parsedAcc?.name ? parsedAcc.name : String(parsedAcc);
+              const accQty = typeof parsedAcc === 'object' && parsedAcc?.quantity ? parsedAcc.quantity : 1;
+              const accSNs = typeof parsedAcc === 'object' && parsedAcc?.serialNumbers ? parsedAcc.serialNumbers : [];
+
               productSummary[key].accessories.push({
                 name: accName,
                 quantity: accQty,
                 serialNumbers: accSNs || [],
               });
-            }
-          });
+            });
+          }
         }
       });
 
