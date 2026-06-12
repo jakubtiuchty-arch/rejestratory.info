@@ -21,6 +21,20 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "IT dla Lasów - Katalog produktów",
   description: "Kompleksowe rozwiązania IT dla Lasów Państwowych",
+  robots: {
+    index: false,
+    follow: false,
+    noarchive: true,
+    nosnippet: true,
+    noimageindex: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noarchive: true,
+      nosnippet: true,
+      noimageindex: true,
+    },
+  },
 };
 
 export default function RootLayout({
