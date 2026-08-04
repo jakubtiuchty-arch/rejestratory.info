@@ -20,9 +20,16 @@ import { readFileSync } from 'fs'
 const htmlPath = process.argv[2]
 const mode = process.argv[3]
 const testAddr = process.argv[4]
+// opcjonalnie: --send-at 2026-08-05T08:30:00+02:00 (Resend scheduledAt, do 30 dni w przód)
+const sendAtIdx = process.argv.indexOf('--send-at')
+const sendAt = sendAtIdx > -1 ? process.argv[sendAtIdx + 1] : null
 
 if (!htmlPath || !['--list', '--test', '--send'].includes(mode) || (mode === '--test' && !testAddr)) {
-  console.error('Użycie: node scripts/send-newsletter.mjs <plik.html> --list | --test <adres> | --send')
+  console.error('Użycie: node scripts/send-newsletter.mjs <plik.html> --list | --test <adres> | --send [--send-at <ISO8601>]')
+  process.exit(1)
+}
+if (sendAt && isNaN(Date.parse(sendAt))) {
+  console.error(`Nieprawidłowa data --send-at: ${sendAt}`)
   process.exit(1)
 }
 
@@ -77,13 +84,19 @@ const targets = mode === '--test' ? [testAddr] : [...recipients.keys()]
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 let ok = 0, fail = 0
 const failed = []
+const scheduled = [] // { to, id } — id pozwala anulować zaplanowaną wysyłkę (resend.emails.cancel)
+
+if (sendAt) console.log(`Wysyłka zaplanowana na: ${sendAt}`)
 
 for (let i = 0; i < targets.length; i++) {
   const to = targets[i]
   try {
-    const { error } = await resend.emails.send({ from: FROM, replyTo: REPLY_TO, to, subject, html })
+    const payload = { from: FROM, replyTo: REPLY_TO, to, subject, html }
+    if (sendAt) payload.scheduledAt = sendAt
+    const { data, error } = await resend.emails.send(payload)
     if (error) throw new Error(error.message)
     ok++
+    scheduled.push({ to, id: data?.id })
     if (ok % 20 === 0 || mode === '--test') console.log(`[${i + 1}/${targets.length}] OK ${to}`)
   } catch (e) {
     fail++
@@ -93,5 +106,11 @@ for (let i = 0; i < targets.length; i++) {
   if (i < targets.length - 1) await sleep(600)
 }
 
-console.log(`\nWysłane: ${ok}, błędy: ${fail}`)
+console.log(`\n${sendAt ? 'Zaplanowane' : 'Wysłane'}: ${ok}, błędy: ${fail}`)
 if (failed.length) console.log('Nieudane adresy:\n' + failed.join('\n'))
+if (sendAt && scheduled.length) {
+  const { writeFileSync } = await import('fs')
+  const f = `scheduled-${sendAt.slice(0, 10)}.json`
+  writeFileSync(f, JSON.stringify({ sendAt, subject, emails: scheduled }, null, 2))
+  console.log(`ID zaplanowanych maili zapisane w ${f} (anulowanie: resend.emails.cancel(id))`)
+}
