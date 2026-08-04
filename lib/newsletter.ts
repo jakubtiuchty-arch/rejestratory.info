@@ -27,6 +27,14 @@ export async function getRecipients(): Promise<string[]> {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   )
   const uniq = new Set<string>()
+  // 1) adresy OGÓLNE nadleśnictw (nadlesnictwo@rdlp.lasy.gov.pl) — baza zbudowana
+  //    2026-08-04 z portali 17 RDLP + korespondencji, walidacja DNS; plik w repo
+  const general = (await import('@/newsletter/odbiorcy-ogolne.json')).default as string[]
+  for (const e of general) {
+    const n = normalizeEmail(e)
+    if (n) uniq.add(n)
+  }
+  // 2) adresy OSOBISTE administratorów z Supabase (klienci serwisu/sklepu)
   for (const table of ['registrators', 'sales_products', 'inspections']) {
     const { data, error } = await sb.from(table).select('client_email').not('client_email', 'is', null)
     if (error) throw new Error(`Supabase ${table}: ${error.message}`)

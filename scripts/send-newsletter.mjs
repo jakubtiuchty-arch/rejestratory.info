@@ -60,6 +60,11 @@ function normalize(raw) {
 }
 
 const recipients = new Map() // email -> client_name
+// adresy ogólne nadleśnictw (nadlesnictwo@rdlp.lasy.gov.pl) — newsletter/odbiorcy-ogolne.json
+for (const e of JSON.parse(readFileSync('newsletter/odbiorcy-ogolne.json', 'utf8'))) {
+  const n = normalize(e)
+  if (n && !recipients.has(n)) recipients.set(n, '(adres ogólny nadleśnictwa)')
+}
 for (const table of ['registrators', 'sales_products', 'inspections']) {
   const { data, error } = await sb.from(table).select('client_name, client_email').not('client_email', 'is', null)
   if (error) { console.error(`Supabase ${table}:`, error.message); continue }
