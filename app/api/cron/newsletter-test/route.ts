@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { getManifest, getEditionHtml, approvalToken, NEWSLETTER_TEST_TO, NEWSLETTER_FROM, NEWSLETTER_REPLY_TO, SITE } from '@/lib/newsletter'
+import { getManifest, getEditionHtml, approvalToken, withRdlpBanner, NEWSLETTER_TEST_TO, NEWSLETTER_FROM, NEWSLETTER_REPLY_TO, SITE } from '@/lib/newsletter'
 
 /**
  * Cron: poniedziałek 7:00 UTC (9:00 czasu PL latem).
@@ -39,7 +39,17 @@ export async function GET(request: NextRequest) {
     })
     if (error) throw new Error(error.message)
 
-    return NextResponse.json({ ok: true, file: manifest.file, bulkAt: manifest.bulkAt, testTo: NEWSLETTER_TEST_TO })
+    // druga testówka: wariant dla Wydziałów Informatyki RDLP (banerek "prześlijcie dalej")
+    const { error: rdlpErr } = await resend.emails.send({
+      from: NEWSLETTER_FROM,
+      replyTo: NEWSLETTER_REPLY_TO,
+      to: NEWSLETTER_TEST_TO,
+      subject: `[TEST RDLP] ${subject}`,
+      html: withRdlpBanner(html),
+    })
+    if (rdlpErr) console.error('[newsletter-test] RDLP:', rdlpErr.message)
+
+    return NextResponse.json({ ok: true, file: manifest.file, bulkAt: manifest.bulkAt, testTo: NEWSLETTER_TEST_TO, rdlpTest: !rdlpErr })
   } catch (e) {
     console.error('[newsletter-test]', e)
     return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 500 })

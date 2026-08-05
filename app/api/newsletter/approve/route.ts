@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { createClient } from '@supabase/supabase-js'
-import { getManifest, getEditionHtml, approvalToken, getRecipients, NEWSLETTER_FROM, NEWSLETTER_REPLY_TO } from '@/lib/newsletter'
+import { getManifest, getEditionHtml, approvalToken, getRecipients, getRdlpRecipients, withRdlpBanner, NEWSLETTER_FROM, NEWSLETTER_REPLY_TO } from '@/lib/newsletter'
 
 /**
  * Zatwierdzenie wysyłki newslettera (link z maila testowego).
@@ -51,9 +51,10 @@ export async function GET(request: NextRequest) {
 
     if (!confirm) {
       const recipients = await getRecipients()
+      const rdlp = await getRdlpRecipients()
       return htmlResp(page(
         'Potwierdź wysyłkę newslettera',
-        `Wydanie: <b>${f.split('/').pop()}</b><br>Odbiorcy: <b>${recipients.length} nadleśnictw</b><br>Termin wysyłki: <b>${manifest.bulkAt.replace('T', ' ').slice(0, 16)}</b>`,
+        `Wydanie: <b>${f.split('/').pop()}</b><br>Odbiorcy: <b>${recipients.length} nadleśnictw</b> + <b>${rdlp.length} wydziałów informatyki RDLP</b> (wariant z prośbą o przekazanie dalej)<br>Termin wysyłki: <b>${manifest.bulkAt.replace('T', ' ').slice(0, 16)}</b>`,
         { href: `${request.nextUrl.pathname}?f=${encodeURIComponent(f)}&t=${t}&confirm=1`, label: `Potwierdzam — wysyłaj` },
       ))
     }
@@ -85,12 +86,30 @@ export async function GET(request: NextRequest) {
       }
       if (i < recipients.length - 1) await sleep(600)
     }
-    await sb.from('newsletter_sends').update({ recipient_count: ok }).eq('file', f)
-    console.log(`[newsletter-approve] ${f}: zaplanowane ${ok}/${recipients.length}`, failed.slice(0, 5))
+    // wariant RDLP: ten sam mail + banerek "prześlijcie administratorom w nadleśnictwach"
+    const rdlpHtml = withRdlpBanner(html)
+    const rdlpRecipients = await getRdlpRecipients()
+    let rdlpOk = 0
+    for (let i = 0; i < rdlpRecipients.length; i++) {
+      try {
+        const { error } = await resend.emails.send({
+          from: NEWSLETTER_FROM, replyTo: NEWSLETTER_REPLY_TO, to: rdlpRecipients[i], subject, html: rdlpHtml,
+          scheduledAt: manifest.bulkAt,
+        })
+        if (error) throw new Error(error.message)
+        rdlpOk++
+      } catch (e) {
+        failed.push(`RDLP ${rdlpRecipients[i]}: ${e instanceof Error ? e.message : e}`)
+      }
+      if (i < rdlpRecipients.length - 1) await sleep(600)
+    }
+
+    await sb.from('newsletter_sends').update({ recipient_count: ok + rdlpOk }).eq('file', f)
+    console.log(`[newsletter-approve] ${f}: zaplanowane ${ok}/${recipients.length} + RDLP ${rdlpOk}/${rdlpRecipients.length}`, failed.slice(0, 5))
 
     return htmlResp(page(
       'Wysyłka zaplanowana ✓',
-      `Zaplanowano <b>${ok} z ${recipients.length}</b> maili na <b>${manifest.bulkAt.replace('T', ' ').slice(0, 16)}</b>.${failed.length ? `<br><br>Błędy (${failed.length}):<br><code style="font-size:12px">${failed.slice(0, 10).join('<br>')}</code>` : ''}`,
+      `Zaplanowano <b>${ok} z ${recipients.length}</b> maili do nadleśnictw oraz <b>${rdlpOk} z ${rdlpRecipients.length}</b> do wydziałów informatyki RDLP na <b>${manifest.bulkAt.replace('T', ' ').slice(0, 16)}</b>.${failed.length ? `<br><br>Błędy (${failed.length}):<br><code style="font-size:12px">${failed.slice(0, 10).join('<br>')}</code>` : ''}`,
     ))
   } catch (e) {
     console.error('[newsletter-approve]', e)

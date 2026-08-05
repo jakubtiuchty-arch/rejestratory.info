@@ -40,3 +40,11 @@
   robi Claude na prośbę (wzorzec: sesja 2026-08-05).
 - Linki w wydaniach dostają UTM: `utm_source=newsletter&utm_medium=email&utm_campaign=<slug>-<data>`
   (ruch widoczny w GA4 jako kampania). Dodawać przy budowie każdego wydania.
+
+## Wariant RDLP (od 2026-08-05, automatyczny)
+- Każde wydanie idzie RÓWNIEŻ do wydziałów informatyki 17 RDLP
+  (`newsletter/odbiorcy-rdlp-informatyka.json`) — ten sam mail + banerek na górze
+  z prośbą o przekazanie przeglądu administratorom IT w podległych nadleśnictwach
+  (`withRdlpBanner()` w lib/newsletter.ts).
+- Testówka poniedziałkowa przychodzi w DWÓCH mailach: `[TEST — zatwierdź]` i `[TEST RDLP]`.
+  Jedno kliknięcie "Zatwierdź" planuje OBIE wysyłki na wtorek 8:30.
