@@ -98,4 +98,4 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export const maxDuration = 300
+export const maxDuration = 800 // ~610 odbiorców x 600 ms = ~370 s; Pro/fluid pozwala do 800 s
