@@ -29,8 +29,10 @@ export async function getRecipients(): Promise<string[]> {
   const uniq = new Set<string>()
   // 1) adresy OGÓLNE nadleśnictw (nadlesnictwo@rdlp.lasy.gov.pl) — baza zbudowana
   //    2026-08-04 z portali 17 RDLP + korespondencji, walidacja DNS; plik w repo
+  //    + wydziały informatyki 17 RDLP (odbiorcy-rdlp-informatyka.json)
   const general = (await import('@/newsletter/odbiorcy-ogolne.json')).default as string[]
-  for (const e of general) {
+  const rdlp = (await import('@/newsletter/odbiorcy-rdlp-informatyka.json')).default as string[]
+  for (const e of [...general, ...rdlp]) {
     const n = normalizeEmail(e)
     if (n) uniq.add(n)
   }
@@ -72,33 +74,3 @@ export function approvalToken(file: string): string {
   return createHmac('sha256', process.env.CRON_SECRET || '').update(file).digest('hex').slice(0, 32)
 }
 
-/**
- * Wariant dla Wydziałów Informatyki RDLP: ten sam mail + banerek z prośbą
- * o przekazanie przeglądu administratorom IT w podległych nadleśnictwach.
- * Lista: newsletter/odbiorcy-rdlp-informatyka.json (17 adresów, po jednym na RDLP).
- */
-export async function getRdlpRecipients(): Promise<string[]> {
-  const list = (await import('@/newsletter/odbiorcy-rdlp-informatyka.json')).default as string[]
-  return list.map(normalizeEmail).filter((e): e is string => !!e)
-}
-
-export function withRdlpBanner(html: string): string {
-  // pełny wiersz karty między nagłówkiem z logo a hero — limonkowy pas w kolorze
-  // akcentu maila (spójny z CTA), nie "doklejka" nad kartą
-  const bannerRow = `          <!-- ═══ PAS RDLP ═══ -->
-          <tr>
-            <td bgcolor="#a3e635" style="background-color:#a3e635;padding:16px 32px;">
-              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.55;color:#14532d;">
-                <b>Do Wydziału Informatyki RDLP:</b> będziemy wdzięczni za przekazanie
-                tego przeglądu administratorom IT w&nbsp;podległych nadleśnictwach.
-              </p>
-            </td>
-          </tr>
-
-`
-  const anchor = '          <!-- ═══ HERO'
-  if (html.includes(anchor)) return html.replace(anchor, bannerRow + anchor)
-  // awaryjnie (gdyby wydanie nie miało komentarza HERO): prosty pas nad kartą
-  return html.replace(/(<body[^>]*>)/,
-    `$1<div style="max-width:600px;margin:0 auto;background:#a3e635;padding:16px 32px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.55;color:#14532d;"><b>Do Wydziału Informatyki RDLP:</b> będziemy wdzięczni za przekazanie tego przeglądu administratorom IT w podległych nadleśnictwach.</div>`)
-}
