@@ -83,12 +83,22 @@ export async function getRdlpRecipients(): Promise<string[]> {
 }
 
 export function withRdlpBanner(html: string): string {
-  const banner = `
-  <div style="max-width:600px;margin:0 auto 10px;background:#f7fee7;border:1px solid #d9f99d;border-radius:10px;padding:14px 20px;font-family:Arial,Helvetica,sans-serif;">
-    <p style="margin:0;font-size:13px;line-height:1.6;color:#3f6212;">
-      <b>Do Wydziału Informatyki RDLP:</b> będziemy wdzięczni za przekazanie tego
-      przeglądu administratorom IT w podległych nadleśnictwach.
-    </p>
-  </div>`
-  return html.replace(/(<body[^>]*>)/, `$1${banner}`)
+  // pełny wiersz karty między nagłówkiem z logo a hero — limonkowy pas w kolorze
+  // akcentu maila (spójny z CTA), nie "doklejka" nad kartą
+  const bannerRow = `          <!-- ═══ PAS RDLP ═══ -->
+          <tr>
+            <td bgcolor="#a3e635" style="background-color:#a3e635;padding:16px 32px;">
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.55;color:#14532d;">
+                <b>Do Wydziału Informatyki RDLP:</b> będziemy wdzięczni za przekazanie
+                tego przeglądu administratorom IT w&nbsp;podległych nadleśnictwach.
+              </p>
+            </td>
+          </tr>
+
+`
+  const anchor = '          <!-- ═══ HERO'
+  if (html.includes(anchor)) return html.replace(anchor, bannerRow + anchor)
+  // awaryjnie (gdyby wydanie nie miało komentarza HERO): prosty pas nad kartą
+  return html.replace(/(<body[^>]*>)/,
+    `$1<div style="max-width:600px;margin:0 auto;background:#a3e635;padding:16px 32px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.55;color:#14532d;"><b>Do Wydziału Informatyki RDLP:</b> będziemy wdzięczni za przekazanie tego przeglądu administratorom IT w podległych nadleśnictwach.</div>`)
 }
