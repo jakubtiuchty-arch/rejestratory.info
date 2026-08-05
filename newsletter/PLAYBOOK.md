@@ -33,3 +33,10 @@
 - Anulowanie zaplanowanego bulku: ID nie są zapisywane w pipeline — anulować można
   do godziny wysyłki przez Resend API po `email_id` z logów `[newsletter-approve]`
   (Vercel logs) lub napisać do Claude.
+
+## Śledzenie skuteczności (od wydania 2)
+- Resend: open + click tracking WŁĄCZONE dla domeny rejestratory.info (2026-08-05, przez API).
+  Po wysyłce raport per adres: skan `resend.emails.get(id)` po ID z logów — listę „kto kliknął"
+  robi Claude na prośbę (wzorzec: sesja 2026-08-05).
+- Linki w wydaniach dostają UTM: `utm_source=newsletter&utm_medium=email&utm_campaign=<slug>-<data>`
+  (ruch widoczny w GA4 jako kampania). Dodawać przy budowie każdego wydania.
