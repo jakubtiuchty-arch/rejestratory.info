@@ -60,10 +60,12 @@ function normalize(raw) {
 }
 
 const recipients = new Map() // email -> client_name
-// adresy ogólne nadleśnictw (nadlesnictwo@rdlp.lasy.gov.pl) — newsletter/odbiorcy-ogolne.json
-for (const e of JSON.parse(readFileSync('newsletter/odbiorcy-ogolne.json', 'utf8'))) {
-  const n = normalize(e)
-  if (n && !recipients.has(n)) recipients.set(n, '(adres ogólny nadleśnictwa)')
+// adresy ogólne nadleśnictw + wydziały informatyki RDLP (pliki w newsletter/)
+for (const f of ['newsletter/odbiorcy-ogolne.json', 'newsletter/odbiorcy-rdlp-informatyka.json']) {
+  for (const e of JSON.parse(readFileSync(f, 'utf8'))) {
+    const n = normalize(e)
+    if (n && !recipients.has(n)) recipients.set(n, f.includes('rdlp') ? '(wydział informatyki RDLP)' : '(adres ogólny nadleśnictwa)')
+  }
 }
 for (const table of ['registrators', 'sales_products', 'inspections']) {
   const { data, error } = await sb.from(table).select('client_name, client_email').not('client_email', 'is', null)
