@@ -54,6 +54,7 @@ function normalize(raw) {
   let e = (raw || '').toLowerCase().trim().replace(/[,;\s]+$/, '')
   // znane literówki w bazie
   e = e.replace('@olsztyn.lay.gov.pl', '@olsztyn.lasy.gov.pl')
+  e = e.replace('@bialsytok.', '@bialystok.') // odbicie w wysyłce EM45 12.08.2026
   e = e.replace(/@([a-z]+)\.lasy\.pl$/, '@$1.lasy.gov.pl')
   if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(e)) return null
   return e
