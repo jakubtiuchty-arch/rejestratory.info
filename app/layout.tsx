@@ -3,7 +3,6 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { InquiryProvider } from '@/components/InquiryContext'
 import InquiryCartPanel from '@/components/InquiryCartPanel'
-import CrispChat from '@/components/CrispChat'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -54,7 +53,6 @@ export default function RootLayout({
       <GoogleAnalytics gaId="G-FDR8NNEMJN" />
       <Analytics />
       <SpeedInsights />
-      <CrispChat />
     </body>
   </html>
 );

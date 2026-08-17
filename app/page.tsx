@@ -3,37 +3,41 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useInquiry } from '@/components/InquiryContext';
 import SearchAutocomplete from './components/SearchAutocomplete';
-import CrispChat from '@/components/CrispChat';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { 
-  Monitor,
-  Printer,
-  Laptop,
-  Database,
-  FolderOpen,
-  CreditCard,
+import {
+  ArrowRight,
   ChevronDown,
   ChevronUp,
-  Vibrate,
+  Computer,
+  FolderCheck,
+  Keyboard,
+  Laptop,
+  Monitor,
+  Printer,
+  PrinterCheck,
+  ReceiptText,
+  ScanBarcode,
+  ScrollText,
+  Server,
   Smartphone,
-  Package
 } from "lucide-react";
 
 // Placeholder data
 const categories = [
-  { id: 1, name: "Rejestratory", count: 15, icon: Vibrate },
-  { id: 2, name: "Telefony", count: 12, icon: Smartphone },
-  { id: 3, name: "Laptopy", count: 11, icon: Laptop },
-  { id: 4, name: "Urządzenia wielofunkcyjne", count: 7, icon: Printer },
-  { id: 5, name: "Monitory", count: 8, icon: Monitor },
-  { id: 7, name: "Serwery", count: 6, icon: Database },
-  { id: 8, name: "Drukarki do rejestratora", count: 9, icon: Printer },
-  { id: 9, name: "Drukarki laserowe", count: 14, icon: Printer },
-  { id: 10, name: "All in One", count: 5, icon: Monitor },
-  { id: 11, name: "Elektroniczne Zarządzanie Dokumentacją", count: 8, icon: FolderOpen },
-  { id: 12, name: "Urządzenia fiskalne", count: 3, icon: CreditCard },
-  { id: 13, name: "Akcesoria komputerowe", count: 18, icon: Package }
+  // Ikona dobrana po funkcji urządzenia, nie po sylwetce — w 28 px kształt obudowy jest nieczytelny
+  { id: 1, name: "Rejestratory", count: 15, Icon: ScanBarcode },
+  { id: 2, name: "Telefony", count: 12, Icon: Smartphone },
+  { id: 3, name: "Laptopy", count: 11, Icon: Laptop },
+  { id: 4, name: "Urządzenia wielofunkcyjne", count: 7, Icon: PrinterCheck },
+  { id: 5, name: "Monitory", count: 8, Icon: Monitor },
+  { id: 7, name: "Serwery", count: 6, Icon: Server },
+  { id: 8, name: "Drukarki do rejestratora", count: 9, Icon: ScrollText },
+  { id: 9, name: "Drukarki laserowe", count: 14, Icon: Printer },
+  { id: 10, name: "All in One", count: 5, Icon: Computer },
+  { id: 11, name: "Elektroniczne Zarządzanie Dokumentacją", count: 8, Icon: FolderCheck },
+  { id: 12, name: "Urządzenia fiskalne", count: 3, Icon: ReceiptText },
+  { id: 13, name: "Akcesoria komputerowe", count: 18, Icon: Keyboard }
 ];
 
 // Funkcja do mapowania nazw kategorii na URLe
@@ -306,8 +310,13 @@ export default function HomePage() {
       </section>
 
       {/* Categories Section */}
-      <section id="produkty" className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <section id="produkty" className="relative py-16 bg-emerald-50/50">
+        {/* Leśne tło sekcji: tekstura igliwia pod siatką kafelków */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.05]"
+          style={{ backgroundImage: "url('/kategorie/igliwie.svg')", backgroundSize: "170px" }}
+        />
+        <div className="container relative mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Kategorie produktów</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
@@ -315,9 +324,8 @@ export default function HomePage() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {visibleCategories.map((category) => {
-              const IconComponent = category.icon;
               return (
                 <motion.a
                   key={category.id}
@@ -325,18 +333,16 @@ export default function HomePage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: category.id * 0.1 }}
-                  className="border rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer group block"
+                  className="group flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"
                 >
-                  <div className="p-6 text-center">
-                    <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-50 transition-colors">
-                      <IconComponent className="h-8 w-8 text-gray-600 group-hover:text-emerald-600 transition-colors" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">{category.name}</h3>
-                    <p className="text-gray-600 text-sm mb-4">{category.count} produktów</p>
-                    <div className="w-full bg-emerald-600 group-hover:bg-emerald-700 text-white font-medium text-sm py-2 px-4 rounded-lg transition-colors">
-                      Zobacz produkty
-                    </div>
-                  </div>
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-800 transition-colors group-hover:bg-emerald-100">
+                    <category.Icon className="h-7 w-7" strokeWidth={1.6} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-semibold leading-snug text-slate-900">{category.name}</span>
+                    <span className="mt-0.5 block text-xs text-slate-500">{category.count} produktów</span>
+                  </span>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-emerald-700 transition-transform duration-300 group-hover:translate-x-1" />
                 </motion.a>
               );
             })}
@@ -457,7 +463,6 @@ export default function HomePage() {
       <Footer />
 
       {/* Crisp Chat */}
-      <CrispChat />
     </div>
   );
 }
