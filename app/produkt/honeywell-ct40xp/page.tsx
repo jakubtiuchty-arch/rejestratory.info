@@ -12,11 +12,9 @@ import {
   Battery,
   Wifi,
   Smartphone,
-  Download,
   X,
   Calculator,
   BarChart3,
-  FileText,
   Phone,
   Mail,
   MapPin,
@@ -523,7 +521,6 @@ export default function HoneywellCT40XPProductPage() {
           <nav className="-mb-px flex space-x-8">
             {[
               { id: 'specs', label: 'Specyfikacja' },
-              { id: 'downloads', label: 'Pliki do pobrania' },
               { id: 'service', label: 'Serwis', isScroll: true }
             ].map((tab) => (
               <button
@@ -571,44 +568,6 @@ export default function HoneywellCT40XPProductPage() {
 
 
 
-            {activeTab === 'downloads' && (
-              <motion.div
-                key="downloads"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              >
-                {[
-                  { title: "Karta katalogowa", type: "PDF", size: "2.1 MB" },
-                  { title: "Instrukcja obsługi", type: "PDF", size: "8.7 MB" },
-                  { title: "Specyfikacja techniczna", type: "PDF", size: "1.3 MB" },
-                  { title: "Certyfikaty IP67", type: "PDF", size: "0.9 MB" },
-                  { title: "Aplikacje mobilne", type: "APK", size: "45 MB" },
-                  { title: "Narzędzia deweloperskie", type: "ZIP", size: "156 MB" }
-                ].map((file, index) => (
-                  <motion.div
-                    key={index}
-                    className="bg-white rounded-lg p-6 border border-gray-200 hover:border-emerald-300 cursor-pointer transition-colors"
-                    whileHover={{ y: -2 }}
-                  >
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mr-4">
-                        <FileText className="w-6 h-6 text-emerald-600" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900">{file.title}</h4>
-                        <p className="text-sm text-gray-500">{file.type} • {file.size}</p>
-                      </div>
-                    </div>
-                    <button className="w-full bg-emerald-50 text-emerald-600 py-2 rounded-lg hover:bg-emerald-100 transition-colors flex items-center justify-center">
-                      <Download className="w-4 h-4 mr-2" />
-                      Pobierz
-                    </button>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
           </AnimatePresence>
         </div>
       </div>

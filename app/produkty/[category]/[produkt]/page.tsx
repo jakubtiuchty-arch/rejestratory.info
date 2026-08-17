@@ -83,13 +83,6 @@ const ProductPage = ({ params }: ProductPageProps) => {
   return product.specification.split(',').map(s => s.trim());
 }, [product]);
 
-  const downloads = [
-    { name: `Karta katalogowa ${product?.name}`, type: "PDF", size: "2.4 MB" },
-    { name: "Instrukcja obsługi PL", type: "PDF", size: "8.1 MB" },
-    { name: "Specyfikacja techniczna", type: "PDF", size: "1.2 MB" },
-    { name: "Certyfikaty zgodności", type: "PDF", size: "0.8 MB" },
-  ];
-
   // Loading state
   if (!categoryParam || !productSlug) {
     return (
@@ -249,10 +242,9 @@ const ProductPage = ({ params }: ProductPageProps) => {
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <Tabs defaultValue="description" className="w-full">
-            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 mb-8">
+            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 mb-8">
               <TabsTrigger value="description">Opis</TabsTrigger>
               <TabsTrigger value="specs">Specyfikacja</TabsTrigger>
-              <TabsTrigger value="downloads">Pliki</TabsTrigger>
               <TabsTrigger value="buy">Gdzie kupić</TabsTrigger>
             </TabsList>
 
@@ -301,30 +293,6 @@ const ProductPage = ({ params }: ProductPageProps) => {
     </CardContent>
   </Card>
 </TabsContent>
-
-            <TabsContent value="downloads">
-              <Card>
-                <CardContent className="p-8">
-                  <h3 className="text-xl font-semibold mb-6">Pliki do pobrania</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {downloads.map((file, index) => (
-                      <div key={index} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-emerald-300 transition-colors">
-                        <div className="flex items-center gap-3">
-                          <FileText className="h-10 w-10 text-emerald-600" />
-                          <div>
-                            <h4 className="font-medium text-gray-900">{file.name}</h4>
-                            <p className="text-sm text-gray-500">{file.type} • {file.size}</p>
-                          </div>
-                        </div>
-                        <Button size="sm" variant="ghost" className="text-emerald-600">
-                          <Download className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
 
             <TabsContent value="buy">
               <Card>

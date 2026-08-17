@@ -658,7 +658,6 @@ export default function PosnetTemoOnlineProductPage() {
             {[
               { id: 'timeline', label: 'Proces zakupu i wdrożenia' },
               { id: 'specs', label: 'Specyfikacja' },
-              { id: 'downloads', label: 'Pliki do pobrania' }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -692,40 +691,6 @@ export default function PosnetTemoOnlineProductPage() {
           <Specifications />
         </div>
 
-        {/* Pliki do pobrania Section */}
-        <div id="downloads" className="scroll-mt-24 mb-16">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6">Pliki do pobrania</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { title: "Karta katalogowa", type: "PDF", size: "1.2 MB" },
-              { title: "Instrukcja obsługi", type: "PDF", size: "2.8 MB" },
-              { title: "Specyfikacja techniczna", type: "PDF", size: "890 KB" }
-            ].map((file, index) => (
-              <motion.div
-                key={index}
-                className="bg-white rounded-lg p-6 border border-gray-200 hover:border-emerald-300 cursor-pointer transition-colors"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -2 }}
-              >
-                <div className="flex items-center mb-4">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mr-4">
-                    <FileText className="w-6 h-6 text-emerald-600" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900">{file.title}</h4>
-                    <p className="text-sm text-gray-500">{file.type} • {file.size}</p>
-                  </div>
-                </div>
-                <button className="w-full bg-emerald-50 text-emerald-600 py-2 rounded-lg hover:bg-emerald-100 transition-colors flex items-center justify-center">
-                  <Download className="w-4 h-4 mr-2" />
-                  Pobierz
-                </button>
-              </motion.div>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Courier Service Section - POZA PORTALEM */}
