@@ -1,0 +1,24 @@
+# Lista wizyt serwisowych — przegląd drukarek fiskalnych, wrzesień 2026.
+# Źródło: Daty_godziny_przeglądów_fiskalnych.numbers (18.08.2026). Adresy dobrane z bazy odbiorców.
+# Separator: średnik. Wiersze zaczynające się od # są pomijane.
+# UWAGA: odpowiedzi mają iść na jakub.tiuchty@takma.com.pl, nie na serwis@ — stąd --reply-to.
+# Wysyłka:
+#   node scripts/send-mailing.mjs public/mailing/przeglad-fiskalny.html mailing/przeglady-fiskalne.csv --send --reply-to jakub.tiuchty@takma.com.pl
+email;nadlesnictwo;data;godzina
+zielonagora@zielonagora.lasy.gov.pl;Nadleśnictwo Zielona Góra;4 września 2026 (piątek);10:00
+myszyniec@olsztyn.lasy.gov.pl;Nadleśnictwo Myszyniec;7 września 2026 (poniedziałek);10:30
+mlynary@olsztyn.lasy.gov.pl;Nadleśnictwo Młynary;8 września 2026 (wtorek);8:00
+zaporowo@olsztyn.lasy.gov.pl;Nadleśnictwo Zaporowo;8 września 2026 (wtorek);9:00
+gorowo@olsztyn.lasy.gov.pl;Nadleśnictwo Górowo Iławeckie;8 września 2026 (wtorek);12:30
+korpele@olsztyn.lasy.gov.pl;Nadleśnictwo Korpele;9 września 2026 (środa);9:00
+przasnysz@olsztyn.lasy.gov.pl;Nadleśnictwo Przasnysz;9 września 2026 (środa);12:30
+ciechanow@olsztyn.lasy.gov.pl;Nadleśnictwo Ciechanów;10 września 2026 (czwartek);9:30
+parciaki@olsztyn.lasy.gov.pl;Nadleśnictwo Parciaki;10 września 2026 (czwartek);11:30
+ostroleka@olsztyn.lasy.gov.pl;Nadleśnictwo Ostrołęka;10 września 2026 (czwartek);13:00
+ilawa@olsztyn.lasy.gov.pl;Nadleśnictwo Iława;11 września 2026 (piątek);8:00
+susz@olsztyn.lasy.gov.pl;Nadleśnictwo Susz;11 września 2026 (piątek);10:00
+lidzbark@olsztyn.lasy.gov.pl;Nadleśnictwo Lidzbark;11 września 2026 (piątek);13:30
+olsztyn@olsztyn.lasy.gov.pl;Nadleśnictwo Olsztyn;14 września 2026 (poniedziałek);8:30
+wichrowo@olsztyn.lasy.gov.pl;Nadleśnictwo Wichrowo;14 września 2026 (poniedziałek);12:00
+strzebielino@gdansk.lasy.gov.pl;Nadleśnictwo Strzebielino;15 września 2026 (wtorek);10:00
+nowytarg@krakow.lasy.gov.pl;Nadleśnictwo Nowy Targ;16 września 2026 (środa);10:00
