@@ -128,6 +128,13 @@ if (mode === '--preview') {
 
 // ── Wysyłka ──────────────────────────────────────────────────────────────────
 const resend = new Resend(env.RESEND_API_KEY)
+// Nagłówki oczekiwane przez filtry od poczty masowej — ich brak podbija punktację
+// spamową (potwierdzone kwarantanną Barracudy w Lasach Państwowych, 19.08.2026).
+const LIST_HEADERS = {
+  'List-Unsubscribe': `<mailto:${REPLY_TO}?subject=rezygnacja>`,
+  'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+}
+
 const FROM = 'TAKMA Serwis <oferta@rejestratory.info>'
 
 const targets = mode === '--test' ? [{ ...rows[0], EMAIL: modeArg }] : rows
@@ -146,7 +153,7 @@ for (let i = 0; i < targets.length; i++) {
   const subject = (html.match(/<title>([^<]+)<\/title>/) || [])[1]?.trim()
   if (!subject) { console.error('Brak <title> w szablonie — nie mam tematu maila.'); process.exit(1) }
   try {
-    const payload = { from: FROM, replyTo: REPLY_TO, to: row.EMAIL, subject, html }
+    const payload = { from: FROM, replyTo: REPLY_TO, to: row.EMAIL, subject, html, headers: LIST_HEADERS }
     if (sendAt) payload.scheduledAt = sendAt
     const { data, error } = await resend.emails.send(payload)
     if (error) throw new Error(error.message)

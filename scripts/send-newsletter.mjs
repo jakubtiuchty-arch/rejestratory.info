@@ -85,6 +85,14 @@ if (mode === '--list') {
 
 // ── Wysyłka ──────────────────────────────────────────────────────────────────
 const resend = new Resend(env.RESEND_API_KEY)
+// Nagłówki oczekiwane przez filtry od poczty masowej — ich brak podbija punktację
+// spamową (potwierdzone kwarantanną Barracudy w Lasach Państwowych, 19.08.2026).
+// Rezygnacja obsługiwana jest ręcznie: odpowiedź słowem „rezygnacja".
+const LIST_HEADERS = {
+  'List-Unsubscribe': '<mailto:takma@takma.com.pl?subject=rezygnacja>',
+  'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+}
+
 const FROM = 'TAKMA <oferta@rejestratory.info>'
 const REPLY_TO = 'takma@takma.com.pl'
 
@@ -99,7 +107,7 @@ if (sendAt) console.log(`Wysyłka zaplanowana na: ${sendAt}`)
 for (let i = 0; i < targets.length; i++) {
   const to = targets[i]
   try {
-    const payload = { from: FROM, replyTo: REPLY_TO, to, subject, html }
+    const payload = { from: FROM, replyTo: REPLY_TO, to, subject, html, headers: LIST_HEADERS }
     if (sendAt) payload.scheduledAt = sendAt
     const { data, error } = await resend.emails.send(payload)
     if (error) throw new Error(error.message)
