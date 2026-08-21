@@ -56,5 +56,8 @@ console.log(`\nAnulowane: ${ok}, błędy: ${fail}`)
 if (failed.length) {
   const f = path.replace(/\.json$/, '-cancel-errors.json')
   writeFileSync(f, JSON.stringify(failed, null, 2))
-  console.log(`Nieudane anulowania zapisane w ${f} — TE MAILE NADAL POJDĄ`)
+  console.log(`Nieudane anulowania zapisane w ${f}`)
+  console.log('UWAGA: sprawdź ich status przez resend.emails.get(id) zanim uznasz, że pójdą.')
+  console.log('Błąd "Email is not scheduled" zwykle znaczy, że mail ma status suppressed')
+  console.log('(adres na liście blokad Resend po wcześniejszym odbiciu) — taki mail NIE zostanie wysłany.')
 }
