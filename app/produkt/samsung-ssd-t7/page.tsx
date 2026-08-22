@@ -1,193 +1,107 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  Download,
-  X,
-  Calculator,
-  BarChart3,
-  FileText,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Laptop
-} from 'lucide-react'
-import { useInquiry } from '@/components/InquiryContext'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-white rounded-lg overflow-hidden cursor-pointer p-12"
-        style={{ minHeight: '500px' }}
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src={images[currentImage]}
-          alt="Samsung SSD T7 3.2TB"
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src={images[currentImage]}
-                alt="Samsung SSD T7 3.2TB - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
+const data: ProductData = {
+  slug: 'samsung-ssd-t7',
+  name: 'Samsung SSD T7',
+  category: 'Akcesoria komputerowe',
+  categoryHref: '/kategoria/akcesoria-komputerowe',
+  images: ['/ssd_t9_1.png'],
+  inquiry: {
+    description: 'Zewnętrzny dysk SSD USB 3.2 Gen 2',
+    specifications: 'Odczyt do 1050 MB/s · USB-C 10 Gb/s · szyfrowanie AES 256 bit · 58 g · 8 mm grubości',
+  },
+  whyNavLabel: 'Dlaczego T7',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W biurze nadleśnictwa',
+  highlights: [
+    { icon: ICON.transfer, label: 'Odczyt', value: 'do 1050 MB/s' },
+    { icon: ICON.dyskzew, label: 'Grubość', value: '8 mm, waga 58 g' },
+    { icon: ICON.usbc, label: 'Złącze', value: 'USB-C 3.2 Gen 2 (10 Gb/s)' },
+    { icon: ICON.klodka, label: 'Zabezpieczenie', value: 'AES 256 bit i hasło' },
+  ],
+  variants: [
+    { id: 'pojemnosc', label: 'Pojemność', options: ['500 GB', '1 TB', '2 TB'] },
+  ],
+  specGroups: [
+    {
+      title: 'Wydajność',
+      rows: [
+        { k: 'Odczyt sekwencyjny', v: 'do 1050 MB/s' },
+        { k: 'Zapis sekwencyjny', v: 'do 1000 MB/s' },
+        { k: 'Interfejs', v: 'USB 3.2 Gen 2, przepustowość 10 Gb/s' },
+        { k: 'Złącze', v: 'USB-C' },
+      ],
+    },
+    {
+      title: 'Obudowa',
+      rows: [
+        { k: 'Wymiary', v: '85 × 57 × 8 mm' },
+        { k: 'Waga', v: '58 g' },
+        { k: 'Materiał', v: 'aluminium' },
+        { k: 'Chłodzenie', v: 'warstwa rozpraszająca ciepło pod obudową' },
+      ],
+    },
+    {
+      title: 'Zabezpieczenia i zgodność',
+      rows: [
+        { k: 'Szyfrowanie', v: 'sprzętowe AES 256 bit' },
+        { k: 'Ochrona hasłem', v: 'tak, przez oprogramowanie Samsung' },
+        { k: 'Systemy', v: 'Windows, macOS, Android' },
+        { k: 'Gwarancja', v: '5 lat' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.dyskzew,
+      title: 'Osiem milimetrów grubości',
+      body:
+        'Pięćdziesiąt osiem gramów w aluminiowej obudowie — dysk wchodzi do przedniej kieszeni torby na laptopa i nie przypomina o sobie ciężarem.',
+    },
+    {
+      icon: ICON.transfer,
+      title: 'Kopia zapasowa w tle',
+      body:
+        'Tysiąc pięćdziesiąt megabajtów na sekundę wystarcza, żeby archiwizacja dokumentacji leśnictwa przestała być zadaniem na koniec dnia.',
+    },
+    {
+      icon: ICON.klodka,
+      title: 'Dane pod hasłem',
+      body:
+        'Sprzętowe szyfrowanie AES 256 bit z ochroną hasłem — zawartość dysku zostaje zamknięta razem z nim.',
+    },
+    {
+      icon: ICON.usbc,
+      title: 'Podłączasz i pracujesz',
+      body:
+        'USB-C bez dodatkowego zasilania, zgodny z komputerami i telefonami z Androidem.',
+    },
+  ],
+  whereToBuy: [
+    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
+    { name: 'TAKMA' },
+  ],
+  signature: [
+    {
+      icon: ICON.dyskzew,
+      title: 'Najlżejszy dysk w tym zestawieniu',
+      body:
+        'Pięćdziesiąt osiem gramów i osiem milimetrów grubości. Jeśli dysk ma jeździć w terenie razem z laptopem, waga zaczyna mieć znaczenie.',
+      tone: 'akcent',
+    },
+  ],
+  related: [
+    {
+      name: 'Samsung SSD T9 1 TB',
+      href: '/produkt/samsung-ssd-t9',
+      note: 'Dwa razy szybszy, odporny na upadki z 3 m',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function SamsungSSDT7ProductPage() {
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  const productImages = [
-    '/ssd_t7_1.png'
-  ]
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/akcesoria-komputerowe" className="hover:text-emerald-600">Akcesoria komputerowe</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Samsung SSD T7 3.2TB</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4 flex-grow pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={productImages} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Akcesoria komputerowe
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Samsung SSD T7 3.2TB
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Pojemny zewnętrzny dysk SSD z zabezpieczeniem hasłem. Połączenie USB-C, duża pojemność do przechowywania danych, szybki transfer plików. Idealny do pracy w nadleśnictwach - niezawodny, bezpieczny i wydajny do archiwizacji dokumentów i danych terenowych.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'samsung-ssd-t7',
-                      name: 'Samsung SSD T7 3.2TB',
-                      image: '/placeholder.png',
-                      category: 'Akcesoria komputerowe',
-                      description: 'Pojemny zewnętrzny dysk SSD z zabezpieczeniem hasłem',
-                      specifications: 'Pojemność 3.2TB, USB-C, szybkość do 1050 MB/s'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-{/* Footer */}
-<Footer />
-</div>
-  )
+export default function SamsungSSDT7Page() {
+  return <ProductPage data={data} />
 }

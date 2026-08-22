@@ -1,193 +1,104 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  Download,
-  X,
-  Calculator,
-  BarChart3,
-  FileText,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Laptop
-} from 'lucide-react'
-import { useInquiry } from '@/components/InquiryContext'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-white rounded-lg overflow-hidden cursor-pointer p-12"
-        style={{ minHeight: '500px' }}
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src={images[currentImage]}
-          alt="Samsung SSD T9 1TB"
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src={images[currentImage]}
-                alt="Samsung SSD T9 1TB - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
+const data: ProductData = {
+  slug: 'samsung-ssd-t9',
+  name: 'Samsung SSD T9 1 TB',
+  category: 'Akcesoria komputerowe',
+  categoryHref: '/kategoria/akcesoria-komputerowe',
+  images: ['/ssd_t7_1.png'],
+  inquiry: {
+    description: 'Zewnętrzny dysk SSD USB 3.2 Gen 2x2',
+    specifications: '1 TB · odczyt do 2000 MB/s · USB-C 20 Gb/s · szyfrowanie AES 256 bit · 122 g',
+  },
+  whyNavLabel: 'Dlaczego T9',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W biurze nadleśnictwa',
+  highlights: [
+    { icon: ICON.transfer, label: 'Odczyt', value: 'do 2000 MB/s' },
+    { icon: ICON.pojemnosc, label: 'Pojemność', value: '1 TB' },
+    { icon: ICON.usbc, label: 'Złącze', value: 'USB-C 3.2 Gen 2x2 (20 Gb/s)' },
+    { icon: ICON.upadek, label: 'Odporność', value: 'upadki z 3 m' },
+  ],
+  specGroups: [
+    {
+      title: 'Wydajność',
+      rows: [
+        { k: 'Odczyt sekwencyjny', v: 'do 2000 MB/s' },
+        { k: 'Zapis sekwencyjny', v: 'do 1950 MB/s' },
+        { k: 'Interfejs', v: 'USB 3.2 Gen 2x2, przepustowość 20 Gb/s' },
+        { k: 'Złącze', v: 'USB-C' },
+      ],
+    },
+    {
+      title: 'Obudowa',
+      rows: [
+        { k: 'Wymiary', v: '88 × 60 × 14 mm' },
+        { k: 'Waga', v: '122 g' },
+        { k: 'Odporność', v: 'upadki z wysokości do 3 m' },
+        { k: 'Wykończenie', v: 'wzmocniona obudowa z powłoką antypoślizgową' },
+      ],
+    },
+    {
+      title: 'Zabezpieczenia i zgodność',
+      rows: [
+        { k: 'Szyfrowanie', v: 'sprzętowe AES 256 bit' },
+        { k: 'Ochrona hasłem', v: 'tak, przez oprogramowanie Samsung' },
+        { k: 'Systemy', v: 'Windows, macOS, Android' },
+        { k: 'Gwarancja', v: '5 lat' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.transfer,
+      title: 'Dwa tysiące megabajtów na sekundę',
+      body:
+        'Kopia zdjęć z powierzchni czy archiwum dokumentacji schodzi z dysku w tempie, przy którym nie warto już wychodzić po kawę.',
+    },
+    {
+      icon: ICON.klodka,
+      title: 'Dane pod hasłem, nie na wierzchu',
+      body:
+        'Sprzętowe szyfrowanie AES 256 bit z ochroną hasłem — dysk wyniesiony z biura albo zgubiony w terenie nie jest otwartą teczką.',
+    },
+    {
+      icon: ICON.upadek,
+      title: 'Zniesie upadek z trzech metrów',
+      body:
+        'Wzmocniona obudowa z gumową powłoką — sprzęt do noszenia w plecaku razem z resztą wyposażenia, nie do trzymania w szufladzie.',
+    },
+    {
+      icon: ICON.usbc,
+      title: 'Jeden przewód do laptopa',
+      body:
+        'USB-C w standardzie 3.2 Gen 2x2 — dysk podłącza się jednym kablem, bez zasilacza i bez przejściówek.',
+    },
+  ],
+  whereToBuy: [
+    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
+    { name: 'TAKMA' },
+  ],
+  signature: [
+    {
+      icon: ICON.klodka,
+      title: 'Szyfrowanie sprzętowe AES 256 bit',
+      body:
+        'Dysk szyfruje dane układem w obudowie, a nie programem na komputerze. Bez hasła zawartość jest nieczytelna także po wyjęciu kości pamięci.',
+      tone: 'akcent',
+    },
+  ],
+  related: [
+    {
+      name: 'Samsung SSD T7',
+      href: '/produkt/samsung-ssd-t7',
+      note: 'Cieńsza obudowa, odczyt do 1050 MB/s',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function SamsungSSDT9ProductPage() {
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  const productImages = [
-    '/ssd_t9_1.png'
-  ]
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/akcesoria-komputerowe" className="hover:text-emerald-600">Akcesoria komputerowe</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Samsung SSD T9 1TB</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4 flex-grow pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={productImages} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Akcesoria komputerowe
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Samsung SSD T9 1TB
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Szybki zewnętrzny dysk SSD z interfejsem USB 3.2 Gen 2x2. Połączenie USB-C, bardzo szybki transfer danych, kompaktowa konstrukcja. Idealny do pracy w nadleśnictwach - błyskawiczny, mobilny i niezawodny do przenoszenia dużych plików i dokumentacji terenowej.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'samsung-ssd-t9',
-                      name: 'Samsung SSD T9 1TB',
-                      image: '/placeholder.png',
-                      category: 'Akcesoria komputerowe',
-                      description: 'Szybki zewnętrzny dysk SSD z interfejsem USB 3.2 Gen 2x2',
-                      specifications: 'Pojemność 1TB, USB-C, szybkość do 2000 MB/s'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-{/* Footer */}
-<Footer />
-</div>
-  )
+export default function SamsungSSDT9Page() {
+  return <ProductPage data={data} />
 }

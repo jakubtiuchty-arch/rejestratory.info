@@ -1,193 +1,77 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  Download,
-  X,
-  Calculator,
-  BarChart3,
-  FileText,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Laptop
-} from 'lucide-react'
-import { useInquiry } from '@/components/InquiryContext'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-white rounded-lg overflow-hidden cursor-pointer p-12"
-        style={{ minHeight: '500px' }}
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src={images[currentImage]}
-          alt="Podkładka pod mysz"
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src={images[currentImage]}
-                alt="Podkładka pod mysz - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
+const data: ProductData = {
+  slug: 'podkladka-pod-mysz',
+  name: 'Podkładka pod mysz z podpórką',
+  category: 'Akcesoria komputerowe',
+  categoryHref: '/kategoria/akcesoria-komputerowe',
+  images: ['/podkladka_pod_myszke_1.png'],
+  inquiry: {
+    description: 'Podkładka z żelową podpórką pod nadgarstek',
+    specifications: 'Podpórka pod nadgarstek · spód antypoślizgowy · wymiary ok. 25 × 20 cm',
+  },
+  whyNavLabel: 'Dlaczego Podkładka',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W biurze nadleśnictwa',
+  highlights: [
+    { icon: ICON.podkladka, label: 'Podpórka', value: 'pod nadgarstek' },
+    { icon: ICON.nadgarstek, label: 'Ustawienie ręki', value: 'nadgarstek uniesiony' },
+    { icon: ICON.mysz, label: 'Powierzchnia', value: 'gładka, pod czujnik optyczny' },
+    { icon: ICON.antyposlizg, label: 'Spód', value: 'antypoślizgowy' },
+  ],
+  specGroups: [
+    {
+      title: 'Wykonanie',
+      rows: [
+        { k: 'Podpórka', v: 'pod nadgarstek' },
+        { k: 'Spód', v: 'antypoślizgowy' },
+        { k: 'Wymiary', v: 'ok. 25 × 20 cm' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.nadgarstek,
+      title: 'Nadgarstek nie leży na krawędzi biurka',
+      body:
+        'Podpórka unosi rękę tak, żeby nacisk rozłożył się na przedramię — to najprostsza zmiana w stanowisku, jaką da się wprowadzić w jedno popołudnie.',
+    },
+    {
+      icon: ICON.podkladka,
+      title: 'Jedna rzecz, nie dwie',
+      body:
+        'Podkładka i podpórka w jednym elemencie, bez osobnej poduszki, która i tak ucieka spod ręki.',
+    },
+    {
+      icon: ICON.antyposlizg,
+      title: 'Nie jedzie po blacie',
+      body:
+        'Antypoślizgowy spód trzyma podkładkę w miejscu przy szybkim ruchu myszą.',
+    },
+    {
+      icon: ICON.mysz,
+      title: 'Powierzchnia pod czujnik optyczny',
+      body:
+        'Gładka, jednolita faktura — mysz nie gubi śledzenia tak jak na lakierowanym blacie.',
+    },
+  ],
+  whereToBuy: [
+    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
+    { name: 'TAKMA' },
+  ],
+  hideService: true,
+  related: [
+    {
+      name: 'Podnóżek biurowy',
+      href: '/produkt/podnozek-biurowy',
+      note: 'Druga strona tego samego stanowiska',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function PodkladkaPodMyszProductPage() {
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  const productImages = [
-    '/podkladka_pod_myszke_1.png'
-  ]
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/akcesoria-komputerowe" className="hover:text-emerald-600">Akcesoria komputerowe</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Podkładka pod mysz</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4 flex-grow pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={productImages} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Akcesoria komputerowe
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Podkładka pod mysz
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Ergonomiczna podkładka pod mysz z podpórką nadgarstka. Powierzchnia antypoślizgowa, wygodne wymiary. Idealna do pracy biurowej w nadleśnictwach - zapewnia komfort podczas długiej pracy przy komputerze i chroni nadgarstki.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'podkladka-pod-mysz',
-                      name: 'Podkładka pod mysz',
-                      image: '/placeholder.png',
-                      category: 'Akcesoria komputerowe',
-                      description: 'Ergonomiczna podkładka pod mysz z podpórką nadgarstka',
-                      specifications: 'Powierzchnia antypoślizgowa, wymiary 25x20cm'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-{/* Footer */}
-<Footer />
-</div>
-  )
+export default function PodkladkaPodMyszPage() {
+  return <ProductPage data={data} />
 }

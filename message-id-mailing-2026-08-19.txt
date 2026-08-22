@@ -1,0 +1,23 @@
+Mailing: przegląd drukarek fiskalnych, wysyłka 19.08.2026 09:00
+Nadawca: oferta@rejestratory.info (SPF+DKIM zweryfikowane, DMARC p=none)
+Status u operatora (Resend/Amazon SES): wszystkie przyjęte przez mx*.lasy.gov.pl z kodem 250
+
+Adresat | Message-ID | status
+---
+zielonagora@zielonagora.lasy.gov.pl | <010201a018d26155-cab8cda7-9d7d-43d7-a3e0-52bdc02916a0-000000@eu-west-1.amazonses.com> | delivered
+myszyniec@olsztyn.lasy.gov.pl | <010201a018d2695e-a1017d73-728e-45ef-8618-65d266636d93-000000@eu-west-1.amazonses.com> | delivered
+mlynary@olsztyn.lasy.gov.pl | <010201a018d217bc-d872ea13-edda-4561-b109-e99cd13d7850-000000@eu-west-1.amazonses.com> | delivered
+zaporowo@olsztyn.lasy.gov.pl | <010201a018d26914-0d0f8975-ccea-477a-aa51-242fdcee121a-000000@eu-west-1.amazonses.com> | delivered
+gorowo@olsztyn.lasy.gov.pl | <010201a018d23718-b7b15518-8d93-4a5d-8231-b70f1ae5dee0-000000@eu-west-1.amazonses.com> | delivered
+korpele@olsztyn.lasy.gov.pl | <010201a018d1d8b2-271d3cf5-42c4-4fd1-b9e2-1f94abbcad0f-000000@eu-west-1.amazonses.com> | delivered
+przasnysz@olsztyn.lasy.gov.pl | <010201a018d1e78d-a6bc957b-c294-4284-8c73-cf4d2599a5ee-000000@eu-west-1.amazonses.com> | delivered
+ciechanow@olsztyn.lasy.gov.pl | <010201a018d24265-e59b7806-0009-472a-9edb-f121f8f3d757-000000@eu-west-1.amazonses.com> | delivered
+parciaki@olsztyn.lasy.gov.pl | <010201a018d27560-77438f87-1970-4786-990b-27291c41dce8-000000@eu-west-1.amazonses.com> | delivered
+ostroleka@olsztyn.lasy.gov.pl | <010201a018d2332f-66f38ae4-7ca3-4cdc-a287-14c67de7a28a-000000@eu-west-1.amazonses.com> | delivered
+ilawa@olsztyn.lasy.gov.pl | <010201a018d1f71a-a510dcd8-9f1b-4c2e-baa3-188c2ff4713d-000000@eu-west-1.amazonses.com> | delivered
+susz@olsztyn.lasy.gov.pl | <010201a018d26949-b57bc542-50df-44d2-8646-8916e1bdc9c2-000000@eu-west-1.amazonses.com> | delivered
+lidzbark@olsztyn.lasy.gov.pl | <010201a018d209df-00e038f9-2806-4cc7-9324-29d8cb1976fe-000000@eu-west-1.amazonses.com> | delivered
+olsztyn@olsztyn.lasy.gov.pl | <010201a018d22f5d-79dfe130-5305-4a67-8be2-2be528f13a8e-000000@eu-west-1.amazonses.com> | delivered
+wichrowo@olsztyn.lasy.gov.pl | <010201a018d1f7f2-64ce9757-9c83-4aa7-bd5c-bbe2731ad7ad-000000@eu-west-1.amazonses.com> | delivered
+strzebielino@gdansk.lasy.gov.pl | <010201a018d1f3fd-2a9b8b90-a200-4e31-8c8c-a9061f2fb4ec-000000@eu-west-1.amazonses.com> | delivered
+nowytarg@krakow.lasy.gov.pl | <010201a018d22140-d0df2a59-7a1c-4720-ac0b-8ce4481420de-000000@eu-west-1.amazonses.com> | delivered

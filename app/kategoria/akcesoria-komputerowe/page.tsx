@@ -4,37 +4,19 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { 
-  Search, 
-  ShoppingCart, 
-  Shield, 
-  Truck, 
-  Headphones, 
-  Phone,
-  Mail,
-  MapPin,
-  Package,
-  ChevronRight,
-  Filter,
-  Grid3X3,
-  List,
-  SortAsc,
-  Eye,
-  Heart,
-  ArrowUpDown
-} from "lucide-react";
+import { ICON, naCiemnym } from '@/components/product/icons'
 
 // Placeholder produkty dla kategorii Akcesoria komputerowe
 const products = [
   {
     id: 1,
-    name: "Torba na laptop",
+    name: "Torba na laptopa 15,6\u2033",
     category: "Akcesoria komputerowe",
     description: "Wytrzymała torba na laptopa z miejscem na dokumenty i akcesoria",
-    specifications: "Do laptopów 15,6\", wodoodporna, wyściełane wnętrze",
+    specifications: "Laptopy do 15,6\u2033, materiał wodoodporny, wyściełana komora",
     price: "150 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "torba_na_laptopa_15.png",
     badge: null,
     featured: false,
@@ -42,13 +24,13 @@ const products = [
   },
   {
     id: 2,
-    name: "Podkładka pod mysz",
+    name: "Podkładka pod mysz z podpórką",
     category: "Akcesoria komputerowe", 
     description: "Ergonomiczna podkładka pod mysz z podpórką nadgarstka",
     specifications: "Powierzchnia antypoślizgowa, wymiary 25x20cm",
     price: "45 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "podkladka_pod_myszke_1.png",
     badge: null,
     featured: false,
@@ -62,8 +44,8 @@ const products = [
     specifications: "Regulacja kąta nachylenia, powierzchnia antypoślizgowa",
     price: "120 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA", 
-    image: "podnozek_biurowy_1.png",
+    whereToBuy: "ZUP Łódź, TAKMA", 
+    image: "podnozek_pod_biurko_1.png",
     badge: null,
     featured: false,
     customUrl: "/produkt/podnozek-biurowy"
@@ -76,22 +58,22 @@ const products = [
     specifications: "Pojemność 1TB, USB-C, szybkość do 2000 MB/s",
     price: "650 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
-    image: "ssd_t9_1.png", 
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "ssd_t7_1.png", 
     badge: null,
     featured: true,
     customUrl: "/produkt/samsung-ssd-t9"
   },
   {
     id: 5,
-    name: "Samsung SSD T7 3.2TB",
+    name: "Samsung SSD T7",
     category: "Akcesoria komputerowe",
     description: "Pojemny zewnętrzny dysk SSD z zabezpieczeniem hasłem",
-    specifications: "Pojemność 3.2TB, USB-C, szybkość do 1050 MB/s",
+    specifications: "500 GB / 1 TB / 2 TB, USB-C, odczyt do 1050 MB/s",
     price: "1 850 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
-    image: "ssd_t7_1.png",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "ssd_t9_1.png",
     badge: null,
     featured: true,
     customUrl: "/produkt/samsung-ssd-t7"
@@ -104,7 +86,7 @@ const products = [
     specifications: "Licencja roczna, 1 użytkownik, pełny pakiet Office",
     price: "550 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "ms365_1.png",
     badge: null,
     featured: true,
@@ -112,13 +94,13 @@ const products = [
   },
   {
     id: 7,
-    name: "Klawiatura i mysz bezprzewodowa Dell KM5221",
+    name: "Dell Pro KM5221W — klawiatura i mysz",
     category: "Akcesoria komputerowe",
     description: "Bezprzewodowy zestaw klawiatura + mysz z długą żywotnością baterii",
-    specifications: "Połączenie USB, zasięg do 10m, cicha praca",
+    specifications: "2,4 GHz, bateria do 36 miesięcy, mysz do 4000 dpi",
     price: "180 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "km5221_1.png",
     badge: null,
     featured: false,
@@ -126,13 +108,13 @@ const products = [
   },
   {
     id: 8,
-    name: "Klawiatura i mysz bezprzewodowa Dell KM7321",
+    name: "Dell Pro Plus KM7321W — klawiatura i mysz",
     category: "Akcesoria komputerowe",
-    description: "Premium zestaw bezprzewodowy z podświetleniem klawiszy",
-    specifications: "Bluetooth + USB, wielozadaniowość, aluminiowa obudowa",
+    description: "Zestaw bezprzewodowy z przełączaniem między trzema urządzeniami",
+    specifications: "Bluetooth 5.0 i 2,4 GHz, do 3 urządzeń, mechanizm nożycowy",
     price: "320 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "km7321_1.png",
     badge: null,
     featured: true,
@@ -140,13 +122,13 @@ const products = [
   },
   {
     id: 9,
-    name: "Klawiatura i mysz bezprzewodowa HP 655",
+    name: "HP 655 — klawiatura i mysz",
     category: "Akcesoria komputerowe",
     description: "Ergonomiczny zestaw klawiatura + mysz dla komfortowej pracy",
-    specifications: "Połączenie USB, cicha klawiatura, optyczna mysz 1600 DPI",
+    specifications: "2,4 GHz, zasięg do 10 m, mysz 4000 dpi",
     price: "140 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "hp655_1.png",
     badge: null,
     featured: false,
@@ -160,7 +142,7 @@ const products = [
     specifications: "600 VA / 360 W, 230V, 2 gniazda Schuko, bateria VRLA 7Ah 12V",
     price: "450 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "vertin_600_1.png",
     badge: null,
     featured: false,
@@ -174,7 +156,7 @@ const products = [
     specifications: "1000 VA / 600 W, 230V, bateria VRLA 2x7Ah 12V, 3x Schuko + 3x C13",
     price: "650 PLN",
     availability: "Dostępny",
-    whereToBuy: "TAKMA",
+    whereToBuy: "ZUP Łódź, TAKMA",
     image: "vertin_1000_1.png",
     badge: null,
     featured: false,
@@ -252,9 +234,9 @@ export default function CategoryPage() {
         <div className="container mx-auto px-4 py-4">
           <nav className="flex items-center gap-2 text-sm">
             <a href="/" className="text-gray-600 hover:text-emerald-600">Strona główna</a>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
+            <img src={ICON.chevronPrawo} alt="" className="h-4 w-4 mix-blend-multiply" />
             <a href="/kategoria/akcesoria-komputerowe" className="text-gray-600 hover:text-emerald-600">Produkty</a>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
+            <img src={ICON.chevronPrawo} alt="" className="h-4 w-4 mix-blend-multiply" />
             <span className="text-gray-900 font-medium">Akcesoria komputerowe</span>
           </nav>
         </div>
@@ -265,7 +247,7 @@ export default function CategoryPage() {
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 mb-6">
             <div className="w-16 h-16 bg-emerald-100 rounded-lg flex items-center justify-center">
-              <Package className="h-8 w-8 text-emerald-600" />
+              <img src={ICON.produkt} alt="" className="h-8 w-8 mix-blend-multiply" />
             </div>
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Akcesoria komputerowe</h1>
@@ -286,7 +268,7 @@ export default function CategoryPage() {
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
             {/* Wyszukiwarka */}
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <img src={ICON.lupa} alt="" className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 mix-blend-multiply" />
               <input
                 type="text"
                 placeholder="Szukaj w akcesoriach..."
@@ -303,7 +285,7 @@ export default function CategoryPage() {
                 onClick={() => setShowFilters(!showFilters)}
                 className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
               >
-                <Filter className="h-4 w-4" />
+                <img src={ICON.filtr} alt="" className="h-4 w-4 mix-blend-multiply" />
                 Filtry
               </button>
 
@@ -326,13 +308,13 @@ export default function CategoryPage() {
                   onClick={() => setViewMode("grid")}
                   className={`p-2 ${viewMode === "grid" ? "bg-emerald-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}
                 >
-                  <Grid3X3 className="h-4 w-4" />
+                  <img src={viewMode === "grid" ? naCiemnym(ICON.aplikacje) : ICON.aplikacje} alt="" className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => setViewMode("list")}
                   className={`p-2 ${viewMode === "list" ? "bg-emerald-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}
                 >
-                  <List className="h-4 w-4" />
+                  <img src={viewMode === "list" ? naCiemnym(ICON.lista) : ICON.lista} alt="" className="h-4 w-4" />
                 </button>
               </div>
             </div>
@@ -373,7 +355,7 @@ export default function CategoryPage() {
           {filteredProducts.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="h-12 w-12 text-gray-400" />
+                <img src={ICON.lupa} alt="" className="h-12 w-12 mix-blend-multiply" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Brak produktów</h3>
               <p className="text-gray-600">Spróbuj zmienić filtry lub wyszukiwaną frazę</p>

@@ -1,193 +1,84 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  Download,
-  X,
-  Calculator,
-  BarChart3,
-  FileText,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Laptop
-} from 'lucide-react'
-import { useInquiry } from '@/components/InquiryContext'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-white rounded-lg overflow-hidden cursor-pointer p-12"
-        style={{ minHeight: '500px' }}
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src={images[currentImage]}
-          alt="Torba na laptop 15,6''"
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src={images[currentImage]}
-                alt="Torba na laptop 15,6'' - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
+const data: ProductData = {
+  slug: 'torba-na-laptopa-15',
+  name: 'Torba na laptopa 15,6″',
+  category: 'Akcesoria komputerowe',
+  categoryHref: '/kategoria/akcesoria-komputerowe',
+  images: ['/torba_na_laptopa_15.png'],
+  inquiry: {
+    description: 'Torba na laptopa z przegrodą na dokumenty',
+    specifications: 'Laptopy do 15,6″ · wyściełana komora · materiał wodoodporny · kieszeń na dokumenty',
+  },
+  whyNavLabel: 'Dlaczego Torba',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W biurze nadleśnictwa',
+  highlights: [
+    { icon: ICON.torba, label: 'Rozmiar', value: 'laptopy do 15,6″' },
+    { icon: ICON.woda, label: 'Materiał', value: 'wodoodporny' },
+    { icon: ICON.wyscielenie, label: 'Komora na laptop', value: 'wyściełana' },
+    { icon: ICON.dokumenty, label: 'Dokumenty', value: 'osobna przegroda' },
+  ],
+  specGroups: [
+    {
+      title: 'Przeznaczenie',
+      rows: [
+        { k: 'Laptopy', v: 'do 15,6 cala' },
+        { k: 'Komora główna', v: 'wyściełana, na laptopa' },
+        { k: 'Przegroda', v: 'na dokumenty i akcesoria' },
+      ],
+    },
+    {
+      title: 'Wykonanie',
+      rows: [
+        { k: 'Materiał', v: 'wodoodporny' },
+        { k: 'Noszenie', v: 'uchwyt i pasek na ramię' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.wyscielenie,
+      title: 'Wyściełana komora na sprzęt',
+      body:
+        'Laptop jedzie w wyściełanej przegrodzie, a nie luzem między dokumentami — najczęstsza przyczyna pękniętej matrycy odpada.',
+    },
+    {
+      icon: ICON.woda,
+      title: 'Materiał wodoodporny',
+      body:
+        'Przejście z parkingu do biura w deszczu nie kończy się mokrą klawiaturą.',
+    },
+    {
+      icon: ICON.dokumenty,
+      title: 'Dokumenty osobno',
+      body:
+        'Segregator i wydruki mają własną przegrodę, więc nie trą o obudowę laptopa przy każdym kroku.',
+    },
+    {
+      icon: ICON.torba,
+      title: 'Do noszenia, nie do przenoszenia raz',
+      body:
+        'Uchwyt i pasek na ramię — torba jest przewidziana na codzienny dojazd, a nie na jednorazową przeprowadzkę sprzętu.',
+    },
+  ],
+  whereToBuy: [
+    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
+    { name: 'TAKMA' },
+  ],
+  hideService: true,
+  related: [
+    {
+      name: 'Samsung SSD T7',
+      href: '/produkt/samsung-ssd-t7',
+      note: 'Dysk, który zmieści się w przedniej kieszeni',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function TorbaNaLaptopProductPage() {
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  const productImages = [
-    '/torba_na_laptopa_15.png'
-  ]
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/akcesoria-komputerowe" className="hover:text-emerald-600">Akcesoria komputerowe</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Torba na laptop 15,6''</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4 flex-grow pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={productImages} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Akcesoria komputerowe
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Torba na laptop 15,6''
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Wytrzymała torba na laptopa z miejscem na dokumenty i akcesoria. Dopasowana do laptopów 15,6 cali, wodoodporna, wyściełane wnętrze. Idealna do pracy w nadleśnictwach - chroni sprzęt podczas transportu i zapewnia wygodne noszenie laptopa oraz dokumentacji.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'torba-na-laptopa-15',
-                      name: 'Torba na laptop 15,6\'\'',
-                      image: '/placeholder.png',
-                      category: 'Akcesoria komputerowe',
-                      description: 'Wytrzymała torba na laptopa z miejscem na dokumenty i akcesoria',
-                      specifications: 'Do laptopów 15,6", wodoodporna, wyściełane wnętrze'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-{/* Footer */}
-<Footer />
-</div>
-  )
+export default function TorbaNaLaptopaPage() {
+  return <ProductPage data={data} />
 }

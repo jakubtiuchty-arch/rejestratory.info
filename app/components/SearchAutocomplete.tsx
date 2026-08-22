@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react'
-import { Search, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { ICON } from '@/components/product/icons'
 
 // Lista wszystkich produktów
 const allProducts = [
@@ -92,15 +92,15 @@ const allProducts = [
   { name: "Posnet Temo Online", category: "Urządzenie fiskalne", url: "/produkt/posnet-temo-online", keywords: ["posnet", "temo", "online", "kasa", "fiskalna", "drukarka"] },
   
   // Akcesoria komputerowe
-  { name: "Torba na laptop", category: "Akcesoria komputerowe", url: "/produkt/torba-na-laptopa-15", keywords: ["torba", "laptop", "15", "plecak", "futerał", "pokrowiec"] },
+  { name: "Torba na laptopa 15,6\u2033", category: "Akcesoria komputerowe", url: "/produkt/torba-na-laptopa-15", keywords: ["torba", "laptop", "15", "plecak", "futerał", "pokrowiec"] },
   { name: "Podkładka pod mysz", category: "Akcesoria komputerowe", url: "/produkt/podkladka-pod-mysz", keywords: ["podkładka", "mysz", "myszka", "ergonomiczna", "nadgarstek"] },
   { name: "Podnóżek biurowy", category: "Akcesoria komputerowe", url: "/produkt/podnozek-biurowy", keywords: ["podnóżek", "biurowy", "ergonomia", "regulowany", "stopy"] },
   { name: "Samsung SSD T9 1TB", category: "Akcesoria komputerowe", url: "/produkt/samsung-ssd-t9", keywords: ["samsung", "ssd", "t9", "1tb", "dysk", "zewnętrzny", "usb"] },
-  { name: "Samsung SSD T7 3.2TB", category: "Akcesoria komputerowe", url: "/produkt/samsung-ssd-t7", keywords: ["samsung", "ssd", "t7", "3tb", "dysk", "zewnętrzny", "usb"] },
+  { name: "Samsung SSD T7", category: "Akcesoria komputerowe", url: "/produkt/samsung-ssd-t7", keywords: ["samsung", "ssd", "t7", "dysk", "zewnętrzny", "usb"] },
   { name: "Microsoft 365 Business Standard", category: "Akcesoria komputerowe", url: "/produkt/ms-365", keywords: ["microsoft", "365", "office", "licencja", "oprogramowanie", "business"] },
-  { name: "Klawiatura i mysz bezprzewodowa Dell KM5221", category: "Akcesoria komputerowe", url: "/produkt/dell-km5221", keywords: ["dell", "km5221", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] },
-  { name: "Klawiatura i mysz bezprzewodowa Dell KM7321", category: "Akcesoria komputerowe", url: "/produkt/dell-km7321", keywords: ["dell", "km7321", "klawiatura", "mysz", "bezprzewodowa", "zestaw", "premium"] },
-  { name: "Klawiatura i mysz bezprzewodowa HP 655", category: "Akcesoria komputerowe", url: "/produkt/hp-655", keywords: ["hp", "655", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] }
+  { name: "Dell Pro KM5221W — klawiatura i mysz", category: "Akcesoria komputerowe", url: "/produkt/dell-km5221", keywords: ["dell", "km5221", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] },
+  { name: "Dell Pro Plus KM7321W — klawiatura i mysz", category: "Akcesoria komputerowe", url: "/produkt/dell-km7321", keywords: ["dell", "km7321", "klawiatura", "mysz", "bezprzewodowa", "zestaw", "premium"] },
+  { name: "HP 655 — klawiatura i mysz", category: "Akcesoria komputerowe", url: "/produkt/hp-655", keywords: ["hp", "655", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] }
 ]
 
 interface SearchAutocompleteProps {
@@ -181,7 +181,7 @@ export default function SearchAutocomplete({ value, onChange }: SearchAutocomple
     <div ref={wrapperRef} className="relative w-full">
       {/* Input */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+        <img src={ICON.lupa} alt="" className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 mix-blend-multiply" />
         <input
           type="text"
           placeholder="Szukaj produktów... (min. 3 znaki)"
@@ -198,7 +198,7 @@ export default function SearchAutocomplete({ value, onChange }: SearchAutocomple
             }}
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
           >
-            <X className="h-4 w-4" />
+            <img src={ICON.zamknij} alt="" className="h-4 w-4 mix-blend-multiply" />
           </button>
         )}
       </div>
@@ -231,7 +231,7 @@ export default function SearchAutocomplete({ value, onChange }: SearchAutocomple
                 >
                   <div className="flex items-start gap-3">
                     <div className="flex-shrink-0 w-10 h-10 bg-gray-100 rounded flex items-center justify-center">
-                      <Search className="h-5 w-5 text-emerald-600" />
+                      <img src={ICON.lupa} alt="" className="h-5 w-5 mix-blend-multiply" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-semibold text-gray-900 truncate">
@@ -253,7 +253,7 @@ export default function SearchAutocomplete({ value, onChange }: SearchAutocomple
       {value.length > 0 && value.length < 3 && (
         <div className="absolute z-[9999] w-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-3">
           <div className="text-xs text-gray-500 flex items-center gap-2">
-            <Search className="h-4 w-4" />
+            <img src={ICON.lupa} alt="" className="h-4 w-4 mix-blend-multiply" />
             Wpisz co najmniej 3 znaki aby zobaczyć wyniki
           </div>
         </div>

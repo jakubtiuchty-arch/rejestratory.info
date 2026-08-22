@@ -2,20 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  X, 
-  Trash2, 
-  Send, 
-  Package, 
-  Mail,
-  User,
-  Phone,
-  Building2,
-  MessageSquare,
-  CheckCircle,
-  ShoppingCart,
-  AlertCircle
-} from 'lucide-react'
+import { ICON, naCiemnym } from './product/icons'
 import { useInquiry } from './InquiryContext'
 
 export default function InquiryCartPanel() {
@@ -129,7 +116,7 @@ export default function InquiryCartPanel() {
             <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white p-6 flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                  <ShoppingCart className="w-6 h-6" />
+                  <img src={naCiemnym(ICON.zamowienie)} alt="" className="h-6 w-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">Zapytanie ofertowe</h2>
@@ -144,7 +131,7 @@ export default function InquiryCartPanel() {
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <X className="w-5 h-5" />
+                <img src={naCiemnym(ICON.zamknij)} alt="" className="h-5 w-5" />
               </motion.button>
             </div>
 
@@ -159,7 +146,7 @@ export default function InquiryCartPanel() {
                     animate={{ scale: 1 }}
                     transition={{ type: 'spring', delay: 0.2 }}
                   >
-                    <Package className="w-12 h-12 text-gray-400" />
+                    <img src={ICON.produkt} alt="" className="h-12 w-12 opacity-40 mix-blend-multiply" />
                   </motion.div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">
                     Brak produktów w zapytaniu
@@ -189,7 +176,7 @@ export default function InquiryCartPanel() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <img src={ICON.kosz} alt="" className="h-4 w-4 mix-blend-multiply" />
                           <span>Wyczyść wszystko</span>
                         </motion.button>
                       )}
@@ -225,6 +212,9 @@ export default function InquiryCartPanel() {
                               {item.description && (
                                 <p className="text-xs text-gray-500 mt-1 line-clamp-1">{item.description}</p>
                               )}
+                              {item.specifications && (
+                                <p className="text-xs text-gray-600 mt-1">{item.specifications}</p>
+                              )}
                             </div>
 
                             {/* Remove button */}
@@ -234,7 +224,7 @@ export default function InquiryCartPanel() {
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
                             >
-                              <X className="w-4 h-4" />
+                              <img src={ICON.zamknij} alt="" className="h-4 w-4 mix-blend-multiply" />
                             </motion.button>
                           </div>
                         </motion.div>
@@ -254,7 +244,7 @@ export default function InquiryCartPanel() {
                             Imię <span className="text-red-500">*</span>
                           </label>
                           <div className="relative">
-                            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                            <img src={ICON.uzytkownik} alt="" className="pointer-events-none absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 opacity-45 mix-blend-multiply" />
                             <input
                               type="text"
                               name="firstName"
@@ -288,7 +278,7 @@ export default function InquiryCartPanel() {
                           Email <span className="text-red-500">*</span>
                         </label>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                          <img src={ICON.koperta} alt="" className="pointer-events-none absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 opacity-45 mix-blend-multiply" />
                           <input
                             type="email"
                             name="email"
@@ -307,7 +297,7 @@ export default function InquiryCartPanel() {
                           Telefon <span className="text-red-500">*</span>
                         </label>
                         <div className="relative">
-                          <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                          <img src={ICON.telefon} alt="" className="pointer-events-none absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 opacity-45 mix-blend-multiply" />
                           <input
                             type="tel"
                             name="phone"
@@ -326,7 +316,7 @@ export default function InquiryCartPanel() {
                           Nadleśnictwo (opcjonalnie)
                         </label>
                         <div className="relative">
-                          <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                          <img src={ICON.budynek} alt="" className="pointer-events-none absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 opacity-45 mix-blend-multiply" />
                           <input
                             type="text"
                             name="forestDistrict"
@@ -344,7 +334,7 @@ export default function InquiryCartPanel() {
                           Dodatkowa wiadomość (opcjonalnie)
                         </label>
                         <div className="relative">
-                          <MessageSquare className="absolute left-3 top-3 text-gray-400 w-4 h-4" />
+                          <img src={ICON.czat} alt="" className="pointer-events-none absolute left-3 top-3 h-4 w-4 opacity-45 mix-blend-multiply" />
                           <textarea
                             name="message"
                             value={formData.message}
@@ -359,7 +349,7 @@ export default function InquiryCartPanel() {
                       {/* Info box */}
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                         <div className="flex items-start space-x-3">
-                          <AlertCircle className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                          <img src={ICON.info} alt="" className="mt-0.5 h-5 w-5 shrink-0 mix-blend-multiply" />
                           <div className="text-sm text-blue-900">
                             <p className="font-semibold mb-1">Co po wysłaniu zapytania?</p>
                             <p className="text-blue-800">
@@ -388,7 +378,7 @@ export default function InquiryCartPanel() {
                           </>
                         ) : (
                           <>
-                            <Send className="w-5 h-5" />
+                            <img src={naCiemnym(ICON.wyslij)} alt="" className="h-5 w-5" />
                             <span>Wyślij zapytanie</span>
                           </>
                         )}
@@ -419,7 +409,7 @@ export default function InquiryCartPanel() {
                       animate={{ scale: [0, 1.2, 1] }}
                       transition={{ duration: 0.6 }}
                     >
-                      <CheckCircle className="w-24 h-24 mx-auto mb-4" />
+                      <img src={naCiemnym(ICON.ptaszek)} alt="" className="mx-auto mb-4 h-24 w-24" />
                     </motion.div>
                     <h3 className="text-2xl font-bold mb-2">Zapytanie wysłane!</h3>
                     <p className="text-emerald-100">Skontaktujemy się z Tobą wkrótce</p>

@@ -1,217 +1,181 @@
-"use client";
-import React from "react";
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Laptop, 
-  Printer, 
-  Monitor, 
-  Smartphone,
-  Server,
-  ChevronRight
-} from "lucide-react";
+'use client'
 
-const categories = [
-  { name: "Rejestratory", href: "/kategoria/rejestratory", icon: Smartphone },
-  { name: "Laptopy", href: "/kategoria/laptopy", icon: Laptop },
-  { name: "Monitory", href: "/kategoria/monitory", icon: Monitor },
-  { name: "Drukarki", href: "/kategoria/drukarki-laserowe", icon: Printer },
-  { name: "Serwery", href: "/kategoria/serwery", icon: Server },
-];
+/**
+ * Stopka wg wzorców NN/g „Web Page Footers 101”:
+ *  — utility links (kontakt i obsługa) są w stopce zawsze, bo tam ludzie ich szukają,
+ *  — site map: pełna lista kategorii, nie przypadkowe pięć z trzynastu,
+ *  — linki pogrupowane w kolumny z konkretnymi nagłówkami („Sprzęt”, „Obsługa”,
+ *    „Kontakt”), a nie ogólnikami w rodzaju „Informacje” czy „Zasoby”,
+ *  — bez zwijania i bez mikroskopijnego druku: minimalny rozmiar linku to 14 px.
+ */
 
-const quickLinks = [
-  { name: "Strona główna", href: "/" },
-  { name: "Wszystkie produkty", href: "/#produkty" },
-  { name: "Serwis", href: "/serwis" },
-  { name: "Kontakt", href: "/kontakt" },
-];
+import React from 'react'
+import ContourTexture from '@/components/ContourTexture'
+import { ICON, naCiemnym } from '@/components/product/icons'
+
+const KATEGORIE = [
+  ['Rejestratory', '/kategoria/rejestratory'],
+  ['Telefony', '/kategoria/telefony'],
+  ['Tablety', '/kategoria/tablety'],
+  ['Laptopy', '/kategoria/laptopy'],
+  ['All in One', '/kategoria/all-in-one'],
+  ['Monitory', '/kategoria/monitory'],
+  ['Serwery', '/kategoria/serwery'],
+  ['Drukarki laserowe', '/kategoria/drukarki-laserowe'],
+  ['Urządzenia wielofunkcyjne', '/kategoria/urzadzenia-wielofunkcyjne'],
+  ['Drukarki do rejestratora', '/kategoria/drukarki-do-rejestratora'],
+  ['Urządzenia fiskalne', '/kategoria/urzadzenia-fiskalne'],
+  ['Zarządzanie dokumentacją', '/kategoria/ezd'],
+  ['Akcesoria komputerowe', '/kategoria/akcesoria-komputerowe'],
+]
+
+const OBSLUGA = [
+  ['Zgłoś usterkę', '/serwis#zgloszenie'],
+  ['Jak wygląda naprawa', '/serwis'],
+  ['Panel klienta', '/panel-klienta'],
+  ['Kontakt', '/kontakt'],
+  ['Wszystkie produkty', '/#produkty'],
+]
+
+const KONTAKT = [
+  {
+    icon: ICON.telefon,
+    etykieta: 'Dział handlowy',
+    wartosc: '607 819 688',
+    href: 'tel:+48607819688',
+  },
+  {
+    icon: ICON.naprawa,
+    etykieta: 'Serwis',
+    wartosc: '601 619 898',
+    href: 'tel:+48601619898',
+  },
+  {
+    icon: ICON.koperta,
+    etykieta: 'E-mail',
+    wartosc: 'takma@takma.com.pl',
+    href: 'mailto:takma@takma.com.pl',
+  },
+]
+
+const Naglowek = ({ children }: { children: React.ReactNode }) => (
+  <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#A8F000]">{children}</h2>
+)
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden">
-      {/* Górna sekcja z gradientem */}
-      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900">
-        {/* Dekoracyjne elementy tła - ukryte na mobile */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl"></div>
-        </div>
+    <footer className="relative isolate overflow-hidden bg-[#0A1B12]">
+      <ContourTexture className="text-[#A8F000]/[0.06]" />
 
-        <div className="container mx-auto px-4 py-8 md:py-16 relative z-10">
-          {/* Mobile Layout - kompaktowy */}
-          <div className="md:hidden">
-            {/* Logo */}
-            <div className="mb-6">
-              <img 
-                src="/takma_logo_footer.png" 
-                alt="TAKMA" 
-                className="h-10 w-auto brightness-0 invert opacity-90"
-              />
-            </div>
-
-            {/* Kontakt - kompaktowy grid */}
-            <div className="grid grid-cols-1 gap-3 mb-6">
-              <a 
-                href="mailto:takma@takma.com.pl"
-                className="flex items-center gap-2 text-slate-400 text-sm"
-              >
-                <Mail className="w-4 h-4 text-emerald-500 shrink-0" />
-                takma@takma.com.pl
-              </a>
-              <a 
-                href="tel:+48607819688"
-                className="flex items-center gap-2 text-slate-400 text-sm"
-              >
-                <Phone className="w-4 h-4 text-emerald-500 shrink-0" />
-                607 819 688
-              </a>
-              <div className="flex items-center gap-2 text-slate-400 text-sm">
-                <MapPin className="w-4 h-4 text-emerald-500 shrink-0" />
-                ul. Poświęcka 1a, 51-128 Wrocław
-              </div>
-            </div>
-
-            {/* Szybkie linki - w jednym rzędzie */}
-            <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs">
-              {quickLinks.map((link) => (
-                <a 
-                  key={link.name}
-                  href={link.href}
-                  className="text-slate-500 hover:text-emerald-400 transition-colors"
-                >
-                  {link.name}
-                </a>
-              ))}
-            </div>
+      <div className="container relative mx-auto px-4 py-14">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+          {/* Kto prowadzi katalog */}
+          <div className="lg:col-span-3">
+            <img
+              src="/takma_logo_footer.png"
+              alt="TAKMA"
+              className="h-16 w-auto opacity-90 brightness-0 invert lg:h-20"
+            />
+            <p className="mt-5 text-sm leading-relaxed text-emerald-50/60">
+              Dostarczamy i serwisujemy sprzęt IT dla Lasów Państwowych — od rejestratorów
+              terenowych po wyposażenie kancelarii.
+            </p>
+            <address className="mt-5 space-y-1 text-sm not-italic text-emerald-50/60">
+              <p className="font-medium text-white">TAKMA Tadeusz Tiuchty</p>
+              <p>ul. Poświęcka 1a, 51-128 Wrocław</p>
+              <p className="font-mono text-xs text-emerald-50/45">NIP 915-100-43-77</p>
+            </address>
           </div>
 
-          {/* Desktop Layout - pełny */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-            
-            {/* Logo i opis */}
-            <div className="lg:col-span-1">
-              <div className="mb-6">
-                <img 
-                  src="/takma_logo_footer.png" 
-                  alt="TAKMA" 
-                  className="h-16 lg:h-20 w-auto brightness-0 invert opacity-90"
+          {/* Pełna lista kategorii — stopka jako mapa katalogu */}
+          <div className="lg:col-span-5">
+            <Naglowek>Sprzęt</Naglowek>
+            <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2.5 lg:gap-x-8">
+              {KATEGORIE.map(([nazwa, href]) => (
+                <li key={href}>
+                  <a
+                    href={href}
+                    className="text-sm text-emerald-50/70 transition hover:text-[#A8F000]"
+                  >
+                    {nazwa}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Zadania poboczne */}
+          <div className="lg:col-span-2">
+            <Naglowek>Obsługa</Naglowek>
+            <ul className="mt-5 space-y-2.5">
+              {OBSLUGA.map(([nazwa, href]) => (
+                <li key={href}>
+                  <a
+                    href={href}
+                    className="text-sm text-emerald-50/70 transition hover:text-[#A8F000]"
+                  >
+                    {nazwa}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Kontakt — to, po co ludzie najczęściej schodzą do stopki */}
+          <div className="lg:col-span-2">
+            <Naglowek>Kontakt</Naglowek>
+            <ul className="mt-5 space-y-4">
+              {KONTAKT.map((k) => (
+                <li key={k.etykieta}>
+                  <a href={k.href} className="group flex items-start gap-3">
+                    <img
+                      src={naCiemnym(k.icon)}
+                      alt=""
+                      className="mt-0.5 h-4 w-4 shrink-0 opacity-60 transition-opacity group-hover:opacity-100"
+                    />
+                    <span className="min-w-0">
+                      <span className="block text-xs uppercase tracking-wide text-emerald-50/45">
+                        {k.etykieta}
+                      </span>
+                      <span className="block break-words text-sm text-emerald-50/80 transition group-hover:text-[#A8F000]">
+                        {k.wartosc}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+              <li className="flex items-start gap-3">
+                <img
+                  src={naCiemnym(ICON.zegar)}
+                  alt=""
+                  className="mt-0.5 h-4 w-4 shrink-0 opacity-60"
                 />
-              </div>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Specjalizujemy się w dostarczaniu nowoczesnego sprzętu IT 
-                dla Lasów Państwowych. Profesjonalne rozwiązania dla leśnictwa.
-              </p>
-            </div>
-
-            {/* Popularne kategorie */}
-            <div>
-              <h3 className="text-white font-semibold text-lg mb-6 flex items-center gap-2">
-                <span className="w-8 h-0.5 bg-emerald-500 rounded-full"></span>
-                Kategorie
-              </h3>
-              <ul className="space-y-3">
-                {categories.map((category) => {
-                  const Icon = category.icon;
-                  return (
-                    <li key={category.name}>
-                      <a 
-                        href={category.href}
-                        className="group flex items-center gap-3 text-slate-400 hover:text-emerald-400 transition-colors"
-                      >
-                        <Icon className="w-4 h-4 text-slate-500 group-hover:text-emerald-500 transition-colors" />
-                        <span className="text-sm">{category.name}</span>
-                        <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-
-            {/* Szybkie linki */}
-            <div>
-              <h3 className="text-white font-semibold text-lg mb-6 flex items-center gap-2">
-                <span className="w-8 h-0.5 bg-emerald-500 rounded-full"></span>
-                Nawigacja
-              </h3>
-              <ul className="space-y-3">
-                {quickLinks.map((link) => (
-                  <li key={link.name}>
-                    <a 
-                      href={link.href}
-                      className="group flex items-center gap-2 text-slate-400 hover:text-emerald-400 transition-colors text-sm"
-                    >
-                      <ChevronRight className="w-3 h-3 text-slate-600 group-hover:text-emerald-500 transition-colors" />
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Kontakt */}
-            <div>
-              <h3 className="text-white font-semibold text-lg mb-6 flex items-center gap-2">
-                <span className="w-8 h-0.5 bg-emerald-500 rounded-full"></span>
-                Kontakt
-              </h3>
-              <ul className="space-y-4">
-                <li>
-                  <a 
-                    href="mailto:takma@takma.com.pl"
-                    className="group flex items-start gap-3 text-slate-400 hover:text-emerald-400 transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors shrink-0">
-                      <Mail className="w-4 h-4 text-emerald-500" />
-                    </div>
-                    <div>
-                      <span className="text-xs text-slate-500 block">Email</span>
-                      <span className="text-sm">takma@takma.com.pl</span>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href="tel:+48607819688"
-                    className="group flex items-start gap-3 text-slate-400 hover:text-emerald-400 transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors shrink-0">
-                      <Phone className="w-4 h-4 text-emerald-500" />
-                    </div>
-                    <div>
-                      <span className="text-xs text-slate-500 block">Telefon</span>
-                      <span className="text-sm">607 819 688</span>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <div className="flex items-start gap-3 text-slate-400">
-                    <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center shrink-0">
-                      <MapPin className="w-4 h-4 text-emerald-500" />
-                    </div>
-                    <div>
-                      <span className="text-xs text-slate-500 block">Adres</span>
-                      <span className="text-sm">ul. Poświęcka 1a<br />51-128 Wrocław</span>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
+                <span>
+                  <span className="block text-xs uppercase tracking-wide text-emerald-50/45">
+                    Godziny pracy
+                  </span>
+                  <span className="block text-sm text-emerald-50/80">pon.–pt. 7:30–15:30</span>
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
-      {/* Dolna sekcja - copyright */}
-      <div className="bg-slate-950">
-        <div className="container mx-auto px-4 py-3 md:py-5">
-          <div className="flex items-center justify-center">
-            <div className="text-slate-500 text-xs md:text-sm text-center">
-              © {new Date().getFullYear()} <span className="text-slate-400">Rejestratory.info</span> — Wszystkie prawa zastrzeżone
-            </div>
-          </div>
+      <div className="relative border-t border-white/10">
+        <div className="container mx-auto flex flex-col gap-2 px-4 py-5 text-sm text-emerald-50/45 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {new Date().getFullYear()} <span className="text-emerald-50/70">Rejestratory.info</span>{' '}
+            — katalog prowadzony przez TAKMA
+          </p>
+          <p className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <a href="/polityka-prywatnosci" className="transition hover:text-[#A8F000]">
+              Polityka prywatności
+            </a>
+            <span>Wszystkie prawa zastrzeżone</span>
+          </p>
         </div>
       </div>
     </footer>
-  );
+  )
 }

@@ -1,193 +1,105 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  Download,
-  X,
-  Calculator,
-  BarChart3,
-  FileText,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Laptop
-} from 'lucide-react'
-import { useInquiry } from '@/components/InquiryContext'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-white rounded-lg overflow-hidden cursor-pointer p-12"
-        style={{ minHeight: '500px' }}
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src={images[currentImage]}
-          alt="Klawiatura i mysz bezprzewodowa Dell KM7321"
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src={images[currentImage]}
-                alt="Klawiatura i mysz bezprzewodowa Dell KM7321 - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
+const data: ProductData = {
+  slug: 'dell-km7321',
+  name: 'Dell Pro Plus KM7321W',
+  category: 'Akcesoria komputerowe',
+  categoryHref: '/kategoria/akcesoria-komputerowe',
+  images: ['/km7321_1.png'],
+  inquiry: {
+    description: 'Bezprzewodowy zestaw do pracy na kilku komputerach',
+    specifications: 'Bluetooth 5.0 i 2,4 GHz · do 3 urządzeń · mysz 1600 dpi (do 4000) · bateria do 36 miesięcy',
+  },
+  whyNavLabel: 'Dlaczego KM7321W',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W biurze nadleśnictwa',
+  highlights: [
+    { icon: ICON.bluetooth, label: 'Łączność', value: 'Bluetooth 5.0 i 2,4 GHz' },
+    { icon: ICON.urzadzenia, label: 'Urządzenia', value: 'przełączanie między trzema' },
+    { icon: ICON.precyzja, label: 'Mysz', value: '1600 dpi, do 4000 dpi' },
+    { icon: ICON.czaspracy, label: 'Bateria', value: 'do 36 miesięcy pracy' },
+  ],
+  specGroups: [
+    {
+      title: 'Łączność',
+      rows: [
+        { k: 'Standardy', v: 'Bluetooth 5.0 oraz 2,4 GHz' },
+        { k: 'Odbiornik', v: 'USB, dołączony' },
+        { k: 'Sparowane urządzenia', v: 'do 3, przełączane klawiszem' },
+        { k: 'Szyfrowanie', v: 'AES 128 bit' },
+      ],
+    },
+    {
+      title: 'Klawiatura',
+      rows: [
+        { k: 'Układ', v: 'pełnowymiarowy z blokiem numerycznym' },
+        { k: 'Mechanizm', v: 'nożycowy' },
+        { k: 'Klawisze programowalne', v: '12' },
+        { k: 'Zasilanie', v: '2 × AAA' },
+        { k: 'Żywotność baterii', v: 'do 36 miesięcy' },
+      ],
+    },
+    {
+      title: 'Mysz',
+      rows: [
+        { k: 'Rozdzielczość domyślna', v: '1600 dpi' },
+        { k: 'Regulacja', v: 'do 4000 dpi' },
+        { k: 'Przyciski skrótów', v: '5' },
+        { k: 'Zasilanie', v: '1 × AA' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.urzadzenia,
+      title: 'Jeden zestaw, trzy komputery',
+      body:
+        'Klawiatura pamięta trzy sparowane urządzenia i przechodzi między nimi klawiszem — stanowisko obsługujące laptopa i komputer stacjonarny nie potrzebuje dwóch kompletów.',
+    },
+    {
+      icon: ICON.bluetooth,
+      title: 'Bluetooth albo odbiornik',
+      body:
+        'Do nowego laptopa wystarczy Bluetooth 5.0, do starszego komputera bez modułu zostaje odbiornik USB w zestawie.',
+    },
+    {
+      icon: ICON.klawiatura,
+      title: 'Mechanizm nożycowy',
+      body:
+        'Płaski, cichy skok klawisza — praca przy wspólnym pokoju nie przeszkadza reszcie kancelarii.',
+    },
+    {
+      icon: ICON.czaspracy,
+      title: 'Trzy lata na komplecie baterii',
+      body:
+        'Deklarowane 36 miesięcy pracy klawiatury, bez ładowarki i bez kabla na biurku.',
+    },
+  ],
+  whereToBuy: [
+    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
+    { name: 'TAKMA' },
+  ],
+  signature: [
+    {
+      icon: ICON.urzadzenia,
+      title: 'Przełącza się między trzema komputerami',
+      body:
+        'Sparowane urządzenia zmienia się jednym klawiszem — laptop terenowy, komputer w kancelarii i stanowisko wspólne obsługuje ta sama klawiatura.',
+      tone: 'akcent',
+    },
+  ],
+  related: [
+    {
+      name: 'Dell Pro KM5221W',
+      href: '/produkt/dell-km5221',
+      note: 'Prostszy zestaw 2,4 GHz do jednego komputera',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function DellKM7321ProductPage() {
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  const productImages = [
-    '/km7321_1.png'
-  ]
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/akcesoria-komputerowe" className="hover:text-emerald-600">Akcesoria komputerowe</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Klawiatura i mysz bezprzewodowa Dell KM7321</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4 flex-grow pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={productImages} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Akcesoria komputerowe
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Klawiatura i mysz bezprzewodowa Dell KM7321
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Premium zestaw bezprzewodowy klawiatura + mysz z podświetleniem klawiszy. Łączność Bluetooth i USB, wielozadaniowość, aluminiowa obudowa. Idealny do pracy biurowej w nadleśnictwach - elegancki, funkcjonalny i wydajny.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'dell-km7321',
-                      name: 'Klawiatura i mysz bezprzewodowa Dell KM7321',
-                      image: '/placeholder.png',
-                      category: 'Akcesoria komputerowe',
-                      description: 'Premium zestaw bezprzewodowy z podświetleniem klawiszy',
-                      specifications: 'Bluetooth + USB, wielozadaniowość, aluminiowa obudowa'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-{/* Footer */}
-<Footer />
-</div>
-  )
+export default function DellKM7321Page() {
+  return <ProductPage data={data} />
 }

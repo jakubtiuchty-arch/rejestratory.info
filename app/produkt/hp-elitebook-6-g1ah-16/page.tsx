@@ -1,739 +1,135 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  X,
-  Calculator,
-  BarChart3,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Laptop,
-  Sparkles
-} from 'lucide-react'
-import { useInquiry } from '@/components/InquiryContext'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(1)
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-white rounded-lg overflow-hidden aspect-video cursor-pointer p-8"
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src={`/hp_elite_16_${currentImage}.png`}
-          alt="HP EliteBook 6 G1ah 16"
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Thumbnail Gallery */}
-      <div className="grid grid-cols-5 gap-1">
-        {[1, 2, 3, 4, 5].map((index) => (
-          <motion.div
-            key={index}
-            className={`aspect-square bg-white rounded-lg overflow-hidden cursor-pointer border-2 p-2 ${
-              currentImage === index ? 'border-emerald-600' : 'border-transparent'
-            }`}
-            whileHover={{ scale: 1.05 }}
-            onClick={() => setCurrentImage(index)}
-          >
-            <img
-              src={`/hp_elite_16_${index}.png`}
-              alt={`View ${index}`}
-              className="w-full h-full object-contain"
-            />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src={`/hp_elite_16_${currentImage}.png`}
-                alt="HP EliteBook 6 G1ah 16 - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-
-
-// Specifications Component
-const Specifications = () => {
-  const specs = [
-    { category: "Wyświetlacz", items: [
-      { name: "Rozmiar", value: "16 cali (40,6 cm)" },
-      { name: "Typ", value: "WUXGA (1920 × 1200) IPS, powłoka antyrefleksyjna" },
-      { name: "Jasność", value: "300 nitów" },
-      { name: "Gama kolorów", value: "62,5% sRGB" }
-    ]},
-    { category: "Wydajność", items: [
-      { name: "Procesor", value: "AMD Ryzen™ 5 220, do 4,9 GHz" },
-      { name: "Liczba rdzeni", value: "6 rdzeni, 12 wątków" },
-      { name: "Pamięć podręczna", value: "16 MB L3" },
-      { name: "RAM", value: "16 GB DDR5-5600 MT/s (1 × 16 GB)" },
-      { name: "Gniazda pamięci", value: "2 gniazda SODIMM" },
-      { name: "Dysk", value: "SSD 512 GB PCIe® NVMe™" },
-      { name: "Karta graficzna", value: "AMD Radeon™ 740M (zintegrowana)" }
-    ]},
-    { category: "Łączność i bezpieczeństwo", items: [
-      { name: "Sieć bezprzewodowa", value: "MediaTek Wi-Fi 6E RZ616 (2×2)" },
-      { name: "Bluetooth", value: "Bluetooth® 5.3" },
-      { name: "Kamera", value: "Kamera na podczerwień 5 MPx" },
-      { name: "Czytnik", value: "Czytnik linii papilarnych" },
-      { name: "Zabezpieczenia", value: "HP Sure Platform, HP Tamper Lock" }
-    ]},
-    { category: "Klawiatura i mobilność", items: [
-      { name: "Klawiatura", value: "Odporna na zalanie z klawiaturą numeryczną i podświetleniem" },
-      { name: "Bateria", value: "3-ogniwowy, 56 Wh, HP Long Life" },
-      { name: "Szybkie ładowanie", value: "Do 50% w 30 minut" },
-      { name: "Zasilacz", value: "65 W USB Type-C®" },
-      { name: "System", value: "Windows 11 Pro" },
-      { name: "Waga", value: "Od 1,75 kg" }
-    ]},
-    { category: "Porty i złącza", items: [
-      { name: "HDMI", value: "1 port HDMI 2.1" },
-      { name: "USB-C", value: "2 porty Thunderbolt™ 4 (40 Gb/s, zasilanie, DisplayPort™ 1.4)" },
-      { name: "USB-A", value: "2 porty USB-A 5 Gb/s (zasilane)" },
-      { name: "Audio", value: "1 gniazdo combo jack stereo (słuchawki/mikrofon)" },
-      { name: "Ethernet", value: "1 port RJ-45" },
-      { name: "Zabezpieczenia", value: "1 gniazdo blokady zabezpieczającej" }
-    ]},
-    { category: "Audio i multimedia", items: [
-      { name: "System dźwięku", value: "Poly Studio" },
-      { name: "Głośniki", value: "Dwa głośniki stereo" },
-      { name: "Mikrofony", value: "Układ dwóch mikrofonów" }
-    ]},
-    { category: "Wymiary i gwarancja", items: [
-      { name: "Wymiary", value: "35,94 × 25,1 × 1,7 cm (z tyłu), 1,1 cm (z przodu)" },
-      { name: "Certyfikaty", value: "MIL-STD 810H, ENERGY STAR®, TCO Certified" },
-      { name: "Gwarancja", value: "Roczna ograniczona gwarancja (1/1/0)" },
-      { name: "Wsparcie", value: "3-letnie wsparcie sprzętowe HP, reakcja w następnym dniu roboczym" }
-    ]}
-  ]
-
-  return (
-    <div className="space-y-6">
-      {specs.map((category, index) => (
-        <motion.div
-          key={category.category}
-          className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: index * 0.1 }}
-        >
-          <div className="bg-emerald-50 px-6 py-3 border-b border-emerald-200">
-            <h4 className="font-semibold text-emerald-700">{category.category}</h4>
-          </div>
-          <div className="p-6">
-            <div className="space-y-3">
-              {category.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
-                  <span className="text-gray-600">{item.name}</span>
-                  <span className="font-medium text-gray-900 text-right">{item.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  )
-}
-
-// Service Contract Lightbox Component
-const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          <motion.div
-            className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.5, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-900">HP Support - Wsparcie Premium</h3>
-                <button
-                  onClick={onClose}
-                  className="p-2 hover:bg-gray-100 rounded-full"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              
-              <div className="space-y-4 text-gray-600">
-                <p>
-                  HP EliteBook 6 G1ah 16 jest objęty 3-letnim wsparciem sprzętowym HP z reakcją 
-                  w następnym dniu roboczym u klienta. To kompleksowe wsparcie zapewnia ciągłość 
-                  pracy i bezpieczeństwo inwestycji.
-                </p>
-                
-                <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-                  <h4 className="font-semibold text-emerald-700 mb-3">Co zyskuje administrator i użytkownik?</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Reakcja w następnym dniu roboczym - zero przestojów</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Wsparcie techniczne w zakresie sprzętu i oprogramowania</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Zdalna diagnostyka przed wizytą technika</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Gwarancja na 3 lata - przewidywalne koszty i spokój</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Priorytetowe wsparcie dla urządzeń biznesowych</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-sm font-semibold text-gray-900 mb-2">
-                    Korzyści dla Nadleśnictwa:
-                  </p>
-                  <p className="text-sm">
-                    HP Support oznacza całkowite bezpieczeństwo operacyjne - każda awaria jest 
-                    rozwiązywana następnego dnia roboczego bezpośrednio na miejscu. Administrator ma 
-                    pełną kontrolę i przewidywalność kosztów przez 3 lata.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
-}
-
-
-// Accessories Section Component
-const AccessoriesSection = ({ productName }: { productName: string }) => {
-  const { addToInquiry } = useInquiry()
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
-
-  const accessories = [
+const data: ProductData = {
+  slug: 'hp-elitebook-6-g1ah-16',
+  name: 'HP EliteBook 6 G1ah 16',
+  category: 'Laptopy',
+  categoryHref: '/kategoria/laptopy',
+  images: ['/hp_elite_16_1.png'],
+  inquiry: {
+    description: 'Laptop biznesowy 16 cali z AMD Ryzen',
+    specifications: 'Windows 11 Pro · 16″ WUXGA · Ryzen 5 220 · 16 GB · SSD 512 GB · MIL-STD 810H',
+  },
+  whyNavLabel: 'Dlaczego EliteBook 6',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W biurze nadleśnictwa',
+  highlights: [
+    { icon: ICON.przekatna, label: 'Ekran', value: '16″ WUXGA IPS, 300 nitów' },
+    { icon: ICON.procesor, label: 'Procesor', value: 'AMD Ryzen 5 220, do 4,9 GHz' },
+    { icon: ICON.pamiec, label: 'Pamięć', value: '16 GB DDR5 + SSD 512 GB' },
+    { icon: ICON.waga, label: 'Waga', value: 'od 1,75 kg' },
+  ],
+  variants: [
+    { id: 'pamiec', label: 'Konfiguracja', options: ['16 GB / SSD 512 GB'] },
+  ],
+  specGroups: [
     {
-      id: 'footrest',
-      name: 'Podnóżek biurowy',
-      description: 'Ergonomiczny podnóżek do pracy przy komputerze',
-      image: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
-      price: '99 zł'
+      title: 'Wyświetlacz',
+      rows: [
+        { k: 'Przekątna', v: '16″ (40,6 cm)' },
+        { k: 'Matryca', v: 'WUXGA 1920 × 1200 IPS, powłoka antyrefleksyjna' },
+        { k: 'Jasność', v: '300 nitów' },
+        { k: 'Gama kolorów', v: '62,5% sRGB' },
+      ],
     },
     {
-      id: 'mouse',
-      name: 'Bezprzewodowy zestaw klawiatura i mysz HP',
-      description: 'Ergonomiczny zestaw klawiatura i mysz Bluetooth',
-      image: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
-      price: '189 zł'
+      title: 'Wydajność',
+      rows: [
+        { k: 'Procesor', v: 'AMD Ryzen 5 220, do 4,9 GHz' },
+        { k: 'Rdzenie', v: '6 rdzeni, 12 wątków' },
+        { k: 'Pamięć RAM', v: '16 GB DDR5-5600, 2 gniazda SODIMM' },
+        { k: 'Dysk', v: 'SSD 512 GB PCIe NVMe' },
+        { k: 'Grafika', v: 'AMD Radeon 740M' },
+      ],
     },
     {
-      id: 'bag',
-      name: 'Torba na laptopa 14"',
-      description: 'Wodoodporna torba na laptopa',
-      image: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
-      price: '169 zł'
+      title: 'Łączność i zabezpieczenia',
+      rows: [
+        { k: 'Sieć', v: 'Wi-Fi 6E RZ616, 2×2' },
+        { k: 'Bluetooth', v: '5.3' },
+        { k: 'Kamera', v: 'na podczerwień, 5 Mpx' },
+        { k: 'Czytnik', v: 'linii papilarnych' },
+        { k: 'Zabezpieczenia', v: 'HP Sure Platform, HP Tamper Lock' },
+      ],
     },
     {
-      id: 'mousepad',
-      name: 'Podkładka pod mysz',
-      description: 'Profesjonalna podkładka pod mysz',
-      image: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
-      price: '49 zł'
-    }
-  ]
-
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
-  }
-
-  const handleAddSelectedToInquiry = () => {
-    selectedAccessories.forEach(accessoryId => {
-      const accessory = accessories.find(a => a.id === accessoryId)
-      if (accessory) {
-        addToInquiry({
-          id: `hp-elite-accessory-${accessory.id}`,
-          name: accessory.name,
-          image: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
-          category: 'Akcesoria',
-          description: accessory.description
-        })
-      }
-    })
-    setSelectedAccessories([])
-  }
-
-  return (
-    <div className="mb-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Akcesoria
-            </h3>
-          </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={handleAddSelectedToInquiry}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {accessories.map((accessory) => {
-            const isSelected = selectedAccessories.includes(accessory.id)
-            return (
-              <motion.div
-                key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
-                  isSelected 
-                    ? 'border-emerald-500 bg-emerald-50' 
-                    : 'border-gray-200 hover:border-emerald-300'
-                }`}
-                onClick={() => toggleAccessory(accessory.id)}
-              >
-                <div className="p-4 flex flex-col h-full">
-                  <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
-                  <div className="flex items-center justify-end mt-auto">
-                    <button
-                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                        isSelected 
-                          ? 'bg-emerald-700 text-white' 
-                          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                      }`}
-                    >
-                      {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
-      </motion.div>
-    </div>
-  )
+      title: 'Porty',
+      rows: [
+        { k: 'HDMI', v: '1 × HDMI 2.1' },
+        { k: 'USB-C', v: '2 × Thunderbolt 4, 40 Gb/s' },
+        { k: 'USB-A', v: '2 × USB-A 5 Gb/s' },
+        { k: 'Sieć przewodowa', v: '1 × RJ-45' },
+        { k: 'Audio', v: 'combo jack 3,5 mm' },
+      ],
+    },
+    {
+      title: 'Obudowa i zasilanie',
+      rows: [
+        { k: 'Klawiatura', v: 'odporna na zalanie, podświetlana, z częścią numeryczną' },
+        { k: 'Bateria', v: '56 Wh HP Long Life, 50% w 30 minut' },
+        { k: 'Zasilacz', v: '65 W USB-C' },
+        { k: 'Waga', v: 'od 1,75 kg' },
+        { k: 'Certyfikaty', v: 'MIL-STD 810H, ENERGY STAR, TCO Certified' },
+        { k: 'System', v: 'Windows 11 Pro' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.norma,
+      title: 'Obudowa przebadana normą MIL-STD 810H',
+      body:
+        'Laptop przeszedł testy wstrząsów, wibracji i temperatur, a klawiatura jest odporna na zalanie — to sprzęt na warunki biura terenowego, nie tylko gabinetu.',
+    },
+    {
+      icon: ICON.porty,
+      title: 'Komplet portów bez przejściówek',
+      body:
+        'Dwa Thunderbolt 4, dwa USB-A, HDMI 2.1 i RJ-45 na pokładzie — rzutnik na naradzie i kabel sieciowy w kancelarii działają od ręki.',
+    },
+    {
+      icon: ICON.ladowanie,
+      title: 'Połowa baterii w pół godziny',
+      body:
+        'Ogniwo 56 Wh HP Long Life ładuje się do 50% w 30 minut, więc krótka przerwa wystarcza na dojazd i pracę w terenie.',
+    },
+    {
+      icon: ICON.odcisk,
+      title: 'Logowanie odciskiem lub twarzą',
+      body:
+        'Czytnik linii papilarnych i kamera na podczerwień, a nad nimi HP Sure Platform i Tamper Lock chroniące przed ingerencją w sprzęt.',
+    },
+  ],
+  usedBy: { device: 'HP EliteBook 6 G1ah 16' },
+  whereToBuy: [{ name: 'TAKMA' }],
+  signature: [
+    {
+      icon: ICON.onsite,
+      title: '3-letnie wsparcie sprzętowe HP',
+      body:
+        'Reakcja w następnym dniu roboczym w ramach wsparcia sprzętowego HP. Podstawowa gwarancja producenta obejmuje pierwszy rok.',
+      tone: 'akcent',
+    },
+    {
+      icon: ICON.ai,
+      title: 'Copilot i jednostki AI w procesorze',
+      body:
+        'Dedykowany klawisz Copilot w systemie Windows oraz jednostki AI w procesorze AMD Ryzen, odpowiadające za zarządzanie wydajnością i bezpieczeństwem.',
+      tone: 'ciemny',
+    },
+  ],
+  related: [
+    {
+      name: 'Dell Pro 16 Plus',
+      href: '/produkt/dell-pro-16-plus',
+      note: 'Odpowiednik na platformie Intel vPro',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function HPEliteBook6G1ah16ProductPage() {
-  const [activeTab, setActiveTab] = useState('specs')
-  const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/laptopy" className="hover:text-emerald-600">Laptopy</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">HP EliteBook 6 G1ah 16</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={[]} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Laptop
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                HP EliteBook 6 G1ah 16
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                HP EliteBook 6 G1ah 16 to nowoczesny laptop biznesowy z dużym 16-calowym wyświetlaczem WUXGA IPS, 
-                zaprojektowany specjalnie dla profesjonalistów wymagających mobilności i wydajności. Wyposażony w 
-                procesor AMD Ryzen 5 z 6 rdzeniami i kartę graficzną AMD Radeon 740M, zapewnia płynną pracę z 
-                aplikacjami biurowymi i narzędziami do analizy danych. Wbudowana kamera na podczerwień z 
-                rozpoznawaniem twarzy oraz czytnik linii papilarnych gwarantują najwyższy poziom bezpieczeństwa. 
-                Laptop wyposażono w odporne na zalanie klawiaturę z podświetleniem i klawiaturą numeryczną, co 
-                zwiększa komfort pracy. Bateria 56 Wh z funkcją szybkiego ładowania umożliwia długą pracę mobilną, 
-                a lekkość konstrukcji sprawia, że jest idealnym rozwiązaniem dla pracowników terenowych.
-              </p>
-
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'hp-elitebook-6-g1ah-16',
-                      name: 'HP EliteBook 6 G1ah 16',
-                      image: '/hp_elite_16_1.png',
-                      category: 'Laptopy',
-                      description: 'Nowoczesny laptop biznesowy z 16" WUXGA IPS',
-                      specifications: 'AMD Ryzen 5, 16GB RAM, 512GB SSD, AMD Radeon 740M'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Box AI + SmartCard - grid 2 kolumny */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                {/* Box AI */}
-                <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg p-4 border border-purple-200">
-                  <div className="flex items-start space-x-3">
-                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Sparkles className="w-4 h-4 text-purple-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-purple-700 mb-1">Innowacyjne funkcje AI</h4>
-                      <p className="text-sm text-gray-600">
-                        Laptop wyposażony w Copilot w systemie Windows z dedykowanym klawiszem. 
-                        Procesor AMD Ryzen z jednostkami AI zapewnia inteligentne zarządzanie wydajnością i bezpieczeństwem.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Czytnik SmartCard */}
-                <div className="bg-gradient-to-br from-slate-600 to-blue-700 rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="flex items-start space-x-3">
-                    <Shield className="w-6 h-6 text-white flex-shrink-0 mt-0.5" />
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-white mb-1">Wbudowany czytnik SmartCard</h4>
-                      <p className="text-sm text-blue-50">
-                        Laptop wyposażony w czytnik kart inteligentnych z obsługą autoryzacji. 
-                        Pełna integracja z systemami wymagającymi karty smart.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm mt-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Accessories Section */}
-        <AccessoriesSection productName="HP EliteBook 6 G1ah 16" />
-
-        {/* Bundle Section */}
-        <div className="mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-gradient-to-br from-emerald-50 to-blue-50 rounded-xl p-8 border-2 border-emerald-200 shadow-sm"
-          >
-            <div className="text-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                Najlepiej kupić w zestawie
-              </h3>
-              <p className="text-gray-600">
-                Kompletne stanowisko pracy - laptop, monitor i akcesoria w jednym zamówieniu
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              {/* HP EliteBook 6 G1ah 16 */}
-              <div className="bg-white rounded-lg p-6 border-2 border-emerald-300 shadow-sm">
-                <div className="flex items-center justify-center mb-4">
-                  <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-                    <Laptop className="w-6 h-6 text-emerald-600" />
-                  </div>
-                </div>
-                <h4 className="font-semibold text-gray-900 text-center mb-2">HP EliteBook 6 G1ah 16</h4>
-                <p className="text-sm text-gray-600 text-center">
-                  Laptop biznesowy z AMD Ryzen 5
-                </p>
-              </div>
-
-              {/* HP Seria 5 Pro Monitor */}
-              <div className="bg-white rounded-lg p-6 border-2 border-blue-300 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center justify-center mb-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <rect x="2" y="3" width="20" height="14" rx="2" strokeWidth="2"/>
-                      <line x1="8" y1="21" x2="16" y2="21" strokeWidth="2"/>
-                      <line x1="12" y1="17" x2="12" y2="21" strokeWidth="2"/>
-                    </svg>
-                  </div>
-                </div>
-                <h4 className="font-semibold text-gray-900 text-center mb-2">HP Seria 5 Pro 527pu</h4>
-                <p className="text-sm text-gray-600 text-center mb-4">
-                  Monitor 27" QHD z USB-C
-                </p>
-                <div className="text-center">
-                  <a 
-                    href="/produkt/hp-seria-5-pro-527pu"
-                    className="inline-flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-700 px-4 py-2 rounded-lg font-medium text-sm transition-colors border border-blue-200"
-                  >
-                    <span>Zobacz produkt</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              {/* Keyboard + Mouse */}
-              <div className="bg-white rounded-lg p-6 border-2 border-gray-300 shadow-sm">
-                <div className="flex items-center justify-center mb-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <rect x="2" y="4" width="20" height="16" rx="2" strokeWidth="2"/>
-                      <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M6 16h8" strokeWidth="2" strokeLinecap="round"/>
-                    </svg>
-                  </div>
-                </div>
-                <h4 className="font-semibold text-gray-900 text-center mb-2">Klawiatura + Mysz HP</h4>
-                <p className="text-sm text-gray-600 text-center">
-                  Bezprzewodowy zestaw klawiatura i mysz
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg p-6 border border-emerald-300">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="flex-1">
-                  <h4 className="font-semibold text-gray-900 mb-2">Korzyści z zakupu zestawu:</h4>
-                  <ul className="space-y-2 text-sm text-gray-600">
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Kompletne stanowisko pracy od razu gotowe do użycia</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Spójny ekosystem produktów HP - pełna kompatybilność</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Pojedyncze zamówienie - uproszczona logistyka i dokumentacja</span>
-                    </li>
-                  </ul>
-                </div>
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'hp-elitebook-6-g1ah-16',
-                      name: 'HP EliteBook 6 G1ah 16',
-                      image: '/hp_elite_16_1.png',
-                      category: 'Laptopy'
-                    })
-                    addToInquiry({
-                      id: 'hp-seria-5-pro-527pu',
-                      name: 'HP Seria 5 Pro 527pu',
-                      image: '/hp_monitor_1.png',
-                      category: 'Monitory'
-                    })
-                    addToInquiry({
-                      id: 'hp-keyboard-mouse',
-                      name: 'Klawiatura + Mysz HP',
-                      image: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
-                      category: 'Akcesoria'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="bg-emerald-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2 shadow-lg"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Package className="w-5 h-5" />
-                  <span>Zapytaj o zestaw</span>
-                </motion.button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-
-        {/* Tabs Navigation */}
-        <div className="border-b border-gray-200 mb-8">
-          <nav className="-mb-px flex space-x-8">
-            {[
-              { id: 'specs', label: 'Specyfikacja' },
-              { id: 'service', label: 'Serwis', isScroll: true }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  tab.id === 'service'
-                    ? 'border-transparent text-orange-600 hover:text-orange-700 hover:border-orange-300'
-                    : activeTab === tab.id
-                    ? 'border-emerald-500 text-emerald-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-                onClick={() => {
-                  if (tab.isScroll) {
-                    // Scroll to service section
-                    const serviceSection = document.getElementById('service-section')
-                    if (serviceSection) {
-                      serviceSection.scrollIntoView({ behavior: 'smooth' })
-                    }
-                  } else {
-                    setActiveTab(tab.id)
-                  }
-                }}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Tab Content */}
-        <div className="mb-16">
-          <AnimatePresence mode="wait">
-
-
-            {activeTab === 'specs' && (
-              <motion.div
-                key="specs"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <Specifications />
-              </motion.div>
-            )}
-
-
-
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Service Contract Lightbox */}
-      <ServiceContractLightbox 
-        isOpen={isServiceLightboxOpen} 
-        onClose={() => setIsServiceLightboxOpen(false)} 
-      />
-
-      {/* Courier Service Section */}
-      <CourierServiceSection productName="HP EliteBook 6 G1ah 16" />
-
-{/* Footer */}
-<Footer />
-</div>
-  )
+export default function HPEliteBook6Page() {
+  return <ProductPage data={data} />
 }

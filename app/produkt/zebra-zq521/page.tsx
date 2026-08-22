@@ -1,456 +1,104 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { useInquiry } from '@/components/InquiryContext'
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  X,
-  Calculator,
-  BarChart3,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Palette,
-  Nfc,
-  Award
-} from 'lucide-react'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div>
-      {/* Main Image */}
-      <motion.div 
-        className="relative rounded-lg overflow-hidden aspect-[4/3] cursor-pointer"
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src="/zq521_1.png"
-          alt="Zebra ZQ521"
-          className="w-full h-full object-contain"
-          style={{ transform: 'scale(1.13) translateY(2%)' }}
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src="/zq521_1.png"
-                alt="Zebra ZQ521 - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-
-
-// Specifications Component
-const Specifications = () => {
-  const specs = [
-    { category: "Parametry fizyczne", items: [
-      { name: "Wymiary", value: "158 × 155 × 67 mm" },
-      { name: "Waga", value: "0,79 kg (bateria 3250 mAh)" },
-      { name: "Klasa szczelności", value: "IP54" },
-      { name: "Odporność na upadki", value: "2 m (wielokrotnie)" }
-    ]},
-    { category: "Parametry drukarki", items: [
-      { name: "Rozdzielczość", value: "203 dpi (8 pkt/mm)" },
-      { name: "Maksymalna szerokość druku", value: "104 mm" },
-      { name: "Maksymalna szybkość druku", value: "127 mm/s" },
-      { name: "System operacyjny", value: "Link-OS™" }
-    ]},
-    { category: "Obsługa nośników", items: [
-      { name: "Szerokość podłoża", value: "50,8-113 mm" },
-      { name: "Maksymalna średnica rolki", value: "57 mm" },
-      { name: "Rodzaje podłoży", value: "Paragon, etykiety, przywieszki, RFID" }
-    ]},
-    { category: "Zasilanie", items: [
-      { name: "Bateria standardowa", value: "PowerPrecision+ 3250 mAh" },
-      { name: "Bateria opcjonalna", value: "PowerPrecision+ 6500 mAh" }
-    ]},
-    { category: "Łączność", items: [
-      { name: "Wi-Fi", value: "802.11ac (2,4 GHz i 5 GHz)" },
-      { name: "Bluetooth", value: "4.1 (Classic i BLE)" },
-      { name: "USB", value: "2.0 On-The-Go (12 Mb/s)" }
-    ]},
-    { category: "Parametry pracy", items: [
-      { name: "Temperatura robocza", value: "-20°C do 55°C" },
-      { name: "Wilgotność robocza", value: "10% do 90%, bez kondensacji" }
-    ]}
-  ]
-
-  return (
-    <div className="space-y-6">
-      {specs.map((category, index) => (
-        <motion.div
-          key={category.category}
-          className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: index * 0.1 }}
-        >
-          <div className="bg-emerald-50 px-6 py-3 border-b border-emerald-200">
-            <h4 className="font-semibold text-emerald-700">{category.category}</h4>
-          </div>
-          <div className="p-6">
-            <div className="space-y-3">
-              {category.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
-                  <span className="text-gray-600">{item.name}</span>
-                  <span className="font-medium text-gray-900">{item.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  )
-}
-
-
-// Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: (accessory: any) => void }) => {
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
-
-  const accessories = [
+const data: ProductData = {
+  slug: 'zebra-zq521',
+  name: 'Zebra ZQ521',
+  category: 'Drukarki do rejestratora',
+  categoryHref: '/kategoria/drukarki-do-rejestratora',
+  images: ['/zq521_1.png'],
+  inquiry: {
+    description: 'Mobilna drukarka 4-calowa do pracy w terenie',
+    specifications: '203 dpi · 127 mm/s · IP54 · upadek 2 m · Wi-Fi ac · Link-OS',
+  },
+  whyNavLabel: 'Dlaczego ZQ521',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'Przy odbiorze drewna',
+  highlights: [
+    { icon: ICON.upadek, label: 'Odporność', value: 'IP54, upadki z 2 m' },
+    { icon: ICON.mroz, label: 'Temperatura', value: 'od -20 °C do +55 °C' },
+    { icon: ICON.szybkosc, label: 'Prędkość druku', value: '127 mm/s, 203 dpi' },
+    { icon: ICON.rolka, label: 'Nośniki', value: 'paragony, etykiety, przywieszki' },
+  ],
+  specGroups: [
     {
-      id: 'charger-network',
-      name: 'Ładowarka sieciowa',
-      price: 'Zapytaj o cenę'
+      title: 'Obudowa',
+      rows: [
+        { k: 'Wymiary', v: '158 × 155 × 67 mm' },
+        { k: 'Waga', v: '0,79 kg z baterią 3250 mAh' },
+        { k: 'Klasa szczelności', v: 'IP54' },
+        { k: 'Upadki', v: 'z 2 m, wielokrotnie' },
+      ],
     },
     {
-      id: 'charger-car',
-      name: 'Ładowarka samochodowa',
-      price: 'Zapytaj o cenę'
+      title: 'Drukowanie',
+      rows: [
+        { k: 'Rozdzielczość', v: '203 dpi (8 pkt/mm)' },
+        { k: 'Szerokość druku', v: 'do 104 mm' },
+        { k: 'Prędkość', v: 'do 127 mm/s' },
+        { k: 'System', v: 'Link-OS' },
+      ],
     },
     {
-      id: 'bag',
-      name: 'Torba na drukarkę',
-      price: 'Zapytaj o cenę'
+      title: 'Nośniki',
+      rows: [
+        { k: 'Szerokość podłoża', v: '50,8–113 mm' },
+        { k: 'Średnica rolki', v: 'do 57 mm' },
+        { k: 'Rodzaje', v: 'paragony, etykiety, przywieszki' },
+      ],
     },
     {
-      id: 'paper',
-      name: 'Papier termiczny 104x25x33',
-      price: 'Zapytaj o cenę'
-    }
-  ]
-
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
-  }
-
-  return (
-    <div className="mb-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Akcesoria
-            </h3>
-          </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={() => {
-                selectedAccessories.forEach((accessoryId) => {
-                  const accessory = accessories.find(a => a.id === accessoryId)
-                  if (accessory) {
-                    onAddToInquiry(accessory)
-                  }
-                })
-                setSelectedAccessories([])
-              }}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {accessories.map((accessory) => {
-            const isSelected = selectedAccessories.includes(accessory.id)
-            return (
-              <motion.div
-                key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
-                  isSelected 
-                    ? 'border-emerald-500 bg-emerald-50' 
-                    : 'border-gray-200 hover:border-emerald-300'
-                }`}
-                onClick={() => toggleAccessory(accessory.id)}
-              >
-                <div className="p-4 flex flex-col items-center text-center">
-                  {isSelected && (
-                    <div className="mb-2">
-                      <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    </div>
-                  )}
-                  <h4 className="font-semibold text-gray-900 mb-3">{accessory.name}</h4>
-                  <button
-                    className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                      isSelected 
-                        ? 'bg-emerald-700 text-white' 
-                        : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                    }`}
-                  >
-                    {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
-                  </button>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
-      </motion.div>
-    </div>
-  )
+      title: 'Zasilanie i łączność',
+      rows: [
+        { k: 'Bateria', v: 'PowerPrecision+ 3250 mAh' },
+        { k: 'Wi-Fi', v: '802.11ac, 2,4 i 5 GHz' },
+        { k: 'Bluetooth', v: '4.1 Classic i BLE' },
+        { k: 'USB', v: '2.0 On-The-Go' },
+        { k: 'Temperatura pracy', v: 'od -20 °C do +55 °C' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.upadek,
+      title: 'Upadek z dwóch metrów, wielokrotnie',
+      body:
+        'Drukarka wisi u pasa i spada — obudowa jest na to przygotowana, a klasa IP54 chroni przed deszczem i pyłem przy odbiórce.',
+    },
+    {
+      icon: ICON.mroz,
+      title: 'Drukuje przy dwudziestu stopniach mrozu',
+      body:
+        'Zakres pracy od -20 °C obejmuje zimową zrywkę, gdy zwykła drukarka odmawia podania papieru.',
+    },
+    {
+      icon: ICON.rolka,
+      title: 'Kwity, etykiety i przywieszki',
+      body:
+        'Jedno urządzenie obsługuje kwity odbioru, etykiety na stos i przywieszki — nośniki od 50,8 do 113 mm szerokości.',
+    },
+    {
+      icon: ICON.czaspracy,
+      title: 'Bateria PowerPrecision+ 3250 mAh',
+      body:
+        'Akumulator z układem kontroli stanu — drukarka raportuje kondycję ogniwa, więc wymianę planuje się przed awarią, a nie po niej.',
+    },
+  ],
+  usedBy: { device: 'Zebra ZQ521' },
+  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/rejestratory' }, { name: 'TAKMA' }],
+  signature: [
+    {
+      icon: ICON.upadek,
+      title: 'Zaprojektowana pod upadki z 2 metrów',
+      body:
+        'Klasa szczelności IP54, praca od -20 °C i odporność na wielokrotne upadki z dwóch metrów. Drukarka do noszenia przy pasie przez cały dzień, nie do stanowiska w kancelarii.',
+      tone: 'akcent',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function ZebraZQ521ProductPage() {
-  const [activeTab, setActiveTab] = useState('specs')
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/drukarki-do-rejestratora" className="hover:text-emerald-600">Drukarki do rejestratora</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Zebra ZQ521</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={[]} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Drukarka mobilna
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Zebra ZQ521
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Zebra ZQ521 to zaawansowana drukarka mobilna 4-calowa zaprojektowana dla najbardziej wymagających zastosowań terenowych. Wyposażona w system operacyjny Link-OS oraz technologię Power Smart Print, drukarka automatycznie optymalizuje zużycie baterii i szybkość druku. Urządzenie charakteryzuje się wyjątkową odpornością – klasa szczelności IP54 oraz certyfikat MIL-STD 810G gwarantują niezawodne działanie w trudnych warunkach, a odporność na wielokrotne upadki z wysokości 2 metrów czyni ją idealnym narzędziem dla służb leśnych. Dzięki rozszerzonej łączności bezprzewodowej Bluetooth 4.1, a także obsłudze platformy Zebra DNA, drukarka zapewnia bezproblemową integrację z mobilnymi systemami zarządzania flotą.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'zebra-zq521',
-                      name: 'Zebra ZQ521',
-                      image: '/zq521_1.png',
-                      category: 'Drukarki mobilne',
-                      description: 'Drukarka mobilna 4-calowa z Link-OS',
-                      specifications: 'IP54, Bluetooth 4.1, Wi-Fi 802.11ac'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Bestseller box */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 rounded-lg p-6 border-2 border-amber-300 shadow-lg mb-6"
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                    <Award className="w-6 h-6 text-orange-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white mb-1">
-                      Najczęściej wybierana przez Nadleśnictwa
-                    </h3>
-                    <p className="text-sm text-amber-50">
-                      Niekwestionowany lider wśród drukarek termiczny pracujących w terenie!
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZSLP Stargard</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZPUH Olsztyn</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Accessories Section */}
-        <AccessoriesSection 
-          productName="Zebra ZQ521" 
-          onAddToInquiry={(accessory) => {
-            addToInquiry({
-              id: `accessory-${accessory.id}`,
-              name: accessory.name,
-              image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==',
-              category: 'Akcesoria'
-            })
-          }} 
-        />
-
-        {/* Tabs Navigation */}
-        <div className="border-b border-gray-200 mb-8">
-          <nav className="-mb-px flex space-x-8">
-            {[
-              { id: 'specs', label: 'Specyfikacja' },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === tab.id
-                    ? 'border-emerald-500 text-emerald-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Tab Content */}
-        <div className="mb-16">
-          <AnimatePresence mode="wait">
-
-
-            {activeTab === 'specs' && (
-              <motion.div
-                key="specs"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <Specifications />
-              </motion.div>
-            )}
-
-
-
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Courier Service Section */}
-      <CourierServiceSection productName="Zebra ZQ521" />
-
-    {/* Footer */}
-<Footer />
-</div>
-  )
+export default function ZebraZQ521Page() {
+  return <ProductPage data={data} />
 }

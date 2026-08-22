@@ -1,575 +1,100 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  X,
-  Calculator,
-  BarChart3,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  ChevronDown
-} from 'lucide-react'
-import { useInquiry } from '@/components/InquiryContext'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-square cursor-pointer"
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src="/pa768_1.png"
-          alt="Unitech PA768"
-          className="w-[85%] h-[85%] object-contain mx-auto my-auto absolute inset-0 m-auto"
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src="/pa768_1.png"
-                alt="Unitech PA768 - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
+const data: ProductData = {
+  slug: 'unitech-pa768',
+  name: 'Unitech PA768',
+  category: 'Rejestratory',
+  categoryHref: '/kategoria/rejestratory',
+  images: ['/pa768_1.png'],
+  inquiry: {
+    description: 'Terminal z baterią wymienianą bez wyłączania',
+    specifications: 'Android · 6,3″ FHD+ · Snapdragon 6490 2,7 GHz · 6/64 GB · 5100 mAh hot-swap · IP65/IP67',
+  },
+  whyNavLabel: 'Dlaczego PA768',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W warunkach leśnych',
+  highlights: [
+    { icon: ICON.wymiana, label: 'Bateria', value: '5100 mAh, hot-swap' },
+    { icon: ICON.upadek, label: 'Upadki', value: 'do 1,8 m' },
+    { icon: ICON.przekatna, label: 'Ekran', value: '6,3″ FHD+' },
+    { icon: ICON.procesor, label: 'Procesor', value: 'Snapdragon 6490, 2,7 GHz' },
+  ],
+  variants: [
+    { id: 'pamiec', label: 'Pamięć', options: ['6 GB / 64 GB'] },
+  ],
+  specGroups: [
+    {
+      title: 'Wyświetlacz',
+      rows: [
+        { k: 'Przekątna', v: '6,3″' },
+        { k: 'Rozdzielczość', v: '2160 × 1080 FHD+' },
+      ],
+    },
+    {
+      title: 'Wydajność',
+      rows: [
+        { k: 'Procesor', v: 'Snapdragon 6490, 8 rdzeni, 2,7 GHz' },
+        { k: 'Pamięć RAM', v: '6 GB' },
+        { k: 'Pamięć wbudowana', v: '64 GB' },
+      ],
+    },
+    {
+      title: 'Odporność',
+      rows: [
+        { k: 'Klasa szczelności', v: 'IP65 i IP67' },
+        { k: 'Upadki', v: 'do 1,8 m' },
+        { k: 'Temperatura pracy', v: 'od -20 °C do +55 °C' },
+      ],
+    },
+    {
+      title: 'Zasilanie',
+      rows: [
+        { k: 'Bateria', v: '5100 mAh, wymiana bez wyłączania' },
+        { k: 'Czas pracy', v: 'do 14 godzin' },
+        { k: 'Ładowanie', v: 'USB-C' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.wymiana,
+      title: 'Wymiana baterii bez wyłączania',
+      body:
+        'Tryb hot-swap podtrzymuje pracę urządzenia podczas zmiany ogniwa — sesja w aplikacji nie przepada, praca trwa dalej.',
+    },
+    {
+      icon: ICON.upadek,
+      title: 'Odporność na upadek z 1,8 m',
+      body:
+        'Najwyższa wartość w zestawieniu terminali — obudowa liczy się z pracą z pojazdu i podawaniem sprzętu z ręki do ręki.',
+    },
+    {
+      icon: ICON.przekatna,
+      title: 'Największy ekran wśród terminali',
+      body:
+        '6,3 cala w rozdzielczości FHD+ mieści mapę i formularz naraz, a wciąż mieści się w dłoni.',
+    },
+    {
+      icon: ICON.mroz,
+      title: 'Od -20 °C do +55 °C',
+      body:
+        'Terminal pracuje zimą przy zrywce i latem w nagrzanym pojeździe bez przerw na ochłonięcie.',
+    },
+  ],
+  usedBy: { device: 'Unitech PA768' },
+  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/rejestratory' }, { name: 'TAKMA' }],
+  related: [
+    {
+      name: 'Unitech EA660',
+      href: '/produkt/unitech-ea660',
+      note: 'Dłuższy czas pracy, mniejszy ekran',
+    },
+  ],
 }
 
-
-// Specifications Component
-const Specifications = () => {
-  const specs = [
-    { category: "Wyświetlacz", items: [
-      { name: "Rozmiar", value: "Ekran 6,3''" },
-      { name: "Rozdzielczość", value: "2160 x 1080 FHD+" },
-    ]},
-    { category: "Wydajność", items: [
-      { name: "Procesor", value: "Qualcomm Snapdragon 6490 Octa-Core 2,7 GHz" },
-      { name: "RAM", value: "6GB" },
-      { name: "Pamięć", value: "64 GB Flash" }
-    ]},
-    { category: "Wytrzymałość", items: [
-      { name: "Norma", value: "IP65/IP67" },
-      { name: "Upadki", value: "Wytrzymuje upadki do 1,8 m" },
-      { name: "Temperatura", value: "-20°C do +55°C" }
-    ]},
-    { category: "Bateria", items: [
-      { name: "Pojemność", value: "5100 mAh (hot-swap)" },
-      { name: "Czas pracy", value: "Do 14 godzin" },
-      { name: "Ładowanie", value: "USB-C" }
-    ]}
-  ]
-
-  return (
-    <div className="space-y-6">
-      {specs.map((category, index) => (
-        <motion.div
-          key={category.category}
-          className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: index * 0.1 }}
-        >
-          <div className="bg-emerald-50 px-6 py-3 border-b border-emerald-200">
-            <h4 className="font-semibold text-emerald-700">{category.category}</h4>
-          </div>
-          <div className="p-6">
-            <div className="space-y-3">
-              {category.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
-                  <span className="text-gray-600">{item.name}</span>
-                  <span className="font-medium text-gray-900">{item.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  )
-}
-
-// Service Contract Lightbox Component
-const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          <motion.div
-            className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.5, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-900">Kontrakty serwisowe Unitech</h3>
-                <button
-                  onClick={onClose}
-                  className="p-2 hover:bg-gray-100 rounded-full"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              
-              <div className="space-y-4 text-gray-600">
-                <p>
-                  Kontrakty serwisowe Unitech to kompleksowe programy wsparcia technicznego, 
-                  które zapewniają ciągłość działania Twoich urządzeń mobilnych.
-                </p>
-                
-                <div className="bg-emerald-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-emerald-700 mb-2">Co obejmuje kontrakt?</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Priorytetowe wsparcie techniczne 24/7</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Gwarancja wymiany urządzenia w 24h</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Regularne aktualizacje bezpieczeństwa</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Zdalne rozwiązywanie problemów</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Pokrycie kosztów napraw i części</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <p className="text-sm">
-                  Dostępne są różne poziomy kontraktów - od podstawowego wsparcia 
-                  po zaawansowane pakiety z gwarancją wymiany następnego dnia roboczego.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
-}
-
-
-// Accessories Section Component
-const AccessoriesSection = ({ productName }: { productName: string }) => {
-  const { addToInquiry } = useInquiry()
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
-  const [showAllAccessories, setShowAllAccessories] = useState(false)
-
-  const accessories = [
-    {
-      id: 'screen',
-      name: 'Szkło hartowane na ekran',
-      description: 'Ochrona wyświetlacza przed zadrapaniami'
-    },
-    {
-      id: 'carcharger',
-      name: 'Ładowarka samochodowa',
-      description: 'Szybka ładowarka do samochodu z kablem USB-C'
-    },
-    {
-      id: 'mount',
-      name: 'Uchwyt samochodowy',
-      description: 'Uniwersalny uchwyt do montażu w pojeździe'
-    },
-    {
-      id: 'dock-battery',
-      name: 'Stacja dokująca z możliwością ładowania samego akumulatora + zasilacz',
-      description: 'Stacja dokująca umożliwiająca ładowanie baterii bez urządzenia'
-    },
-    {
-      id: 'case',
-      name: 'Futerał',
-      description: 'Wytrzymały futerał ochronny'
-    },
-    {
-      id: 'dock-full',
-      name: 'Stacja dokująca + port USB Host i Ethernet + zasilacz + kabel USB + możliwość ładowania samego akumulatora',
-      description: 'Kompletna stacja dokująca z pełnym wyposażeniem'
-    },
-    {
-      id: 'battery-standard',
-      name: 'Akumulator standardowy 5100mAh',
-      description: 'Standardowy akumulator zapasowy'
-    },
-    {
-      id: 'battery-extended',
-      name: 'Akumulator powiększony 7700mAh',
-      description: 'Akumulator o zwiększonej pojemności'
-    },
-    {
-      id: 'wrist-strap',
-      name: 'Pasek na rękę montowany do nakładki na obudowę',
-      description: 'Wygodny pasek zabezpieczający montowany do nakładki'
-    },
-    {
-      id: 'stylus',
-      name: 'Rysik do ekranu',
-      description: 'Precyzyjny rysik do obsługi ekranu dotykowego'
-    }
-  ]
-
-  const visibleAccessories = showAllAccessories ? accessories : accessories.slice(0, 4)
-
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
-  }
-
-  const handleAddSelectedToInquiry = () => {
-    selectedAccessories.forEach(accessoryId => {
-      const accessory = accessories.find(a => a.id === accessoryId)
-      if (accessory) {
-        addToInquiry({
-          id: `unitech-pa768-accessory-${accessory.id}`,
-          name: accessory.name,
-          image: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
-          category: 'Akcesoria',
-          description: accessory.description
-        })
-      }
-    })
-    setSelectedAccessories([])
-  }
-
-  return (
-    <div className="mb-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Akcesoria
-            </h3>
-          </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={handleAddSelectedToInquiry}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {visibleAccessories.map((accessory) => {
-            const isSelected = selectedAccessories.includes(accessory.id)
-            return (
-              <motion.div
-                key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
-                  isSelected 
-                    ? 'border-emerald-500 bg-emerald-50' 
-                    : 'border-gray-200 hover:border-emerald-300'
-                }`}
-                onClick={() => toggleAccessory(accessory.id)}
-              >
-                <div className="p-4 flex flex-col h-full">
-                  <div className="relative mb-4">
-                    {isSelected && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
-                  <div className="flex items-center justify-end mt-auto">
-                    <button
-                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                        isSelected 
-                          ? 'bg-emerald-700 text-white' 
-                          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                      }`}
-                    >
-                      {isSelected ? 'Wybrane' : 'Wybierz'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
-
-        {/* Show More Button */}
-        {accessories.length > 4 && (
-          <div className="mt-6 flex justify-center">
-            <motion.button
-              onClick={() => setShowAllAccessories(!showAllAccessories)}
-              className="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span>{showAllAccessories ? 'Zwiń akcesoria' : 'Zobacz więcej akcesoriów'}</span>
-              <motion.div
-                animate={{ rotate: showAllAccessories ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ChevronDown className="w-4 h-4" />
-              </motion.div>
-            </motion.button>
-          </div>
-        )}
-      </motion.div>
-    </div>
-  )
-}
-
-// Main Product Page Component
-export default function UnitechPA768ProductPage() {
-  const [activeTab, setActiveTab] = useState('specs')
-  const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/rejestratory" className="hover:text-emerald-600">Rejestratory</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Unitech PA768</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={[]} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Unitech PA768
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Unitech PA768 to wzmocniony komputer mobilny do pracy w lesie i na zrębach. 6,3'' ekran FHD+ (500 nitów) jest czytelny w słońcu i chroniony szkłem Gorilla Glass. Zintegrowany skaner 2D z dalekim zasięgiem przyspiesza odczyt plakietek, etykiet sztapli oraz kodów na dokumentach przewozowych. Ośmiordzeniowy Snapdragon 6490 2,7 GHz i 6 GB RAM zapewniają płynne mapy, zdjęcia i formularze. Klasa IP65/IP67 i odporność na upadki do 1,8 m znoszą deszcz, błoto i pył. Hot-swap bateria 5100 mAh pozwala wymienić ogniwo bez przerywania pracy, a USB-C ułatwia szybkie ładowanie. Łączność 5G i Wi-Fi 6E przyspiesza wysyłkę danych z terenu, a dokładny GNSS ułatwia orientację w oddziałach i kwaterach. Tryb w rękawicach oraz wysoka jasność zwiększają wygodę podczas opadów i w pełnym słońcu.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'unitech-pa768',
-                      name: 'Unitech PA768',
-                      image: '/pa768_1.png',
-                      category: 'Rejestratory',
-                      description: 'Wzmocniony komputer mobilny 6.3" z hot-swap baterią i skanerem 2D',
-                      specifications: 'Snapdragon 6490 2.7GHz, 6GB RAM, 64GB, 5100mAh hot-swap, IP65/IP67, 5G/Wi-Fi 6E'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Kontrakty serwisowe */}
-              <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200 mb-6">
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-semibold text-emerald-700">Kontrakty serwisowe dostępne</h4>
-                      <button
-                        onClick={() => setIsServiceLightboxOpen(true)}
-                        className="p-1 hover:bg-emerald-200 rounded-full transition-colors"
-                      >
-                        <Info className="w-4 h-4 text-emerald-600" />
-                      </button>
-                    </div>
-                    <p className="text-sm text-gray-600">
-                      Kontrakt serwisowy to spokój dla administratora i gwarancja ciągłości pracy dla leśniczego w terenie. 
-                      Profesjonalne wsparcie zapewnia, że urządzenia zawsze będą gotowe do pracy.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Accessories Section */}
-        <AccessoriesSection productName="Unitech PA768" />
-
-        {/* Tabs Navigation */}
-        <div className="border-b border-gray-200 mb-8">
-          <nav className="-mb-px flex space-x-8">
-            {[
-              { id: 'specs', label: 'Specyfikacja' },
-              { id: 'service', label: 'Serwis', isScroll: true }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  tab.id === 'service'
-                    ? 'border-transparent text-orange-600 hover:text-orange-700 hover:border-orange-300'
-                    : activeTab === tab.id
-                    ? 'border-emerald-500 text-emerald-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-                onClick={() => {
-                  if (tab.isScroll) {
-                    // Scroll to service section
-                    const serviceSection = document.getElementById('service-section')
-                    if (serviceSection) {
-                      serviceSection.scrollIntoView({ behavior: 'smooth' })
-                    }
-                  } else {
-                    setActiveTab(tab.id)
-                  }
-                }}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Tab Content */}
-        <div className="mb-16">
-          <AnimatePresence mode="wait">
-            {activeTab === 'specs' && (
-              <motion.div
-                key="specs"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <Specifications />
-              </motion.div>
-            )}
-
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Service Contract Lightbox */}
-      <ServiceContractLightbox 
-        isOpen={isServiceLightboxOpen} 
-        onClose={() => setIsServiceLightboxOpen(false)} 
-      />
-
-      {/* Courier Service Section */}
-      <CourierServiceSection productName="Unitech PA768" />
-
-  {/* Footer */}
-<Footer />
-</div>
-  )
+export default function UnitechPA768Page() {
+  return <ProductPage data={data} />
 }

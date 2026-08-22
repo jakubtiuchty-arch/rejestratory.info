@@ -56,3 +56,38 @@
     color: hsl(var(--foreground));
   }
 }
+
+/* Karuzela logotypów nadleśnictw — płynny przesuw w lewo.
+   Włącza się tylko wtedy, gdy jednostek jest więcej, niż mieści się w rzędzie.
+   Lista renderowana jest dwukrotnie, więc przesunięcie o połowę szerokości
+   wraca do punktu wyjścia i pętla pozostaje niewidoczna. */
+@keyframes przesuw-w-lewo {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.karuzela-tor {
+  display: flex;
+  width: max-content;
+  animation: przesuw-w-lewo linear infinite;
+}
+
+.karuzela:hover .karuzela-tor {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .karuzela-tor { animation: none; }
+}
+
+/* Panel przewijalny bez widocznego paska — treść nadal przewija się kółkiem,
+   gestem i klawiaturą, znika tylko szara belka psująca zaokrąglony róg. */
+.bez-paska {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.bez-paska::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}

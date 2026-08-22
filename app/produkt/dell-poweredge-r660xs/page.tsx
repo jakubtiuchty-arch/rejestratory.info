@@ -1,435 +1,137 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { useInquiry } from '@/components/InquiryContext'
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  X,
-  Calculator,
-  BarChart3,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Palette,
-  Nfc,
-  Server,
-  HardDrive,
-  Cpu
-} from 'lucide-react'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div>
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-[4/3] cursor-pointer"
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src="/r660_1.png"
-          alt="Dell PowerEdge R660xs"
-          className="w-full h-full object-contain"
-          style={{ transform: 'scale(0.935) translateY(-2%)' }}
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src="/r660_1.png"
-                alt="Dell PowerEdge R660xs - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
+const data: ProductData = {
+  slug: 'dell-poweredge-r660xs',
+  name: 'Dell PowerEdge R660xs',
+  category: 'Serwery',
+  categoryHref: '/kategoria/serwery',
+  images: ['/r660_1.png'],
+  inquiry: {
+    description: 'Najmocniejszy serwer w ofercie dla nadleśnictw',
+    specifications: 'Xeon Gold 5416S · 128 GB DDR5 ECC · 9,6 TB SAS w RAID · iDRAC9 · ProSupport 60 mies.',
+  },
+  whyNavLabel: 'Dlaczego R660xs',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W serwerowni nadleśnictwa',
+  highlights: [
+    { icon: ICON.procesor, label: 'Procesor', value: 'Xeon Gold 5416S, 16 rdzeni / 32 wątki' },
+    { icon: ICON.pamiec, label: 'Pamięć', value: '128 GB DDR5 RDIMM ECC' },
+    { icon: ICON.dyski, label: 'Przestrzeń', value: '9,6 TB SAS 10 000 obr./min' },
+    { icon: ICON.wsparcie5, label: 'Gwarancja', value: 'ProSupport 60 miesięcy' },
+  ],
+  variants: [
+    { id: 'konfiguracja', label: 'Konfiguracja', options: ['128 GB / 9,6 TB'] },
+  ],
+  specGroups: [
+    {
+      title: 'Procesor',
+      rows: [
+        { k: 'Model', v: 'Intel Xeon Gold 5416S' },
+        { k: 'Taktowanie', v: '2,0–4,0 GHz' },
+        { k: 'Rdzenie', v: '16 rdzeni / 32 wątki' },
+        { k: 'Cache', v: '30 MB' },
+        { k: 'TDP', v: '150 W' },
+      ],
+    },
+    {
+      title: 'Pamięć',
+      rows: [
+        { k: 'Pojemność', v: '128 GB (4 × 32 GB)' },
+        { k: 'Typ', v: 'DDR5 RDIMM ECC' },
+        { k: 'Prędkość', v: '4800 MT/s' },
+      ],
+    },
+    {
+      title: 'Dyski i macierz',
+      rows: [
+        { k: 'Zatoki', v: 'do 8 dysków 2,5″ SAS/SATA hot-plug' },
+        { k: 'Kontroler', v: 'PERC H755, 8 GB cache, 12 Gb/s' },
+        { k: 'Poziomy RAID', v: '0/1/5/6/10/50/60' },
+        { k: 'Zainstalowane', v: '9,6 TB — 4 × 2,4 TB SAS, 10 000 obr./min' },
+      ],
+    },
+    {
+      title: 'Zarządzanie i sieć',
+      rows: [
+        { k: 'Zdalne zarządzanie', v: 'iDRAC9 Enterprise (1 × RJ-45)' },
+        { k: 'OpenManage', v: 'Enterprise Advanced Plus' },
+        { k: 'Karta sieciowa', v: 'Broadcom 5720 Dual Port, 2 × RJ-45 1 Gb/s' },
+      ],
+    },
+    {
+      title: 'Zasilanie i obudowa',
+      rows: [
+        { k: 'Zasilacze', v: '2 × 700 W Hot-Plug, 80 PLUS Titanium' },
+        { k: 'Przewód', v: 'Rack PDU 2 m (C13/C14)' },
+        { k: 'Maskownica', v: 'LCD Bezel 1U' },
+        { k: 'Szyny', v: 'ReadyRails z ramieniem na przewody' },
+      ],
+    },
+    {
+      title: 'Gwarancja',
+      rows: [
+        { k: 'Wsparcie', v: 'ProSupport, reakcja Next Business Day Onsite' },
+        { k: 'Okres', v: '60 miesięcy' },
+        { k: 'Opcje', v: 'zachowanie dysków twardych' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.pamiec,
+      title: 'Sto dwadzieścia osiem gigabajtów DDR5',
+      body:
+        'Największa pamięć w zestawieniu — serwer udźwignie bazy danych i wiele maszyn wirtualnych naraz.',
+    },
+    {
+      icon: ICON.dyski,
+      title: 'Dyski SAS 10 000 obrotów',
+      body:
+        'Szybsze nośniki niż w pozostałych modelach: liczy się tu czas dostępu do danych, nie sama pojemność.',
+    },
+    {
+      icon: ICON.rozbudowa,
+      title: 'Osiem zatok 2,5 cala',
+      body:
+        'Cztery zatoki wolne — przestrzeń rośnie bez przerywania pracy dzięki obsłudze hot-plug.',
+    },
+    {
+      icon: ICON.zasilacze,
+      title: 'Redundantne zasilanie Titanium',
+      body:
+        'Dwa zasilacze 700 W w klasie 80 PLUS Titanium zapewniają ciągłość pracy i niskie straty energii.',
+    },
+  ],
+  usedBy: { device: 'PowerEdge R660xs' },
+  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
+  signature: [
+    {
+      icon: ICON.wsparcie5,
+      title: 'Pięć lat gwarancji ProSupport',
+      body:
+        'Sześćdziesiąt miesięcy wsparcia z reakcją w następnym dniu roboczym u klienta oraz opcją zachowania dysków twardych — dane nie opuszczają jednostki przy wymianie sprzętu.',
+      tone: 'akcent',
+    },
+    {
+      icon: ICON.rozbudowa,
+      title: 'Możliwość rozbudowy',
+      body:
+        'Serwer rośnie razem z potrzebami nadleśnictwa: więcej pamięci RAM, kolejne dyski w zatokach hot-plug i dodatkowe karty rozszerzeń bez wymiany platformy.',
+      tone: 'ciemny',
+    },
+  ],
+  related: [
+    {
+      name: 'Dell PowerEdge R550',
+      href: '/produkt/dell-poweredge-r550',
+      note: 'Więcej przestrzeni dyskowej przy mniejszej pamięci',
+    },
+  ],
 }
 
-
-// Specifications Component
-const Specifications = () => {
-  const specs = [
-    { category: "Procesor", items: [
-      { name: "Model", value: "Intel® Xeon™ Gold-5416S" },
-      { name: "Taktowanie", value: "2.0 GHz - 4.0 GHz" },
-      { name: "Rdzenie/Wątki", value: "16 rdzeni / 32 wątki" },
-      { name: "Cache", value: "30 MB" },
-      { name: "TDP", value: "150 W" }
-    ]},
-    { category: "Pamięć RAM", items: [
-      { name: "Pojemność", value: "128 GB (4 x 32 GB)" },
-      { name: "Typ", value: "DDR5 RDIMM ECC" },
-      { name: "Prędkość", value: "4800 MT/s" }
-    ]},
-    { category: "Dyski i macierz RAID", items: [
-      { name: "Zatoki na dyski", value: "Maksymalnie 8 dysków 2.5″ SAS/SATA (Hot-Plug)" },
-      { name: "Kontroler RAID", value: "PERC H755 (Sprzętowy, 8 GB cache, 12 Gb/s)" },
-      { name: "Poziomy RAID", value: "0/1/5/6/10/50/60" },
-      { name: "Dyski twarde", value: "9,6 TB (4 x 2,4TB HDD, 10000 obr./min, SAS 12 Gb/s, 2.5″, Hot-Plug)" }
-    ]},
-    { category: "Zarządzanie i sieć", items: [
-      { name: "Zdalne zarządzanie", value: "iDRAC9 Enterprise (1x RJ-45)" },
-      { name: "Licencja OpenManage", value: "OpenManage Enterprise Advanced Plus" },
-      { name: "Karta sieciowa", value: "Broadcom® 5720 Dual Port (2 x RJ-45, 1 Gb/s)" }
-    ]},
-    { category: "Zasilanie i obudowa", items: [
-      { name: "Zasilacz", value: "2 x 700 W Hot-Plug (80 PLUS Titanium)" },
-      { name: "Przewód zasilający", value: "Rack PDU 2 m (C13/C14)" },
-      { name: "Maskownica", value: "LCD Bezel (1U)" },
-      { name: "Szyny montażowe", value: "Ruchome ReadyRails™ z ramieniem na przewody" }
-    ]},
-    { category: "Gwarancja i wsparcie", items: [
-      { name: "Gwarancja", value: "ProSupport z czasem reakcji Next Business Day Onsite" },
-      { name: "Okres gwarancji", value: "60 miesięcy" },
-      { name: "Dodatkowe opcje", value: "Zachowanie dysków twardych" }
-    ]}
-  ]
-
-  return (
-    <div className="space-y-6">
-      {specs.map((category, index) => (
-        <motion.div
-          key={category.category}
-          className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: index * 0.1 }}
-        >
-          <div className="bg-emerald-50 px-6 py-3 border-b border-emerald-200">
-            <h4 className="font-semibold text-emerald-700">{category.category}</h4>
-          </div>
-          <div className="p-6">
-            <div className="space-y-3">
-              {category.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
-                  <span className="text-gray-600">{item.name}</span>
-                  <span className="font-medium text-gray-900">{item.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  )
-}
-
-// Service Contract Lightbox Component
-const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          <motion.div
-            className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.5, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-900">Wsparcie serwisowe Dell ProSupport</h3>
-                <button
-                  onClick={onClose}
-                  className="p-2 hover:bg-gray-100 rounded-full"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              
-              <div className="space-y-4 text-gray-600">
-                <p>
-                  Dell PowerEdge R660xs jest objęty profesjonalnym wsparciem ProSupport, 
-                  zapewniającym kompleksową ochronę i wsparcie techniczne dla infrastruktury serwerowej.
-                </p>
-                
-                <div className="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
-                  <h4 className="font-semibold text-emerald-700 mb-3">Korzyści z ProSupport:</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Reakcja serwisu następnego dnia roboczego</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Priorytetowe wsparcie techniczne 24/7</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Zachowanie dysków twardych po wymianie</span>
-                    </li>
-                    <li className="flex items-start">
-                      <Check className="w-4 h-4 text-emerald-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Gwarancja przez 60 miesięcy</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
-}
-
-
-// Main Product Page Component
-export default function DellPowerEdgeR660xsProductPage() {
-  const [activeTab, setActiveTab] = useState('specs')
-  const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/serwery" className="hover:text-emerald-600">Serwery</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Dell PowerEdge R660xs</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={[]} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Serwer rack 1U
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Dell PowerEdge R660xs
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Dell PowerEdge R660xs to wydajny serwer rack 1U z procesorami Intel Xeon Gold czwartej generacji, 
-                zaprojektowany dla wymagających nadleśnictw potrzebujących maksymalnej mocy obliczeniowej w kompaktowej 
-                obudowie. Procesor Gold z 16 rdzeniami i pamięć DDR5 4800 MT/s zapewniają wyjątkową wydajność dla 
-                najbardziej złożonych aplikacji leśnych i analiz danych. Szybkie dyski SAS 10000 obr./min gwarantują 
-                błyskawiczny dostęp do danych. System zarządzania iDRAC9 Enterprise oraz redundantne zasilacze Hot-Plug 
-                zapewniają najwyższą niezawodność dla krytycznych systemów nadleśnictwa.
-              </p>
-              
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'dell-poweredge-r660xs',
-                      name: 'Dell PowerEdge R660xs',
-                      image: '/r660_1.png',
-                      category: 'Serwery',
-                      description: 'Wydajny serwer rack 1U z Intel Xeon Gold',
-                      specifications: 'Intel Xeon Gold-5416S, 128GB DDR5, 9.6TB RAID'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* BOX 1 - RAM i HDD - czerwono-pomarańczowy gradient */}
-              <div className="rounded-lg p-4 border-2 mb-4 shadow-md" style={{ background: 'linear-gradient(to right, #dc2626, #ea580c, #fb923c)', borderColor: '#ea580c' }}>
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
-                    <HardDrive className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold mb-1 text-white">Maksymalna wydajność pamięci i dysków</h4>
-                    <p className="text-sm text-white">
-                      Serwer wyposażony w 128 GB pamięci RAM DDR5 RDIMM ECC 4800 MT/s oraz 9,6 TB przestrzeni dyskowej 
-                      (4 x 2,4TB HDD 10000 obr./min SAS w macierzy RAID). Najnowsza pamięć DDR5 oraz szybkie dyski 
-                      SAS zapewniają najwyższą wydajność do obsługi najbardziej wymagających systemów leśnych, 
-                      zaawansowanych analiz danych oraz aplikacji czasu rzeczywistego.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* BOX 2 - Rozbudowa - szary gradient */}
-              <div className="rounded-lg p-4 border-2 mb-6 shadow-md" style={{ background: 'linear-gradient(to right, #374151, #6b7280, #9ca3af)', borderColor: '#6b7280' }}>
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
-                    <Cpu className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold mb-1 text-white">Możliwość rozbudowy</h4>
-                    <p className="text-sm text-white">
-                      Serwer można swobodnie rozbudowywać w miarę wzrostu potrzeb nadleśnictwa. 
-                      Możliwa jest rozbudowa pamięci RAM DDR5, dodanie większej ilości dysków twardych (do 8 zatoki 2.5″), 
-                      wymiana kontrolera RAID na wydajniejszy oraz instalacja dodatkowych kart 
-                      rozszerzeń. Kompaktowa konstrukcja 1U z procesorem Gold pozwala na maksymalne 
-                      wykorzystanie mocy obliczeniowej bez kompromisów w zakresie możliwości rozbudowy.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Tabs Navigation */}
-        <div className="border-b border-gray-200 mb-8">
-          <nav className="-mb-px flex space-x-8">
-            {[
-              { id: 'specs', label: 'Specyfikacja' },
-              { id: 'service', label: 'Serwis', isScroll: true }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  tab.id === 'service'
-                    ? 'border-transparent text-orange-600 hover:text-orange-700 hover:border-orange-300'
-                    : activeTab === tab.id
-                    ? 'border-emerald-500 text-emerald-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-                onClick={() => {
-                  if (tab.isScroll) {
-                    // Scroll to service section
-                    const serviceSection = document.getElementById('service-section')
-                    if (serviceSection) {
-                      serviceSection.scrollIntoView({ behavior: 'smooth' })
-                    }
-                  } else {
-                    setActiveTab(tab.id)
-                  }
-                }}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Tab Content */}
-        <div className="mb-16">
-          <AnimatePresence mode="wait">
-
-
-            {activeTab === 'specs' && (
-              <motion.div
-                key="specs"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <Specifications />
-              </motion.div>
-            )}
-
-
-
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Service Contract Lightbox */}
-      <ServiceContractLightbox 
-        isOpen={isServiceLightboxOpen} 
-        onClose={() => setIsServiceLightboxOpen(false)} 
-      />
-
-      {/* Courier Service Section */}
-      <CourierServiceSection productName="Dell PowerEdge R660xs" />
-
-{/* Footer */}
-<Footer />
-</div>
-  )
+export default function DellR660xsPage() {
+  return <ProductPage data={data} />
 }

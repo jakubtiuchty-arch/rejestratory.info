@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart, Menu, X, User } from "lucide-react";
 import { useInquiry } from '@/components/InquiryContext';
+import { ICON, naCiemnym } from '@/components/product/icons'
 
 interface HeaderProps {
   activeTab?: 'home' | 'produkty' | 'serwis' | 'kontakt';
@@ -81,7 +81,7 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
               href="/panel-klienta"
               className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center gap-2 border border-gray-300 transition-colors"
             >
-              <User className="h-4 w-4" />
+              <img src={ICON.uzytkownik} alt="" className="h-4 w-4 mix-blend-multiply" />
               Panel Klienta
             </a>
             
@@ -89,7 +89,7 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
               onClick={openCart}
               className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2"
             >
-              <ShoppingCart className="h-4 w-4" />
+              <img src={naCiemnym(ICON.zamowienie)} alt="" className="h-4 w-4" />
               Zapytanie ({inquiryCount})
             </button>
           </div>
@@ -100,7 +100,7 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
               onClick={openCart}
               className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg flex items-center gap-2"
             >
-              <ShoppingCart className="h-4 w-4" />
+              <img src={naCiemnym(ICON.zamowienie)} alt="" className="h-4 w-4" />
               ({inquiryCount})
             </button>
             
@@ -108,7 +108,7 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-gray-700 hover:text-emerald-600 transition-colors"
             >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {mobileMenuOpen ? <img src={ICON.zamknij} alt="" className="h-6 w-6 mix-blend-multiply" /> : <img src={ICON.menu} alt="" className="h-6 w-6 mix-blend-multiply" />}
             </button>
           </div>
         </nav>
@@ -180,7 +180,7 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
                   className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  <User className="h-4 w-4" />
+                  <img src={ICON.uzytkownik} alt="" className="h-4 w-4 mix-blend-multiply" />
                   Panel Klienta
                 </a>
               </li>

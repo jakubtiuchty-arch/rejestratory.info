@@ -17,16 +17,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
-import { 
-  Filter,
-  Grid3x3,
-  List,
-  ChevronRight,
-  ShieldCheck,
-  Truck,
-  Package,
-  TreePine
-} from "lucide-react";
 
 // Import prawdziwych danych produktów
 import { 
@@ -34,6 +24,7 @@ import {
   productCategories,
   Product 
 } from "../../products-data";
+import { ICON } from '@/components/product/icons'
 
 interface CategoryPageProps {
   params: Promise<{
@@ -98,7 +89,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <TreePine className="h-8 w-8 text-emerald-600" />
+              <img src={ICON.drzewo} alt="" className="h-8 w-8 mix-blend-multiply" />
               <span className="text-xl font-bold text-gray-900">IT dla Lasów</span>
             </div>
             
@@ -121,9 +112,9 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
         <div className="container mx-auto px-4">
           <nav className="flex items-center gap-2 text-sm">
             <Link href="/" className="text-gray-600 hover:text-emerald-600">Strona główna</Link>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
+            <img src={ICON.chevronPrawo} alt="" className="h-4 w-4 mix-blend-multiply" />
             <span className="text-gray-600 hover:text-emerald-600">Produkty</span>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
+            <img src={ICON.chevronPrawo} alt="" className="h-4 w-4 mix-blend-multiply" />
             <span className="text-gray-900 font-medium">{categoryInfo.name}</span>
           </nav>
         </div>
@@ -158,7 +149,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <Button variant="outline" className="flex items-center gap-2">
-                <Filter className="h-4 w-4" />
+                <img src={ICON.filtr} alt="" className="h-4 w-4 mix-blend-multiply" />
                 Filtry
               </Button>
               
@@ -184,7 +175,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                   onClick={() => setViewMode('grid')}
                   className="p-2"
                 >
-                  <Grid3x3 className="h-4 w-4" />
+                  <img src={ICON.aplikacje} alt="" className="h-4 w-4 mix-blend-multiply" />
                 </Button>
                 <Button
                   size="sm"
@@ -192,7 +183,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                   onClick={() => setViewMode('list')}
                   className="p-2"
                 >
-                  <List className="h-4 w-4" />
+                  <img src={ICON.lista} alt="" className="h-4 w-4 mix-blend-multiply" />
                 </Button>
               </div>
             </div>
@@ -309,7 +300,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                             {product.specification ? (
   product.specification.split(',').slice(0, 4).map((spec, i) => (
     <div key={i} className="flex items-center gap-2 text-sm text-gray-600">
-      <ShieldCheck className="h-4 w-4 text-emerald-600" />
+      <img src={ICON.tarcza} alt="" className="h-4 w-4 mix-blend-multiply" />
       {spec.trim()}
     </div>
   ))
@@ -326,11 +317,11 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                                 
                                 <div className="ml-auto flex items-center gap-4 text-sm text-gray-600">
                                   <div className="flex items-center gap-1">
-  <Package className="h-4 w-4 text-emerald-600" />
+  <img src={ICON.produkt} alt="" className="h-4 w-4 mix-blend-multiply" />
   Dostępny
 </div>
                                   <div className="flex items-center gap-1">
-                                    <Truck className="h-4 w-4 text-emerald-600" />
+                                    <img src={ICON.kurier} alt="" className="h-4 w-4 mix-blend-multiply" />
                                     {product.where_to_buy}
                                   </div>
                                 </div>

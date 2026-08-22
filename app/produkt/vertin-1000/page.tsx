@@ -1,220 +1,104 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  Download,
-  X,
-  Calculator,
-  BarChart3,
-  FileText,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Laptop
-} from 'lucide-react'
-import { useInquiry } from '@/components/InquiryContext'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-white rounded-lg overflow-hidden cursor-pointer p-12"
-        style={{ minHeight: '500px' }}
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src={images[currentImage]}
-          alt="Zasilacz UPS Vertin Liebert itON 1000 VA"
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src={images[currentImage]}
-                alt="Zasilacz UPS Vertin Liebert itON 1000 VA - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
+const data: ProductData = {
+  slug: 'vertin-1000',
+  name: 'Vertiv Liebert itON 1000 VA',
+  category: 'Akcesoria komputerowe',
+  categoryHref: '/kategoria/akcesoria-komputerowe',
+  images: ['/vertin_1000_1.png'],
+  inquiry: {
+    description: 'Zasilacz awaryjny UPS do stanowiska i sprzętu sieciowego',
+    specifications: '1000 VA / 600 W · line-interactive z AVR · 3 × Schuko i 3 × IEC C13 · bateria VRLA 2 × 7 Ah 12 V',
+  },
+  whyNavLabel: 'Dlaczego itON 1000',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W biurze nadleśnictwa',
+  highlights: [
+    { icon: ICON.moc, label: 'Moc', value: '1000 VA / 600 W' },
+    { icon: ICON.napiecie, label: 'Regulacja', value: 'AVR z podbiciem i obniżeniem' },
+    { icon: ICON.gniazdo, label: 'Gniazda', value: '3 × Schuko i 3 × IEC C13' },
+    { icon: ICON.bateria, label: 'Bateria', value: 'VRLA 2 × 7 Ah 12 V' },
+  ],
+  specGroups: [
+    {
+      title: 'Zasilanie',
+      rows: [
+        { k: 'Moc pozorna', v: '1000 VA' },
+        { k: 'Moc czynna', v: '600 W' },
+        { k: 'Topologia', v: 'line-interactive' },
+        { k: 'Napięcie', v: '230 V' },
+        { k: 'Regulacja napięcia', v: 'AVR z podbiciem i obniżeniem' },
+      ],
+    },
+    {
+      title: 'Bateria i gniazda',
+      rows: [
+        { k: 'Bateria', v: 'VRLA 2 × 7 Ah 12 V' },
+        { k: 'Gniazda wyjściowe', v: '3 × Schuko oraz 3 × IEC C13' },
+        { k: 'Cold start', v: 'tak' },
+        { k: 'Ładowanie', v: 'szybkie' },
+      ],
+    },
+    {
+      title: 'Obsługa',
+      rows: [
+        { k: 'Panel', v: 'wskaźniki LED' },
+        { k: 'Temperatura pracy', v: 'od 0 °C do +40 °C' },
+        { k: 'Certyfikaty', v: 'CE, RoHS' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.gniazdo,
+      title: 'Sześć gniazd w dwóch standardach',
+      body:
+        'Trzy Schuko dla komputera i monitora, trzy IEC C13 dla przełącznika, routera albo małego serwera — jeden zasilacz obsługuje całe stanowisko z osprzętem sieciowym.',
+    },
+    {
+      icon: ICON.napiecie,
+      title: 'Wyrównuje napięcie, nie tylko podtrzymuje',
+      body:
+        'Automatyczna regulacja napięcia z podbiciem i obniżeniem reaguje na wahania w sieci, zanim staną się problemem zasilacza komputera.',
+    },
+    {
+      icon: ICON.coldstart,
+      title: 'Startuje bez sieci',
+      body:
+        'Funkcja cold start pozwala uruchomić urządzenie z samej baterii — przy awarii zasilania komputer da się włączyć i wyłączyć po ludzku.',
+    },
+    {
+      icon: ICON.bateria,
+      title: 'Dwie baterie zamiast jednej',
+      body:
+        'Podwójny akumulator VRLA 7 Ah daje dłuższe podtrzymanie przy tym samym obciążeniu niż wersja 600 VA.',
+    },
+  ],
+  whereToBuy: [
+    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
+    { name: 'TAKMA' },
+  ],
+  signature: [
+    {
+      icon: ICON.gniazdo,
+      title: 'Schuko i IEC C13 w jednym urządzeniu',
+      body:
+        'Sprzęt sieciowy używa wtyków C13, komputery i monitory — Schuko. Ten zasilacz nie zmusza do przejściówek ani do drugiego UPS-a w kancelarii.',
+      tone: 'akcent',
+    },
+  ],
+  related: [
+    {
+      name: 'Vertiv Liebert itON 600 VA',
+      href: '/produkt/vertin-600',
+      note: 'Mniejszy model do samego komputera',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function VertinUPS1000ProductPage() {
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  const productImages = [
-    '/vertin_1000_1.png'
-  ]
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/akcesoria-komputerowe" className="hover:text-emerald-600">Akcesoria komputerowe</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Zasilacz UPS Vertin Liebert itON 1000 VA</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4 flex-grow pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={productImages} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Zasilacz UPS
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Zasilacz UPS Vertin Liebert itON 1000 VA
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Niezawodny zasilacz UPS typu line-interactive z automatycznym regulatorem napięcia (AVR), zaprojektowany do ochrony komputerów biurowych i sprzętu IT w nadleśnictwach. Kompaktowa konstrukcja i intuicyjna obsługa zapewniają wystarczający czas podtrzymania, umożliwiając bezpieczne zapisanie pracy i uporządkowane wyłączenie systemu. Wyposażony w funkcje automatycznego restartu i cold start dla zwiększonej ciągłości działania. Idealne rozwiązanie dla administracji leśnej wymagającej niezawodnej ochrony sprzętu.
-              </p>
-
-              <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <h3 className="font-semibold text-gray-900 mb-3">Najważniejsze cechy:</h3>
-                <ul className="space-y-2 text-sm text-gray-700">
-                  <li className="flex items-start gap-2">
-                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <span><strong>Moc:</strong> 1000 VA / 600 W</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <span><strong>Napięcie wyjściowe:</strong> 230 V (modyfikowana sinusoida), 50 Hz</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <span><strong>Gniazda wyjściowe:</strong> 3 gniazda Schuko + 3 gniazda C13</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <span><strong>Bateria:</strong> VRLA 2x7Ah 12V</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                    <span><strong>Funkcje:</strong> Automatyczny regulator napięcia (AVR), zabezpieczenie przed przeciążeniem, automatyczne ponowne uruchomienie, funkcja zimnego startu</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'vertin-ups-1000',
-                      name: 'Zasilacz UPS Vertin Liebert itON 1000 VA',
-                      image: '/placeholder.png',
-                      category: 'Akcesoria komputerowe',
-                      description: 'Niezawodny zasilacz UPS line-interactive z AVR do ochrony sprzętu IT',
-                      specifications: '1000VA/600W, 230V, bateria VRLA 2x7Ah 12V, gniazda Schuko + C13'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-{/* Footer */}
-<Footer />
-</div>
-  )
+export default function Vertiv1000Page() {
+  return <ProductPage data={data} />
 }

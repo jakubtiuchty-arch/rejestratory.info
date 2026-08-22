@@ -1,553 +1,130 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { useInquiry } from '@/components/InquiryContext'
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  X,
-  Calculator,
-  BarChart3,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Palette,
-  Nfc
-} from 'lucide-react'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div>
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-gray-100 rounded-lg overflow-hidden aspect-[4/3] cursor-pointer"
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src="/DCPB7620DW_1.png?v=2"
-          alt="Brother DCP-B7620DW"
-          className="w-full h-full object-contain"
-          style={{ transform: 'translateY(10%)' }}
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src="/DCPB7620DW_1.png?v=2"
-                alt="Brother DCP-B7620DW - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-
-
-// Specifications Component
-const Specifications = () => {
-  const specs = [
-    { category: "Ogólne", items: [
-      { name: "Typ drukarki", value: "Mono, laserowa" },
-      { name: "Funkcje", value: "Drukowanie, Kopiowanie, Skanowanie" },
-      { name: "Połączenie", value: "USB 2.0, Ethernet, Wi-Fi 802.11b/g/n" },
-      { name: "Panel sterowania", value: "2-wierszowy wyświetlacz LCD" }
-    ]},
-    { category: "Drukowanie", items: [
-      { name: "Prędkość druku mono", value: "34 stron/min (A4)" },
-      { name: "Druk dwustronny", value: "Ręczny (16 stron/min)" },
-      { name: "Rozdzielczość", value: "Do 1200 x 1200 dpi" },
-      { name: "Pamięć", value: "256 MB" }
-    ]},
-    { category: "Obsługa papieru", items: [
-      { name: "Wejście papieru", value: "Podajnik 250 ark. + ręczny 1 ark." },
-      { name: "Wyjście papieru", value: "120 arkuszy" },
-      { name: "Maksymalny format", value: "A4, Letter, B5, A5, A6" },
-      { name: "Gramatura", value: "60 - 230 g/m²" }
-    ]},
-    { category: "Funkcje dodatkowe", items: [
-      { name: "Skanowanie", value: "CIS, 22.5 ipm mono / 7.5 ipm kolor" },
-      { name: "Kopiowanie", value: "34 kopii/min, 256 odcieni szarości" },
-      { name: "Cykl pracy", value: "Do 2500 stron miesięcznie" },
-      { name: "Druk mobilny", value: "AirPrint, Mopria, Brother Mobile Connect" }
-    ]}
-  ]
-
-  return (
-    <div className="space-y-6">
-      {specs.map((category, index) => (
-        <motion.div
-          key={category.category}
-          className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: index * 0.1 }}
-        >
-          <div className="bg-emerald-50 px-6 py-3 border-b border-emerald-200">
-            <h4 className="font-semibold text-emerald-700">{category.category}</h4>
-          </div>
-          <div className="p-6">
-            <div className="space-y-3">
-              {category.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
-                  <span className="text-gray-600">{item.name}</span>
-                  <span className="font-medium text-gray-900">{item.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  )
-}
-
-// Service Contract Lightbox Component
-const ServiceContractLightbox = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={onClose}
-        >
-          <motion.div
-            className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.5, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-900">Brak kontraktów serwisowych dla urządzeń konsumenckich</h3>
-                <button
-                  onClick={onClose}
-                  className="p-2 hover:bg-gray-100 rounded-full"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              
-              <div className="space-y-4 text-gray-600">
-                <p>
-                  Urządzenia konsumenckie, takie jak Brother DCP-B7620DW, nie są objęte 
-                  kontraktami serwisowymi dostępnymi dla sprzętu profesjonalnych, przystosowanych do pracy w terenie. Oznacza to szereg 
-                  konsekwencji dla administratora i użytkowników terenowych:
-                </p>
-                
-                <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-                  <h4 className="font-semibold text-red-700 mb-3">Co traci administrator i użytkownik?</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak gwarancji szybkiej naprawy lub wymiany urządzenia</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Długie oczekiwanie na serwis - nawet kilka tygodni</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak urządzeń zastępczych podczas naprawy</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak priorytetowego wsparcia technicznego 24/7</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Wyższe koszty długoterminowe i przestoje w pracy terenowej</span>
-                    </li>
-                    <li className="flex items-start">
-                      <AlertTriangle className="w-4 h-4 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
-                      <span>Brak regularnych aktualizacji bezpieczeństwa przez producenta</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="text-sm font-semibold text-gray-900 mb-2">
-                    Konsekwencje dla Nadleśnictwa:
-                  </p>
-                  <p className="text-sm">
-                    Brak profesjonalnego wsparcia oznacza poważne ryzyko operacyjne - każda awaria może 
-                    skutkować wielodniowym przestojem w pracy leśniczego. Administrator 
-                    musi samodzielnie zarządzać rezerwowymi urządzeniami, co generuje dodatkowe koszty 
-                    i komplikacje logistyczne. Pracownik w terenie pozostaje bez wsparcia, a ciągłość 
-                    pracy zależy wyłącznie od sprawności urządzenia konsumenckiego.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  )
-}
-
-
-// Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: (accessory: any) => void }) => {
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
-
-  const accessories = [
+const data: ProductData = {
+  slug: 'brother-dcp-b7620dw',
+  name: 'Brother DCP-B7620DW',
+  category: 'Drukarki laserowe',
+  categoryHref: '/kategoria/drukarki-laserowe',
+  images: ['/dcpb75620dwph.png'],
+  inquiry: {
+    description: 'Kompaktowe urządzenie 3 w 1 na mniejsze stanowisko',
+    specifications: 'Mono laser · 34 str./min · skan · kopia · Wi-Fi',
+  },
+  whyNavLabel: 'Dlaczego DCP-B7620DW',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W kancelarii nadleśnictwa',
+  highlights: [
+    { icon: ICON.szybkosc, label: 'Prędkość druku', value: '34 strony/min (A4)' },
+    { icon: ICON.skandok, label: 'Skanowanie', value: '22,5 ipm mono' },
+    { icon: ICON.kompakt, label: 'Format', value: 'urządzenie 3 w 1' },
+    { icon: ICON.siec, label: 'Łączność', value: 'Wi-Fi, Ethernet, USB' },
+  ],
+  specGroups: [
     {
-      id: 'drum',
-      name: 'Bęben Brother',
-      description: 'Oryginalny bęben Brother, wydajność 12000 stron',
-      image: '/DCPB7620DW_bęben.png',
-      price: 'Zapytaj o cenę'
+      title: 'Ogólne',
+      rows: [
+        { k: 'Typ', v: 'monochromatyczna, laserowa' },
+        { k: 'Funkcje', v: 'druk, kopiowanie, skanowanie' },
+        { k: 'Panel', v: 'wyświetlacz LCD dwuwierszowy' },
+        { k: 'Pamięć', v: '256 MB' },
+        { k: 'Łączność', v: 'USB 2.0, Ethernet, Wi-Fi' },
+      ],
     },
     {
-      id: 'toner-black',
+      title: 'Drukowanie',
+      rows: [
+        { k: 'Prędkość', v: '34 strony/min (A4)' },
+        { k: 'Dupleks', v: 'ręczny, 16 stron/min' },
+        { k: 'Rozdzielczość', v: 'do 1200 × 1200 dpi' },
+      ],
+    },
+    {
+      title: 'Obsługa papieru',
+      rows: [
+        { k: 'Podajnik główny', v: '250 arkuszy' },
+        { k: 'Podajnik ręczny', v: '1 arkusz' },
+        { k: 'Odbiornik', v: '120 arkuszy' },
+        { k: 'Formaty', v: 'A4, Letter, B5, A5, A6' },
+        { k: 'Gramatura', v: '60–230 g/m²' },
+      ],
+    },
+    {
+      title: 'Skanowanie i eksploatacja',
+      rows: [
+        { k: 'Skaner', v: 'CIS' },
+        { k: 'Skan mono', v: '22,5 ipm' },
+        { k: 'Skan kolor', v: '7,5 ipm' },
+        { k: 'Kopiowanie', v: '34 kopie/min' },
+        { k: 'Cykl pracy', v: 'do 2500 stron miesięcznie' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.kompakt,
+      title: 'Druk, kopia i skan w jednej obudowie',
+      body:
+        'Na małym stanowisku zastępuje trzy urządzenia, a zajmuje tyle miejsca co zwykła drukarka.',
+    },
+    {
+      icon: ICON.szybkosc,
+      title: 'Trzydzieści cztery strony na minutę',
+      body:
+        'Prędkość wystarczająca do bieżącej korespondencji i kopii dokumentów w kancelarii leśnictwa.',
+    },
+    {
+      icon: ICON.skandok,
+      title: 'Skanowanie z prędkością 22,5 ipm',
+      body:
+        'Kopiowanie i skanowanie dokumentów bez wysyłania ich na inne stanowisko.',
+    },
+    {
+      icon: ICON.siec,
+      title: 'Wi-Fi i Ethernet w standardzie',
+      body:
+        'Urządzenie wpina się w sieć kablem lub bezprzewodowo i obsługuje druk z telefonu przez AirPrint i Mopria.',
+    },
+  ],
+  usedBy: { device: 'Brother DCP-B7620DW' },
+  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
+  signature: [
+    {
+      icon: ICON.kompakt,
+      title: 'Trzy funkcje na najmniejszym stanowisku',
+      body:
+        'Druk, kopiowanie i skanowanie w obudowie wielkości zwykłej drukarki — rozwiązanie dla leśnictwa albo pokoju, w którym nie ma miejsca na osobne urządzenia.',
+      tone: 'akcent',
+    },
+  ],
+  accessoriesHeading: 'Materiały eksploatacyjne — dodaj do zapytania',
+  accessories: [
+    {
+      id: 'toner',
       name: 'Toner czarny Brother',
-      description: 'Oryginalny toner Brother, wydajność 2000 stron',
+      meta: '2 000 stron',
+      description: 'Oryginalny toner Brother',
       image: '/DCPB7620DW_toner_czarny.png',
-      price: 'Zapytaj o cenę'
-    }
-  ]
-
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
-  }
-
-  return (
-    <div className="mb-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Materiały eksploatacyjne
-            </h3>
-          </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={() => {
-                selectedAccessories.forEach((id) => {
-                  const accessory = accessories.find(a => a.id === id)
-                  if (accessory) {
-                    onAddToInquiry(accessory)
-                  }
-                })
-                setSelectedAccessories([])
-              }}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {accessories.map((accessory) => {
-            const isSelected = selectedAccessories.includes(accessory.id)
-            return (
-              <motion.div
-                key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
-                  isSelected 
-                    ? 'border-emerald-500 bg-emerald-50' 
-                    : 'border-gray-200 hover:border-emerald-300'
-                }`}
-                onClick={() => toggleAccessory(accessory.id)}
-              >
-                <div className="p-4 flex flex-col h-full">
-                  <div className="relative mb-4">
-                    <img
-                      src={accessory.image}
-                      alt={accessory.name}
-                      className={`w-full h-40 object-contain rounded-lg ${
-                        accessory.id === 'drum' ? 'scale-[1.20]' : 
-                        accessory.id === 'toner-black' ? 'scale-[1.16]' : 
-                        'scale-150'
-                      }`}
-                    />
-                    {isSelected && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-1">{accessory.name}</h4>
-                  <p className="text-sm text-gray-600 mb-3 flex-1">{accessory.description}</p>
-                  <div className="flex items-center justify-end mt-auto">
-                    <button
-                      className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                        isSelected 
-                          ? 'bg-emerald-700 text-white' 
-                          : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                      }`}
-                    >
-                      {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
-      </motion.div>
-    </div>
-  )
+    },
+    {
+      id: 'beben',
+      name: 'Bęben Brother',
+      meta: '12 000 stron',
+      description: 'Oryginalny bęben Brother',
+      image: '/DCPB7620DW_bęben.png',
+    },
+  ],
+  related: [
+    {
+      name: 'Brother DCP-L5510DW',
+      href: '/produkt/brother-dcp-l5510dw',
+      note: 'Szybszy druk 48 stron na minutę i dupleks',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function BrotherDCPB7620DWProductPage() {
-  const [activeTab, setActiveTab] = useState('specs')
-  const [isServiceLightboxOpen, setIsServiceLightboxOpen] = useState(false)
-  
-  // ← ZMIENIONE: Używamy Context zamiast lokalnego state
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/drukarki-laserowe" className="hover:text-emerald-600">Drukarki laserowe</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Brother DCP-B7620DW</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={[]} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Drukarka laserowa
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Brother DCP-B7620DW
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Brother DCP-B7620DW to monochromatyczna drukarka laserowa zaprojektowana z myślą o wymaganiach nowoczesnego biura. Urządzenie łączy funkcje drukowania, kopiowania i skanowania, zapewniając kompleksowe rozwiązanie dla codziennych zadań. Intuicyjna obsługa oraz łączność przewodowa i bezprzewodowa umożliwiają elastyczną integrację z infrastrukturą sieciową. Funkcje druku mobilnego przez Brother Mobile Connect i AirPrint zwiększają wygodę użytkowania. Urządzenie wyróżnia się niskimi kosztami eksploatacji oraz solidną konstrukcją, gwarantującą niezawodność. Dzięki kompaktowym wymiarom idealnie sprawdza się na biurku, nie zajmując nadmiernej przestrzeni.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'brother-dcp-b7620dw',
-                      name: 'Brother DCP-B7620DW',
-                      image: '/DCPB7620DW_1.png?v=2',
-                      category: 'Drukarki laserowe',
-                      description: 'Monochromatyczna drukarka laserowa 3w1',
-                      specifications: '34 str/min, druk/kopia/skan, Wi-Fi, USB, Ethernet'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* BESTSELLER - INFO BOX */}
-              <div className="rounded-lg p-4 border-2 mb-6 shadow-md" style={{ background: 'linear-gradient(to right, #122F0B, #275F3E, #44785B, #6F9D87, #B5CABA)', borderColor: '#6F9D87' }}>
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
-                    <Check className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold mb-1 text-white">Idealna do biurka leśniczego</h4>
-                    <p className="text-sm text-white">
-                      Brother DCP-B7620DW to bestseller ostatnich lat wśród leśniczych. Kompaktowe wymiary, 
-                      niezawodność i niskie koszty eksploatacji sprawiają, że to idealne rozwiązanie 
-                      do biurka w nadleśnictwie.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Accessories Section */}
-        <AccessoriesSection 
-          productName="Brother DCP-B7620DW" 
-          onAddToInquiry={(accessory) => {
-            addToInquiry({
-              id: `accessory-${accessory.id}`,
-              name: accessory.name,
-              image: accessory.image,
-              category: 'Materiały eksploatacyjne',
-              description: accessory.description
-            })
-            setShowRipple(true)
-            setTimeout(() => setShowRipple(false), 1000)
-          }}
-        />
-
-        {/* Tabs Navigation */}
-        <div className="border-b border-gray-200 mb-8">
-          <nav className="-mb-px flex space-x-8">
-            {[
-              { id: 'specs', label: 'Specyfikacja' },
-              { id: 'service', label: 'Serwis', isScroll: true }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  tab.id === 'service'
-                    ? 'border-transparent text-orange-600 hover:text-orange-700 hover:border-orange-300'
-                    : activeTab === tab.id
-                    ? 'border-emerald-500 text-emerald-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-                onClick={() => {
-                  if (tab.isScroll) {
-                    // Scroll to service section
-                    const serviceSection = document.getElementById('service-section')
-                    if (serviceSection) {
-                      serviceSection.scrollIntoView({ behavior: 'smooth' })
-                    }
-                  } else {
-                    setActiveTab(tab.id)
-                  }
-                }}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Tab Content */}
-        <div className="mb-16">
-          <AnimatePresence mode="wait">
-
-
-            {activeTab === 'specs' && (
-              <motion.div
-                key="specs"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <Specifications />
-              </motion.div>
-            )}
-
-
-
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Service Contract Lightbox */}
-      <ServiceContractLightbox 
-        isOpen={isServiceLightboxOpen} 
-        onClose={() => setIsServiceLightboxOpen(false)} 
-      />
-
-      {/* Courier Service Section */}
-      <CourierServiceSection productName="Brother DCP-B7620DW" />
-
-      {/* Footer */}
-<Footer />
-</div>
-  )
+export default function BrotherDCPB7620DWPage() {
+  return <ProductPage data={data} />
 }

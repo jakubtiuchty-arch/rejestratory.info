@@ -18,22 +18,6 @@ import {
   TabsContent,
 } from "@/components/ui/tabs";
 import Link from "next/link";
-import { 
-  ChevronRight,
-  TreePine,
-  Download,
-  FileText,
-  ShoppingCart,
-  Info,
-  Cpu,
-  Battery,
-  CloudRain,
-  Camera,
-  Wifi,
-  Maximize2,
-  Phone,
-  Mail
-} from "lucide-react";
 
 // Import prawdziwych danych produktów
 import { 
@@ -41,6 +25,7 @@ import {
   getCategoryProducts,
   productCategories 
 } from "../../../products-data";
+import { ICON } from '@/components/product/icons'
 
 interface ProductPageProps {
   params: Promise<{
@@ -120,7 +105,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <TreePine className="h-8 w-8 text-emerald-600" />
+              <img src={ICON.drzewo} alt="" className="h-8 w-8 mix-blend-multiply" />
               <span className="text-xl font-bold text-gray-900">IT dla Lasów</span>
             </div>
             
@@ -132,7 +117,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
             </ul>
             
             <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
-              <ShoppingCart className="h-4 w-4 mr-2" />
+              <img src={ICON.zamowienie} alt="" className="h-4 w-4 mr-2 mix-blend-multiply" />
               Zapytanie (0)
             </Button>
           </nav>
@@ -144,13 +129,13 @@ const ProductPage = ({ params }: ProductPageProps) => {
         <div className="container mx-auto px-4">
           <nav className="flex items-center gap-2 text-sm">
             <Link href="/" className="text-gray-600 hover:text-emerald-600">Strona główna</Link>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
+            <img src={ICON.chevronPrawo} alt="" className="h-4 w-4 mix-blend-multiply" />
             <Link href="/#produkty" className="text-gray-600 hover:text-emerald-600">Produkty</Link>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
+            <img src={ICON.chevronPrawo} alt="" className="h-4 w-4 mix-blend-multiply" />
             <Link href={`/produkty/${categoryParam}`} className="text-gray-600 hover:text-emerald-600">
               {categoryInfo?.name}
             </Link>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
+            <img src={ICON.chevronPrawo} alt="" className="h-4 w-4 mix-blend-multiply" />
             <span className="text-gray-900 font-medium">{product.name}</span>
           </nav>
         </div>
@@ -207,11 +192,11 @@ const ProductPage = ({ params }: ProductPageProps) => {
 
               <div className="flex gap-4 mb-8">
                 <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 flex-1">
-                  <ShoppingCart className="h-5 w-5 mr-2" />
+                  <img src={ICON.zamowienie} alt="" className="h-5 w-5 mr-2 mix-blend-multiply" />
                   Dodaj do zapytania
                 </Button>
                 <Button size="lg" variant="outline">
-                  <Phone className="h-5 w-5 mr-2" />
+                  <img src={ICON.telefon} alt="" className="h-5 w-5 mr-2 mix-blend-multiply" />
                   Zadzwoń
                 </Button>
               </div>
@@ -310,11 +295,11 @@ const ProductPage = ({ params }: ProductPageProps) => {
                           dostosowaną do potrzeb Twojego nadleśnictwa.
                         </p>
                         <div className="flex items-center gap-2">
-                          <Phone className="h-5 w-5 text-emerald-600" />
+                          <img src={ICON.telefon} alt="" className="h-5 w-5 mix-blend-multiply" />
                           <span className="font-medium">+48 123 456 789</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Mail className="h-5 w-5 text-emerald-600" />
+                          <img src={ICON.koperta} alt="" className="h-5 w-5 mix-blend-multiply" />
                           <span className="font-medium">sprzedaz@itdlalasow.pl</span>
                         </div>
                       </div>

@@ -1,438 +1,114 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import { useInquiry } from '@/components/InquiryContext'
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  X,
-  Calculator,
-  BarChart3,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Palette,
-  Nfc
-} from 'lucide-react'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div>
-      {/* Main Image */}
-      <motion.div 
-        className="relative rounded-lg overflow-hidden aspect-[4/3] cursor-pointer"
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src="/SPPR410_1.png"
-          alt="Bixolon SPP-R410"
-          className="w-full h-full object-contain"
-          style={{ transform: 'scale(1.00) translateY(-2%)' }}
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src="/SPPR410_1.png"
-                alt="Bixolon SPP-R410 - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-
-
-// Specifications Component
-const Specifications = () => {
-  const specs = [
-    { category: "Ogólne", items: [
-      { name: "Typ drukarki", value: "Mobilna, termiczna" },
-      { name: "Wymiary", value: "143 x 138 x 66 mm" },
-      { name: "Waga z baterią", value: "530 g" },
-      { name: "Pamięć", value: "8 MB SDRAM, 4 MB Flash" },
-      { name: "Gwarancja", value: "2 lata" }
-    ]},
-    { category: "Drukowanie", items: [
-      { name: "Prędkość druku", value: "Do 90 mm/s (paragony), 60 mm/s (bez podkładu)" },
-      { name: "Rozdzielczość", value: "203 dpi" },
-      { name: "Szerokość druku", value: "Do 104 mm" },
-      { name: "Technologia", value: "Termiczna" }
-    ]},
-    { category: "Obsługa papieru", items: [
-      { name: "Rodzaje nośników", value: "Paragony, z podkładem, bez podkładu" },
-      { name: "Szerokość nośników", value: "112 mm / 105 mm" },
-      { name: "Średnica rolki", value: "Do 57 mm" },
-      { name: "System ładowania", value: "Łatwe ładowanie papieru" }
-    ]},
-    { category: "Bateria i zasilanie", items: [
-      { name: "Bateria", value: "Litowo-jonowa 7,3 V, 2850 mAh" },
-      { name: "Czas ładowania", value: "Do 4 godzin" },
-      { name: "Certyfikat", value: "EnergyStar" }
-    ]},
-    { category: "Łączność", items: [
-      { name: "Standardowo", value: "USB 2.0 FS + szeregowy" },
-      { name: "Opcjonalnie", value: "Bluetooth, WLAN 802.11a/b/g/n" },
-      { name: "NFC", value: "Easy Bluetooth Pairing™" },
-      { name: "Zabezpieczenia WLAN", value: "WEP40/104, WPA1/2 (PSK, EAP)" }
-    ]},
-    { category: "Odporność", items: [
-      { name: "Szczelność", value: "IP54" },
-      { name: "Odporność na upadki", value: "1,8 m" },
-      { name: "Temperatura robocza", value: "-15°C ~ 50°C" },
-      { name: "Wilgotność robocza", value: "10 ~ 80% (wilg. wzgl.)" }
-    ]}
-  ]
-
-  return (
-    <div className="space-y-6">
-      {specs.map((category, index) => (
-        <motion.div
-          key={category.category}
-          className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: index * 0.1 }}
-        >
-          <div className="bg-emerald-50 px-6 py-3 border-b border-emerald-200">
-            <h4 className="font-semibold text-emerald-700">{category.category}</h4>
-          </div>
-          <div className="p-6">
-            <div className="space-y-3">
-              {category.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0">
-                  <span className="text-gray-600">{item.name}</span>
-                  <span className="font-medium text-gray-900">{item.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  )
-}
-
-
-// Accessories Section Component
-const AccessoriesSection = ({ productName, onAddToInquiry }: { productName: string, onAddToInquiry: (accessory: any) => void }) => {
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([])
-
-  const accessories = [
+const data: ProductData = {
+  slug: 'bixolon-sppr410',
+  name: 'Bixolon SPP-R410',
+  category: 'Drukarki do rejestratora',
+  categoryHref: '/kategoria/drukarki-do-rejestratora',
+  images: ['/sppr410_1.png'],
+  inquiry: {
+    description: 'Najlżejsza mobilna drukarka 4-calowa w katalogu',
+    specifications: '203 dpi · do 90 mm/s · 530 g · Bluetooth · IP54 · upadek 1,8 m',
+  },
+  whyNavLabel: 'Dlaczego SPP-R410',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'Przy odbiorze drewna',
+  highlights: [
+    { icon: ICON.waga, label: 'Waga', value: '530 g z baterią' },
+    { icon: ICON.kompakt, label: 'Wymiary', value: '143 × 138 × 66 mm' },
+    { icon: ICON.bluetooth, label: 'Łączność', value: 'Bluetooth' },
+    { icon: ICON.upadek, label: 'Odporność', value: 'IP54, upadki z 1,8 m' },
+  ],
+  specGroups: [
     {
-      id: 'charger-network',
-      name: 'Ładowarka sieciowa',
-      price: 'Zapytaj o cenę',
-      description: 'Ładowarka sieciowa do Bixolon SPP-R410'
+      title: 'Obudowa',
+      rows: [
+        { k: 'Wymiary', v: '143 × 138 × 66 mm' },
+        { k: 'Waga z baterią', v: '530 g' },
+        { k: 'Pamięć', v: '8 MB SDRAM, 4 MB Flash' },
+        { k: 'Gwarancja', v: '2 lata' },
+      ],
     },
     {
-      id: 'charger-car',
-      name: 'Ładowarka samochodowa',
-      price: 'Zapytaj o cenę',
-      description: 'Ładowarka samochodowa do Bixolon SPP-R410'
+      title: 'Drukowanie',
+      rows: [
+        { k: 'Prędkość', v: 'do 90 mm/s dla paragonów, 60 mm/s bez podkładu' },
+        { k: 'Rozdzielczość', v: '203 dpi' },
+        { k: 'Szerokość druku', v: 'do 104 mm' },
+        { k: 'Technologia', v: 'termiczna' },
+      ],
     },
     {
-      id: 'bag',
-      name: 'Torba na drukarkę',
-      price: 'Zapytaj o cenę',
-      description: 'Torba na drukarkę Bixolon SPP-R410'
+      title: 'Nośniki',
+      rows: [
+        { k: 'Rodzaje', v: 'paragony i etykiety z podkładem' },
+        { k: 'Szerokość', v: '112 mm lub 105 mm' },
+        { k: 'Średnica rolki', v: 'do 57 mm' },
+        { k: 'Ładowanie', v: 'system łatwej wymiany rolki' },
+      ],
     },
     {
-      id: 'paper',
-      name: 'Papier termiczny',
-      price: 'Zapytaj o cenę',
-      description: 'Papier termiczny do Bixolon SPP-R410'
-    }
-  ]
-
-  const toggleAccessory = (accessoryId: string) => {
-    setSelectedAccessories(prev => 
-      prev.includes(accessoryId) 
-        ? prev.filter(id => id !== accessoryId)
-        : [...prev, accessoryId]
-    )
-  }
-
-  return (
-    <div className="mb-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-xl p-8 border border-gray-200 shadow-sm"
-      >
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Akcesoria
-            </h3>
-          </div>
-          {selectedAccessories.length > 0 && (
-            <motion.button
-              onClick={() => {
-                selectedAccessories.forEach((id) => {
-                  const accessory = accessories.find(a => a.id === id)
-                  if (accessory) {
-                    onAddToInquiry(accessory)
-                  }
-                })
-                setSelectedAccessories([])
-              }}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Package className="w-5 h-5" />
-              <span>Dodaj do zapytania ({selectedAccessories.length})</span>
-            </motion.button>
-          )}
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {accessories.map((accessory) => {
-            const isSelected = selectedAccessories.includes(accessory.id)
-            return (
-              <motion.div
-                key={accessory.id}
-                className={`bg-white rounded-lg border-2 transition-all cursor-pointer ${
-                  isSelected 
-                    ? 'border-emerald-500 bg-emerald-50' 
-                    : 'border-gray-200 hover:border-emerald-300'
-                }`}
-                onClick={() => toggleAccessory(accessory.id)}
-              >
-                <div className="p-4 flex flex-col items-center text-center">
-                  {isSelected && (
-                    <div className="mb-2">
-                      <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    </div>
-                  )}
-                  <h4 className="font-semibold text-gray-900 mb-3">{accessory.name}</h4>
-                  <button
-                    className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                      isSelected 
-                        ? 'bg-emerald-700 text-white' 
-                        : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                    }`}
-                  >
-                    {isSelected ? 'Wybrane' : 'Dodaj do zapytania'}
-                  </button>
-                </div>
-              </motion.div>
-            )
-          })}
-        </div>
-      </motion.div>
-    </div>
-  )
+      title: 'Zasilanie i łączność',
+      rows: [
+        { k: 'Bateria', v: 'Li-Ion 7,3 V, 2850 mAh' },
+        { k: 'Czas ładowania', v: 'do 4 godzin' },
+        { k: 'Transmisja', v: 'Bluetooth' },
+        { k: 'Parowanie', v: 'Easy Bluetooth Pairing' },
+        { k: 'Szczelność', v: 'IP54' },
+        { k: 'Upadki', v: 'z 1,8 m' },
+        { k: 'Temperatura pracy', v: 'od -15 °C do +50 °C' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.bluetooth,
+      title: 'Parowanie z rejestratorem jednym dotknięciem',
+      body:
+        'Transmisja Bluetooth z funkcją Easy Bluetooth Pairing — połączenie z rejestratorem zestawia się bez wpisywania kodów.',
+    },
+    {
+      icon: ICON.waga,
+      title: 'Pięćset trzydzieści gramów',
+      body:
+        'Najlżejsza drukarka 4-calowa w katalogu — o ćwierć kilograma lżejsza od typowego konkurenta, co odczuwalne jest przy noszeniu przez cały dzień.',
+    },
+    {
+      icon: ICON.kompakt,
+      title: 'Najmniejsza obudowa w zestawieniu',
+      body:
+        'Wymiary 143 × 138 × 66 mm mieszczą się w kieszeni kurtki roboczej albo w małej kaburze przy pasie.',
+    },
+    {
+      icon: ICON.rolka,
+      title: 'Łatwa wymiana rolki',
+      body:
+        'System szybkiego ładowania papieru skraca wymianę do otwarcia klapy i włożenia rolki — bez zdejmowania rękawic.',
+    },
+  ],
+  usedBy: { device: 'Bixolon SPP-R410' },
+  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/rejestratory' }, { name: 'TAKMA' }],
+  signature: [
+    {
+      icon: ICON.waga,
+      title: 'Najlżejsza drukarka w katalogu',
+      body:
+        'Pięćset trzydzieści gramów wraz z baterią i najmniejsza obudowa w zestawieniu. Wybór tam, gdzie urządzenie towarzyszy leśniczemu przez cały dzień.',
+      tone: 'akcent',
+    },
+  ],
+  related: [
+    {
+      name: 'Seiko MP-A40',
+      href: '/produkt/seiko-mpa40',
+      note: 'Nieco cięższa, z dłuższą żywotnością mechanizmu',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function BixolonSPPR410ProductPage() {
-  const [activeTab, setActiveTab] = useState('specs')
-  
-  // ← ZMIENIONE: Używamy Context zamiast lokalnego state
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/drukarki-do-rejestratora" className="hover:text-emerald-600">Drukarki do rejestratora</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Bixolon SPP-R410</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={[]} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Drukarka mobilna
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Bixolon SPP-R410
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Bixolon SPP-R410 to kompaktowa drukarka mobilna zaprojektowana z myślą o pracy w terenie. Dzięki technologii termicznej oraz wytrzymałej konstrukcji z certyfikatem IP54, urządzenie sprawdzi się w trudnych warunkach środowiskowych Lasów Państwowych. Drukarka obsługuje łączność Bluetooth, Wi-Fi oraz NFC, zapewniając elastyczność i szybką integrację z mobilnymi systemami inwentaryzacyjnymi. Lekka i przenośna, z baterią o wydajności do 2850 mAh, doskonale wspiera pracę leśników w obszarach bez dostępu do zasilania elektrycznego.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'bixolon-spp-r410',
-                      name: 'Bixolon SPP-R410',
-                      image: '/SPPR410_1.png',
-                      category: 'Drukarki mobilne',
-                      description: 'Kompaktowa drukarka mobilna z IP54',
-                      specifications: 'Termiczna, 203 dpi, Bluetooth/Wi-Fi, bateria 2850 mAh'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Accessories Section */}
-        <AccessoriesSection 
-          productName="Bixolon SPP-R410" 
-          onAddToInquiry={(accessory) => {
-            addToInquiry({
-              id: `accessory-${accessory.id}`,
-              name: accessory.name,
-              image: '/api/placeholder/120/120',
-              category: 'Akcesoria',
-              description: accessory.description
-            })
-            setShowRipple(true)
-            setTimeout(() => setShowRipple(false), 1000)
-          }}
-        />
-
-        {/* Tabs Navigation */}
-        <div className="border-b border-gray-200 mb-8">
-          <nav className="-mb-px flex space-x-8">
-            {[
-              { id: 'specs', label: 'Specyfikacja' },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === tab.id
-                    ? 'border-emerald-500 text-emerald-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-                onClick={() => setActiveTab(tab.id)}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Tab Content */}
-        <div className="mb-16">
-          <AnimatePresence mode="wait">
-
-
-            {activeTab === 'specs' && (
-              <motion.div
-                key="specs"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <Specifications />
-              </motion.div>
-            )}
-
-
-
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Courier Service Section */}
-      <CourierServiceSection productName="Bixolon SPP-R410" />
-
-      {/* Footer */}
-<Footer />
-</div>
-  )
+export default function BixolonSPPR410Page() {
+  return <ProductPage data={data} />
 }

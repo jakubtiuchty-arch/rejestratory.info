@@ -1,909 +1,670 @@
-"use client";
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import { 
-  Phone, 
-  Mail, 
-  MapPin,
-  Wrench,
-  Clock,
-  CheckCircle,
-  Send,
-  X,
-  Package,
-  Printer,
-  Truck,
-  Menu
-} from "lucide-react";
+'use client'
+
+/**
+ * Strona serwisu — zbudowana jak „start page” z GOV.UK Service Manual: najpierw
+ * tyle informacji, żeby leśniczy wiedział, czy trafił dobrze i co przygotować,
+ * dopiero potem formularz. Formularz trzyma się wytycznych GOV.UK: pola pogrupowane
+ * w sekcje z legendą, pytania zamknięte, pola nieobowiązkowe oznaczone słowem
+ * „(opcjonalnie)” zamiast gwiazdek przy obowiązkowych. Warstwa wizualna ta sama,
+ * co na kartach produktu.
+ */
+
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { createPortal } from 'react-dom'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import { Wdrozenie } from '@/components/product/ProductPage'
+import { ICON, naCiemnym } from '@/components/product/icons'
+
+const PROCES = {
+  label: 'Od zgłoszenia do sprawnego sprzętu',
+  heading: 'Jak wygląda naprawa',
+  navLabel: 'Proces',
+  lead:
+    'Pięć kroków od zgłoszenia do odesłania sprawnego urządzenia. Transport w obie strony organizujemy my.',
+  steps: [
+    { icon: ICON.formularz, title: 'Zgłoszenie', note: 'formularz albo telefon' },
+    { icon: ICON.kurier, title: 'Odbiór', note: 'kurier zabiera sprzęt spod adresu' },
+    { icon: ICON.diagnoza, title: 'Diagnoza', note: 'ustalamy, co się zepsuło' },
+    { icon: ICON.wycena, title: 'Wycena', note: 'czekamy na Państwa akceptację' },
+    { icon: ICON.naprawa, title: 'Naprawa', note: 'i odesłanie sprawnego urządzenia' },
+  ],
+}
+
+const TYPY_URZADZEN = [
+  ['rejestrator', 'Rejestrator'],
+  ['telefon', 'Telefon'],
+  ['laptop', 'Laptop'],
+  ['drukarka-laserowa', 'Drukarka laserowa'],
+  ['urzadzenie-wielofunkcyjne', 'Urządzenie wielofunkcyjne'],
+  ['drukarka-termiczna', 'Drukarka termiczna'],
+  ['urzadzenie-fiskalne', 'Urządzenie fiskalne'],
+  ['inny', 'Inne urządzenie'],
+]
+
+const POLE =
+  'w-full rounded-xl border border-stone-300 bg-white px-4 py-3 text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20'
+
+const Etykieta = ({
+  htmlFor,
+  children,
+  hint,
+  opcjonalne,
+}: {
+  htmlFor: string
+  children: React.ReactNode
+  hint?: string
+  opcjonalne?: boolean
+}) => (
+  <>
+    <label htmlFor={htmlFor} className="block font-medium text-stone-900">
+      {children}
+      {opcjonalne && <span className="font-normal text-stone-500"> (opcjonalnie)</span>}
+    </label>
+    {hint && <p className="mt-1 text-sm text-stone-500">{hint}</p>}
+  </>
+)
+
+const Sekcja = ({ tytul, children }: { tytul: string; children: React.ReactNode }) => (
+  <fieldset className="border-t border-stone-200 pt-7">
+    <legend className="float-left w-full pb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-700">
+      {tytul}
+    </legend>
+    <div className="clear-both space-y-6">{children}</div>
+  </fieldset>
+)
 
 export default function ServicePage() {
-  const [formData, setFormData] = React.useState({
-    firstName: "",
-    lastName: "",
-    forestDistrict: "",
-    address: "",
-    phone: "",
-    email: "",
-    deviceType: "",
-    otherDevice: "",
-    serialNumber: "",
-    hasContract: "",
-    courierPickup: "",
-    problemDescription: ""
-  });
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    forestDistrict: '',
+    address: '',
+    phone: '',
+    email: '',
+    deviceType: '',
+    otherDevice: '',
+    serialNumber: '',
+    hasContract: '',
+    courierPickup: '',
+    problemDescription: '',
+  })
+  const [showLightbox, setShowLightbox] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [zamontowane, setZamontowane] = useState(false)
 
-  const [showLightbox, setShowLightbox] = React.useState(false);
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  React.useEffect(() => setZamontowane(true), [])
+
+  const zmien = (pole: string, wartosc: string) =>
+    setFormData((d) => ({ ...d, [pole]: wartosc }))
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
+    e.preventDefault()
+    setIsSubmitting(true)
     try {
       const response = await fetch('/api/service', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Błąd wysyłania formularza');
-      }
-
-      setIsSubmitting(false);
-      setShowLightbox(true);
-      
-      // Reset formularza - ale zachowaj courierPickup dla warunkowego lightboxa
-      const savedCourierChoice = formData.courierPickup;
+      })
+      if (!response.ok) throw new Error('Błąd wysyłania formularza')
+      setIsSubmitting(false)
+      setShowLightbox(true)
+      const wybor = formData.courierPickup
       setFormData({
-        firstName: "",
-        lastName: "",
-        forestDistrict: "",
-        address: "",
-        phone: "",
-        email: "",
-        deviceType: "",
-        otherDevice: "",
-        serialNumber: "",
-        hasContract: "",
-        courierPickup: savedCourierChoice,
-        problemDescription: ""
-      });
-
+        firstName: '',
+        lastName: '',
+        forestDistrict: '',
+        address: '',
+        phone: '',
+        email: '',
+        deviceType: '',
+        otherDevice: '',
+        serialNumber: '',
+        hasContract: '',
+        courierPickup: wybor,
+        problemDescription: '',
+      })
     } catch (error) {
-      console.error('Error:', error);
-      alert('Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.');
-      setIsSubmitting(false);
+      console.error('Error:', error)
+      alert('Wystąpił błąd podczas wysyłania formularza. Spróbuj ponownie.')
+      setIsSubmitting(false)
     }
-  };
+  }
+
+  const kurier = formData.courierPickup === 'tak'
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-stone-50">
       <Header activeTab="serwis" />
 
-      {/* Hero Section z Typewriter */}
-      <section className="bg-gradient-to-br from-emerald-600 via-emerald-700 to-emerald-800 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="flex justify-center mb-6">
-                <div className="bg-white/20 backdrop-blur rounded-full p-4">
-                  <Wrench className="h-12 w-12" />
-                </div>
-              </div>
-              
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                SERWIS
+      {/* ------------------------------------------------------------------ */}
+      {/*  Wstęp — czym jest ta usługa i co przygotować przed zgłoszeniem     */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="border-b border-stone-200 bg-white">
+        <div className="container mx-auto px-4 pb-16 pt-12">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-700">
+                Serwis i naprawa
+              </p>
+              <h1 className="mt-3 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl">
+                Urządzenie nie działa?
               </h1>
-              
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 flex items-center justify-center">
-                <p className="text-lg lg:text-xl text-emerald-50 leading-relaxed">
-                  Chcielibyśmy, abyś trafiał tu jak najrzadziej, ale skoro już jesteś – załatwmy to jak najszybciej.
+              <p className="mt-4 max-w-xl text-lg leading-relaxed text-stone-600">
+                Naprawiamy sprzęt dostarczony do nadleśnictw — rejestratory, telefony,
+                drukarki, laptopy i urządzenia fiskalne. Zgłoszenie zajmuje kilka minut,
+                a kurier odbiera sprzęt spod wskazanego adresu.
+              </p>
+
+              <div className="mt-8 rounded-2xl border border-stone-200 bg-stone-50 p-6">
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-stone-500">
+                  Co przygotować
+                </p>
+                <ul className="mt-4 space-y-3">
+                  {[
+                    'Numer seryjny urządzenia — zwykle na naklejce pod baterią lub z tyłu obudowy.',
+                    'Krótki opis usterki: co się dzieje, od kiedy i przy jakiej czynności.',
+                    'Adres, spod którego kurier ma odebrać sprzęt.',
+                  ].map((t) => (
+                    <li key={t} className="flex items-start gap-3 text-stone-700">
+                      <img
+                        src={ICON.ptaszek}
+                        alt=""
+                        className="mt-0.5 h-4 w-4 shrink-0 mix-blend-multiply"
+                      />
+                      <span>{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="#zgloszenie"
+                  className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 font-semibold text-white transition hover:bg-emerald-700"
+                >
+                  Zgłoś usterkę
+                  <img src={naCiemnym(ICON.strzalka)} alt="" className="h-4 w-4" />
+                </a>
+                <a
+                  href="#proces"
+                  className="inline-flex items-center gap-2 rounded-xl border border-stone-300 px-6 py-3.5 font-semibold text-stone-700 transition hover:border-stone-400"
+                >
+                  Zobacz, jak to działa
+                </a>
+              </div>
+            </div>
+
+            {/* Kontakt bezpośredni — dla tych, którzy wolą zadzwonić.
+                Karta rozciąga się na wysokość kolumny obok, żeby miała wspólną
+                górną i dolną krawędź z treścią po lewej. */}
+            <div className="lg:col-span-5">
+              <div className="flex h-full flex-col rounded-2xl border border-stone-200 p-6">
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-stone-500">
+                  Wolisz zadzwonić
+                </p>
+                <p className="mt-3 text-lg font-semibold text-stone-900">Krzysztof Wójcik</p>
+                <p className="text-sm text-stone-600">Kierownik działu serwisu</p>
+
+                <dl className="mt-5 divide-y divide-stone-100">
+                  {[
+                    { icon: ICON.telefon, k: 'Telefon', v: '601 619 898', href: 'tel:601619898' },
+                    {
+                      icon: ICON.koperta,
+                      k: 'E-mail',
+                      v: 'serwis@takma.com.pl',
+                      href: 'mailto:serwis@takma.com.pl',
+                    },
+                    { icon: ICON.zegar, k: 'Godziny pracy', v: 'pon.–pt. 7:30–15:30' },
+                  ].map((r) => (
+                    <div key={r.k} className="flex items-start gap-3 py-3.5">
+                      <img src={r.icon} alt="" className="mt-0.5 h-5 w-5 shrink-0 mix-blend-multiply" />
+                      <div className="min-w-0">
+                        <dt className="text-xs uppercase tracking-wide text-stone-400">{r.k}</dt>
+                        <dd className="font-medium text-stone-900">
+                          {r.href ? (
+                            <a href={r.href} className="text-emerald-700 hover:underline">
+                              {r.v}
+                            </a>
+                          ) : (
+                            r.v
+                          )}
+                        </dd>
+                      </div>
+                    </div>
+                  ))}
+                </dl>
+
+                <p className="mt-auto border-t border-stone-200 pt-5 text-sm leading-relaxed text-stone-600">
+                  Poza godzinami pracy najszybciej dotrzemy do sprawy przez formularz niżej —
+                  zgłoszenie czeka na nas rano.
                 </p>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Timeline - Proces naprawy */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-12"
-            >
-              <h2 className="text-3xl font-bold text-gray-900">
-                Jak wygląda proces naprawy?
-              </h2>
-            </motion.div>
+      {/* ------------------------------------------------------------------ */}
+      {/*  Proces naprawy — ta sama oś, co na kartach produktu               */}
+      {/* ------------------------------------------------------------------ */}
+      <div id="proces">
+        <Wdrozenie timeline={PROCES} />
+      </div>
 
-            {/* Desktop Timeline - poziomy */}
-            <div className="hidden lg:block">
-              <div className="relative">
-                {/* Linia łącząca */}
-                <div className="absolute top-12 left-0 right-0 h-1 bg-gradient-to-r from-emerald-200 via-emerald-400 to-emerald-200">
-                  <motion.div
-                    className="h-full bg-gradient-to-r from-emerald-500 to-emerald-600"
-                    initial={{ width: "0%" }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 3.5, ease: "easeInOut", delay: 0.3 }}
-                  />
-                </div>
-
-                <div className="grid grid-cols-5 gap-4">
-                  {/* Krok 1: Zgłoszenie */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="relative group"
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      className="relative z-10 w-24 h-24 mx-auto bg-white border-4 border-emerald-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all cursor-pointer"
-                    >
-                      <Send className="h-10 w-10 text-emerald-600" />
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                        1
-                      </div>
-                    </motion.div>
-                    <div className="text-center mt-4">
-                      <h3 className="font-bold text-gray-900 mb-1">Zgłoszenie</h3>
-                      <p className="text-sm text-gray-600">Formularz lub telefon</p>
-                    </div>
-                  </motion.div>
-
-                  {/* Krok 2: Wysyłka do nas */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.8 }}
-                    className="relative group"
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      className="relative z-10 w-24 h-24 mx-auto bg-white border-4 border-blue-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all cursor-pointer"
-                    >
-                      <Package className="h-10 w-10 text-blue-600" />
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                        2
-                      </div>
-                    </motion.div>
-                    <div className="text-center mt-4">
-                      <h3 className="font-bold text-gray-900 mb-1">Wysyłka</h3>
-                      <p className="text-sm text-gray-600">Kurier odbiera sprzęt</p>
-                    </div>
-                  </motion.div>
-
-                  {/* Krok 3: Diagnoza */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.3 }}
-                    className="relative group"
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      animate={{ 
-                        rotate: [0, 5, -5, 0],
-                      }}
-                      transition={{
-                        rotate: {
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }
-                      }}
-                      className="relative z-10 w-24 h-24 mx-auto bg-white border-4 border-purple-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all cursor-pointer"
-                    >
-                      <CheckCircle className="h-10 w-10 text-purple-600" />
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                        3
-                      </div>
-                    </motion.div>
-                    <div className="text-center mt-4">
-                      <h3 className="font-bold text-gray-900 mb-1">Diagnoza</h3>
-                      <p className="text-sm text-gray-600">Wycena i akceptacja</p>
-                    </div>
-                  </motion.div>
-
-                  {/* Krok 4: Naprawa */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.8 }}
-                    className="relative group"
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      className="relative z-10 w-24 h-24 mx-auto bg-white border-4 border-orange-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all cursor-pointer"
-                    >
-                      <Wrench className="h-10 w-10 text-orange-600" />
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                        4
-                      </div>
-                    </motion.div>
-                    <div className="text-center mt-4">
-                      <h3 className="font-bold text-gray-900 mb-1">Naprawa</h3>
-                      <p className="text-sm text-gray-600">Profesjonalny serwis</p>
-                    </div>
-                  </motion.div>
-
-                  {/* Krok 5: Wysyłka zwrotna */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 2.3 }}
-                    className="relative group"
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      animate={{ 
-                        x: [0, 5, 0],
-                      }}
-                      transition={{
-                        x: {
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }
-                      }}
-                      className="relative z-10 w-24 h-24 mx-auto bg-white border-4 border-emerald-500 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all cursor-pointer"
-                    >
-                      <Truck className="h-10 w-10 text-emerald-600" />
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                        5
-                      </div>
-                    </motion.div>
-                    <div className="text-center mt-4">
-                      <h3 className="font-bold text-gray-900 mb-1">Wysyłka</h3>
-                      <p className="text-sm text-gray-600">Odbiór sprawnego sprzętu</p>
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile Timeline - pionowy */}
-            <div className="lg:hidden space-y-6">
-              {[
-                { icon: Send, title: "Zgłoszenie", desc: "Formularz lub telefon", color: "emerald", step: 1 },
-                { icon: Package, title: "Wysyłka", desc: "Kurier odbiera sprzęt", color: "blue", step: 2 },
-                { icon: CheckCircle, title: "Diagnoza", desc: "Wycena i akceptacja", color: "purple", step: 3 },
-                { icon: Wrench, title: "Naprawa", desc: "Profesjonalny serwis", color: "orange", step: 4 },
-                { icon: Truck, title: "Wysyłka", desc: "Odbiór sprawnego sprzętu", color: "emerald", step: 5 }
-              ].map((item, index) => {
-                const Icon = item.icon;
-                const colorClasses = {
-                  emerald: "border-emerald-500 bg-emerald-50",
-                  blue: "border-blue-500 bg-blue-50",
-                  purple: "border-purple-500 bg-purple-50",
-                  orange: "border-orange-500 bg-orange-50"
-                };
-                const iconColors = {
-                  emerald: "text-emerald-600",
-                  blue: "text-blue-600",
-                  purple: "text-purple-600",
-                  orange: "text-orange-600"
-                };
-                const badgeColors = {
-                  emerald: "bg-emerald-600",
-                  blue: "bg-blue-600",
-                  purple: "bg-purple-600",
-                  orange: "bg-orange-600"
-                };
-
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.4 }}
-                    className="flex items-start gap-4"
-                  >
-                    <div className={`relative flex-shrink-0 w-16 h-16 rounded-full border-4 ${colorClasses[item.color as keyof typeof colorClasses]} flex items-center justify-center shadow-lg`}>
-                      <Icon className={`h-7 w-7 ${iconColors[item.color as keyof typeof iconColors]}`} />
-                      <div className={`absolute -top-1 -right-1 w-6 h-6 ${badgeColors[item.color as keyof typeof badgeColors]} text-white rounded-full flex items-center justify-center text-xs font-bold`}>
-                        {item.step}
-                      </div>
-                    </div>
-                    <div className="flex-1 pt-1">
-                      <h3 className="font-bold text-gray-900 mb-1">{item.title}</h3>
-                      <p className="text-sm text-gray-600">{item.desc}</p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            {/* Info box */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 2.6 }}
-              className="mt-12 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-xl p-6 border-2 border-emerald-200"
-            >
-              <div className="flex items-start gap-3">
-                <Clock className="h-6 w-6 text-emerald-600 mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">Najkrótszy możliwy czas</h3>
-                  <p className="text-gray-700">
-                    Rozumiemy, że każda godzina bez sprawnego sprzętu to utrata efektywności. 
-                    Dlatego priorytetem jest jak najszybsze przywrócenie urządzenia do pełnej sprawności.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
+      {/* ------------------------------------------------------------------ */}
+      {/*  Formularz zgłoszenia                                              */}
+      {/* ------------------------------------------------------------------ */}
+      <section id="zgloszenie" className="scroll-mt-8 border-b border-stone-200 bg-stone-50">
+        <div className="container mx-auto px-4 py-16">
+          <div className="mx-auto max-w-3xl">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-700">
+              Formularz
+            </p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-stone-900">Zgłoś usterkę</h2>
+            <p className="mt-3 text-stone-600">
+              Odpowiadamy w ciągu jednego dnia roboczego. Wszystkie pola są wymagane, chyba że
+              zaznaczono inaczej.
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* Formularz zgłoszenia */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-emerald-50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-white rounded-2xl shadow-xl p-8"
-            >
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
-                  <Send className="h-8 w-8 text-emerald-600" />
-                </div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Zgłoś naprawę</h2>
-                <p className="text-gray-600">Wypełnij formularz, a my zajmiemy się resztą</p>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Imię *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.firstName}
-                      onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                      placeholder="Jan"
-                    />
+          {/* Jedna kolumna — badania CXL: wypełnienie o ~15 s szybsze niż w układzie
+              wielokolumnowym, bo wzrok idzie jedną ścieżką w dół. Szerokość pola
+              podpowiada długość odpowiedzi (GOV.UK: text input). */}
+          <div className="mx-auto mt-10 max-w-3xl">
+            <form onSubmit={handleSubmit}>
+              <div className="space-y-7 rounded-2xl border border-stone-200 bg-white p-6 sm:p-8">
+                <Sekcja tytul="Zgłaszający">
+                  <div className="flex flex-wrap gap-6">
+                    <div className="min-w-[10rem] flex-1">
+                      <Etykieta htmlFor="imie">Imię</Etykieta>
+                      <input
+                        id="imie"
+                        type="text"
+                        required
+                        autoComplete="given-name"
+                        value={formData.firstName}
+                        onChange={(e) => zmien('firstName', e.target.value)}
+                        className={`mt-2 ${POLE}`}
+                      />
+                    </div>
+                    <div className="min-w-[10rem] flex-1">
+                      <Etykieta htmlFor="nazwisko">Nazwisko</Etykieta>
+                      <input
+                        id="nazwisko"
+                        type="text"
+                        required
+                        autoComplete="family-name"
+                        value={formData.lastName}
+                        onChange={(e) => zmien('lastName', e.target.value)}
+                        className={`mt-2 ${POLE}`}
+                      />
+                    </div>
                   </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Nazwisko *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.lastName}
-                      onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                      placeholder="Kowalski"
-                    />
-                  </div>
-                </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Nadleśnictwo *
-                    </label>
+                  <div className="max-w-sm">
+                    <Etykieta htmlFor="nadlesnictwo">Nadleśnictwo</Etykieta>
                     <input
+                      id="nadlesnictwo"
                       type="text"
                       required
                       value={formData.forestDistrict}
-                      onChange={(e) => setFormData({...formData, forestDistrict: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                      placeholder="Nadleśnictwo Miłomłyn"
+                      onChange={(e) => zmien('forestDistrict', e.target.value)}
+                      className={`mt-2 ${POLE}`}
+                      placeholder="np. Miłomłyn"
                     />
                   </div>
 
+                  <div className="flex flex-wrap items-end gap-6">
+                    <div className="w-[12rem]">
+                      <Etykieta htmlFor="telefon">Telefon</Etykieta>
+                      <input
+                        id="telefon"
+                        type="tel"
+                        required
+                        autoComplete="tel"
+                        value={formData.phone}
+                        onChange={(e) => zmien('phone', e.target.value)}
+                        className={`mt-2 ${POLE}`}
+                      />
+                    </div>
+                    <div className="min-w-[14rem] flex-1">
+                      <Etykieta htmlFor="email">E-mail</Etykieta>
+                      <input
+                        id="email"
+                        type="email"
+                        required
+                        autoComplete="email"
+                        value={formData.email}
+                        onChange={(e) => zmien('email', e.target.value)}
+                        className={`mt-2 ${POLE}`}
+                        placeholder="na ten adres wyślemy etykietę"
+                      />
+                    </div>
+                  </div>
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Telefon *
-                    </label>
+                    <Etykieta htmlFor="adres" hint="Ulica, numer, kod pocztowy i miejscowość.">
+                      Adres odbioru
+                    </Etykieta>
                     <input
-                      type="tel"
+                      id="adres"
+                      type="text"
                       required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                      placeholder="+48 123 456 789"
+                      value={formData.address}
+                      onChange={(e) => zmien('address', e.target.value)}
+                      className={`mt-2 ${POLE}`}
+                      placeholder="ul. Leśna 1, 14-140 Miłomłyn"
                     />
                   </div>
-                </div>
+                </Sekcja>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Adres *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.address}
-                    onChange={(e) => setFormData({...formData, address: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder="ul. Leśna 1, 00-000 Miłomłyn"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder="jan.kowalski@nadlesnictwo.pl"
-                  />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Typ urządzenia *
-                    </label>
+                <Sekcja tytul="Urządzenie i usterka">
+                  <div className="flex flex-wrap items-end gap-6">
+                  <div className="min-w-[13rem] flex-1">
+                    <Etykieta htmlFor="typ">Rodzaj urządzenia</Etykieta>
                     <select
+                      id="typ"
                       required
                       value={formData.deviceType}
-                      onChange={(e) => setFormData({...formData, deviceType: e.target.value, otherDevice: ""})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                      onChange={(e) => {
+                        zmien('deviceType', e.target.value)
+                        zmien('otherDevice', '')
+                      }}
+                      className={`mt-2 ${POLE}`}
                     >
-                      <option value="">Wybierz urządzenie</option>
-                      <option value="rejestrator">Rejestrator</option>
-                      <option value="telefon">Telefon</option>
-                      <option value="laptop">Laptop</option>
-                      <option value="drukarka-laserowa">Drukarka laserowa</option>
-                      <option value="urzadzenie-wielofunkcyjne">Urządzenie wielofunkcyjne</option>
-                      <option value="drukarka-termiczna">Drukarka termiczna</option>
-                      <option value="urzadzenie-fiskalne">Urządzenie fiskalne</option>
-                      <option value="inny">Inny</option>
+                      <option value="">Wybierz z listy</option>
+                      {TYPY_URZADZEN.map(([v, l]) => (
+                        <option key={v} value={v}>
+                          {l}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <AnimatePresence>
+                    {formData.deviceType === 'inny' && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="max-w-sm"
+                      >
+                        <Etykieta htmlFor="inne">Jakie to urządzenie?</Etykieta>
+                        <input
+                          id="inne"
+                          type="text"
+                          required
+                          value={formData.otherDevice}
+                          onChange={(e) => zmien('otherDevice', e.target.value)}
+                          className={`mt-2 ${POLE}`}
+                          placeholder="np. skaner Epson DS-730n"
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  <div className="w-[13rem]">
+                    <Etykieta htmlFor="sn" opcjonalne>
                       Numer seryjny
-                    </label>
+                    </Etykieta>
                     <input
+                      id="sn"
                       type="text"
                       value={formData.serialNumber}
-                      onChange={(e) => setFormData({...formData, serialNumber: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                      placeholder="SN: 123456789"
+                      onChange={(e) => zmien('serialNumber', e.target.value)}
+                      className={`mt-2 ${POLE}`}
+                      placeholder="z naklejki na obudowie"
                     />
                   </div>
-                </div>
+                  </div>
 
-                {/* Warunkowe pole "Inny typ urządzenia" */}
-                {formData.deviceType === "inny" && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Jaki typ urządzenia? *
-                    </label>
-                    <input
-                      type="text"
-                      required={formData.deviceType === "inny"}
-                      value={formData.otherDevice}
-                      onChange={(e) => setFormData({...formData, otherDevice: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                      placeholder="Wpisz typ urządzenia"
+                  <div>
+                    <Etykieta
+                      htmlFor="usterka"
+                      hint="Co się dzieje, od kiedy i przy jakiej czynności. Im konkretniej, tym szybsza diagnoza."
+                    >
+                      Opis usterki
+                    </Etykieta>
+                    <textarea
+                      id="usterka"
+                      required
+                      rows={4}
+                      value={formData.problemDescription}
+                      onChange={(e) => zmien('problemDescription', e.target.value)}
+                      className={`mt-2 ${POLE}`}
                     />
-                  </motion.div>
-                )}
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Czy urządzenie posiada kontrakt serwisowy? *
-                  </label>
-                  <div className="flex gap-6">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        required
-                        value="tak"
-                        checked={formData.hasContract === "tak"}
-                        onChange={(e) => setFormData({...formData, hasContract: e.target.value})}
-                        className="w-4 h-4 text-emerald-600 focus:ring-emerald-500"
-                      />
-                      <span className="text-gray-700">Tak</span>
-                    </label>
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        required
-                        value="nie"
-                        checked={formData.hasContract === "nie"}
-                        onChange={(e) => setFormData({...formData, hasContract: e.target.value})}
-                        className="w-4 h-4 text-emerald-600 focus:ring-emerald-500"
-                      />
-                      <span className="text-gray-700">Nie</span>
-                    </label>
                   </div>
-                </div>
 
-                {/* Zamówienie kuriera - wyróżniona sekcja z poprawą na mobile */}
-                <div className="bg-blue-50 border-2 border-blue-300 rounded-xl p-6">
-                  <div className="flex items-start gap-3 mb-4">
-                    <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Truck className="h-6 w-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <label className="block text-base font-bold text-gray-900 mb-1">
-                        Czy zamówić kuriera po odbiór sprzętu? *
-                      </label>
-                      <p className="text-sm text-gray-600 mb-3">
-                        Zamówimy kuriera, który odbierze sprzęt z Twojej lokalizacji w ciągu 48h
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <label className="flex items-center gap-3 cursor-pointer bg-white px-6 py-3 rounded-lg border-2 border-gray-200 hover:border-emerald-500 transition-all flex-1">
-                      <input
-                        type="radio"
-                        required
-                        value="tak"
-                        checked={formData.courierPickup === "tak"}
-                        onChange={(e) => setFormData({...formData, courierPickup: e.target.value})}
-                        className="w-5 h-5 text-emerald-600 focus:ring-emerald-500 flex-shrink-0"
-                      />
-                      <span className="text-gray-900 font-semibold">Tak, zamów kuriera</span>
-                    </label>
-                    <label className="flex items-center gap-3 cursor-pointer bg-white px-6 py-3 rounded-lg border-2 border-gray-200 hover:border-gray-400 transition-all flex-1">
-                      <input
-                        type="radio"
-                        required
-                        value="nie"
-                        checked={formData.courierPickup === "nie"}
-                        onChange={(e) => setFormData({...formData, courierPickup: e.target.value})}
-                        className="w-5 h-5 text-gray-600 focus:ring-gray-500 flex-shrink-0"
-                      />
-                      <span className="text-gray-900 font-semibold">Nie, dostarczę osobiście</span>
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Opis usterki *
-                  </label>
-                  <textarea
-                    required
-                    value={formData.problemDescription}
-                    onChange={(e) => setFormData({...formData, problemDescription: e.target.value})}
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                    placeholder="Opisz problem z urządzeniem..."
-                  />
-                </div>
-
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  className={`w-full font-semibold py-4 rounded-lg flex items-center justify-center gap-2 shadow-lg transition-all ${
-                    isSubmitting 
-                      ? 'bg-gray-400 cursor-not-allowed' 
-                      : 'bg-emerald-600 hover:bg-emerald-700 text-white hover:shadow-xl'
-                  }`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      >
-                        <Clock className="h-5 w-5" />
-                      </motion.div>
-                      Wysyłanie...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="h-5 w-5" />
-                      Wyślij zgłoszenie
-                    </>
-                  )}
-                </motion.button>
-              </form>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Lightbox z instrukcją - warunkowy */}
-      <AnimatePresence>
-        {showLightbox && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] flex items-center justify-center p-4"
-            onClick={() => setShowLightbox(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 20 }}
-              className="bg-white rounded-2xl p-8 max-w-2xl w-full shadow-2xl relative z-[9999] max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setShowLightbox(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <X className="h-6 w-6" />
-              </button>
-
-              <div className="text-center mb-6">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                  className="inline-flex items-center justify-center w-20 h-20 bg-emerald-100 rounded-full mb-4"
-                >
-                  <CheckCircle className="h-10 w-10 text-emerald-600" />
-                </motion.div>
-                <h3 className="text-2xl font-bold text-gray-900">
-                  {formData.courierPickup === "tak" ? "Zamówienie kuriera wysłane!" : "Zgłoszenie przyjęte!"}
-                </h3>
-                <p className="text-gray-600 mt-2">
-                  {formData.courierPickup === "tak" 
-                    ? "Otrzymasz wiadomość email z dalszymi instrukcjami" 
-                    : "Oczekujemy na przesyłkę"}
-                </p>
-              </div>
-
-              {/* Warunkowa treść - zależnie od wyboru kuriera */}
-              {formData.courierPickup === "tak" ? (
-                // Lightbox dla kuriera
-                <>
-                  <div className="bg-orange-50 rounded-xl p-6 mb-6">
-                    <h4 className="font-semibold text-gray-900 mb-4">Co dalej?</h4>
-                    <p className="text-sm text-orange-800 mb-4">
-                      Przygotuj urządzenie do odbioru zgodnie z poniższą listą. Kurier skontaktuje się z Tobą 
-                      w ciągu 24 godzin od otrzymania zgłoszenia.
+                  <fieldset>
+                    <legend className="font-medium text-stone-900">
+                      Czy urządzenie jest na kontrakcie serwisowym?
+                    </legend>
+                    <p className="mt-1 text-sm text-stone-500">
+                      Zgłoszenia na kontrakcie obsługujemy w pierwszej kolejności i bez wyceny.
                     </p>
-
-                    <div className="space-y-3">
+                    <div className="mt-3 flex flex-wrap gap-3">
                       {[
-                        { 
-                          text: "Przygotuj urządzenie", 
-                          detail: "Wykonaj kopię zapasową danych i wyloguj się z kont" 
-                        },
-                        { 
-                          text: "Starannie zapakuj", 
-                          detail: "Zabezpiecz urządzenie w oryginalnym pudełku lub w bezpiecznym opakowaniu" 
-                        },
-                        { 
-                          text: "Wydrukuj otrzymaną etykietę", 
-                          detail: "Otrzymasz etykietę kurierską na email - wydrukuj i przyklej do paczki" 
-                        },
-                        { 
-                          text: "Dołącz dokumenty", 
-                          detail: "Jeśli posiadasz fakturę lub dowód zakupu, dołącz kopię do przesyłki" 
-                        },
-                        { 
-                          text: "Oczekuj na kuriera", 
-                          detail: "Kurier odbierze paczkę we wskazanym miejscu - nie musisz jej nadawać" 
-                        }
-                      ].map((item, index) => (
-                        <motion.div
-                          key={index}
-                          className="flex items-start space-x-3 p-3 bg-white rounded-lg border border-orange-200"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
+                        ['tak', 'Tak'],
+                        ['nie', 'Nie wiem lub nie'],
+                      ].map(([v, l]) => (
+                        <label
+                          key={v}
+                          className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition ${
+                            formData.hasContract === v
+                              ? 'border-emerald-600 bg-emerald-50/60'
+                              : 'border-stone-300 hover:border-stone-400'
+                          }`}
                         >
-                          <motion.div
-                            className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: index * 0.1 + 0.05, type: "spring" }}
-                          >
-                            <CheckCircle className="w-4 h-4 text-white" />
-                          </motion.div>
-                          <div className="flex-1">
-                            <p className="font-semibold text-gray-900 text-sm">{index + 1}. {item.text}</p>
-                            <p className="text-xs text-gray-600 mt-0.5">{item.detail}</p>
-                          </div>
-                        </motion.div>
+                          <input
+                            type="radio"
+                            name="kontrakt"
+                            required
+                            value={v}
+                            checked={formData.hasContract === v}
+                            onChange={(e) => zmien('hasContract', e.target.value)}
+                            className="h-4 w-4 accent-emerald-600"
+                          />
+                          <span className="font-medium text-stone-900">{l}</span>
+                        </label>
                       ))}
                     </div>
-                  </div>
+                  </fieldset>
+                </Sekcja>
 
-                  <div className="bg-blue-50 p-4 rounded-lg mb-6">
-                    <div className="flex items-start space-x-3">
-                      <Package className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <div className="text-sm text-blue-900">
-                        <p className="font-semibold mb-1">Ważne informacje:</p>
-                        <ul className="space-y-1 text-blue-800">
-                          <li>• Numer przesyłki otrzymasz w wiadomości email</li>
-                          <li>• Śledź status naprawy w systemie lub kontaktując się z nami</li>
-                          <li>• W razie pytań zadzwoń: <span className="font-semibold">71 781 71 28</span></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                // Lightbox dla dostawy osobistej
-                <div className="bg-blue-50 rounded-xl p-6 mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <MapPin className="h-5 w-5 text-blue-600" />
-                    Adres wysyłki
-                  </h4>
-                  
-                  <div className="bg-white rounded-lg p-4 mb-4 border-2 border-blue-200">
-                    <div className="text-center">
-                      <div className="text-lg font-bold text-gray-900 mb-1">TAKMA SERWIS</div>
-                      <div className="text-gray-700">ul. Poświęcka 1a</div>
-                      <div className="text-gray-700 mb-2">51-128 Wrocław</div>
-                      <div className="flex items-center justify-center gap-2 text-blue-600 font-semibold">
-                        <Phone className="h-4 w-4" />
-                        601 619 898
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="text-center text-gray-700">
-                    <p className="mb-2">Oczekujemy na przesyłkę</p>
-                    <p className="text-xl font-bold text-gray-900">Będziemy w kontakcie!</p>
-                  </div>
-                </div>
-              )}
-
-              <motion.button
-                onClick={() => setShowLightbox(false)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg transition-colors"
-              >
-                Rozumiem
-              </motion.button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Kontakt - Krzysztof Wójcik - przeprojektowane */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 via-white to-emerald-50 relative overflow-hidden">
-        {/* Dekoracyjne elementy w tle */}
-        <div className="absolute top-10 right-10 w-64 h-64 bg-emerald-100 rounded-full blur-3xl opacity-30"></div>
-        <div className="absolute bottom-10 left-10 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-30"></div>
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-8"
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                Masz pytania?
-              </h2>
-              <p className="text-gray-600 text-lg">
-                Skontaktuj się z osobą odpowiedzialną za serwis
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white rounded-2xl shadow-2xl overflow-hidden"
-            >
-              <div className="grid md:grid-cols-5">
-                {/* Lewa kolumna - emerald gradient */}
-                <div className="md:col-span-2 bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 flex flex-col justify-center items-center text-white relative overflow-hidden">
-                  {/* Dekoracyjny wzór */}
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-0 left-0 w-32 h-32 border-4 border-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-                    <div className="absolute bottom-0 right-0 w-40 h-40 border-4 border-white rounded-full translate-x-1/2 translate-y-1/2"></div>
-                  </div>
-                  
-                  <div className="relative z-10 text-center">
-                    <motion.div
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="w-24 h-24 bg-white/20 backdrop-blur rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-white/30"
-                    >
-                      <Phone className="h-12 w-12 text-white" />
-                    </motion.div>
-                    
-                    <div className="mb-4">
-                      <div className="text-sm font-medium text-emerald-200 mb-1">Kierownik działu serwisu</div>
-                      <div className="text-2xl font-bold">Krzysztof Wójcik</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Prawa kolumna - informacje kontaktowe */}
-                <div className="md:col-span-3 p-8">
-                  <div className="space-y-6">
-                    {/* Telefon */}
-                    <motion.a
-                      href="tel:601619898"
-                      whileHover={{ scale: 1.02, x: 5 }}
-                      className="flex items-center gap-4 p-4 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-all group"
-                    >
-                      <div className="w-12 h-12 bg-emerald-600 rounded-lg flex items-center justify-center group-hover:bg-emerald-700 transition-colors">
-                        <Phone className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-600 mb-1">Telefon</div>
-                        <div className="text-2xl font-bold text-gray-900">601 619 898</div>
-                      </div>
-                    </motion.a>
-
-                    {/* Email */}
-                    <motion.a
-                      href="mailto:serwis@takma.com.pl"
-                      whileHover={{ scale: 1.02, x: 5 }}
-                      className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all group"
-                    >
-                      <div className="w-12 h-12 bg-gray-600 rounded-lg flex items-center justify-center group-hover:bg-gray-700 transition-colors">
-                        <Mail className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-600 mb-1">Email</div>
-                        <div className="text-lg font-semibold text-gray-900">serwis@takma.com.pl</div>
-                      </div>
-                    </motion.a>
-
-                    {/* Godziny dostępności */}
-                    <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-xl">
-                      <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-                        <Clock className="h-6 w-6 text-white" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-600 mb-1">Godziny dostępności</div>
-                        <div className="text-lg font-semibold text-gray-900">Pn-Pt: 7:30 - 15:30</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Dodatkowa informacja */}
-                  <div className="mt-6 pt-6 border-t border-gray-200">
-                    <p className="text-sm text-gray-600 text-center">
-                      Wolisz pisemnie? Skorzystaj z formularza zgłoszeniowego powyżej
+                <Sekcja tytul="Odbiór sprzętu">
+                  <fieldset>
+                    <legend className="font-medium text-stone-900">
+                      Jak sprzęt trafi do serwisu?
+                    </legend>
+                    <p className="mt-1 text-sm text-stone-500">
+                      Przy odbiorze kurierem etykietę przewozową wysyłamy mailem — paczki nie
+                      nadajesz samodzielnie.
                     </p>
-                  </div>
+                    <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                      {[
+                        ['tak', 'Odbiór kurierem', 'Kurier przyjeżdża pod wskazany adres.'],
+                        ['nie', 'Dostarczę osobiście', 'Adres serwisu podamy po zgłoszeniu.'],
+                      ].map(([v, l, opis]) => (
+                        <label
+                          key={v}
+                          className={`flex cursor-pointer items-start gap-3 rounded-xl border px-4 py-3 transition ${
+                            formData.courierPickup === v
+                              ? 'border-emerald-600 bg-emerald-50/60'
+                              : 'border-stone-300 hover:border-stone-400'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="kurier"
+                            required
+                            value={v}
+                            checked={formData.courierPickup === v}
+                            onChange={(e) => zmien('courierPickup', e.target.value)}
+                            className="mt-1 h-4 w-4 shrink-0 accent-emerald-600"
+                          />
+                          <span>
+                            <span className="block font-medium text-stone-900">{l}</span>
+                            <span className="block text-sm text-stone-600">{opis}</span>
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+                </Sekcja>
+
+                <div className="border-t border-stone-200 pt-8">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-4 font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-stone-400 sm:w-auto"
+                  >
+                    {isSubmitting ? 'Wysyłanie…' : 'Wyślij zgłoszenie'}
+                    {!isSubmitting && <img src={naCiemnym(ICON.strzalka)} alt="" className="h-4 w-4" />}
+                  </button>
+                  <p className="mt-3 text-sm text-stone-500">
+                    Potwierdzenie przyjęcia zgłoszenia wyślemy na podany adres e-mail.
+                  </p>
                 </div>
               </div>
-            </motion.div>
+            </form>
+
           </div>
         </div>
       </section>
 
-     {/* Footer */}
-<Footer />
-</div>
-  );
+      {/* ------------------------------------------------------------------ */}
+      {/*  Potwierdzenie po wysłaniu — portal, żeby nic go nie przycięło     */}
+      {/* ------------------------------------------------------------------ */}
+      {zamontowane &&
+        createPortal(
+          <AnimatePresence>
+            {showLightbox && (
+              <motion.div
+                className="fixed inset-0 z-[60] flex items-center justify-center bg-stone-900/50 p-4 backdrop-blur-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setShowLightbox(false)}
+              >
+                <motion.div
+                  role="dialog"
+                  aria-modal="true"
+                  className="flex max-h-[85vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-2xl shadow-stone-900/20"
+                  initial={{ scale: 0.96, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.96, opacity: 0 }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex shrink-0 items-start justify-between gap-4 px-6 pb-5 pt-6">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-50">
+                        <img src={ICON.ptaszek} alt="" className="h-6 w-6 mix-blend-multiply" />
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-bold tracking-tight text-stone-900">
+                          Zgłoszenie przyjęte
+                        </h3>
+                        <p className="mt-0.5 text-sm text-stone-600">
+                          {kurier
+                            ? 'Etykietę kurierską wyślemy mailem'
+                            : 'Czekamy na przesyłkę'}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowLightbox(false)}
+                      aria-label="Zamknij"
+                      className="rounded-full p-2 transition hover:bg-stone-100"
+                    >
+                      <img src={ICON.zamknij} alt="" className="h-5 w-5 mix-blend-multiply" />
+                    </button>
+                  </div>
+
+                  <div className="bez-paska min-h-0 flex-1 space-y-5 overflow-y-auto px-6 pb-5">
+                    {kurier ? (
+                      <div>
+                        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-700">
+                          Co teraz
+                        </p>
+                        <ol className="mt-3 space-y-2">
+                          {[
+                            [
+                              'Zabezpiecz dane',
+                              'Zrób kopię zapasową i wyloguj się z kont na urządzeniu.',
+                            ],
+                            [
+                              'Zapakuj sprzęt',
+                              'Najlepiej w oryginalne pudełko albo inne opakowanie z wypełnieniem.',
+                            ],
+                            [
+                              'Wydrukuj etykietę z maila',
+                              'Naklej ją na paczkę przed przyjazdem kuriera.',
+                            ],
+                            [
+                              'Dołącz dowód zakupu',
+                              'Jeśli go masz — przyspiesza rozpatrzenie gwarancji.',
+                            ],
+                            [
+                              'Czekaj na kuriera',
+                              'Skontaktuje się w ciągu 24 godzin. Paczki nie nadajesz.',
+                            ],
+                          ].map(([t, o], i) => (
+                            <li
+                              key={t}
+                              className="flex items-start gap-3 rounded-xl border border-stone-200 px-4 py-3"
+                            >
+                              <span className="mt-0.5 font-mono text-[11px] tracking-[0.18em] text-stone-400">
+                                {String(i + 1).padStart(2, '0')}
+                              </span>
+                              <span>
+                                <span className="block font-medium text-stone-900">{t}</span>
+                                <span className="block text-sm text-stone-600">{o}</span>
+                              </span>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    ) : (
+                      <div className="rounded-2xl border border-stone-200 bg-stone-50 p-5">
+                        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-stone-500">
+                          Adres serwisu
+                        </p>
+                        <p className="mt-3 text-lg font-semibold text-stone-900">TAKMA Serwis</p>
+                        <p className="text-stone-700">ul. Poświęcka 1a</p>
+                        <p className="text-stone-700">51-128 Wrocław</p>
+                        <p className="mt-3 text-sm text-stone-600">
+                          Telefon:{' '}
+                          <a href="tel:601619898" className="font-medium text-emerald-700 hover:underline">
+                            601 619 898
+                          </a>
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex shrink-0 items-center justify-between gap-4 border-t border-stone-200 bg-stone-50 px-6 py-4">
+                    <p className="text-sm text-stone-600">
+                      Pytania? <span className="font-medium text-stone-900">601 619 898</span>
+                    </p>
+                    <button
+                      onClick={() => setShowLightbox(false)}
+                      className="rounded-xl bg-[#0A1B12] px-5 py-2.5 font-semibold text-white transition hover:bg-[#14301F]"
+                    >
+                      Rozumiem
+                    </button>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
+        )}
+
+      <Footer />
+    </div>
+  )
 }

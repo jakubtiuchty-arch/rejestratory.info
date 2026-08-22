@@ -1,193 +1,103 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  Download,
-  X,
-  Calculator,
-  BarChart3,
-  FileText,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Laptop
-} from 'lucide-react'
-import { useInquiry } from '@/components/InquiryContext'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-white rounded-lg overflow-hidden cursor-pointer p-12"
-        style={{ minHeight: '500px' }}
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src={images[currentImage]}
-          alt="Microsoft 365 Business Standard"
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src={images[currentImage]}
-                alt="Microsoft 365 Business Standard - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
+const data: ProductData = {
+  slug: 'ms-365',
+  name: 'Microsoft 365 Business Standard',
+  category: 'Akcesoria komputerowe',
+  categoryHref: '/kategoria/akcesoria-komputerowe',
+  images: ['/ms365_1.png'],
+  inquiry: {
+    description: 'Roczna licencja na pakiet biurowy z pocztą i chmurą',
+    specifications: 'Licencja roczna dla 1 użytkownika · aplikacje Office · 1 TB OneDrive · skrzynka 50 GB · Teams',
+  },
+  whyNavLabel: 'Dlaczego Microsoft 365',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W biurze nadleśnictwa',
+  highlights: [
+    { icon: ICON.klucz, label: 'Licencja', value: 'roczna, 1 użytkownik' },
+    { icon: ICON.aplikacje, label: 'Aplikacje', value: 'Word, Excel, PowerPoint, Outlook' },
+    { icon: ICON.chmura, label: 'OneDrive', value: '1 TB na użytkownika' },
+    { icon: ICON.koperta, label: 'Poczta', value: 'skrzynka 50 GB z własną domeną' },
+  ],
+  specGroups: [
+    {
+      title: 'Licencja',
+      rows: [
+        { k: 'Rodzaj', v: 'subskrypcja roczna' },
+        { k: 'Zakres', v: '1 użytkownik' },
+        { k: 'Instalacje', v: '5 komputerów, 5 tabletów i 5 telefonów na użytkownika' },
+        { k: 'Wsparcie', v: 'telefoniczne i internetowe Microsoftu, całodobowo' },
+      ],
+    },
+    {
+      title: 'Aplikacje',
+      rows: [
+        { k: 'Pakiet biurowy', v: 'Word, Excel, PowerPoint, Outlook, OneNote' },
+        { k: 'Wersje', v: 'komputerowa, przeglądarkowa i mobilna' },
+        { k: 'Dodatkowo', v: 'Teams, SharePoint, Bookings, Planner, Forms, Clipchamp, Loop' },
+      ],
+    },
+    {
+      title: 'Poczta i chmura',
+      rows: [
+        { k: 'Skrzynka pocztowa', v: 'Exchange Online, 50 GB' },
+        { k: 'Własna domena', v: 'tak' },
+        { k: 'OneDrive', v: '1 TB na użytkownika' },
+        { k: 'Witryny zespołu', v: 'SharePoint' },
+      ],
+    },
+    {
+      title: 'Bezpieczeństwo',
+      rows: [
+        { k: 'Szyfrowanie danych', v: 'tak' },
+        { k: 'Uwierzytelnianie wieloskładnikowe', v: 'tak' },
+        { k: 'Zarządzanie urządzeniami', v: 'podstawowe' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.koperta,
+      title: 'Poczta pod adresem nadleśnictwa',
+      body:
+        'Skrzynka 50 GB w Exchange Online działa na własnej domenie, więc korespondencja wychodzi spod służbowego adresu, a nie z konta prywatnego.',
+    },
+    {
+      icon: ICON.chmura,
+      title: 'Terabajt na dokumentację',
+      body:
+        'OneDrive trzyma pliki poza dyskiem komputera — awaria laptopa w terenie przestaje oznaczać utratę pracy.',
+    },
+    {
+      icon: ICON.aplikacje,
+      title: 'Pakiet na komputerze i w przeglądarce',
+      body:
+        'Word, Excel i Outlook w wersji instalowanej oraz przez przeglądarkę — dokument otwiera się także na komputerze zastępczym.',
+    },
+    {
+      icon: ICON.klucz,
+      title: 'Pięć komputerów na jedną licencję',
+      body:
+        'Jeden użytkownik instaluje pakiet na pięciu komputerach, pięciu tabletach i pięciu telefonach — bez dokupowania licencji na sprzęt zapasowy.',
+    },
+  ],
+  whereToBuy: [
+    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
+    { name: 'TAKMA' },
+  ],
+  hideService: true,
+  related: [
+    {
+      name: 'Samsung SSD T9 1 TB',
+      href: '/produkt/samsung-ssd-t9',
+      note: 'Kopia zapasowa poza chmurą',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function Microsoft365BusinessStandardProductPage() {
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  const productImages = [
-    '/ms365_1.png'
-  ]
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/akcesoria-komputerowe" className="hover:text-emerald-600">Akcesoria komputerowe</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Microsoft 365 Business Standard</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4 flex-grow pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={productImages} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Akcesoria komputerowe
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Microsoft 365 Business Standard
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Pakiet aplikacji biurowych z chmurą OneDrive i Teams. Licencja roczna, pełny pakiet Office dla jednego użytkownika. Idealny do pracy biurowej w nadleśnictwach - kompletne narzędzia do produktywnej pracy i współpracy zespołowej.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'microsoft-365-business-standard',
-                      name: 'Microsoft 365 Business Standard',
-                      image: '/placeholder.png',
-                      category: 'Akcesoria komputerowe',
-                      description: 'Pakiet aplikacji biurowych z chmurą OneDrive i Teams',
-                      specifications: 'Licencja roczna, 1 użytkownik, pełny pakiet Office'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-{/* Footer */}
-<Footer />
-</div>
-  )
+export default function MS365Page() {
+  return <ProductPage data={data} />
 }

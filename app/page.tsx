@@ -6,9 +6,6 @@ import SearchAutocomplete from './components/SearchAutocomplete';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import {
-  ArrowRight,
-  ChevronDown,
-  ChevronUp,
   Computer,
   FolderCheck,
   Keyboard,
@@ -21,13 +18,16 @@ import {
   ScrollText,
   Server,
   Smartphone,
+  Tablet,
 } from "lucide-react";
+import { ICON, naCiemnym } from '@/components/product/icons'
 
 // Placeholder data
 const categories = [
   // Ikona dobrana po funkcji urządzenia, nie po sylwetce — w 28 px kształt obudowy jest nieczytelny
   { id: 1, name: "Rejestratory", count: 15, Icon: ScanBarcode },
   { id: 2, name: "Telefony", count: 12, Icon: Smartphone },
+  { id: 14, name: "Tablety", count: 3, Icon: Tablet },
   { id: 3, name: "Laptopy", count: 11, Icon: Laptop },
   { id: 4, name: "Urządzenia wielofunkcyjne", count: 7, Icon: PrinterCheck },
   { id: 5, name: "Monitory", count: 8, Icon: Monitor },
@@ -45,6 +45,7 @@ const getCategoryUrl = (categoryName: string) => {
   const urlMap: Record<string, string> = {
     "Rejestratory": "/kategoria/rejestratory",
     "Telefony": "/kategoria/telefony", 
+    "Tablety": "/kategoria/tablety",
     "Laptopy": "/kategoria/laptopy",
     "Urządzenia wielofunkcyjne": "/kategoria/urzadzenia-wielofunkcyjne",
     "Monitory": "/kategoria/monitory",
@@ -192,7 +193,7 @@ export default function HomePage() {
               }}
               className="relative"
             >
-              <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6" />
+              <img src={naCiemnym(ICON.chevronDol)} alt="" className="h-5 w-5 sm:h-6 sm:w-6" />
               <motion.div
                 className="absolute inset-0 rounded-full bg-white/20"
                 animate={{
@@ -342,7 +343,7 @@ export default function HomePage() {
                     <span className="block text-sm font-semibold leading-snug text-slate-900">{category.name}</span>
                     <span className="mt-0.5 block text-xs text-slate-500">{category.count} produktów</span>
                   </span>
-                  <ArrowRight className="h-4 w-4 shrink-0 text-emerald-700 transition-transform duration-300 group-hover:translate-x-1" />
+                  <img src={ICON.strzalka} alt="" className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 mix-blend-multiply" />
                 </motion.a>
               );
             })}
@@ -390,23 +391,23 @@ export default function HomePage() {
               >
                 {categoriesView === 0 && (
                   <>
-                    <ChevronDown className="h-5 w-5" />
+                    <img src={naCiemnym(ICON.chevronDol)} alt="" className="h-5 w-5" />
                     Zobacz więcej
-                    <ChevronDown className="h-5 w-5" />
+                    <img src={naCiemnym(ICON.chevronDol)} alt="" className="h-5 w-5" />
                   </>
                 )}
                 {categoriesView === 1 && (
                   <>
-                    <ChevronDown className="h-5 w-5" />
+                    <img src={naCiemnym(ICON.chevronDol)} alt="" className="h-5 w-5" />
                     Zobacz wszystkie kategorie
-                    <ChevronDown className="h-5 w-5" />
+                    <img src={naCiemnym(ICON.chevronDol)} alt="" className="h-5 w-5" />
                   </>
                 )}
                 {categoriesView === 2 && (
                   <>
-                    <ChevronUp className="h-5 w-5" />
+                    <img src={ICON.chevronGora} alt="" className="h-5 w-5 mix-blend-multiply" />
                     Pokaż mniej
-                    <ChevronUp className="h-5 w-5" />
+                    <img src={ICON.chevronGora} alt="" className="h-5 w-5 mix-blend-multiply" />
                   </>
                 )}
               </motion.button>

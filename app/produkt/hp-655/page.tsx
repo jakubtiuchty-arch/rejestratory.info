@@ -1,193 +1,96 @@
 'use client'
 
-import CourierServiceSection from "@/components/CourierServiceSection";
+import ProductPage, { type ProductData } from '@/components/product/ProductPage'
+import { ICON } from '@/components/product/icons'
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import {
-  ZoomIn,
-  Shield,
-  Battery,
-  Wifi,
-  Smartphone,
-  Download,
-  X,
-  Calculator,
-  BarChart3,
-  FileText,
-  Phone,
-  Mail,
-  MapPin,
-  Check,
-  Package,
-  ShoppingCart,
-  Info,
-  Truck,
-  AlertTriangle,
-  Laptop
-} from 'lucide-react'
-import { useInquiry } from '@/components/InquiryContext'
-
-// Image Gallery Component
-const ImageGallery = ({ images }: { images: string[] }) => {
-  const [currentImage, setCurrentImage] = useState(0)
-  const [isZoomed, setIsZoomed] = useState(false)
-
-  return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <motion.div 
-        className="relative bg-white rounded-lg overflow-hidden cursor-pointer p-12"
-        style={{ minHeight: '500px' }}
-        whileHover={{ scale: 1.02 }}
-        onClick={() => setIsZoomed(true)}
-      >
-        <img
-          src={images[currentImage]}
-          alt="Klawiatura i mysz bezprzewodowa HP 655"
-          className="w-full h-full object-contain"
-        />
-        <div className="absolute top-4 right-4">
-          <div className="bg-white/80 rounded-full p-2">
-            <ZoomIn className="w-5 h-5 text-gray-600" />
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Zoom Modal */}
-      <AnimatePresence>
-        {isZoomed && (
-          <motion.div
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsZoomed(false)}
-          >
-            <motion.div
-              className="relative max-w-4xl max-h-full"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.5 }}
-            >
-              <img
-                src={images[currentImage]}
-                alt="Klawiatura i mysz bezprzewodowa HP 655 - powiększenie"
-                className="max-w-full max-h-full object-contain"
-              />
-              <button
-                className="absolute top-4 right-4 bg-white/20 rounded-full p-2 text-white hover:bg-white/30"
-                onClick={() => setIsZoomed(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
+const data: ProductData = {
+  slug: 'hp-655',
+  name: 'HP 655 Wireless Keyboard and Mouse',
+  category: 'Akcesoria komputerowe',
+  categoryHref: '/kategoria/akcesoria-komputerowe',
+  images: ['/hp655_1.png'],
+  inquiry: {
+    description: 'Bezprzewodowy zestaw klawiatura i mysz',
+    specifications: '2,4 GHz · zasięg do 10 m · mysz 4000 dpi · bateria klawiatury do 20 mies., myszy do 24 mies.',
+  },
+  whyNavLabel: 'Dlaczego HP 655',
+  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyLabel: 'W biurze nadleśnictwa',
+  highlights: [
+    { icon: ICON.odbiornik, label: 'Łączność', value: '2,4 GHz, zasięg do 10 m' },
+    { icon: ICON.precyzja, label: 'Rozdzielczość myszy', value: '4000 dpi' },
+    { icon: ICON.czaspracy, label: 'Bateria', value: 'klawiatura 20, mysz 24 miesiące' },
+    { icon: ICON.klawiatura, label: 'Układ', value: 'pełnowymiarowy, niski profil' },
+  ],
+  specGroups: [
+    {
+      title: 'Łączność',
+      rows: [
+        { k: 'Standard', v: 'bezprzewodowy 2,4 GHz' },
+        { k: 'Odbiornik', v: 'USB typu A, dołączony' },
+        { k: 'Zasięg', v: 'do 10 m w otwartej przestrzeni' },
+      ],
+    },
+    {
+      title: 'Klawiatura',
+      rows: [
+        { k: 'Układ', v: 'pełnowymiarowy, trzystrefowy' },
+        { k: 'Skok klawisza', v: '2,0 mm, niski profil' },
+        { k: 'Klawisze do przypisania', v: 'ponad 20' },
+        { k: 'Zasilanie', v: '2 × AAA' },
+        { k: 'Żywotność baterii', v: 'do 20 miesięcy' },
+      ],
+    },
+    {
+      title: 'Mysz',
+      rows: [
+        { k: 'Czujnik', v: 'optyczny, wielopowierzchniowy' },
+        { k: 'Rozdzielczość', v: '4000 dpi' },
+        { k: 'Budowa', v: 'symetryczna, dla prawo- i leworęcznych' },
+        { k: 'Zasilanie', v: '2 × AA' },
+        { k: 'Żywotność baterii', v: 'do 24 miesięcy' },
+      ],
+    },
+  ],
+  why: [
+    {
+      icon: ICON.mysz,
+      title: 'Działa też na blacie bez podkładki',
+      body:
+        'Czujnik wielopowierzchniowy radzi sobie na lakierowanym biurku i na kamiennym parapecie — mysz nie wymaga przygotowania stanowiska.',
+    },
+    {
+      icon: ICON.odbiornik,
+      title: 'Dziesięć metrów zasięgu',
+      body:
+        'Odbiornik USB może zostać w komputerze pod biurkiem albo w szafie serwerowej, a zestaw nadal odpowiada.',
+    },
+    {
+      icon: ICON.klawiszskrotu,
+      title: 'Ponad dwadzieścia klawiszy do przypisania',
+      body:
+        'Skróty do najczęstszych czynności ustawia się raz i przestaje szukać ich w menu.',
+    },
+    {
+      icon: ICON.czaspracy,
+      title: 'Dwa lata na bateriach myszy',
+      body:
+        'Deklarowane 24 miesiące pracy myszy i 20 miesięcy klawiatury — wymiana baterii nie wchodzi do kalendarza.',
+    },
+  ],
+  whereToBuy: [
+    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
+    { name: 'TAKMA' },
+  ],
+  related: [
+    {
+      name: 'Dell Pro KM5221W',
+      href: '/produkt/dell-km5221',
+      note: 'Szyfrowana transmisja i bateria na 36 miesięcy',
+    },
+  ],
 }
 
-// Main Product Page Component
-export default function HP655ProductPage() {
-  const { inquiryCount, addToInquiry, openCart } = useInquiry()
-  const [showRipple, setShowRipple] = useState(false)
-
-  const productImages = [
-    '/hp655_1.png'
-  ]
-
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header activeTab="produkty" />
-      
-      {/* Breadcrumbs */}
-      <div className="container mx-auto px-4 py-4">
-        <nav className="text-sm text-gray-500">
-          <a href="/" className="hover:text-emerald-600">Strona główna</a>
-          <span className="mx-2">/</span>
-          <a href="/kategoria/akcesoria-komputerowe" className="hover:text-emerald-600">Akcesoria komputerowe</a>
-          <span className="mx-2">/</span>
-          <span className="text-gray-900">Klawiatura i mysz bezprzewodowa HP 655</span>
-        </nav>
-      </div>
-
-      {/* Product Hero Section */}
-      <div className="container mx-auto px-4 flex-grow pb-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-          {/* Image Gallery */}
-          <div>
-            <ImageGallery images={productImages} />
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <div className="flex items-center space-x-2 mb-2">
-                <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">
-                  Akcesoria komputerowe
-                </span>
-              </div>
-              
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Klawiatura i mysz bezprzewodowa HP 655
-              </h1>
-              
-              <p className="text-gray-600 mb-4 text-justify">
-                Ergonomiczny zestaw klawiatura + mysz dla komfortowej pracy. Połączenie USB, cicha klawiatura, optyczna mysz 1600 DPI. Idealny do pracy biurowej w nadleśnictwach - wygodny, niezawodny i funkcjonalny.
-              </p>
-              <div className="flex space-x-4 mb-6">
-                <motion.button
-                  onClick={() => {
-                    addToInquiry({
-                      id: 'hp-655',
-                      name: 'Klawiatura i mysz bezprzewodowa HP 655',
-                      image: '/placeholder.png',
-                      category: 'Akcesoria komputerowe',
-                      description: 'Ergonomiczny zestaw klawiatura + mysz dla komfortowej pracy',
-                      specifications: 'Połączenie USB, cicha klawiatura, optyczna mysz 1600 DPI'
-                    })
-                    setShowRipple(true)
-                    setTimeout(() => setShowRipple(false), 1000)
-                  }}
-                  className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors flex items-center justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Package className="w-5 h-5 mr-2" />
-                  Zapytaj o produkt
-                </motion.button>
-              </div>
-
-              {/* Gdzie kupić - prosty design */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Gdzie kupić?</h3>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">ZUP Łódź</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">
-                    <span className="font-medium text-gray-900">TAKMA</span>
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
-{/* Footer */}
-<Footer />
-</div>
-  )
+export default function HP655Page() {
+  return <ProductPage data={data} />
 }

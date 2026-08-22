@@ -3,28 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { 
-  Search, 
-  ShoppingCart, 
-  Shield, 
-  Truck, 
-  Headphones, 
-  Phone,
-  Mail,
-  MapPin,
-  Vibrate,
-  Smartphone,
-  TreePine,
-  Trees,
-  ChevronRight,
-  Filter,
-  Grid3X3,
-  List,
-  SortAsc,
-  Eye,
-  Heart,
-  ArrowUpDown
-} from "lucide-react";
+import { ICON, naCiemnym } from '@/components/product/icons'
 
 // Placeholder produkty dla kategorii Rejestratory
 const products = [
@@ -244,7 +223,7 @@ export default function CategoryPage() {
               </ul>
               
               <button className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-                <ShoppingCart className="h-4 w-4" />
+                <img src={ICON.zamowienie} alt="" className="h-4 w-4 mix-blend-multiply" />
                 Zapytanie (0)
               </button>
             </div>
@@ -257,9 +236,9 @@ export default function CategoryPage() {
         <div className="container mx-auto px-4 py-4">
           <nav className="flex items-center gap-2 text-sm">
             <a href="/" className="text-gray-600 hover:text-emerald-600">Strona główna</a>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
+            <img src={ICON.chevronPrawo} alt="" className="h-4 w-4 mix-blend-multiply" />
             <a href="/#produkty" className="text-gray-600 hover:text-emerald-600">Produkty</a>
-            <ChevronRight className="h-4 w-4 text-gray-400" />
+            <img src={ICON.chevronPrawo} alt="" className="h-4 w-4 mix-blend-multiply" />
             <span className="text-gray-900 font-medium">Rejestratory</span>
           </nav>
         </div>
@@ -270,7 +249,7 @@ export default function CategoryPage() {
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 mb-6">
             <div className="w-16 h-16 bg-emerald-100 rounded-lg flex items-center justify-center">
-              <Vibrate className="h-8 w-8 text-emerald-600" />
+              <img src={ICON.rejestrator} alt="" className="h-8 w-8 mix-blend-multiply" />
             </div>
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Rejestratory</h1>
@@ -291,7 +270,7 @@ export default function CategoryPage() {
           <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
             {/* Wyszukiwarka */}
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <img src={ICON.lupa} alt="" className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 mix-blend-multiply" />
               <input
                 type="text"
                 placeholder="Szukaj w rejestratorach..."
@@ -308,7 +287,7 @@ export default function CategoryPage() {
                 onClick={() => setShowFilters(!showFilters)}
                 className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
               >
-                <Filter className="h-4 w-4" />
+                <img src={ICON.filtr} alt="" className="h-4 w-4 mix-blend-multiply" />
                 Filtry
               </button>
 
@@ -331,13 +310,13 @@ export default function CategoryPage() {
                   onClick={() => setViewMode("grid")}
                   className={`p-2 ${viewMode === "grid" ? "bg-emerald-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}
                 >
-                  <Grid3X3 className="h-4 w-4" />
+                  <img src={viewMode === "grid" ? naCiemnym(ICON.aplikacje) : ICON.aplikacje} alt="" className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => setViewMode("list")}
                   className={`p-2 ${viewMode === "list" ? "bg-emerald-600 text-white" : "text-gray-600 hover:bg-gray-50"}`}
                 >
-                  <List className="h-4 w-4" />
+                  <img src={viewMode === "list" ? naCiemnym(ICON.lista) : ICON.lista} alt="" className="h-4 w-4" />
                 </button>
               </div>
             </div>
@@ -378,7 +357,7 @@ export default function CategoryPage() {
           {filteredProducts.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="h-12 w-12 text-gray-400" />
+                <img src={ICON.lupa} alt="" className="h-12 w-12 mix-blend-multiply" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">Brak produktów</h3>
               <p className="text-gray-600">Spróbuj zmienić filtry lub wyszukiwaną frazę</p>
