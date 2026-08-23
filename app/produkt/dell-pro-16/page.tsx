@@ -89,7 +89,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Dell Pro 16', exclude: 'Dell Pro 16 Plus' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.linux,

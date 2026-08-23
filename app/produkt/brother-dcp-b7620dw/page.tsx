@@ -89,7 +89,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Brother DCP-B7620DW' },
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.kompakt,

@@ -92,7 +92,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: '527pq' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/monitory' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.plynnosc,
@@ -104,7 +103,7 @@ const data: ProductData = {
   ],
   related: [
     {
-      name: 'HP Pro S5 QHD USB-C 527pv',
+      name: 'HP Pro S5 QHD USB-C 527pu',
       href: '/produkt/hp-seria-5-pro-527pu',
       note: 'Ta sama matryca z USB-C i gniazdem RJ-45',
     },

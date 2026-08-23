@@ -91,7 +91,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Seiko MPA40' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/rejestratory' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.wsparcie5,

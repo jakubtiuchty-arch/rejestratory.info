@@ -104,7 +104,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'HP EliteBook 6 G1ah 16' },
-  whereToBuy: [{ name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.onsite,

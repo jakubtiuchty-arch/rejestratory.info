@@ -4,8 +4,8 @@ import ProductPage, { type ProductData } from '@/components/product/ProductPage'
 import { ICON } from '@/components/product/icons'
 
 const data: ProductData = {
-  slug: 'dell-pro-27-plus-p2724heb',
-  name: 'Dell Pro 27 P2724HEB',
+  slug: 'dell-pro-27-plus-p2724deb',
+  name: 'Dell Pro 27 P2724DEB',
   category: 'Monitory',
   categoryHref: '/kategoria/monitory',
   images: ['/P2424HEB_1.png'],
@@ -13,7 +13,7 @@ const data: ProductData = {
     description: 'Monitor 27 cali QHD z kamerą i głośnikami',
     specifications: '27″ QHD · kamera 4 Mpx + IR · głośniki 2 × 5 W · USB-C 90 W · Auto KVM',
   },
-  whyNavLabel: 'Dlaczego P2724HEB',
+  whyNavLabel: 'Dlaczego P2724DEB',
   whyHeading: 'Do czego przyda się w nadleśnictwie',
   whyLabel: 'Na biurku w nadleśnictwie',
   highlights: [
@@ -91,8 +91,7 @@ const data: ProductData = {
         'Auto KVM przełącza klawiaturę i mysz między urządzeniami, co ułatwia pracę na sprzęcie służbowym i stacjonarnym.',
     },
   ],
-  usedBy: { device: 'P2724HEB' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/monitory' }, { name: 'TAKMA' }],
+  usedBy: { device: 'P2724DEB' },
   signature: [
     {
       icon: ICON.kamera,
@@ -111,6 +110,6 @@ const data: ProductData = {
   ],
 }
 
-export default function DellP2724HEBPage() {
+export default function DellP2724DEBPage() {
   return <ProductPage data={data} />
 }

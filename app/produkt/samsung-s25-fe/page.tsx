@@ -90,7 +90,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Samsung S25 FE' },
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   related: [
     {
       name: 'Samsung Galaxy S25+',

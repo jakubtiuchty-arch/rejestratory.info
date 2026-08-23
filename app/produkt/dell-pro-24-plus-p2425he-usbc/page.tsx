@@ -91,7 +91,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Dell P2425HE' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/monitory' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.usbc,
@@ -103,8 +102,8 @@ const data: ProductData = {
   ],
   related: [
     {
-      name: 'Dell Pro 27 Plus P2725HE z USB-C',
-      href: '/produkt/dell-pro-27-plus-p2725he-usbc',
+      name: 'Dell Pro 27 P2726HE z USB-C',
+      href: '/produkt/dell-pro-27-p2726he',
       note: 'Ten sam monitor na 27 cali',
     },
   ],

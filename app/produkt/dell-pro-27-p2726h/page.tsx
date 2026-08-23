@@ -4,20 +4,20 @@ import ProductPage, { type ProductData } from '@/components/product/ProductPage'
 import { ICON } from '@/components/product/icons'
 
 const data: ProductData = {
-  slug: 'dell-pro-27-plus-p2725he',
-  name: 'Dell Pro 27 Plus P2725H',
+  slug: 'dell-pro-27-p2726h',
+  name: 'Dell Pro 27 P2726H',
   category: 'Monitory',
   categoryHref: '/kategoria/monitory',
   images: ['/P2425HE_1.png'],
   inquiry: {
     description: 'Monitor 27 cali do pracy z dokumentacją',
-    specifications: '27″ Full HD 100 Hz · IPS · 99% sRGB · pivot · 3 lata Premium Panel',
+    specifications: '27″ Full HD 120 Hz · IPS · 99% sRGB · pivot · 3 lata Premium Panel',
   },
-  whyNavLabel: 'Dlaczego P2725H',
+  whyNavLabel: 'Dlaczego P2726H',
   whyHeading: 'Do czego przyda się w nadleśnictwie',
   whyLabel: 'Na biurku w nadleśnictwie',
   highlights: [
-    { icon: ICON.przekatna, label: 'Ekran', value: '27″ Full HD, 100 Hz' },
+    { icon: ICON.przekatna, label: 'Ekran', value: '27″ Full HD, 120 Hz' },
     { icon: ICON.oko, label: 'Komfort', value: 'TÜV Eye Comfort 4 gwiazdki' },
     { icon: ICON.ergonomia, label: 'Ergonomia', value: 'regulacja 150 mm, pivot' },
     { icon: ICON.wsparcie, label: 'Gwarancja', value: '3 lata Premium Panel' },
@@ -28,7 +28,8 @@ const data: ProductData = {
       rows: [
         { k: 'Przekątna', v: '27″' },
         { k: 'Rozdzielczość', v: 'Full HD 1920 × 1080' },
-        { k: 'Odświeżanie', v: '100 Hz' },
+        { k: 'Odświeżanie', v: '120 Hz' },
+        { k: 'Czas reakcji', v: '5 ms GtG w trybie szybkim, 8 ms GtG' },
         { k: 'Matryca', v: 'IPS, kąty 178°/178°' },
         { k: 'Jasność', v: '300 cd/m², kontrast 1500:1' },
         { k: 'Gamut', v: '99% sRGB' },
@@ -37,10 +38,10 @@ const data: ProductData = {
     {
       title: 'Łączność',
       rows: [
-        { k: 'Wideo', v: 'HDMI 1.4, DisplayPort 1.2, VGA' },
-        { k: 'USB-C', v: 'Power Delivery do 15 W' },
-        { k: 'USB-A', v: '3 × USB 3.2 pierwszej generacji' },
-        { k: 'USB-B', v: '1 × USB 3.2 upstream' },
+        { k: 'Wideo', v: 'HDMI z obsługą 1920 × 1080 przy 120 Hz, DisplayPort 1.4' },
+        { k: 'USB-C', v: '2 × downstream 5 Gb/s, zasilanie do 15 W' },
+        { k: 'USB-A', v: '2 × downstream 5 Gb/s' },
+        { k: 'USB-B', v: '1 × upstream 5 Gb/s' },
       ],
     },
     {
@@ -49,7 +50,7 @@ const data: ProductData = {
         { k: 'Display Manager', v: 'tak, z EasyArrange' },
         { k: 'TÜV Eye Comfort', v: '4 gwiazdki' },
         { k: 'Brak migotania', v: 'tak' },
-        { k: 'Gwarancja', v: '3 lata Premium Panel' },
+        { k: 'Gwarancja', v: '3 lata z wymianą z wyprzedzeniem i Premium Panel' },
       ],
     },
     {
@@ -89,8 +90,6 @@ const data: ProductData = {
         'Gwarancja obejmuje wymianę panelu przy wadzie pikseli przez cały okres jej trwania.',
     },
   ],
-  usedBy: { device: 'P2725HE', exclude: 'P2725HE USB-C' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/monitory' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.rozdzielczosc,
@@ -102,13 +101,13 @@ const data: ProductData = {
   ],
   related: [
     {
-      name: 'Dell Pro 27 Plus P2725HE z USB-C',
-      href: '/produkt/dell-pro-27-plus-p2725he-usbc',
+      name: 'Dell Pro 27 P2726HE z USB-C',
+      href: '/produkt/dell-pro-27-p2726he',
       note: 'Ta sama matryca ze stacją dokującą USB-C',
     },
   ],
 }
 
-export default function DellP2725HPage() {
+export default function DellP2726HPage() {
   return <ProductPage data={data} />
 }

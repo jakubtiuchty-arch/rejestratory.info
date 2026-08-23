@@ -1,5 +1,321 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-23 — trzy karty sprzętu EZD
+
+Domknięta oferta na sprzęt do EZD: **wszystkie osiem urządzeń na kartach**, 61 ofert, 81 kart produktu.
+
+| nowa karta | cena netto | wyposażenie z oferty |
+|---|---|---|
+| `honeywell-pc42e-t` — Honeywell PC42E-T | 556,00 zł | etykiety, taśma, dyspenser, gilotyna, głowice 203 i 300 dpi |
+| `zebra-ds2278` — Zebra DS2278 | 486,00 zł | podstawka, kabel USB, akumulator |
+| `honeywell-1250g` — Honeywell Voyager 1250g | 294,00 zł | podstawka, kabel USB |
+
+Druk podaje przy tych trzech wyłącznie nazwę modelu i link do karty katalogowej producenta, więc specyfikacja pochodzi od Honeywella i Zebry: PC42E-T — termotransfer, 203 lub 300 dpi, do 6 ips, Ethernet i USB w standardzie, 128 MB RAM i Flash, zgodność akcesoriów z PC42T; DS2278 — Bluetooth, akumulator 2400 mAh na 84 godziny i 110 000 odczytów, IP52, 250 upadków z 0,5 m; Voyager 1250g — laser jednoliniowy, 100 odczytów na sekundę, zasięg do 58 cm.
+
+**Voyager 1250g jest przewodowy**, mimo że druk pisze „(bezprzewodowy)”. Świadczy o tym również jego własne wyposażenie w tej samej ofercie: podstawka i kabel USB, bez akumulatora — w odróżnieniu od DS2278, który akumulator ma. Karta opisuje go jako przewodowy.
+
+**Do rozstrzygnięcia przy okazji:** nagłówek „Akcesoria dodatkowe do czytnika ZEBRA DS2208” stoi w druku pod pozycją DS2278 i zawiera akumulator, więc podstawka, kabel i akumulator trafiły na kartę DS2278. Karta DS2208 nie ma w tej ofercie żadnego wyposażenia — jeżeli składnica sprzedaje podstawkę także do wersji przewodowej, trzeba to dopisać ręcznie.
+
+**Brakujące zdjęcia — dziewięć sztuk:** `pc42e_t_1.png`, `zebra-ds2278.png`, `honeywell-1250g.png`, `hp460_1.png`, `hp715_1.png`, `torba_hp_15.png`, `524pu_1.png`, `524pm_1.png`, `527pm_1.png`.
+
+## 2026-08-23 — sprzęt do EZD
+
+`Oferta na sprzęt do EZD 03.2026.docx` — **wszystkie pięć urządzeń, które mamy w katalogu**, z ich wyposażeniem. 58 ofert łącznie.
+
+| model | cena netto | wyposażenie |
+|---|---|---|
+| Zebra ZD421c | 1 552,00 zł | moduł RS232, moduł Ethernet, etykiety, trzy rodzaje kaset z taśmą |
+| Honeywell PC45t | 2 087,00 zł | etykiety, taśma termotransferowa |
+| Epson DS-730n | 2 247,00 zł | — |
+| Zebra DS2208 | 487,00 zł | — |
+| Honeywell Voyager 1450g | 408,00 zł | podstawka, kabel USB |
+
+**Trzeci format daty.** Ten druk pisze „Oferta obowiązuje od 10.03.2026r. do odwołania” — trzecie sformułowanie po „w okresie od…” i „na zamówienia złożone od…”.
+
+**Urządzenie rozpoznawane po nagłówku bloku.** Czytniki i drukarki są tu opisane jedną, dwiema linijkami, więc dotychczasowe rozpoznawanie po bloku parametrów ich nie łapało i wyposażenie jednego przeciekało do drugiego (PC45t zebrał dziewięć pozycji zamiast dwóch). Dokument ma jednak regularną sekwencję: urządzenie, nagłówek „Akcesoria i materiały eksploatacyjne do…”, lista pozycji. Parser patrzy więc jeden wiersz w przód — pozycja stojąca tuż nad takim nagłówkiem jest urządzeniem, choćby opisana jedną linijką. Puste rzędy między wierszami są przy tym pomijane.
+
+**Wyposażenie idzie za pozycją w dokumencie, nie za nazwą w nagłówku.** Warto to odnotować, bo nagłówek bywa nieaktualny: pod bezprzewodowym czytnikiem ZEBRA DS2278 stoi nagłówek nazywający DS2208, a wśród pozycji jest akumulator — którego przewodowy DS2208 nie ma. Gdyby decydowała nazwa z nagłówka, nasza karta DS2208 dostałaby akumulator. Ta sama zasada oszczędziła nam wcześniej tonerów Brothera MFC-L8690CDW dopisanych pod MFC-L8730CDW.
+
+**Bez kart, z oferty wypadły** (razem z wyposażeniem): Honeywell PC42E-T (556,00 zł), Zebra DS2278 bezprzewodowa (486,00 zł), Honeywell 1250g bezprzewodowy (294,00 zł).
+
+## 2026-08-23 — trzy karty akcesoriów HP
+
+Domknięta oferta na akcesoria: **12 z 12 pozycji na kartach**, 53 oferty łącznie, 78 kart produktu.
+
+| nowa karta | cena netto | z oferty |
+|---|---|---|
+| `hp-460` — HP 460 Multi-device Keyboard | 189,20 zł | Bluetooth 5.3 i 2,4 GHz, do 3 urządzeń, blok numeryczny, 12 klawiszy programowalnych, ładowanie USB-C, do 24 miesięcy, odporna na zalanie, 660 g |
+| `hp-715` — HP 715 Rechargeable Mouse | 273,90 zł | Bluetooth 5.3 i 2,4 GHz, do 3 urządzeń, 1200–3000 dpi, czujnik działa na szkle, 6 programowalnych przycisków, akumulator do 90 dni, 85 g |
+| `torba-hp-15` — Torba HP do laptopów 15,6″ | 148,50 zł | dwie komory z przegrodami, otwór na uchwyt walizki, odporna na wilgoć i zarysowania, 600 g |
+
+Specyfikacja przepisana z oferty, bez uzupełniania z zewnątrz — druk podaje komplet parametrów. Torba HP to **osobny produkt** od naszej „Torby na laptopa 15,6″” za 275 zł; ZUP prowadzi obie, więc karty linkują do siebie.
+
+Dopisane do listingu akcesoriów i do wyszukiwarki.
+
+**Brakujące zdjęcia — sześć sztuk:** `hp460_1.png`, `hp715_1.png`, `torba_hp_15.png` oraz monitory `524pu_1.png`, `524pm_1.png`, `527pm_1.png`.
+
+## 2026-08-23 — akcesoria komputerowe
+
+`Oferta na akcesoria komputerow_03.2026r.docx` — **dziewięć pozycji z dwunastu** trafiło na karty, 50 ofert łącznie:
+
+| pozycja | cena netto |
+|---|---|
+| Podkładka pod mysz | 12,10 zł |
+| Torba na laptopa 15,6″ | 275,00 zł |
+| Podnóżek biurowy | 165,00 zł |
+| Dell Pro KM5221W | 211,20 zł |
+| HP 655 Wireless Keyboard and Mouse | 272,80 zł |
+| Dell Pro Plus KM7321W | 401,50 zł |
+| Samsung SSD T9 1 TB | 605,00 zł |
+| Microsoft 365 Business Standard | 616,00 zł |
+| Samsung SSD T7 Shield 2 TB | 858,00 zł |
+
+**Dopasowanie po tekście z linkami.** Dwie pozycje Della nazywają się identycznie — „Klawiatura i mysz bezprzewodowa DELL” — i różnią się wyłącznie modelem w adresie (`km5221w` kontra `km7321w`), więc porównanie musi widzieć linki, a nie sam widoczny tekst.
+
+**HP 655 rozpoznany po parametrach.** Wiersz nazywa się „Klawiatura i mysz bezprzewodowa WRLS KB/MSE Combo”, bez modelu. Zgodność jest jednak jednoznaczna: 2,4 GHz, zasięg 10 m, bateria klawiatury 20 miesięcy i myszy 24 miesiące — dokładnie to, co ma nasza karta HP 655.
+
+Cała oferta to płaska lista niezależnych produktów, więc każdy wiersz idzie przez mechanizm pozycji samodzielnych (ten sam, co przy tablecie Samsunga) — normalna reguła zrobiłaby z drugiego i kolejnych wierszy wyposażenie pierwszego.
+
+**Bez kart, do decyzji:** klawiatura HP 460 Multi-device (189,20 zł), torba do laptopów HP 15,6″ (148,50 zł), mysz HP 715 6E6F0AA (273,90 zł).
+
+## 2026-08-23 — urządzenia wielofunkcyjne i drukarki Brother
+
+Dwa druki ZUP (`Brother_03.2026` i `wielofunkcyjne_04.2026`) — **osiem urządzeń z materiałami eksploatacyjnymi**, 41 ofert łącznie:
+
+| model | cena netto | tonerów i akcesoriów |
+|---|---|---|
+| Brother DCP-B7620DW | 958,00 zł | 2 |
+| Brother HL-L6210DW | 1 337,00 zł | 4 |
+| Brother MFC-L8390CDW | 1 700,00 zł | 3 |
+| Brother DCP-L5510DW | 1 375,00 zł | 3 |
+| Brother MFC-L5710DW | 2 119,00 zł | 3 |
+| Brother MFC-L6710DW | 2 300,00 zł | 3 |
+| Brother HL-L6410 | 2 407,00 zł | 5 |
+| Brother MFC-L8900CDW | 3 103,00 zł | 12 |
+
+Te druki mają zupełnie inną budowę niż wcześniejsze i wymusiły cztery zmiany w parserze. Po każdej sprawdzone pole po polu, że **żadna z 15 pierwotnych ofert się nie ruszyła**:
+
+1. **Okres bez słowa „okresie”.** Te dokumenty piszą „na zamówienia złożone od 10.03.2026r. do odwołania”, więc dotychczasowe wyrażenie nie łapało daty i bramka jakości odrzucała cały plik.
+2. **Tabela bez nagłówka.** Wiersz „Nazwa | Cena sprzedaży…” bywa tu osobną tabelą nad danymi, więc rozpoznajemy też tabele po zawartości: nazwa w pierwszej komórce, kwota w drugiej.
+3. **Model rozpoznawany po nazwie, nie tylko po linku.** Większość wierszy prowadzi na brother.pl, nie na naszą kartę. Porównanie idzie po samych literach i cyfrach, bo druki piszą raz „MFCL-6710DW”, raz „MFC L 6710 DW”.
+4. **Materiały eksploatacyjne wiązane nagłówkiem.** Nagłówek „Materiały eksploatacyjne do drukarki BROTHER DCPB7620DW” wskazuje model wprost — bez tego tonery jednej drukarki dopisywały się do poprzedniej pozycji w tabeli (DCP-B7620DW zebrał 13 pozycji zamiast dwóch). Wiersz, który ma blok parametrów, ale nie ma karty w katalogu, zamyka poprzednią grupę i wypada, zamiast udawać akcesorium sąsiada.
+
+**Do decyzji — Brother MFC-L8730CDW, 2 086,00 zł.** Nie ma karty w katalogu. Model istnieje (kolor 33 str./min, duplex, ADF 80 arkuszy), ale w druku ZUP pod jego pozycją stoi nagłówek „Materiały eksploatacyjne do urządzenia wielofunkcyjnego BROTHER - MFCL - 8690CDW” — czyli materiały starszego modelu, na który **mamy** kartę, tyle że bez ceny w tym druku. Kolejna niespójność u ZUP. Do rozstrzygnięcia: czy L8730CDW zastąpił L8690CDW i robimy nową kartę, czy to pomyłka w druku. Dziesięć pozycji materiałów czeka i nie zostało nigdzie przypisane.
+
+## 2026-08-23 — tablet Samsung z oferty ZUP
+
+`Oferta na tablety 03.2026.docx` obejmuje trzy urządzenia — Zebrę ET45, Samsunga Tab Active 5 i Zebrę XSLATE L10 — a katalog prowadzi tylko Samsunga. Dodany **Samsung Galaxy Tab Active5: 2 119,00 zł netto**, ZUP Łódź od 10.03.2026 do odwołania, w cenie ładowarka sieciowa. 33 oferty.
+
+**Wyjmowanie pojedynczej pozycji.** Parser dostał tabelę `POJEDYNCZE_POZYCJE`: wskazany wiersz staje się osobną ofertą **bez wyposażenia**, a reszta dokumentu jego nie dotyczy. To istotne akurat tutaj, bo ładowarki, akumulatory i stacje w tym dokumencie są wymieszane między trzema modelami — normalna reguła (wyposażenie idzie do urządzenia, pod którym stoi) przypisałaby Samsungowi ładowarkę Zebry L10. Pozostałe dwa urządzenia lądują jak dotąd w pominiętych, bo nie mają kart.
+
+Sprawdzone po zmianie parsera: **żadna z 15 pierwotnych ofert się nie ruszyła** (jedyna różnica to zmiana nazwy pola `druk` → `formularz`).
+
+## 2026-08-23 — monitory: rocznik 2026 i trzy nowe karty HP
+
+**Karty 27″ Della podmienione na nowszą generację.** `dell-pro-27-plus-p2725he` → **`dell-pro-27-p2726h`**, `dell-pro-27-plus-p2725he-usbc` → **`dell-pro-27-p2726he`**. Zmiany w specyfikacji wzięte z kart katalogowych Della, nie przepisane w ciemno:
+
+| | P2725H(E) — było | P2726H(E) — jest |
+|---|---|---|
+| odświeżanie | 100 Hz | **120 Hz** |
+| czas reakcji | nie podawany | 5 ms GtG w trybie szybkim, 8 ms GtG |
+| wideo | HDMI 1.4, DP 1.2, VGA | HDMI z 1920 × 1080 przy 120 Hz, DP 1.4 (bez VGA) |
+| USB | 3 × USB-A, 1 × USB-B | 2 × USB-A 5 Gb/s, 1 × USB-B 5 Gb/s, 2 × USB-C 5 Gb/s (15 W) |
+| USB-C upstream (HE) | 90 W | **100 W** |
+| gwarancja | 3 lata Premium Panel | 3 lata z wymianą z wyprzedzeniem i Premium Panel |
+
+Zdjęto `usedBy` z obu kart — w panelu leżą sztuki sprzedane jako P2725HE, więc po zmianie modelu ta sekcja mówiłaby o innym urządzeniu. **Nazw w panelu klienta i w panelu handlowym nie ruszono** z tego samego powodu: opisują sprzęt już sprzedany, a nie ofertę.
+
+**Trzy nowe karty HP Series 5 Pro** — specyfikacja z oferty ZUP (kamera, dźwięk, porty stacji, ergonomia, wagi) uzupełniona parametrami matrycy z kart HP:
+
+| karta | cena netto | wyróżnik |
+|---|---|---|
+| `hp-seria-5-pro-524pu` | 1 022,00 zł | 23,8″ FHD 100 Hz, stacja dokująca, USB-C 100 W, RJ-45 z MAPT/WoL/PXE |
+| `hp-seria-5-pro-524pm` | 1 390,00 zł | jw. plus kamera 5 Mpix pop-up z IR, 4 głośniki, 2 mikrofony DNN |
+| `hp-seria-5-pro-527pm` | 1 733,00 zł | 27″ QHD 100 Hz, ten sam zestaw konferencyjny |
+
+Dopisane do listingu monitorów i do wyszukiwarki. **Brakuje zdjęć** — karty wskazują `/524pu_1.png`, `/524pm_1.png`, `/527pm_1.png`; Jakub prześle rendery.
+
+Cała oferta monitorów jest już w katalogu: **12 z 12 modeli**, łącznie 32 oferty ze składnic. 75 kart produktu.
+
+## 2026-08-23 — ceny monitorów z ZUP Łódź
+
+`Oferta na monitory.HP.Dell 01.06.2026.docx` — dwanaście modeli, każdy w osobnej sekcji z własnym terminem. **Siedem weszło na karty**:
+
+| model | cena netto | od |
+|---|---|---|
+| Dell Pro 24 Plus P2425H | 673,00 zł | 10.03.2026 |
+| Dell Pro 24 Plus P2425HE z USB-C | 953,00 zł | 10.03.2026 |
+| Dell Pro 24 P2424HEB | 1 698,00 zł | 10.03.2026 |
+| Dell Pro 27 P2724DEB | 1 924,00 zł | 10.03.2026 |
+| HP S3 Pro 324pf | 524,00 zł | 30.05.2026 |
+| HP Pro S5 QHD 527pq | 1 263,00 zł | 30.05.2026 |
+| HP Pro S5 QHD USB-C 527pu | 1 386,00 zł | 10.03.2026 |
+
+Sześć z nich ZUP linkuje wprost do naszych kart, więc dopasowanie było automatyczne. 27 ofert w sumie.
+
+**Skracanie zbyt długich nazw.** Bramka jakości zatrzymała import, bo nazwa pozycji w tabeli monitorów to całe zdanie reklamowe („Monitor komputerowy DELL P2425H wyróżniony 4-gwiazdkowym certyfikatem TÜV…, zapewnia większą wygodę i płynną łączność” — 141 znaków). Parser ucina nazwę **dopiero po przekroczeniu limitu**, na pierwszym przecinku lub kropce; krótsze zostają nietknięte, żeby nie zjeść wariantu z nazw w rodzaju „…, wersja standardowa i rozszerzona”.
+
+**Dwie nasze karty miały błędne oznaczenia — poprawione:**
+- `hp-seria-5-pro-527pu` nazywała się „HP Pro S5 QHD USB-C **527pv**”, choć slug i plik zdjęcia od początku mówiły `527pu`. W gamie HP Series 5 Pro 27″ są 527pq, 527pu i 527pm — modelu „527pv” nie ma. Poprawione w karcie, listingu monitorów, wyszukiwarce i karcie 527pq.
+- `dell-pro-27-plus-p2724heb` → **`dell-pro-27-plus-p2724deb`**. „P2724HEB” nie istnieje: konferencyjna 24-calówka to P2424HEB, a 27-calowa QHD z kamerą to **P2724DEB** — dokładnie to, co opisuje nasza karta (27″, QHD 2560 × 1440, kamera 4 Mpx, USB-C 90 W). Zmieniony folder, nazwa, slug i wszystkie odwołania (listing, wyszukiwarka, panel handlowy, karta P2424HEB).
+
+**Do decyzji — pięć pozycji z oferty bez pokrycia w katalogu:**
+- **Dell P2726H (705,00 zł)** i **Dell P2726HE z USB-C (1 046,00 zł)** — to rocznik 2026, a nasze karty opisują poprzednią generację P2725H i P2725HE. Oba modele istnieją u Della. Pytanie: podmieniamy istniejące karty na nowszą generację czy dokładamy osobne?
+- **HP S5 Pro FHD USB-C 524pu (1 022,00 zł)**, **HP S5 Pro FHD USB-C Conferencing 524pm (1 390,00 zł)**, **HP S5 Pro QHD USB-C Conferencing 527pm (1 733,00 zł)** — brak kart. Wszystkie trzy istnieją w gamie HP; do zbudowania potrzebne rendery.
+
+Build 72 kart przechodzi.
+
+## 2026-08-23 — liczby na kafelkach liczone, nie wpisywane
+
+Kafelek „All in One — 5 produktów” przy jednej karcie. Liczby na stronie głównej były wpisane ręcznie w `app/page.tsx` i rozjechały się w **10 z 13 kategorii**: drukarki laserowe obiecywały 14 przy trzech kartach, akcesoria 18 przy jedenastu, rejestratory 15 przy dziesięciu, a monitory odwrotnie — 8 przy dziewięciu.
+
+Teraz liczy to `scripts/policz-karty.mjs` → `data/liczby-kategorii.ts`, podpięty pod hook **`prebuild`**, więc odświeża się sam przed każdym buildem. Kafelek trzyma `href`, nie `count`; `getCategoryUrl` czyta z tej samej listy zamiast z osobnej mapy. Dorzucona odmiana liczebnika: „1 produkt”, „3 produkty”, „11 produktów”.
+
+**Skąd ubytek w All in One — sprawdzone w historii, nie z tej sesji.** Listing miał dwie pozycje (HP ProOne 440 G9 23,8″ i Dell Pro 24); HP wypadł **1.11.2025** w commicie `1c438c1`. Porównanie wszystkich listingów `d0ab73b` ↔ drzewo robocze: jedyna różnica to laptopy 4 → 5, czyli dzisiejszy EliteBook.
+
+Ten sam mechanizm zjadł kiedyś 14-calowego HP: pierwotny katalog miał **EliteBook 645 G11 14″** i **665 G11 16″**, po odświeżeniu generacji został sam 16″. Dlatego ZUP wciąż pisze w ofercie „645 14” G11” — przekleja nazwę poprzedniej generacji.
+
+**Wstrzymane do weryfikacji przez Jakuba (24.08):**
+- czy przywracamy HP ProOne 440 G9 (stary wpis był zaślepką: placeholder zamiast zdjęcia, ogólnikowa specyfikacja, brak karty; w aktualnej ofercie ZUP na all-in-one jest wyłącznie Dell)
+- ceny Dell Pro 24 AiO: **bez systemu 8 GB / 256 GB — 4 687,00 zł** i **z Windows 11 Pro 16 GB / 512 GB — 6 260,00 zł**, obie pozycje linkują do jednej karty `aio-dell-pro-24`, która opisuje wyłącznie wersję z Windows. Do rozstrzygnięcia: dwa wiersze w cenniku jednej karty czy dwie karty. Plik oferty nazywa się „ALL IN ONE HP”, a w środku jest sam DELL — kolejna literówka ZUP po tej z EliteBookiem.
+
+Oferta na all-in-one **nie jest jeszcze wciągnięta** — `data/oferty-skladnicy.ts` ma nadal 20 ofert bez AiO.
+
+Build 72 kart przechodzi.
+
+## 2026-08-23 — koniec ze słowem „druk zamówienia”
+
+Zakaz obejmuje treść, kod i ścieżki. Wymiecione z:
+
+- **karty produktu** — etykieta wiersza w cenniku „Druk zamówienia” → **„Jak zamówić”**, link „Pobierz druk” → **„Pobierz formularz”**
+- **treści kart** — „Stacja jest w tym samym druku zamówienia” → „w tej samej ofercie ZUP Łódź”; „Druk zamówienia ZUP Łódź obejmuje 36 miesięcy gwarancji” → „Oferta ZUP Łódź obejmuje…”
+- **maila z crona** i etykiet źródeł w `data/oferty-reczne.ts`
+- **ścieżki publicznej**: `public/druki/` → **`public/formularze/`** (link do PDF EM45 przepięty i sprawdzony)
+- **modelu danych**: pole oferty `druk` → **`formularz`**, `DRUKI_PDF` → `FORMULARZE_PDF`
+- **komentarzy** w `ProductPage`, cronie i parserze
+
+„Druk” w sensie technologii (prędkość druku, druk dwustronny, termotransfer) zostaje — zakaz dotyczy znaczenia „dokument do wypełnienia”. Reguła zapisana w pamięci.
+
+Build 72 kart przechodzi.
+
+## 2026-08-23 — karta EliteBook 6 G1ah 14″, koniec „Gdzie kupić”
+
+**Boks „Gdzie kupić” usunięty z kart** (prawa kolumna nagłówka) razem z polem `whereToBuy` — z typu `ProductData`, z typu `Seller` i z 71 plików kart. Zanim wypadło, wyciągnąłem z niego to, co było w nim wartościowe: linki do właściwych działów ZUP. Trafiły do parsera jako `DZIALY_ZUP` (monitory, akcesoria-komputerowe, komputery-pc-laptopy-all-in-one; domyślnie rejestratory), więc cennik i cron prowadzą teraz laptopy pod `/komputery-pc-laptopy-all-in-one`, a nie pod rejestratory. Listingi kategorii mają własne, niezależne pole o tej samej nazwie — ich nie ruszałem.
+
+**Nowa karta: HP EliteBook 6 G1ah 14″** (`hp-elitebook-6-g1ah-14`), 5 329,00 zł netto + stacja HP Dock G6 USB-C 100 W 648,00 zł, ZUP Łódź od 30.05.2026 do odwołania.
+
+**Druk myli nazwę modelu.** ZUP wpisał „Producent HP Model Elite Book 645 14” G11 C51 GKET”, ale numer katalogowy **C51GKET to HP EliteBook 6 G1ah 14″** — AMD Ryzen 5 220, 14″ WUXGA, 16 GB DDR5, 512 GB SSD, Wi-Fi 6E, Windows 11 Pro, srebrny. Potwierdzone u trzech polskich dystrybutorów (SuperTech, mak24h, hppartner); EliteBook 645 G11 to poprzednia generacja na Ryzenach 7000. Karta idzie za numerem katalogowym, nie za nazwą z druku — to również młodsza siostra istniejącej karty EliteBook 6 G1ah 16″, więc obie trzymają wspólne nazewnictwo. Warto to zgłosić ZUP.
+
+Reszta specyfikacji z druku: 16 GB z rozbudową do 64 GB, SSD 512 GB, USB4 40 Gb/s ×2 z PD i DP 1.4, USB-A ×2 (jeden dosilony), HDMI 2.1, RJ-45, Smart Card, czytnik linii papilarnych, klawiatura 98 klawiszy podświetlana, 56 Wh, 1,4 kg, gwarancja 36 miesięcy. Ekran: druk pisze „FullHD”, karta podaje dokładne WUXGA 1920 × 1200 za specyfikacją modelu. Procesora druk nie wymienia — wziąłem go z numeru katalogowego. Render dostarczony przez Jakuba (`public/hp_elite_14_1.png`), karta podlinkowana z `/kategoria/laptopy`.
+
+Parser rozpoznaje ten model przez tabelę MODELE (druk nie ma linku do karty), a dopasowanie idzie teraz po **całej komórce**, nie po pierwszej linijce — nazwa pozycji brzmi „Komputer przenośny typu LAPTOP z systemem operacyjnym”, a model stoi wiersz niżej. 20 ofert z 24 druków.
+
+**Do naprawy osobno**: pole `price` w listingach kategorii jest tekstem („5 400 PLN”), więc sortowanie po cenie czyta z niego `parseFloat` = 5 i nie działa w żadnej kategorii. Kwoty nie są nigdzie wyświetlane, więc nie wprowadzają w błąd — ale sortowanie jest martwe.
+
+**Kontrola strony w cronie z bezpiecznikiem**: znacznik krótszy niż trzy znaki (`16` ze sluga `dell-pro-16`) trafiałby na przypadkowy numer w treści, więc taka oferta jest oznaczana jako „nie da się sprawdzić automatem” zamiast fałszywego „model nadal na stronie”.
+
+Build 72 kart przechodzi.
+
+## 2026-08-23 — ceny laptopów z ZUP Łódź
+
+`Oferta Laptopy_06.2026.docx` — cztery laptopy z kartami wchodzą na strony, plus stacja dokująca jako pozycja dodatkowa:
+
+| model | cena netto | pozycje dodatkowe |
+|---|---|---|
+| Dell Pro 16 | 4 259,00 zł | Dell PRO SMART DOCK SD25 — 859,10 zł |
+| Dell Pro 16 Plus | 5 939,00 zł | jw. |
+| Dell Pro 14 Plus | 5 885,00 zł | jw. |
+| HP EliteBook 6 G1ah 16″ | 4 646,00 zł | — |
+
+Okres: od 10.03.2026 do odwołania. Tylko ZUP Łódź.
+
+**Parser rozbity na sekcje i wiele modeli.** Dotąd zakładał jeden druk = jedno urządzenie; ten plik łamie oba założenia: ma cztery modele w jednej tabeli i dwie części z osobnymi terminami (sam laptop od 10.03, laptop ze stacją od 30.05). Teraz akapit „Oferta aktualna… w okresie” otwiera sekcję, tabele z cenami trafiają do sekcji otwartej przed nimi, a model rozpoznaje się po **linku do naszej karty**, który ZUP wstawia przy nazwie — pewniejszym niż nazwa, bo „DELL PRO 16” jest przedrostkiem „DELL PRO 16 PLUS”. Pozycja bez linku to wyposażenie i idzie do modeli tej samej marki (stacja Dell do trzech Delli, nie do stojącego obok HP), a gdy marki nie widać — pod urządzenie, przy którym stoi w druku. Druki jednomodelowe idą starą ścieżką; **regeneracja nie ruszyła żadnej z 15 dotychczasowych ofert** (porównane pole po polu).
+
+**Dostawca czytany z druku, nie zakładany.** Sekcja cen pisała „dostawę oraz serwis prowadzi TAKMA” na sztywno, a druk wskazuje to przy każdym urządzeniu osobno — przy Dell Pro 16, Dell Pro 16 Plus i Galaxy A36 stoi tam SCANTER. Parser wyciąga tę nazwę do pola `dostawca`, a karta podaje ją tylko wtedy, gdy wszystkie druki na dany model mówią to samo; przy rozbieżności albo braku informacji zdanie się urywa na „Zamówienie składa nadleśnictwo w składnicy.”. Ręczne oferty ZQ521 nie mają tej informacji (przepisane ze zrzutów), więc ta karta zdania nie pokazuje.
+
+**Pominięte z tego druku**: HP EliteBook 645 14″ G11 (5 329,00 zł) i stacja HP Dock G6 USB-C 100 W (648,00 zł) z drugiej sekcji — nie ma karty produktu dla tego laptopa.
+
+Build 71 kart przechodzi.
+
+## 2026-08-23 — cechy wyróżnione do siatki „dlaczego”
+
+Zielone boksy z prawej kolumny nagłówka (`signature`) przeniesione do sekcji „Do czego przyda się w nadleśnictwie”. Zostają zielone — ta sama forma kafelka co reszta, tylko w kolorze wyróżnienia; wariant `ciemny` też działa (ikona z `/icons/white/`).
+
+**Powtórzenia scalone.** 32 z 42 kart miały cechę wyróżnioną o tej samej ikonie i tym samym temacie co jeden z powodów („Pięć lat gwarancji producenta” obok „Pięć lat gwarancji”, „Zaprojektowana pod upadki z 2 metrów” obok „Upadek z dwóch metrów, wielokrotnie”). Rozdzielone po karcie tego nie było widać, w jednej siatce czytało się jak zacinająca się płyta. Parę o wspólnej ikonie karta łączy więc w jeden kafelek i zostawia ten z obszerniejszym opisem — oba mówią o tym samym fakcie, więc nic nie ginie. Logika w `ProductPage`, dane kart nietknięte.
+
+**Siatka kończy się równo.** Przy nieparzystej liczbie kafelków pierwszy (wyróżniony) rozpina się na obie kolumny, zamiast zostawiać dziurę w ostatnim wierszu.
+
+Build 71 kart przechodzi.
+
+## 2026-08-23 — terminy do crona, druki do tabeli
+
+Cztery poprawki po przeglądzie tabeli cen:
+
+**Żadnych okresów na karcie.** „obowiązuje do 3 kwietnia 2027” zniknęło z nagłówków kolumn — zostaje sama nazwa składnicy (miasto siedzi już w nazwie, więc podpis pod spodem tylko je powtarzał). Wypadła też cała logika datowa z `CenySkladnic` i `CenaWSkrocie` (`dzis`, `wygasla`, `czynne`, blok „Cennik wymaga odświeżenia”) oraz pomocnicze `dataPL`/`MIESIACE`.
+
+**Aktualności pilnuje cron.** Nowy `app/api/cron/kontrola-ofert/route.ts`, codziennie 6:00 UTC (`vercel.json`), za `Bearer CRON_SECRET`. W dniu wygaśnięcia i każdego kolejnego dnia zbiera oferty z `okres.do <= dziś`, zagląda na stronę składnicy sprawdzając, czy model nadal tam jest, i przysyła raport mailem (Resend, ten sam nadawca co newsletter). Podgląd bez wysyłki: `?dry=1`. Cron **nic nie kasuje sam** — składnice publikują druki jako .docx/.pdf i przebudowują strony, więc kontrola strony to tylko sygnał, decyzję podejmuje człowiek. `data/oferty.ts` eksportuje teraz `WSZYSTKIE_OFERTY` na potrzeby crona.
+
+**Papier termiczny z Olsztyna usunięty** z `data/oferty-reczne.ts`. Pozycja „Papier termiczny” z druku ZUP Łódź (6,55 zł) zostaje — to inna pozycja z innego dokumentu.
+
+**Bez komentarza o pustym zestawie.** „W cenie: druk nie wymienia zawartości zestawu” wypadło; gdy cennik milczy o zawartości (Stargard), komórka po prostu nie ma tego wiersza.
+
+**Druki wciągnięte do tabeli.** Linki ze stopki przeniesione do ostatniego wiersza cennika, każdy w kolumnie swojej składnicy, pod etykietą „Druk zamówienia”. Tam, gdzie mamy PDF (EM45, ZUP Łódź) — „Pobierz druk”; gdzie nie — „Otwórz stronę składnicy”. W stopce została sama nota o VAT i płatnościach.
+
+**Link celuje w konkretną podstronę.** Oferta ma teraz opcjonalne `strona` — adres działu składnicy z tym asortymentem, z fallbackiem na `www` składnicy. ZPUH Olsztyn prowadzi drukarki pod `/drukarki`, ZUP Łódź trzyma rejestratory i drukarki razem pod `/rejestratory`. Tego samego adresu używa wpis w „Gdzie kupić” oraz kontrola strony w cronie — dzięki temu cron sprawdza dokładnie tę stronę, którą widzi klient (test na cofniętej dacie Olsztyna: „model nadal na stronie”). Stargard nie ma działu z elektroniką — jego oferta pochodzi z cennika przetargowego, więc link zostaje na stronie głównej.
+
+**Naprawione przy okazji — dwa martwe adresy składnic.** Kontrola strony wywaliła się na obu i tak wyszło, że karty linkowały w próżnię: `zslp.stargard.lasy.gov.pl` w ogóle nie istnieje (NXDOMAIN), poprawnie jest `zslpstargard.szczecin.lasy.gov.pl`, a jednostka nazywa się Zespół Składnic Lasów Państwowych w Stargardzie, nie „Zakład Składnica”. Olsztyn nie odpowiadał na wariancie z `www` — zostało `zpuh.olsztyn.lasy.gov.pl`. Te adresy karta pokazuje też w boksie „Gdzie kupić”.
+
+Build 71 kart przechodzi. Bez commita — czeka na akceptację.
+
+## 2026-08-23 — ZQ521: porównanie trzech składnic
+
+Ceny ZQ521 z trzech źródeł, przepisane ręcznie ze zrzutów (cenniki nie są w formacie, który da się sparsować):
+
+| składnica | urządzenie | okres | pozycji dodatkowych |
+|---|---|---|---|
+| ZSLP Stargard | 2 444,00 zł | 16.04.2025 – 03.04.2027 | 0 |
+| ZUP Łódź | 2 514,50 zł | nie podano | 7 |
+| ZPUH Olsztyn | 2 596,00 zł | nie podano | 4 |
+
+Ręczne wpisy trafiły do `data/oferty-reczne.ts`, bo `oferty-skladnicy.ts` jest generowany i nadpisywany. Oba źródła łączy `data/oferty.ts` — karta odpytuje jedno wejście.
+
+**Zestaw przeniesiony do kolumn.** Każda składnica sprzedaje inny komplet: Łódź dokłada moduł Bluetooth i torbę, Olsztyn torbę i 24 miesiące gwarancji, a cennik Stargardu nie mówi o zawartości nic. Wiersz „W cenie” pod nazwą urządzenia sugerowałby, że dotyczy wszystkich kolumn, więc przy kilku składnicach opis idzie do komórki z ceną — a gdy druk milczy, kolumna mówi to wprost („druk nie wymienia zawartości zestawu”). Przy jednej składnicy zostaje pod nazwą, bo nie ma czego mylić.
+
+To istotne przy tym konkretnym porównaniu: najtańszy jest Stargard, ale jako jedyny nie deklaruje, co jest w pudełku.
+
+**Znalezione przy okazji, nie naprawione**: karty produktu mają poziome przewijanie na 390 px (`scrollWidth` 514 zamiast 390) — także te bez tabeli cen, więc to defekt wcześniejszy, nie skutek tej zmiany. Tabela cen jest prawidłowo zamknięta we własnym kontenerze `overflow-x-auto`.
+
+## 2026-08-23 — ceny w składnicach: osobna sekcja i porównanie
+
+Poprawki po pierwszej wersji (blok w prawej kolumnie rozciągał nagłówek karty — przy TC27 z jedenastoma pozycjami dodatkowymi kolumna była dwa razy dłuższa od galerii):
+
+- Ceny przeniesione do **sekcji na pełną szerokość** `#ceny`, umieszczonej **pod specyfikacją** i wpiętej w nawigację karty jako „Ceny”. W prawej kolumnie został jednoliniowy skrót („Cena w składnicy · od 2 563 zł netto”) prowadzący do sekcji — cena zostaje nad zgięciem, ale nie rozciąga nagłówka.
+- **Tabela porównawcza składnic**: wiersz to pozycja z druku, kolumna to składnica, kolumny sortowane od najtańszej, najniższa cena w wierszu oznaczona „najtaniej”, brak pozycji w danej składnicy to „—”. Przy jednej składnicy tabela degeneruje się do czytelnych dwóch kolumn, więc to jeden komponent na oba przypadki.
+- Model danych rozszerzony o **składnicę** (`data/skladnice.ts`: ZUP Łódź, ZSLP Stargard, ZPUH Olsztyn) — klucz unikalności to teraz model + składnica, nie sam model.
+- Składnica z ofertą dopisuje się automatycznie do boksu „Gdzie kupić”, nawet jeśli karta jej nie wymienia.
+- Pod nazwą urządzenia wiersz **„W cenie: …”** — druk wymienia w komórce urządzenia, co wchodzi w kwotę (ładowarka sieciowa i samochodowa, dodatkowa karta pamięci, przy niektórych modelach pasek na rękę). Bez tego czytelnik nie wiedział, czy ładowarki trzeba dokupić, zwłaszcza że niżej w tabeli stoi płatna „Ładowarka sieciowa 103,40 zł” (to sztuka zapasowa). Parser bierze tylko wiersze nazywające przedmioty, pomijając specyfikację i akapity „UWAGA / można doposażyć”. Trafienie: 15 z 15 ofert. W stopce tabeli dopisane, że pozycje pod urządzeniem są płatne dodatkowo.
+- **Druk PDF** dla EM45 (przerobiony wcześniej z Worda) leży w `public/druki/` i jest podpięty pod „Druk zamówienia — ZUP Łódź”. Pozostałe składnice prowadzą na razie do swoich stron.
+
+**Brakujące dane**: mam wyłącznie druki ZUP Łódź. Do porównania cen potrzebne są oferty ZSLP Stargard i ZPUH Olsztyn, a także pakiet drukarek ZUP (ZIP ze strony składnicy) — bez nich ZQ521 nie ma jeszcze żadnej ceny.
+
+## 2026-08-23 — ceny ze składnicy na kartach produktu
+
+Decyzja: parser dokumentów ZUP, wszystkie modele, ceny jawnie na karcie.
+
+**Dlaczego jawnie** — NN/g: cena to potrzeba informacyjna numer jeden także w zakupach służbowych, a firmy jej nieujawniające są odbierane jako wymijające. Dziś ZUP publikuje kwoty wyłącznie w środku plików Worda; na stronie składnicy cen nie ma. Druk ZUP na EM45 linkuje przy tym do karty na rejestratory.info — pętla była domknięta tylko w jedną stronę.
+
+**Parser** `scripts/parsuj-oferty-zup.mjs` → `data/oferty-skladnicy.ts`. Czyta `.docx` bez zależności npm (unzip + regex po `word/document.xml`), rozpoznaje okres obowiązywania w obu wariantach („do 31.08.2026” i „do odwołania”), wyciąga tabelę cen, obsługuje wiersze-podtytuły (nazwa pozycji bywa w wierszu nad ceną) i formaty kwot `2.563,00`, `121,-`, `77,-.`. Ma bramkę jakości: przerywa, jeśli slug nie ma karty, brakuje okresu albo kwota wygląda podejrzanie.
+
+Wynik: **15 ofert** z 23 dokumentów. Siedem pominiętych, bo nie mają karty produktu (CT32, EC55, TC26, TC57, TC77, HMD XR21, Point Mobile).
+
+**Blok na karcie**: cena netto dla LP jako liczba wiodąca, brutto obok, znacznik promocji, pozycje dodatkowe z cenami (dla EM45 siedem, ze stacją dokującą 1 991 zł), stopka z okresem obowiązywania i odsyłaczem do druku.
+
+**Wygaszanie po terminie** — sprawdzenie daty siedzi w `useEffect`, nie w renderze. Karty są generowane statycznie, więc `new Date()` w trakcie renderowania zamarłoby w chwili builda i oferta nigdy by nie wygasła bez ponownego wdrożenia. Przetestowane: po podmianie daty końcowej na przeszłą blok przestaje pokazywać kwoty i prosi o aktualny cennik.
+
+Formatowanie kwot i dat robione ręcznie, bez `toLocaleString` — Node na serwerze bywa budowany z okrojonym ICU i gubił spację tysięczną („2563,00 zł” w HTML).
+
+**Zostaje do decyzji**: 72 ceny w danych kategorii nadal nie są nigdzie renderowane i służą wyłącznie sortowaniu „cena rosnąco”. Sortowanie działa więc na liczbach, których nikt nie widzi i nikt nie aktualizuje — do zasilenia z ofert albo do wyłączenia.
+
 ## 2026-08-23 — akcesoria wyglądały na zaznaczone od startu
 
 Kwadrat wyboru miał w środku ikonę ptaszka zawsze, a stan niezaznaczony ukrywał ją klasą `text-transparent` — która działa na tekst, nie na `<img>`. Efekt: każda pozycja wyglądała na wybraną, mimo że `aria-pressed` było `false`.

@@ -78,10 +78,6 @@ const data: ProductData = {
         'Deklarowane 24 miesiące pracy myszy i 20 miesięcy klawiatury — wymiana baterii nie wchodzi do kalendarza.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   related: [
     {
       name: 'Dell Pro KM5221W',

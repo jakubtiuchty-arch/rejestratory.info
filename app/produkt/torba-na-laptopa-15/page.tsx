@@ -65,10 +65,6 @@ const data: ProductData = {
         'Uchwyt i pasek na ramię — torba jest przewidziana na codzienny dojazd, a nie na jednorazową przeprowadzkę sprzętu.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   hideService: true,
   related: [
     {

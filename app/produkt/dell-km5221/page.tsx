@@ -77,10 +77,6 @@ const data: ProductData = {
         'Skróty do programów używanych w nadleśnictwie wchodzą pod klawisze, zamiast być klikane przez trzy menu.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   related: [
     {
       name: 'Dell Pro Plus KM7321W',

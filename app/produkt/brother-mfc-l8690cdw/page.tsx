@@ -86,7 +86,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Brother MFC-L8690CDW' },
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.kolor,

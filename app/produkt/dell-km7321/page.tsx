@@ -78,10 +78,6 @@ const data: ProductData = {
         'Deklarowane 36 miesięcy pracy klawiatury, bez ładowarki i bez kabla na biurku.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   signature: [
     {
       icon: ICON.urzadzenia,

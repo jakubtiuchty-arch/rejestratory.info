@@ -9,7 +9,7 @@ import { ICON, naCiemnym } from '@/components/product/icons'
 const products = [
   {
     id: 1,
-    name: "HP Pro S5 QHD USB-C 527pv",
+    name: "HP Pro S5 QHD USB-C 527pu",
     category: "Monitory",
     description: "Profesjonalny monitor QHD 27 cali do pracy biurowej",
     specifications: "27\" QHD 2560x1440, IPS, 75Hz, HDMI, DisplayPort, USB-A",
@@ -67,7 +67,7 @@ const products = [
   },
   {
     id: 5,
-    name: "Dell Pro 27 Plus P2725HE z USBC",
+    name: "Dell Pro 27 P2726HE z USB-C",
     category: "Monitory",
     description: "Duży monitor 27 cali z ładowaniem USB-C i wysoką rozdzielczością",
     specifications: "27\" QHD 2560x1440, IPS, 60Hz, HDMI, DisplayPort, USB-C 90W",
@@ -78,11 +78,11 @@ const products = [
     imageScale: 0.8,
     badge: "USB-C",
     featured: true,
-    link: "/produkt/dell-pro-27-plus-p2725he-usbc"
+    link: "/produkt/dell-pro-27-p2726he"
   },
   {
     id: 6,
-    name: "Dell Pro 27 Plus P2725H",
+    name: "Dell Pro 27 P2726H",
     category: "Monitory",
     description: "Profesjonalny monitor 27 cali QHD do zastosowań biurowych",
     specifications: "27\" QHD 2560x1440, IPS, 60Hz, HDMI, DisplayPort, USB-A",
@@ -93,7 +93,7 @@ const products = [
     imageScale: 0.8,
     badge: null,
     featured: false,
-    link: "/produkt/dell-pro-27-plus-p2725he"
+    link: "/produkt/dell-pro-27-p2726h"
   },
   {
     id: 7,
@@ -112,7 +112,7 @@ const products = [
   },
   {
     id: 8,
-    name: "Dell Pro 27 P2724HEB",
+    name: "Dell Pro 27 P2724DEB",
     category: "Monitory",
     description: "Ergonomiczny monitor 27 cali z pełną regulacją i pivot",
     specifications: "27\" FHD 1920x1080, IPS, 75Hz, HDMI, DisplayPort, regulowana podstawa",
@@ -123,7 +123,7 @@ const products = [
     imageScale: 0.8,
     badge: null,
     featured: true,
-    link: "/produkt/dell-pro-27-plus-p2724heb"
+    link: "/produkt/dell-pro-27-plus-p2724deb"
   },
   {
     id: 9,
@@ -139,6 +139,48 @@ const products = [
     badge: null,
     featured: true,
     link: "/produkt/hp-seria-3-pro-324pv"
+  },
+  {
+    id: 10,
+    name: "HP Pro S5 FHD USB-C 524pu",
+    category: "Monitory",
+    description: "Monitor 23,8 cala ze stacją dokującą i gniazdem sieciowym w obudowie",
+    specifications: "23,8\" FHD 1920x1080, IPS, 100Hz, USB-C 100W, RJ-45, DisplayPort, HDMI",
+    price: "1 022 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "/524pu_1.png",
+    badge: null,
+    featured: false,
+    link: "/produkt/hp-seria-5-pro-524pu"
+  },
+  {
+    id: 11,
+    name: "HP Pro S5 FHD USB-C Conferencing 524pm",
+    category: "Monitory",
+    description: "Monitor 23,8 cala z chowaną kamerą 5 Mpix, czterema głośnikami i stacją dokującą",
+    specifications: "23,8\" FHD 1920x1080, IPS, 100Hz, kamera 5 Mpix, 4 głośniki, USB-C 100W",
+    price: "1 390 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "/524pm_1.png",
+    badge: null,
+    featured: false,
+    link: "/produkt/hp-seria-5-pro-524pm"
+  },
+  {
+    id: 12,
+    name: "HP Pro S5 QHD USB-C Conferencing 527pm",
+    category: "Monitory",
+    description: "Monitor 27 cali QHD z chowaną kamerą 5 Mpix, czterema głośnikami i stacją dokującą",
+    specifications: "27\" QHD 2560x1440, IPS, 100Hz, kamera 5 Mpix, 4 głośniki, USB-C 100W, RJ-45",
+    price: "1 733 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "/527pm_1.png",
+    badge: null,
+    featured: false,
+    link: "/produkt/hp-seria-5-pro-527pm"
   }
 ];
 

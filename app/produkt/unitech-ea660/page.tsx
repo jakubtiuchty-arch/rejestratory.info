@@ -85,7 +85,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Unitech EA660' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/rejestratory' }, { name: 'TAKMA' }],
   related: [
     {
       name: 'Unitech PA768',

@@ -99,7 +99,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Brother HL-L6410DN' },
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.szybkosc,

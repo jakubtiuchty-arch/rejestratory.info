@@ -87,7 +87,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Samsung S25 Ultra' },
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   related: [
     {
       name: 'Samsung Galaxy S25+',

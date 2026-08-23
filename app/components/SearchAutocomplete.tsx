@@ -45,14 +45,17 @@ const allProducts = [
   { name: "Dell Pro 24 Plus P2424HEB", category: "Monitor", url: "/produkt/dell-pro-24-plus-p2424heb", keywords: ["dell", "pro", "24", "p2424heb", "monitor", "ekran"] },
   { name: "Dell Pro 24 Plus P2425HE", category: "Monitor", url: "/produkt/dell-pro-24-plus-p2425he", keywords: ["dell", "pro", "24", "p2425he", "monitor", "ekran"] },
   { name: "Dell Pro 24 Plus P2425HE USB-C", category: "Monitor", url: "/produkt/dell-pro-24-plus-p2425he-usbc", keywords: ["dell", "pro", "24", "p2425he", "usb-c", "monitor", "ekran"] },
-  { name: "Dell Pro 27 Plus P2724HEB", category: "Monitor", url: "/produkt/dell-pro-27-plus-p2724heb", keywords: ["dell", "pro", "27", "p2724heb", "monitor", "ekran"] },
-  { name: "Dell Pro 27 Plus P2725HE", category: "Monitor", url: "/produkt/dell-pro-27-plus-p2725he", keywords: ["dell", "pro", "27", "p2725he", "monitor", "ekran"] },
-  { name: "Dell Pro 27 Plus P2725HE USB-C", category: "Monitor", url: "/produkt/dell-pro-27-plus-p2725he-usbc", keywords: ["dell", "pro", "27", "p2725he", "usb-c", "monitor", "ekran"] },
+  { name: "Dell Pro 27 Plus P2724DEB", category: "Monitor", url: "/produkt/dell-pro-27-plus-p2724deb", keywords: ["dell", "pro", "27", "p2724deb", "monitor", "ekran"] },
+  { name: "Dell Pro 27 P2726H", category: "Monitor", url: "/produkt/dell-pro-27-p2726h", keywords: ["dell", "pro", "27", "p2726he", "monitor", "ekran"] },
+  { name: "Dell Pro 27 P2726HE USB-C", category: "Monitor", url: "/produkt/dell-pro-27-p2726he", keywords: ["dell", "pro", "27", "p2726he", "usb-c", "monitor", "ekran"] },
   
   // Monitory HP
   { name: "HP Seria 3 Pro 324PV", category: "Monitor", url: "/produkt/hp-seria-3-pro-324pv", keywords: ["hp", "seria", "3", "pro", "324pv", "monitor", "ekran"] },
   { name: "HP Seria 5 Pro 527PQ", category: "Monitor", url: "/produkt/hp-seria-5-pro-527pq", keywords: ["hp", "seria", "5", "pro", "527pq", "monitor", "ekran"] },
   { name: "HP Seria 5 Pro 527PU", category: "Monitor", url: "/produkt/hp-seria-5-pro-527pu", keywords: ["hp", "seria", "5", "pro", "527pu", "monitor", "ekran"] },
+  { name: "HP Seria 5 Pro 524PU", category: "Monitor", url: "/produkt/hp-seria-5-pro-524pu", keywords: ["hp", "seria", "5", "pro", "524pu", "monitor", "ekran", "usb-c", "stacja"] },
+  { name: "HP Seria 5 Pro 524PM", category: "Monitor", url: "/produkt/hp-seria-5-pro-524pm", keywords: ["hp", "seria", "5", "pro", "524pm", "monitor", "ekran", "kamera", "wideokonferencja"] },
+  { name: "HP Seria 5 Pro 527PM", category: "Monitor", url: "/produkt/hp-seria-5-pro-527pm", keywords: ["hp", "seria", "5", "pro", "527pm", "monitor", "ekran", "kamera", "wideokonferencja"] },
   
   // Serwery Dell
   { name: "Dell PowerEdge R360", category: "Serwer", url: "/produkt/dell-poweredge-r360", keywords: ["dell", "poweredge", "r360", "serwer", "server"] },
@@ -86,6 +89,9 @@ const allProducts = [
   { name: "Epson DS-730N", category: "Skaner", url: "/produkt/epson-ds730n", keywords: ["epson", "ds", "730n", "skaner", "dokumentów"] },
   { name: "Honeywell 1450g", category: "Skaner", url: "/produkt/honeywell-1450g", keywords: ["honeywell", "1450g", "skaner", "kodów"] },
   { name: "Zebra DS2208", category: "Skaner", url: "/produkt/zebra-ds2208", keywords: ["zebra", "ds2208", "skaner", "kodów"] },
+  { name: "Zebra DS2278 — czytnik bezprzewodowy", category: "EZD", url: "/produkt/zebra-ds2278", keywords: ["zebra", "ds2278", "czytnik", "skaner", "kody", "bezprzewodowy", "bluetooth"] },
+  { name: "Honeywell PC42E-T — drukarka etykiet", category: "EZD", url: "/produkt/honeywell-pc42e-t", keywords: ["honeywell", "pc42e", "drukarka", "etykiety", "termotransfer"] },
+  { name: "Honeywell Voyager 1250g — czytnik", category: "EZD", url: "/produkt/honeywell-1250g", keywords: ["honeywell", "1250g", "voyager", "czytnik", "skaner", "kody", "laser"] },
   
   // Urządzenia fiskalne
   { name: "Posnet Pospay 2", category: "Urządzenie fiskalne", url: "/produkt/posnet-pospay-2", keywords: ["posnet", "pospay", "2", "kasa", "fiskalna", "terminal"] },
@@ -100,7 +106,10 @@ const allProducts = [
   { name: "Microsoft 365 Business Standard", category: "Akcesoria komputerowe", url: "/produkt/ms-365", keywords: ["microsoft", "365", "office", "licencja", "oprogramowanie", "business"] },
   { name: "Dell Pro KM5221W — klawiatura i mysz", category: "Akcesoria komputerowe", url: "/produkt/dell-km5221", keywords: ["dell", "km5221", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] },
   { name: "Dell Pro Plus KM7321W — klawiatura i mysz", category: "Akcesoria komputerowe", url: "/produkt/dell-km7321", keywords: ["dell", "km7321", "klawiatura", "mysz", "bezprzewodowa", "zestaw", "premium"] },
-  { name: "HP 655 — klawiatura i mysz", category: "Akcesoria komputerowe", url: "/produkt/hp-655", keywords: ["hp", "655", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] }
+  { name: "HP 655 — klawiatura i mysz", category: "Akcesoria komputerowe", url: "/produkt/hp-655", keywords: ["hp", "655", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] },
+  { name: "HP 460 — klawiatura", category: "Akcesoria komputerowe", url: "/produkt/hp-460", keywords: ["hp", "460", "klawiatura", "bezprzewodowa", "bluetooth", "usb-c"] },
+  { name: "HP 715 — mysz", category: "Akcesoria komputerowe", url: "/produkt/hp-715", keywords: ["hp", "715", "mysz", "bezprzewodowa", "bluetooth", "akumulator"] },
+  { name: "Torba HP do laptopów 15,6\"", category: "Akcesoria komputerowe", url: "/produkt/torba-hp-15", keywords: ["torba", "hp", "laptop", "15,6", "przenoszenie"] }
 ]
 
 interface SearchAutocompleteProps {

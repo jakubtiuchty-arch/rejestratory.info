@@ -16,12 +16,13 @@ import ContourTexture from '@/components/ContourTexture'
 import CourierServiceSection from '@/components/CourierServiceSection'
 import { useInquiry } from '@/components/InquiryContext'
 import { ICON } from '@/components/product/icons'
+import { ofertyDla, type OfertaSkladnicy as OfertaZUP } from '@/data/oferty'
+import { SKLADNICE } from '@/data/skladnice'
 
 /* -------------------------------------------------------------------------- */
 /*  Dane karty produktu — jeden kształt dla wszystkich urządzeń               */
 /* -------------------------------------------------------------------------- */
 
-export type Seller = { name: string; href?: string }
 export type SpecGroup = { title: string; rows: { k: string; v: string }[] }
 export type WhyCard = { icon: string; title: string; body: string }
 export type Accessory = {
@@ -105,7 +106,6 @@ export type ProductData = {
   signature?: Signature[]
   /** sekcja „Pracuje już w nadleśnictwach” — nazwa modelu szukana w sprzedaży */
   usedBy?: { device: string; exclude?: string; heading?: string; label?: string }
-  whereToBuy: Seller[]
   /** proces zakupu i wdrożenia — sekcja z animowaną osią kroków */
   timeline?: Timeline
   /** cennik urządzenia i prowizje od transakcji */
@@ -818,6 +818,278 @@ export const Wdrozenie = ({ timeline }: { timeline: Timeline }) => {
 }
 
 /* -------------------------------------------------------------------------- */
+/*  Ceny w składnicach — osobna sekcja na pełną szerokość                     */
+/* -------------------------------------------------------------------------- */
+
+const VAT = 0.23
+
+/**
+ * Formatowanie bez `toLocaleString` — Node na serwerze bywa zbudowany
+ * z okrojonym ICU i gubi wtedy spację tysięczną, co dawało „2563,00 zł”
+ * w HTML i inny wynik po hydracji.
+ */
+const zloty = (kwota: number) => {
+  const [calosc, grosze] = kwota.toFixed(2).split('.')
+  const zGrupami = calosc.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+  return `${zGrupami},${grosze} zł`
+}
+
+const kluczPozycji = (nazwa: string) =>
+  nazwa.toLowerCase().replace(/[\s\-_.+,]/g, '').slice(0, 40)
+
+/**
+ * Ceny ze składnic.
+ *
+ * NN/g: cena to potrzeba informacyjna numer jeden, także w zakupach służbowych,
+ * a jej ukrywanie odbierane jest jako wymijanie. Kwoty pochodzą z oficjalnych
+ * ofert składnic, więc podajemy je wprost — netto dla LP, jak w dokumencie.
+ *
+ * Ten sam model bywa w kilku składnicach po różnych cenach, dlatego układ jest
+ * tabelą: wiersz to pozycja z oferty, kolumna to składnica, a najniższa cena
+ * w wierszu jest wyróżniona. Przy jednej składnicy tabela degeneruje się do
+ * czytelnych dwóch kolumn.
+ *
+ * Terminów ważności nie pokazujemy — leśnika interesuje kwota, nie data ważności
+ * druku, a „obowiązuje do…” tylko zaśmieca tabelę. Aktualność pilnuje cron
+ * `/api/cron/kontrola-ofert`: w dniu wygaśnięcia zgłasza ofertę do sprawdzenia,
+ * a my ją wtedy odświeżamy albo usuwamy z danych.
+ */
+const CenySkladnic = ({ oferty: wejscie, nazwa }: { oferty: OfertaZUP[]; nazwa: string }) => {
+  // kolumny od najtańszej — tabela ma wprost odpowiadać na pytanie „gdzie taniej”
+  const oferty = [...wejscie].sort((a, b) => a.urzadzenie.cenaNetto - b.urzadzenie.cenaNetto)
+
+  // wiersze tabeli: urządzenie na górze, potem pozycje dodatkowe w kolejności
+  // z pierwszego druku, dołączając te, które ma tylko któraś ze składnic
+  const wiersze: { klucz: string; nazwa: string; glowna?: boolean }[] = [
+    { klucz: '__urzadzenie', nazwa, glowna: true },
+  ]
+  for (const o of oferty) {
+    for (const d of o.dodatki) {
+      const k = kluczPozycji(d.nazwa)
+      if (!wiersze.some((w) => w.klucz === k)) wiersze.push({ klucz: k, nazwa: d.nazwa })
+    }
+  }
+
+  const cena = (o: OfertaZUP, klucz: string) => {
+    if (klucz === '__urzadzenie') return o.urzadzenie
+    return o.dodatki.find((d) => kluczPozycji(d.nazwa) === klucz) ?? null
+  }
+
+  // Druk wskazuje, kto odpowiada za dostawę i serwis — nie zawsze TAKMA (przy
+  // Dellach bez systemu i Galaxy A36 jest to SCANTER). Nazwę podajemy tylko
+  // wtedy, gdy wszystkie oferty na ten model mówią to samo; przy rozbieżności
+  // albo braku informacji zdanie się urywa, zamiast zgadywać.
+  const dostawcy = new Set(oferty.map((o) => o.dostawca ?? null))
+  const dostawca = dostawcy.size === 1 ? [...dostawcy][0] : null
+
+  // to samo urządzenie w różnych składnicach ma ten sam zestaw; bierzemy
+  // pierwszy niepusty, żeby nie powtarzać tej samej listy w każdej kolumnie
+  const wZestawie = oferty.map((o) => o.urzadzenie.wZestawie ?? []).find((x) => x.length) ?? []
+
+  const najtansza = (klucz: string) => {
+    const kwoty = oferty.map((o) => cena(o, klucz)?.cenaNetto).filter((k): k is number => !!k)
+    return kwoty.length > 1 ? Math.min(...kwoty) : null
+  }
+
+  return (
+    <section id="ceny" className="scroll-mt-16 border-b border-stone-200 bg-white">
+      <div className="container mx-auto px-4 py-14">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-700">
+              {oferty.length > 1 ? 'Ceny w składnicach' : 'Cena w składnicy'}
+            </p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-stone-900">
+              {oferty.length > 1
+                ? `${nazwa} w ${oferty.length} składnicach`
+                : `Ile kosztuje ${nazwa}`}
+            </h2>
+            <p className="mt-3 leading-relaxed text-stone-600">
+              Kwoty netto dla Lasów Państwowych. Zamówienie składa nadleśnictwo w składnicy
+              {dostawca
+                ? `; dostawę oraz serwis gwarancyjny i pogwarancyjny prowadzi ${dostawca}.`
+                : '.'}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 overflow-hidden rounded-2xl border border-stone-200">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[560px] border-collapse text-left">
+              <thead>
+                <tr className="border-b border-stone-200 bg-stone-50">
+                  <th className="px-5 py-4" />
+                  {oferty.map((o) => {
+                    const s = SKLADNICE[o.skladnica]
+                    return (
+                      <th key={o.skladnica} className="px-5 py-4 align-top font-semibold text-stone-900">
+                        {s.nazwa}
+                      </th>
+                    )
+                  })}
+                </tr>
+              </thead>
+              <tbody>
+                {wiersze.map((w) => {
+                  const min = najtansza(w.klucz)
+                  return (
+                    <tr
+                      key={w.klucz}
+                      className={`border-b border-stone-100 last:border-b-0 ${
+                        w.glowna ? 'bg-emerald-50/40' : ''
+                      }`}
+                    >
+                      <td className="px-5 py-3.5 align-top">
+                        <span
+                          className={
+                            w.glowna
+                              ? 'font-semibold text-stone-900'
+                              : 'text-sm text-stone-600'
+                          }
+                        >
+                          {w.nazwa}
+                        </span>
+                        {/* druk wymienia, co wchodzi w tę cenę — bez tego
+                            czytelnik nie wie, czy ładowarki trzeba dokupić.
+                            Przy kilku składnicach zestaw bywa różny, więc
+                            wtedy opis idzie do kolumn, nie pod nazwę. */}
+                        {w.glowna && oferty.length === 1 && wZestawie.length > 0 && (
+                          <span className="mt-1.5 block text-sm text-stone-600">
+                            <span className="text-stone-500">W cenie: </span>
+                            {wZestawie.join(' · ')}
+                          </span>
+                        )}
+                      </td>
+                      {oferty.map((o) => {
+                        const poz = cena(o, w.klucz)
+                        return (
+                          <td key={o.skladnica} className="whitespace-nowrap px-5 py-3.5 align-top">
+                            {poz ? (
+                              <>
+                                <span
+                                  className={
+                                    w.glowna
+                                      ? 'text-xl font-bold tracking-tight text-stone-900'
+                                      : 'text-sm font-semibold text-stone-900'
+                                  }
+                                >
+                                  {zloty(poz.cenaNetto)}
+                                </span>
+                                {w.glowna && (
+                                  <span className="mt-0.5 block text-xs text-stone-500">
+                                    {zloty(poz.cenaNetto * (1 + VAT))} z VAT
+                                  </span>
+                                )}
+                                <span className="mt-0.5 flex flex-wrap items-center gap-1.5">
+                                  {poz.promocja && (
+                                    <span className="font-mono text-[10px] uppercase tracking-wide text-emerald-700">
+                                      promocja
+                                    </span>
+                                  )}
+                                  {min !== null && poz.cenaNetto === min && (
+                                    <span className="font-mono text-[10px] uppercase tracking-wide text-emerald-700">
+                                      najtaniej
+                                    </span>
+                                  )}
+                                </span>
+                                {w.glowna && oferty.length > 1 && !!poz.wZestawie?.length && (
+                                  <span className="mt-2 block max-w-[16rem] whitespace-normal text-xs leading-relaxed text-stone-600">
+                                    <span className="text-stone-500">W cenie: </span>
+                                    {poz.wZestawie.join(' · ')}
+                                  </span>
+                                )}
+                              </>
+                            ) : (
+                              <span className="text-sm text-stone-400">—</span>
+                            )}
+                          </td>
+                        )
+                      })}
+                    </tr>
+                  )
+                })}
+                <tr className="border-t border-stone-200 bg-stone-50">
+                  <td className="px-5 py-4 align-top">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-stone-500">
+                      Jak zamówić
+                    </span>
+                  </td>
+                  {oferty.map((o) => {
+                    const s = SKLADNICE[o.skladnica]
+                    return (
+                      <td key={o.skladnica} className="px-5 py-4 align-top">
+                        <a
+                          href={o.formularz ?? o.strona ?? s.www}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-700 hover:underline"
+                        >
+                          {o.formularz ? 'Pobierz formularz' : 'Otwórz stronę składnicy'}
+                          <img
+                            src={o.formularz ? ICON.pobierz : ICON.strzalkaUkos}
+                            alt=""
+                            className="h-3.5 w-3.5 mix-blend-multiply"
+                          />
+                        </a>
+                      </td>
+                    )
+                  })}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="border-t border-stone-200 px-5 py-4">
+            <p className="text-xs leading-relaxed text-stone-500">
+              Ceny netto; do kwot dolicza się VAT 23%. Pozycje pod urządzeniem są płatne
+              dodatkowo. Płatność przelewem, termin realizacji ustalany przy zamówieniu.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/** Skrót ceny w kolumnie obok galerii — bez rozciągania nagłówka karty. */
+const CenaWSkrocie = ({ oferty }: { oferty: OfertaZUP[] }) => {
+  if (!oferty.length) return null
+
+  const najnizsza = Math.min(...oferty.map((o) => o.urzadzenie.cenaNetto))
+  const wielu = oferty.length > 1
+
+  return (
+    <a
+      href="#ceny"
+      className="group mt-6 flex items-center justify-between gap-4 rounded-2xl border border-stone-200 bg-white px-5 py-4 transition hover:border-emerald-300 hover:bg-emerald-50/40"
+    >
+      <span className="min-w-0">
+        <span className="block font-mono text-[11px] uppercase tracking-[0.18em] text-stone-500">
+          {wielu ? `Cena w ${oferty.length} składnicach` : 'Cena w składnicy'}
+        </span>
+        <span className="mt-1 flex flex-wrap items-baseline gap-x-2">
+          {wielu && <span className="text-sm text-stone-500">od</span>}
+          <span className="text-2xl font-bold tracking-tight text-stone-900">
+            {zloty(najnizsza)}
+          </span>
+          <span className="text-sm text-stone-500">netto</span>
+        </span>
+        <span className="mt-0.5 block text-xs text-stone-500">
+          {wielu
+            ? 'Zobacz porównanie i pozycje dodatkowe'
+            : `${SKLADNICE[oferty[0].skladnica].nazwa} · zobacz pozycje dodatkowe`}
+        </span>
+      </span>
+      <img
+        src={ICON.strzalka}
+        alt=""
+        className="h-4 w-4 shrink-0 mix-blend-multiply transition group-hover:translate-x-0.5"
+      />
+    </a>
+  )
+}
+
+/* -------------------------------------------------------------------------- */
 /*  Nawigacja po sekcjach — sticky pod nagłówkiem karty                       */
 /* -------------------------------------------------------------------------- */
 
@@ -878,12 +1150,44 @@ export default function ProductPage({ data }: { data: ProductData }) {
     Object.fromEntries((data.variants ?? []).map((g) => [g.id, g.options[0]]))
   )
 
+  const oferty = ofertyDla(data.slug)
+
+  /**
+   * Kafelki sekcji „dlaczego”: cechy wyróżnione (dawne boksy w prawej kolumnie
+   * nagłówka) plus zwykłe powody, wszystko w jednej siatce.
+   *
+   * Cecha wyróżniona zwykle mówi o tym samym, co któryś z powodów — obie
+   * powstały z tego samego faktu, tylko w innym miejscu karty (np. „Pięć lat
+   * gwarancji producenta” obok „Pięć lat gwarancji”). Postawione obok siebie
+   * czytają się jak zacinająca się płyta, więc parę o tej samej ikonie łączymy
+   * w jeden kafelek i zostaje ten z obszerniejszym opisem — żaden fakt nie
+   * ginie, bo oba mówią o tej samej rzeczy.
+   */
+  const wyrozniki = data.signature ?? []
+  const scalone = new Map(
+    wyrozniki.map((w) => {
+      const bliznjak = data.why.find((p) => p.icon === w.icon)
+      const lepszy = bliznjak && bliznjak.body.length > w.body.length ? bliznjak : w
+      return [w.icon, { ...lepszy, tone: w.tone, wyrozniony: true as const }]
+    }),
+  )
+  const kafelki = [
+    ...Array.from(scalone.values()),
+    ...data.why
+      .filter((p) => !scalone.has(p.icon))
+      .map((p) => ({ ...p, tone: undefined, wyrozniony: false as const })),
+  ]
+  // nieparzysta liczba kafelków zostawiłaby dziurę w ostatnim wierszu — pierwszy
+  // (wyróżniony) rozpina się wtedy na obie kolumny i siatka kończy się równo
+  const rozpiety = kafelki.length % 2 === 1 ? kafelki[0] : null
+
   const sections: Section[] = [
     { id: 'dlaczego', label: data.whyNavLabel ?? 'Dlaczego to urządzenie' },
     ...(data.timeline
       ? [{ id: 'wdrozenie', label: data.timeline.navLabel ?? 'Wdrożenie' }]
       : []),
     { id: 'specyfikacja', label: 'Specyfikacja' },
+    ...(oferty.length > 0 ? [{ id: 'ceny', label: 'Ceny' }] : []),
     ...(data.hideService ? [] : [{ id: 'service-section', label: 'Serwis' }]),
   ]
 
@@ -1007,6 +1311,8 @@ export default function ProductPage({ data }: { data: ProductData }) {
               </div>
 
 
+              {oferty.length > 0 && <CenaWSkrocie oferty={oferty} />}
+
               {data.pricing && (
                 <div className="mt-6 overflow-hidden rounded-2xl border border-stone-200 bg-white">
                   <p className="border-b border-stone-200 bg-stone-50 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.18em] text-stone-500">
@@ -1078,84 +1384,6 @@ export default function ProductPage({ data }: { data: ProductData }) {
                 </div>
               )}
 
-              {data.signature && data.signature.length > 0 && (
-                <div className="mt-6 grid grid-cols-1 gap-3">
-                  {data.signature.map((f) => {
-                    const dark = f.tone === 'ciemny'
-                    return (
-                      <div
-                        key={f.title}
-                        className={`rounded-2xl p-4 ${
-                          dark
-                            ? 'bg-[#0A1B12] text-emerald-50/85'
-                            : 'border border-emerald-200 bg-emerald-50/60 text-stone-600'
-                        }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          <img
-                            src={dark ? naCiemnym(f.icon) : f.icon}
-                            alt=""
-                            className={`mt-0.5 h-6 w-6 shrink-0 ${
-                              dark ? 'opacity-90' : 'mix-blend-multiply'
-                            }`}
-                          />
-                          <div>
-                            <p
-                              className={`font-semibold ${
-                                dark ? 'text-white' : 'text-emerald-900'
-                              }`}
-                            >
-                              {f.title}
-                            </p>
-                            <p className="mt-1 text-sm leading-relaxed">{f.body}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              )}
-
-              <div className="mt-6 rounded-2xl border border-stone-200 bg-stone-50 p-4">
-                <p className="flex items-center gap-2 text-sm font-semibold text-stone-900">
-                  <img src={ICON.lokalizacja} alt="" className="h-4 w-4 mix-blend-multiply" />
-                  Gdzie kupić
-                </p>
-                <ul className="mt-3 grid grid-cols-2 gap-2">
-                  {data.whereToBuy.map((seller) => {
-                    const content = (
-                      <>
-                        <span className="flex items-center gap-1.5">
-                          {seller.name}
-                          {seller.href && (
-                            <img src={ICON.strzalkaUkos} alt="" className="h-3.5 w-3.5 transition group-hover/seller: mix-blend-multiply" />
-                          )}
-                        </span>
-                        <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                      </>
-                    )
-                    const cls =
-                      'flex items-center justify-between rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-sm font-medium text-stone-800'
-                    return (
-                      <li key={seller.name}>
-                        {seller.href ? (
-                          <a
-                            href={seller.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`group/seller ${cls} transition hover:border-emerald-300 hover:text-emerald-800`}
-                          >
-                            {content}
-                          </a>
-                        ) : (
-                          <div className={cls}>{content}</div>
-                        )}
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-
               {data.related && data.related.length > 0 && (
                 <div className="mt-4 space-y-2">
                   {data.related.map((r) => (
@@ -1222,16 +1450,37 @@ export default function ProductPage({ data }: { data: ProductData }) {
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2">
-          {data.why.map(({ icon, title, body }) => (
-            <div
-              key={title}
-              className="rounded-2xl border border-stone-200 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <img src={icon} alt="" className="h-8 w-8 mix-blend-multiply" />
-              <h3 className="mt-5 text-lg font-semibold text-stone-900">{title}</h3>
-              <p className="mt-2 leading-relaxed text-stone-600">{body}</p>
-            </div>
-          ))}
+          {kafelki.map((k) => {
+            const ciemny = k.wyrozniony && k.tone === 'ciemny'
+            return (
+              <div
+                key={k.title}
+                className={`rounded-2xl p-6 transition hover:-translate-y-0.5 hover:shadow-md ${
+                  k === rozpiety ? 'md:col-span-2' : ''
+                } ${
+                  ciemny
+                    ? 'bg-[#0A1B12] text-emerald-50/80'
+                    : k.wyrozniony
+                      ? 'border border-emerald-200 bg-emerald-50/60 text-emerald-950/75'
+                      : 'border border-stone-200 bg-white text-stone-600'
+                }`}
+              >
+                <img
+                  src={ciemny ? naCiemnym(k.icon) : k.icon}
+                  alt=""
+                  className={`h-8 w-8 ${ciemny ? 'opacity-90' : 'mix-blend-multiply'}`}
+                />
+                <h3
+                  className={`mt-5 text-lg font-semibold ${
+                    ciemny ? 'text-white' : k.wyrozniony ? 'text-emerald-900' : 'text-stone-900'
+                  }`}
+                >
+                  {k.title}
+                </h3>
+                <p className="mt-2 leading-relaxed">{k.body}</p>
+              </div>
+            )
+          })}
         </div>
       </section>
 
@@ -1267,6 +1516,8 @@ export default function ProductPage({ data }: { data: ProductData }) {
           </div>
         </div>
       </section>
+
+      {oferty.length > 0 && <CenySkladnic oferty={oferty} nazwa={data.name} />}
 
       {/* ---------------------------------------------------------------- */}
       {/*  Baner dedykowanej strony produktu (opcjonalny)                  */}

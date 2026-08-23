@@ -79,10 +79,6 @@ const data: ProductData = {
         'Wymiary 10 × 14 × 28 cm — urządzenie mieści się obok komputera i nie wymaga szafy ani stelaża.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   related: [
     {
       name: 'Vertiv Liebert itON 1000 VA',

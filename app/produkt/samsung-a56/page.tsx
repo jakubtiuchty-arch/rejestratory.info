@@ -84,7 +84,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Samsung A56' },
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   related: [
     {
       name: 'Samsung Galaxy A36',

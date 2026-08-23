@@ -90,7 +90,6 @@ const data: ProductData = {
         'Gniazdo Ethernet oznacza, że z urządzenia korzysta kilka osób z własnych komputerów, bez przepinania kabla USB.',
     },
   ],
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.archiwum,

@@ -91,7 +91,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Brother DCP-L5510DW' },
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.szybkosc,

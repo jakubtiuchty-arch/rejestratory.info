@@ -85,7 +85,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Sewoo LKP400' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/rejestratory' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.szybkosc,

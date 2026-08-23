@@ -4,21 +4,21 @@ import ProductPage, { type ProductData } from '@/components/product/ProductPage'
 import { ICON } from '@/components/product/icons'
 
 const data: ProductData = {
-  slug: 'dell-pro-27-plus-p2725he-usbc',
-  name: 'Dell Pro 27 Plus P2725HE z USB-C',
+  slug: 'dell-pro-27-p2726he',
+  name: 'Dell Pro 27 P2726HE z USB-C',
   category: 'Monitory',
   categoryHref: '/kategoria/monitory',
   images: ['/P2425HE_1.png'],
   inquiry: {
     description: 'Monitor 27 cali ze stacją dokującą USB-C',
-    specifications: '27″ Full HD 100 Hz · USB-C 90 W · RJ45 1GbE · MST · pivot',
+    specifications: '27″ Full HD 120 Hz · USB-C 100 W · RJ45 1GbE · MST · pivot',
   },
-  whyNavLabel: 'Dlaczego P2725HE',
+  whyNavLabel: 'Dlaczego P2726HE',
   whyHeading: 'Do czego przyda się w nadleśnictwie',
   whyLabel: 'Na biurku w nadleśnictwie',
   highlights: [
-    { icon: ICON.przekatna, label: 'Ekran', value: '27″ Full HD, 100 Hz' },
-    { icon: ICON.usbc, label: 'USB-C', value: 'obraz i ładowanie do 90 W' },
+    { icon: ICON.przekatna, label: 'Ekran', value: '27″ Full HD, 120 Hz' },
+    { icon: ICON.usbc, label: 'USB-C', value: 'obraz i ładowanie do 100 W' },
     { icon: ICON.lan, label: 'Sieć', value: 'wbudowany RJ45 1GbE' },
     { icon: ICON.ergonomia, label: 'Ergonomia', value: 'regulacja 150 mm, pivot' },
   ],
@@ -28,7 +28,8 @@ const data: ProductData = {
       rows: [
         { k: 'Przekątna', v: '27″' },
         { k: 'Rozdzielczość', v: 'Full HD 1920 × 1080' },
-        { k: 'Odświeżanie', v: '100 Hz' },
+        { k: 'Odświeżanie', v: '120 Hz' },
+        { k: 'Czas reakcji', v: '5 ms GtG w trybie szybkim, 8 ms GtG' },
         { k: 'Matryca', v: 'IPS, kąty 178°/178°' },
         { k: 'Jasność', v: '300 cd/m², kontrast 1500:1' },
         { k: 'Gamut', v: '99% sRGB' },
@@ -37,17 +38,17 @@ const data: ProductData = {
     {
       title: 'Koncentrator USB-C',
       rows: [
-        { k: 'Power Delivery', v: 'do 90 W (upstream)' },
+        { k: 'Power Delivery', v: 'do 100 W (upstream)' },
         { k: 'DisplayPort', v: 'tryb alternatywny DP 1.4' },
         { k: 'Ethernet', v: 'RJ45 1GbE' },
-        { k: 'USB-A', v: '3 × USB 3.2 downstream' },
-        { k: 'USB-C', v: '1 × USB 3.2 downstream 15 W' },
+        { k: 'USB-A', v: '2 × downstream 5 Gb/s' },
+        { k: 'USB-C', v: '2 × downstream 5 Gb/s, zasilanie do 15 W' },
       ],
     },
     {
       title: 'Porty i funkcje',
       rows: [
-        { k: 'Wideo', v: 'HDMI 1.4, DisplayPort 1.4' },
+        { k: 'Wideo', v: 'HDMI z HDCP 1.4, DisplayPort 1.4' },
         { k: 'Wyjście DP', v: 'DP 1.4 z MST' },
         { k: 'Power Button Sync', v: 'tak, przez USB-C' },
         { k: 'Display Manager', v: 'tak, z EasyArrange' },
@@ -69,7 +70,7 @@ const data: ProductData = {
       icon: ICON.usbc,
       title: 'Jeden kabel zamiast trzech',
       body:
-        'Laptop podłączony USB-C dostaje obraz, zasilanie do 90 W i sieć — odpinasz jeden przewód i jedziesz w teren.',
+        'Laptop podłączony USB-C dostaje obraz, zasilanie do 100 W i sieć — odpinasz jeden przewód i jedziesz w teren.',
     },
     {
       icon: ICON.lan,
@@ -90,14 +91,12 @@ const data: ProductData = {
         'Regulacja wysokości o 150 mm, obrót w obu osiach i pivot do pionu — wygodnie przy długich zestawieniach.',
     },
   ],
-  usedBy: { device: 'Dell P2725HE USB-C' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/monitory' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.usbc,
       title: 'Stacja dokująca wbudowana w monitor',
       body:
-        'Jeden kabel USB-C przenosi obraz, ładuje laptop mocą do 90 W i podaje sieć z wbudowanego gniazda RJ45. Na biurku znika zasilacz i przejściówka do LAN.',
+        'Jeden kabel USB-C przenosi obraz, ładuje laptop mocą do 100 W i podaje sieć z wbudowanego gniazda RJ45. Na biurku znika zasilacz i przejściówka do LAN.',
       tone: 'akcent',
     },
   ],
@@ -110,6 +109,6 @@ const data: ProductData = {
   ],
 }
 
-export default function DellP2725HEUsbcPage() {
+export default function DellP2726HEUsbcPage() {
   return <ProductPage data={data} />
 }

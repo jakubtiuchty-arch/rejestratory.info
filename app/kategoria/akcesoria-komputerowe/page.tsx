@@ -161,6 +161,48 @@ const products = [
     badge: null,
     featured: false,
     customUrl: "/produkt/vertin-1000"
+  },
+  {
+    id: 12,
+    name: "HP 460 Multi-device Keyboard",
+    category: "Akcesoria komputerowe",
+    description: "Bezprzewodowa klawiatura obsługująca trzy urządzenia, ładowana przez USB-C",
+    specifications: "Bluetooth 5.3 + 2,4 GHz, do 3 urządzeń, blok numeryczny, bateria do 24 miesięcy",
+    price: "189 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "hp460_1.png",
+    badge: null,
+    featured: false,
+    customUrl: "/produkt/hp-460"
+  },
+  {
+    id: 13,
+    name: "HP 715 Rechargeable Mouse",
+    category: "Akcesoria komputerowe",
+    description: "Bezprzewodowa mysz dla osób oburęcznych, pracuje także na szkle",
+    specifications: "Bluetooth 5.3 + 2,4 GHz, do 3 urządzeń, 1200-3000 dpi, akumulator do 90 dni",
+    price: "274 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "hp715_1.png",
+    badge: null,
+    featured: false,
+    customUrl: "/produkt/hp-715"
+  },
+  {
+    id: 14,
+    name: "Torba HP do laptopów 15,6\"",
+    category: "Akcesoria komputerowe",
+    description: "Dwukomorowa torba na laptopa z otworem na uchwyt walizki",
+    specifications: "Laptopy 15,6\", dwie komory z przegrodami, odporna na wilgoć i zarysowania, 600 g",
+    price: "149 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "torba_hp_15.png",
+    badge: null,
+    featured: false,
+    customUrl: "/produkt/torba-hp-15"
   }
 ];
 

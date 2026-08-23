@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import { ileKart } from "@/data/liczby-kategorii";
 import { useInquiry } from '@/components/InquiryContext';
 import SearchAutocomplete from './components/SearchAutocomplete';
 import Header from '@/components/Header';
@@ -22,43 +23,37 @@ import {
 } from "lucide-react";
 import { ICON, naCiemnym } from '@/components/product/icons'
 
-// Placeholder data
+/** „1 produkt”, „3 produkty”, „11 produktów” — polska odmiana po liczebniku. */
+const opisLiczbyProduktow = (ile: number) => {
+  if (ile === 1) return "1 produkt";
+  const dziesiatki = ile % 100;
+  const jednosci = ile % 10;
+  const mnoga = jednosci >= 2 && jednosci <= 4 && !(dziesiatki >= 12 && dziesiatki <= 14);
+  return `${ile} ${mnoga ? "produkty" : "produktów"}`;
+};
+
+// Kategorie katalogu. Liczba produktów NIE jest tu wpisywana — bierze się
+// z `data/liczby-kategorii.ts`, który przelicza karty w `app/produkt/` przed
+// każdym buildem. Ręczne liczby rozjeżdżały się z rzeczywistością.
 const categories = [
   // Ikona dobrana po funkcji urządzenia, nie po sylwetce — w 28 px kształt obudowy jest nieczytelny
-  { id: 1, name: "Rejestratory", count: 15, Icon: ScanBarcode },
-  { id: 2, name: "Telefony", count: 12, Icon: Smartphone },
-  { id: 14, name: "Tablety", count: 3, Icon: Tablet },
-  { id: 3, name: "Laptopy", count: 11, Icon: Laptop },
-  { id: 4, name: "Urządzenia wielofunkcyjne", count: 7, Icon: PrinterCheck },
-  { id: 5, name: "Monitory", count: 8, Icon: Monitor },
-  { id: 7, name: "Serwery", count: 6, Icon: Server },
-  { id: 8, name: "Drukarki do rejestratora", count: 9, Icon: ScrollText },
-  { id: 9, name: "Drukarki laserowe", count: 14, Icon: Printer },
-  { id: 10, name: "All in One", count: 5, Icon: Computer },
-  { id: 11, name: "Elektroniczne Zarządzanie Dokumentacją", count: 8, Icon: FolderCheck },
-  { id: 12, name: "Urządzenia fiskalne", count: 3, Icon: ReceiptText },
-  { id: 13, name: "Akcesoria komputerowe", count: 18, Icon: Keyboard }
+  { id: 1, name: "Rejestratory", href: "/kategoria/rejestratory", Icon: ScanBarcode },
+  { id: 2, name: "Telefony", href: "/kategoria/telefony", Icon: Smartphone },
+  { id: 14, name: "Tablety", href: "/kategoria/tablety", Icon: Tablet },
+  { id: 3, name: "Laptopy", href: "/kategoria/laptopy", Icon: Laptop },
+  { id: 4, name: "Urządzenia wielofunkcyjne", href: "/kategoria/urzadzenia-wielofunkcyjne", Icon: PrinterCheck },
+  { id: 5, name: "Monitory", href: "/kategoria/monitory", Icon: Monitor },
+  { id: 7, name: "Serwery", href: "/kategoria/serwery", Icon: Server },
+  { id: 8, name: "Drukarki do rejestratora", href: "/kategoria/drukarki-do-rejestratora", Icon: ScrollText },
+  { id: 9, name: "Drukarki laserowe", href: "/kategoria/drukarki-laserowe", Icon: Printer },
+  { id: 10, name: "All in One", href: "/kategoria/all-in-one", Icon: Computer },
+  { id: 11, name: "Elektroniczne Zarządzanie Dokumentacją", href: "/kategoria/ezd", Icon: FolderCheck },
+  { id: 12, name: "Urządzenia fiskalne", href: "/kategoria/urzadzenia-fiskalne", Icon: ReceiptText },
+  { id: 13, name: "Akcesoria komputerowe", href: "/kategoria/akcesoria-komputerowe", Icon: Keyboard }
 ];
 
-// Funkcja do mapowania nazw kategorii na URLe
-const getCategoryUrl = (categoryName: string) => {
-  const urlMap: Record<string, string> = {
-    "Rejestratory": "/kategoria/rejestratory",
-    "Telefony": "/kategoria/telefony", 
-    "Tablety": "/kategoria/tablety",
-    "Laptopy": "/kategoria/laptopy",
-    "Urządzenia wielofunkcyjne": "/kategoria/urzadzenia-wielofunkcyjne",
-    "Monitory": "/kategoria/monitory",
-    "Serwery": "/kategoria/serwery",
-    "Drukarki do rejestratora": "/kategoria/drukarki-do-rejestratora",
-    "Drukarki laserowe": "/kategoria/drukarki-laserowe",
-    "All in One": "/kategoria/all-in-one",
-    "Elektroniczne Zarządzanie Dokumentacją": "/kategoria/ezd",
-    "Urządzenia fiskalne": "/kategoria/urzadzenia-fiskalne",
-    "Akcesoria komputerowe": "/kategoria/akcesoria-komputerowe"
-  };
-  return urlMap[categoryName] || "#";
-};
+const getCategoryUrl = (categoryName: string) =>
+  categories.find((c) => c.name === categoryName)?.href ?? "#";
 
 type PolecanyProdukt = {
   slug: string;
@@ -368,7 +363,7 @@ export default function HomePage() {
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-sm font-semibold leading-snug text-slate-900">{category.name}</span>
-                    <span className="mt-0.5 block text-xs text-slate-500">{category.count} produktów</span>
+                    <span className="mt-0.5 block text-xs text-slate-500">{opisLiczbyProduktow(ileKart(category.href))}</span>
                   </span>
                   <img src={ICON.strzalka} alt="" className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 mix-blend-multiply" />
                 </motion.a>

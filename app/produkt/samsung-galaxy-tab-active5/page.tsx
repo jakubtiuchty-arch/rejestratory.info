@@ -101,7 +101,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Tab Active5' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl' }, { name: 'TAKMA' }],
 }
 
 export default function TabActive5Page() {

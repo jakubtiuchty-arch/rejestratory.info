@@ -90,7 +90,6 @@ const data: ProductData = {
         'Lekki na tyle, żeby trzymać go w ręku przez całą serię dokumentów bez zmęczenia nadgarstka.',
     },
   ],
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.skandok,

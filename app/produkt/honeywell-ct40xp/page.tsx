@@ -85,7 +85,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Honeywell CT40XP' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/rejestratory' }, { name: 'TAKMA' }],
   related: [
     {
       name: 'Honeywell CT47',

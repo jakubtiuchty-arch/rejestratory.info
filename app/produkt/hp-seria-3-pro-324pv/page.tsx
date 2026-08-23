@@ -89,7 +89,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: '324pv' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/monitory' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.wsparcie,

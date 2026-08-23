@@ -90,7 +90,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Dell P2425HE' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/monitory' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.przekatna,

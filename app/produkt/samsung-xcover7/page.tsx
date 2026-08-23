@@ -87,7 +87,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Samsung XCover Pro 6' },
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   related: [
     {
       name: 'Zebra EM45',

@@ -90,7 +90,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Bixolon SPP-R410' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/rejestratory' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.waga,

@@ -58,10 +58,6 @@ const data: ProductData = {
         'Stawia się pod biurkiem i gotowe — nie trzeba wiercić ani wymieniać mebla.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   hideService: true,
   related: [
     {

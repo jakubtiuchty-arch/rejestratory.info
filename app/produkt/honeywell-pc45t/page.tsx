@@ -90,7 +90,6 @@ const data: ProductData = {
         'Partia etykiet do opisania dokumentacji schodzi z drukarki ciągiem, bez przerw między kolejnymi sztukami.',
     },
   ],
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.tarcza,

@@ -90,7 +90,6 @@ const data: ProductData = {
         'Ekran ustawia się pod wzrost osoby pracującej, co przy stanowisku obsługiwanym na zmiany ma większe znaczenie niż w komputerze przypisanym do jednej osoby.',
     },
   ],
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.onsite,

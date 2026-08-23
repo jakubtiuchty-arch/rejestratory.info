@@ -106,7 +106,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'PowerEdge R360' },
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.wsparcie5,

@@ -80,10 +80,6 @@ const data: ProductData = {
         'USB-C bez dodatkowego zasilania, zgodny z komputerami i telefonami z Androidem.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   signature: [
     {
       icon: ICON.dyskzew,

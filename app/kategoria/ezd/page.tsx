@@ -71,6 +71,45 @@ const products = [
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/1450g_1.png",
     featured: false
+  },
+  {
+    id: 6,
+    name: "Honeywell PC42E-T",
+    slug: "honeywell-pc42e-t",
+    category: "Elektroniczne Zarządzanie Dokumentacją",
+    description: "Biurkowa drukarka etykiet z Ethernetem, z opcjonalną gilotyną i dyspenserem",
+    specifications: "Termotransfer, 203 lub 300 dpi, do 6 ips, Ethernet i USB, 128 MB RAM",
+    price: "556 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "/pc42e_t_1.png",
+    featured: false
+  },
+  {
+    id: 7,
+    name: "Zebra DS2278",
+    slug: "zebra-ds2278",
+    category: "Elektroniczne Zarządzanie Dokumentacją",
+    description: "Bezprzewodowy czytnik kodów 1D i 2D z podstawką ładującą",
+    specifications: "Bluetooth, akumulator 2400 mAh do 84 h, kody 1D i 2D, IP52",
+    price: "486 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "/zebra-ds2278.png",
+    featured: false
+  },
+  {
+    id: 8,
+    name: "Honeywell Voyager 1250g",
+    slug: "honeywell-1250g",
+    category: "Elektroniczne Zarządzanie Dokumentacją",
+    description: "Laserowy czytnik kodów kreskowych 1D z trybem prezentacyjnym na podstawce",
+    specifications: "Laser jednoliniowy, 100 odczytów/s, zasięg do 58 cm, USB",
+    price: "294 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "/honeywell-1250g.png",
+    featured: false
   }
 ];
 

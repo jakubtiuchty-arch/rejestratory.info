@@ -102,7 +102,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'iPad Pro 11 M4' },
-  whereToBuy: [{ name: 'TAKMA' }],
 }
 
 export default function IPadProM4Page() {

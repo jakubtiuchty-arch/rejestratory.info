@@ -90,7 +90,6 @@ const data: ProductData = {
         'Sześćdziesiąt miesięcy od daty wysyłki, z opcją rozszerzenia o pakiety Zebra OneCare.',
     },
   ],
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.wsparcie5,

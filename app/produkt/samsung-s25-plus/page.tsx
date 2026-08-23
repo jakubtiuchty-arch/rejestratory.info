@@ -86,7 +86,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Samsung S25+', exclude: 'Samsung S25 Ultra' },
-  whereToBuy: [{ name: 'TAKMA' }],
   related: [
     {
       name: 'Samsung Galaxy S25 Ultra',

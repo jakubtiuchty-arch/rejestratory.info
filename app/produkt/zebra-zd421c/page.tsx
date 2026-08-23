@@ -91,7 +91,6 @@ const data: ProductData = {
         'Aplikacja Zebry łączy się z drukarką przez Bluetooth Low Energy, więc ustawienia zmienia się bez podłączania komputera.',
     },
   ],
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.wspolpraca,

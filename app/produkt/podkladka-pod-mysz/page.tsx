@@ -58,10 +58,6 @@ const data: ProductData = {
         'Gładka, jednolita faktura — mysz nie gubi śledzenia tak jak na lakierowanym blacie.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   hideService: true,
   related: [
     {

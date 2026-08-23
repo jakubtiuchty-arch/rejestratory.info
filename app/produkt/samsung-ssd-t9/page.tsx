@@ -77,10 +77,6 @@ const data: ProductData = {
         'USB-C w standardzie 3.2 Gen 2x2 — dysk podłącza się jednym kablem, bez zasilacza i bez przejściówek.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   signature: [
     {
       icon: ICON.klodka,

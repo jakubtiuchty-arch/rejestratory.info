@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prebuild": "node scripts/policz-karty.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.1",

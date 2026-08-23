@@ -120,7 +120,6 @@ const data: ProductData = {
       { icon: ICON.kalendarz, title: 'Przeglądy', note: 'ustawowe co 2 lata' },
     ],
   },
-  whereToBuy: [{ name: 'ZUP Łódź' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.kompakt,

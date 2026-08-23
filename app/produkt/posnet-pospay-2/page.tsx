@@ -139,7 +139,6 @@ const data: ProductData = {
       { icon: ICON.kalendarz, title: 'Przeglądy', note: 'ustawowe co 2 lata' },
     ],
   },
-  whereToBuy: [{ name: 'TAKMA' }],
   // w module przeglądów model zapisywany jest bez „2” — to ten sam sprzęt
   usedBy: { device: 'Posnet Pospay' },
   related: [

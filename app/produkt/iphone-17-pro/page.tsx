@@ -100,7 +100,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'iPhone 17 Pro', exclude: 'iPhone 17 Pro Max' },
-  whereToBuy: [{ name: 'TAKMA' }],
 }
 
 export default function IPhone17ProPage() {

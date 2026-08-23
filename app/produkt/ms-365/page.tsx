@@ -84,10 +84,6 @@ const data: ProductData = {
         'Jeden użytkownik instaluje pakiet na pięciu komputerach, pięciu tabletach i pięciu telefonach — bez dokupowania licencji na sprzęt zapasowy.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   hideService: true,
   related: [
     {

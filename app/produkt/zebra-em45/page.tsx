@@ -107,10 +107,6 @@ const data: ProductData = {
     { id: 'holster', name: 'Kabura na pasek', description: 'Obrotowa klamra, dostęp jedną ręką' },
   ],
   usedBy: { device: 'Zebra EM45' },
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/rejestratory' },
-    { name: 'TAKMA' },
-  ],
   serviceContract: '3 lub 5 lat',
   microsite: {
     href: 'https://www.em45.info',

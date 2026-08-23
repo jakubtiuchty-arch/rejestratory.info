@@ -75,6 +75,20 @@ const products: Product[] = [
     badge: null,
     featured: false,
     slug: "dell-pro-16"
+  },
+  {
+    id: 6,
+    name: "HP EliteBook 6 G1ah 14\"",
+    category: "Laptopy",
+    description: "Kompaktowy laptop 14 cali z czytnikiem kart kryptograficznych, do pracy w kancelarii i w terenie",
+    specifications: "AMD Ryzen 5 220, 16GB DDR5, 512GB SSD, 14\" WUXGA, Smart Card, Windows 11 Pro",
+    price: "5 329 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "/hp_elite_14_1.png",
+    badge: null,
+    featured: false,
+    slug: "hp-elitebook-6-g1ah-14"
   }
 ];
 

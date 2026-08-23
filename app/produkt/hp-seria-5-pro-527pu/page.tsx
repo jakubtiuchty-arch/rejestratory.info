@@ -5,7 +5,7 @@ import { ICON } from '@/components/product/icons'
 
 const data: ProductData = {
   slug: 'hp-seria-5-pro-527pu',
-  name: 'HP Pro S5 QHD USB-C 527pv',
+  name: 'HP Pro S5 QHD USB-C 527pu',
   category: 'Monitory',
   categoryHref: '/kategoria/monitory',
   images: ['/527pu_1.png'],
@@ -13,7 +13,7 @@ const data: ProductData = {
     description: 'Monitor 27 cali QHD z USB-C i gniazdem sieciowym',
     specifications: '27″ QHD 100 Hz · USB-C · RJ-45 · daisy chain · 100% sRGB',
   },
-  whyNavLabel: 'Dlaczego 527pv',
+  whyNavLabel: 'Dlaczego 527pu',
   whyHeading: 'Do czego przyda się w nadleśnictwie',
   whyLabel: 'Na biurku w nadleśnictwie',
   highlights: [
@@ -93,8 +93,7 @@ const data: ProductData = {
         'Ograniczenie światła niebieskiego bez zmiany barw na ekranie oraz brak migotania przy pracy na pełen etat.',
     },
   ],
-  usedBy: { device: '527pv' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/monitory' }, { name: 'TAKMA' }],
+  usedBy: { device: '527pu' },
   signature: [
     {
       icon: ICON.rozdzielczosc,
@@ -113,6 +112,6 @@ const data: ProductData = {
   ],
 }
 
-export default function HP527pvPage() {
+export default function HP527puPage() {
   return <ProductPage data={data} />
 }

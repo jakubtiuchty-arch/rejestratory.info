@@ -91,7 +91,6 @@ const data: ProductData = {
     },
   ],
   usedBy: { device: 'Dell P2424HEB' },
-  whereToBuy: [{ name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/monitory' }, { name: 'TAKMA' }],
   signature: [
     {
       icon: ICON.kamera,
@@ -103,8 +102,8 @@ const data: ProductData = {
   ],
   related: [
     {
-      name: 'Dell Pro 27 P2724HEB',
-      href: '/produkt/dell-pro-27-plus-p2724heb',
+      name: 'Dell Pro 27 P2724DEB',
+      href: '/produkt/dell-pro-27-plus-p2724deb',
       note: 'Ten sam zestaw na 27 calach w QHD',
     },
   ],

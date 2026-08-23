@@ -77,10 +77,6 @@ const data: ProductData = {
         'Podwójny akumulator VRLA 7 Ah daje dłuższe podtrzymanie przy tym samym obciążeniu niż wersja 600 VA.',
     },
   ],
-  whereToBuy: [
-    { name: 'ZUP Łódź', href: 'https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe' },
-    { name: 'TAKMA' },
-  ],
   signature: [
     {
       icon: ICON.gniazdo,
