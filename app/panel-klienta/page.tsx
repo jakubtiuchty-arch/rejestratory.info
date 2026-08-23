@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Search, Lock, AlertCircle } from "lucide-react";
+import { ICON } from '@/components/product/icons';
 import { supabase } from '@/lib/supabase';
 
 export default function PanelKlienta() {
@@ -60,7 +60,7 @@ export default function PanelKlienta() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-green-50">
+    <div className="min-h-screen bg-stone-50">
       <Header activeTab="produkty" />
 
       <div className="container mx-auto px-4 py-16">
@@ -71,42 +71,42 @@ export default function PanelKlienta() {
         >
           {/* Logo/Ikona */}
           <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Lock className="h-10 w-10 text-white" />
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-stone-200 bg-white">
+              <img src={ICON.klodka} alt="" className="h-7 w-7 mix-blend-multiply" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Panel Klienta</h1>
-            <p className="text-gray-600">
+            <h1 className="mb-2 text-4xl font-bold tracking-tight text-stone-900">Panel Klienta</h1>
+            <p className="text-stone-600">
               Sprawdź status swoich urządzeń
             </p>
           </div>
 
           {/* Formularz logowania */}
-          <div className="bg-white rounded-2xl shadow-xl p-8">
+          <div className="rounded-2xl border border-stone-200 bg-white p-8">
             <form onSubmit={handleLogin} className="space-y-6">
               <div>
-                <label htmlFor="serial" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="serial" className="block text-sm font-medium text-stone-700 mb-2">
                   Numer seryjny urządzenia
                 </label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <img src={ICON.lupa} alt="" className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 mix-blend-multiply" />
                   <input
                     id="serial"
                     type="text"
                     value={serialNumber}
                     onChange={(e) => setSerialNumber(e.target.value.toUpperCase())}
                     placeholder="np. ABC123456"
-                    className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
+                    className="w-full rounded-xl border border-stone-300 py-3 pl-11 pr-4 text-lg outline-none transition placeholder:text-stone-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20"
                     required
                   />
                 </div>
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-stone-500">
                   Znajdziesz go na naklejce na Twoim urządzeniu
                 </p>
               </div>
 
               {error && (
-                <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg">
-                  <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-xl">
+                  <img src={ICON.info} alt="" className="h-5 w-5 flex-shrink-0 mt-0.5 mix-blend-multiply" />
                   <p className="text-sm text-red-700">{error}</p>
                 </div>
               )}
@@ -114,18 +114,18 @@ export default function PanelKlienta() {
               <button
                 type="submit"
                 disabled={isLoading || !serialNumber}
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-semibold transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="w-full rounded-xl bg-emerald-600 py-3.5 font-semibold text-white transition-colors hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-stone-300"
               >
                 {isLoading ? "Sprawdzanie..." : "Pokaż moje urządzenia"}
               </button>
             </form>
 
             {/* Informacje pomocnicze */}
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <h3 className="text-sm font-semibold text-gray-900 mb-2">
+            <div className="mt-6 pt-6 border-t border-stone-200">
+              <h3 className="text-sm font-semibold text-stone-900 mb-2">
                 Co znajdziesz w panelu?
               </h3>
-              <ul className="space-y-2 text-sm text-gray-600">
+              <ul className="space-y-2 text-sm text-stone-600">
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-600 mt-0.5">✓</span>
                   <span>Listę urządzeń fiskalnych i rejestratorów</span>
@@ -148,7 +148,7 @@ export default function PanelKlienta() {
 
           {/* Pomoc */}
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-stone-600">
               Problemy z dostępem?{" "}
               <a href="mailto:takma@takma.com.pl" className="text-emerald-600 hover:text-emerald-700 font-medium">
                 Skontaktuj się z nami

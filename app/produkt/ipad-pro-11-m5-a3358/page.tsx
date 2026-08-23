@@ -5,7 +5,7 @@ import { ICON } from '@/components/product/icons'
 
 const data: ProductData = {
   slug: 'ipad-pro-11-m5-a3358',
-  name: 'Apple iPad Pro 11″ (M5) — A3358',
+  name: 'Apple iPad Pro 11″ (M5)',
   category: 'Tablety',
   categoryHref: '/kategoria/tablety',
   images: ['/products/ipad-pro-11-1.webp', '/products/ipad-pro-11-2.webp'],
@@ -13,7 +13,6 @@ const data: ProductData = {
     description: 'Tablet do pracy biurowej i pomiaru fotooptycznego, Wi-Fi + Cellular',
     specifications: 'iPadOS · 11″ Ultra Retina XDR 120 Hz · Apple M5 · LiDAR · 5G · Thunderbolt',
   },
-  modelCode: 'A3358',
   highlights: [
     { icon: ICON.przekatna, label: 'Ekran', value: '11″ Ultra Retina XDR, 120 Hz' },
     { icon: ICON.procesor, label: 'Układ', value: 'Apple M5' },
@@ -26,7 +25,7 @@ const data: ProductData = {
   ],
   related: [
     {
-      name: 'iPad Pro 11″ (M4) — A2837',
+      name: 'iPad Pro 11″ (M4)',
       href: '/produkt/ipad-pro-11-m4-a2837',
       note: 'Poprzednia generacja, ten sam ekran i obudowa',
     },
@@ -68,7 +67,6 @@ const data: ProductData = {
         { k: 'Wi-Fi', v: 'Wi-Fi 7, Bluetooth 6' },
         { k: 'Złącze', v: 'Thunderbolt / USB 4' },
         { k: 'Grubość', v: '5,3 mm' },
-        { k: 'Numer modelu', v: 'A3358' },
       ],
     },
   ],

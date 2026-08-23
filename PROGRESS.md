@@ -1,5 +1,51 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-23 — akcesoria wyglądały na zaznaczone od startu
+
+Kwadrat wyboru miał w środku ikonę ptaszka zawsze, a stan niezaznaczony ukrywał ją klasą `text-transparent` — która działa na tekst, nie na `<img>`. Efekt: każda pozycja wyglądała na wybraną, mimo że `aria-pressed` było `false`.
+
+Ptaszek renderuje się teraz dopiero po zaznaczeniu, a w stanie zaznaczonym używa wariantu białego (ciemnozielona ikona na zielonym tle była i tak nieczytelna). Sprawdzone klikiem: 0 zaznaczonych na wejściu, 2 po kliknięciu dwóch pozycji, przycisk „Dodaj (2)” pojawia się dopiero z wyborem.
+
+## 2026-08-23 — drukarki mobilne: kwity wywozowe, nie etykiety
+
+Karty sześciu drukarek mobilnych sprzedawały druk etykiet i przywieszek. Leśniczy drukuje w terenie **kwit wywozowy** — dokument wystawiany w Leśniku+, stanowiący podstawę rozchodu drewna i po podpisaniu przez odbiorcę dowód dostawy (Encyklopedia Leśna, dokumentacja SILP). ZILP prowadzi listę drukarek mobilnych współpracujących z Leśnikiem+ — są na niej m.in. Sewoo LK-P43, Seiko MP-A40, Bixolon SPP-R410, Honeywell RP4D i Zebra ZQ520.
+
+Poprawione karty: `zebra-zq521`, `honeywell-rp4`, `sewoo-lkp43`, `sewoo-lkp400`, `seiko-mpa40`, `bixolon-sppr410`. Wyróżniki „Nośniki: paragony, etykiety, przywieszki” zamienione na papier w rolce z podaną szerokością, wiersze „Rodzaje” w specyfikacji na „Rodzaj: papier termiczny w rolce”, a boksy w rodzaju „Kwity, etykiety i przywieszki” przepisane pod rzeczywisty scenariusz (ZQ521: „Kwit wywozowy prosto z powierzchni”).
+
+Przy okazji: usunięta wzmianka o linerless w odsyłaczu LK-P43 → LK-P400 i dwie nowe kolizje ikon (ta sama ikona pod dwoma wyróżnikami), które powstały przy tej zamianie. Audyt całego katalogu: zero kolizji.
+
+## 2026-08-23 — „Polecane produkty” liczone z panelu
+
+Sekcja na stronie głównej miała trzy modele wpisane na sztywno (EM45, Dell Pro 16 Plus, Brother MFC-L8690CDW) — dwa ostatnie to nie są urządzenia, które faktycznie najczęściej stoją u klientów.
+
+Nowe `/api/najczestsze-urzadzenia`: ranking liczony z `registrators` + `devices`, z odsianiem materiałów i akcesoriów, zwracający tylko modele mające kartę produktu. Strona główna pobiera trójkę po stronie klienta, z zapasem na wypadek braku odpowiedzi (dzisiejsza czołówka wpisana w kod).
+
+Wynik: **Zebra ZQ521** (194 szt., 56 nadleśnictw), **Zebra EM45** (186 szt., 20), **Samsung Galaxy A56** (159 szt., 16). Ranking po liczbie sztuk i po liczbie nadleśnictw daje tę samą trójkę.
+
+Karty dostały liczbę nadleśnictw jako dowód („Pracuje w 56 nadleśnictwach”) i styl kart produktu; podpis sekcji zmieniony z „Najpopularniejsze rozwiązania w naszej ofercie” na „Sprzęt, który najczęściej pracuje w nadleśnictwach” — bo teraz to zdanie jest prawdziwe, a nie deklaratywne.
+
+## 2026-08-22 — /panel-klienta dostosowany do nowego wyglądu
+
+**Metoda: przestylowanie w miejscu, nie przepisanie.** Dashboard ma 2236 linii i obsługuje urządzenia fiskalne, rejestratory w kategoriach, wyszukiwanie, filtr po leśnictwie, edycję leśnictwa (inline i w oknie), kontrakty, protokoły, dokumenty, instrukcje czasowe i modal kuriera. Przepisanie tego od zera to prosta droga do zgubienia sekcji, więc zmienione zostały wyłącznie klasy i ikony — logika, zapytania do Supabase i struktura JSX nietknięte.
+
+Kontrola, że nic nie zniknęło: zrzut `innerText` plus lista nagłówków, przycisków, linków i pól przed zmianą i po niej, dla dwóch kont — Nadleśnictwo Kolumna (104 rejestratory) i Nadleśnictwo Pieńsk (11 fiskalnych + 72 rejestratory).
+
+| | przed | po |
+|---|---|---|
+| nagłówki | 141 / 93 | 141 / 93 identyczne |
+| przyciski | 138 / 99 | 138 / 99 identyczne |
+| linki | 30 / 32 | 30 / 32 identyczne |
+| pola formularzy | 0 / 2 | 0 / 2 identyczne |
+| tekst strony | — | **bajt w bajt**, poza dodanym nadtytułem „PANEL KLIENTA” |
+
+Zmiany wizualne: paleta gray → stone, niebieskie i pomarańczowe akcenty → zieleń, `rounded-lg` → `rounded-2xl`, cienie → jednolite obramowania, ikony UI z Higgsfielda (ikony kategorii sprzętu zostają z lucide, zgodnie z wcześniejszą decyzją). Nowe ikony: pobierz, wyloguj, edytuj, zapisz, instrukcja, umowa. Spinnery zamienione na pierścienie CSS.
+
+**Zdjęcia zamiast placeholderów**: mapa `ZDJECIA_SPRZETU` ma 47 pozycji zamiast pięciu, więc zdjęcie ma **1303 z 1576 pozycji** w bazie (83 %). Dopasowanie po nazwie znormalizowanej (bez spacji, myślników, wielkości liter), klucze sortowane od najdłuższego, żeby „Dell Pro 16 Plus” wygrało z „Dell Pro 16”. Przy okazji naprawione: „Samsung S25 FE” pokazywał zdjęcie S25+ (w kodzie stał komentarz „używamy s25plus jako placeholder”), a plik `s25fe_1.png` był w repo od dawna.
+
+Pułapka: dopasowanie po zawieraniu podstawiało akcesoriom zdjęcie urządzenia z nazwy — „Papier termiczny do drukarki ZEBRA ZQ521” dostawał zdjęcie drukarki, a „Szkło ochronne ZEBRA EM45” zdjęcie telefonu. Stąd wzorzec `AKCESORIUM`: dla materiałów i dodatków dopuszczamy wyłącznie trafienie dokładne. Bez zdjęcia zostają tylko akcesoria i pięć modeli, których w repo nie ma (XCover Pro 6, CT32, DS2278, 1250g, Novitus Bono).
+
+Poprawki przy okazji: adres e-mail Posnetu przestał być czerwony (czerwień sugerowała błąd) i stał się klikalnym `mailto:`; „Wyloguj” z czerwonego przycisku na neutralny — wylogowanie to nie stan awaryjny.
+
 ## 2026-08-22 — stopka przebudowana
 
 Wytyczne: **NN/g „Web Page Footers 101”** — utility links (kontakt, obsługa) w stopce zawsze, bo tam ludzie ich szukają; site map z realnymi kategoriami; linki pogrupowane w kolumny z **konkretnymi** nagłówkami, nie ogólnikami; bez zwijania i bez mikrodruku.

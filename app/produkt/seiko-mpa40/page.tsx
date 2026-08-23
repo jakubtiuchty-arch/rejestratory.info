@@ -47,7 +47,7 @@ const data: ProductData = {
     {
       title: 'Nośniki',
       rows: [
-        { k: 'Rodzaje', v: 'papier w rolce, etykiety w rolce' },
+        { k: 'Rodzaj', v: 'papier termiczny w rolce' },
         { k: 'Szerokość', v: '80 / 100 / 105 / 112 mm' },
         { k: 'Średnica rolki', v: 'do Ø 58 mm' },
         { k: 'Odcinanie', v: 'listwa tear bar' },

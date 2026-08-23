@@ -24,7 +24,7 @@ const products = [
   },
   {
     id: 2,
-    name: "Apple iPad Pro 11\" (M4) — A2837",
+    name: "Apple iPad Pro 11\" (M4)",
     category: "Tablety",
     description: "Wersja Wi-Fi + Cellular z 2024 roku — ekran Ultra Retina XDR i chip M4",
     specifications: "iPadOS, 11\" Ultra Retina XDR (tandem OLED) 2420 × 1668, ProMotion 10–120 Hz, Apple M4, 8 lub 16 GB RAM, 256 GB – 2 TB, aparaty 12 Mpx, Wi-Fi 6E i 5G, Thunderbolt / USB 4, Face ID, 5,3 mm",
@@ -38,7 +38,7 @@ const products = [
   },
   {
     id: 3,
-    name: "Apple iPad Pro 11\" (M5) — A3358",
+    name: "Apple iPad Pro 11\" (M5)",
     category: "Tablety",
     description: "Najnowsza wersja Wi-Fi + Cellular z 2025 roku — chip M5 i modem Apple C1X",
     specifications: "iPadOS 26, 11\" Ultra Retina XDR (tandem OLED) 2420 × 1668, ProMotion 10–120 Hz, Apple M5, 12 lub 16 GB RAM, 256 GB – 2 TB, aparaty 12 Mpx, Wi-Fi 7 i 5G (modem Apple C1X), Thunderbolt / USB 4, Face ID, 5,3 mm",

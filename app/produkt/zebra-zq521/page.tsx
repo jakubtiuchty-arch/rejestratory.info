@@ -20,7 +20,7 @@ const data: ProductData = {
     { icon: ICON.upadek, label: 'Odporność', value: 'IP54, upadki z 2 m' },
     { icon: ICON.mroz, label: 'Temperatura', value: 'od -20 °C do +55 °C' },
     { icon: ICON.szybkosc, label: 'Prędkość druku', value: '127 mm/s, 203 dpi' },
-    { icon: ICON.rolka, label: 'Nośniki', value: 'paragony, etykiety, przywieszki' },
+    { icon: ICON.rolka, label: 'Papier', value: 'rolka 50,8–113 mm szerokości' },
   ],
   specGroups: [
     {
@@ -46,7 +46,7 @@ const data: ProductData = {
       rows: [
         { k: 'Szerokość podłoża', v: '50,8–113 mm' },
         { k: 'Średnica rolki', v: 'do 57 mm' },
-        { k: 'Rodzaje', v: 'paragony, etykiety, przywieszki' },
+        { k: 'Rodzaj', v: 'papier termiczny w rolce' },
       ],
     },
     {
@@ -75,9 +75,9 @@ const data: ProductData = {
     },
     {
       icon: ICON.rolka,
-      title: 'Kwity, etykiety i przywieszki',
+      title: 'Kwit wywozowy prosto z powierzchni',
       body:
-        'Jedno urządzenie obsługuje kwity odbioru, etykiety na stos i przywieszki — nośniki od 50,8 do 113 mm szerokości.',
+        'Kwit wystawiony w Leśniku+ schodzi z drukarki przy stosie i idzie z transportem — bez wracania do kancelarii i przepisywania danych na papierowy formularz.',
     },
     {
       icon: ICON.czaspracy,

@@ -361,12 +361,17 @@ const Accessories = ({
                   <img src={acc.image} alt="" className="mb-3 h-24 w-24 object-contain" />
                 )}
                 {!zeZdjeciami && (
+                  /* ptaszek pokazujemy dopiero po zaznaczeniu — `text-transparent`
+                     nie ukrywa obrazka, więc wcześniej każda pozycja wyglądała
+                     na zaznaczoną */
                   <span
                     className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border transition ${
-                      on ? 'border-emerald-600 bg-emerald-600 text-white' : 'border-stone-300 text-transparent'
+                      on ? 'border-emerald-600 bg-emerald-600' : 'border-stone-300 bg-white'
                     }`}
                   >
-                    <img src={ICON.ptaszek} alt="" className="h-3.5 w-3.5 mix-blend-multiply" />
+                    {on && (
+                      <img src={naCiemnym(ICON.ptaszek)} alt="" className="h-3.5 w-3.5" />
+                    )}
                   </span>
                 )}
                 <span className={zeZdjeciami ? 'flex flex-col items-center gap-1' : ''}>

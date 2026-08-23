@@ -3,37 +3,8 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import {
-  Printer,
-  FileText,
-  Download,
-  AlertCircle,
-  CheckCircle2,
-  Clock,
-  Loader2,
-  LogOut,
-  Truck,
-  X,
-  Check,
-  Info,
-  ChevronDown,
-  ChevronUp,
-  MapPin,
-  Pencil,
-  Search,
-  Filter,
-  Save,
-  BookOpen,
-  ZoomIn,
-  Smartphone,
-  Shield,
-  ShieldCheck,
-  User,
-  Laptop,
-  Monitor,
-  Server,
-  Package,
-} from "lucide-react";
+import { ICON, naCiemnym } from '@/components/product/icons';
+import { Laptop, Monitor, Package, Printer, Server, Smartphone, User } from "lucide-react";
 import { supabase, Device, Inspection, ClientDocument, Registrator } from '@/lib/supabase';
 
 type DeviceStatus = "new" | "ok" | "warning" | "overdue";
@@ -46,15 +17,15 @@ const getStatusConfig = (status: string) => {
   switch (status) {
     case "new":
       return {
-        icon: Printer,
-        color: "text-blue-600",
-        bgColor: "bg-blue-50",
+        icon: ICON.drukarka,
+        color: "text-emerald-700",
+        bgColor: "bg-emerald-50/60",
         label: "NOWE",
-        borderColor: "border-blue-200"
+        borderColor: "border-emerald-200"
       };
     case "ok":
       return {
-        icon: CheckCircle2,
+        icon: ICON.ptaszek,
         color: "text-emerald-600",
         bgColor: "bg-emerald-50",
         label: "Po przeglądzie",
@@ -62,15 +33,15 @@ const getStatusConfig = (status: string) => {
       };
     case "warning":
       return {
-        icon: Clock,
+        icon: ICON.zegar,
         color: "text-amber-600",
-        bgColor: "bg-amber-50",
+        bgColor: "bg-stone-50",
         label: "Zbliża się przegląd",
         borderColor: "border-amber-200"
       };
     case "overdue":
       return {
-        icon: AlertCircle,
+        icon: ICON.ostrzezenie,
         color: "text-red-600",
         bgColor: "bg-red-50",
         label: "Wymaga przeglądu",
@@ -78,11 +49,11 @@ const getStatusConfig = (status: string) => {
       };
     default:
       return {
-        icon: CheckCircle2,
-        color: "text-gray-600",
-        bgColor: "bg-gray-50",
+        icon: ICON.ptaszek,
+        color: "text-stone-600",
+        bgColor: "bg-stone-50",
         label: "Nieznany",
-        borderColor: "border-gray-200"
+        borderColor: "border-stone-200"
       };
   }
 };
@@ -97,15 +68,87 @@ const formatDate = (dateString: string) => {
 };
 
 // Mapowanie nazw urządzeń na zdjęcia
-const getDeviceImage = (deviceName: string): string | null => {
-  const name = deviceName.toLowerCase();
-  
-  if (name.includes('pospay')) return '/pospay_3.png';
-  if (name.includes('temo')) return '/temo_online_1.png';
-  // Dodaj więcej mapowań w miarę potrzeby
-  
-  return null; // Brak zdjęcia - użyj ikony
+/**
+ * Zdjęcia sprzętu w panelu. Nazwy w bazie bywają zapisane inaczej niż na kartach
+ * produktu („Sewoo LKP43” vs „Sewoo LK-P43”), więc dopasowanie idzie po nazwie
+ * znormalizowanej: bez spacji, myślników i wielkości liter. Najpierw trafienie
+ * dokładne, potem zawieranie — dzięki temu „Zebra EM45 stacja dokująca” nie
+ * podszywa się pod sam rejestrator, a „Posnet Pospay 2” trafia na Pospaya.
+ */
+const ZDJECIA_SPRZETU: Record<string, string> = {
+  'Zebra EM45': '/em45_1.webp',
+  'Zebra TC27': '/tc27_1.png',
+  'Zebra TC58e': '/tc58_1.png',
+  'Zebra ZQ521': '/zq521_1.png',
+  'Zebra ZD421c': '/zd421c_1.png',
+  'Zebra DS2208': '/zebra-ds2208.png',
+  'Samsung A36': '/a36_1.png',
+  'Samsung A56': '/a56_1.png',
+  'Samsung S25 FE': '/s25fe_1.png',
+  'Samsung S25 Ultra': '/s25ultra_1.png',
+  'Samsung S25+': '/s25plus_1.png',
+  'Samsung XCover7': '/xcover7_1.png',
+  'Unitech PA768': '/pa768_1.png',
+  'Unitech EA660': '/ea660_1.png',
+  'Honeywell CT30P': '/ct30p_1.png',
+  'Honeywell CT40XP': '/ct40xp_1.png',
+  'Honeywell CT47': '/ct47_1.png',
+  'Honeywell EDA52': '/eda52_1.png',
+  'Honeywell RP4': '/rp4_1.png',
+  'Honeywell PC45t': '/pc45t_1.png',
+  'Honeywell 1450g': '/1450g_1.png',
+  'M3 Mobile SL20+': '/sl20_1.png',
+  'Seiko MPA40': '/mpa40_1.png',
+  'Sewoo LKP43': '/lkp43_1.png',
+  'Sewoo LKP400': '/lkp400_1.png',
+  'Bixolon SPP-R410': '/sppr410_1.png',
+  'Epson DS-730n': '/ds730_1.png',
+  'Dell Pro 16 Plus': '/dell_16_1.png',
+  'Dell Pro 16': '/dell_16_bs_1.png',
+  'Dell Pro 14 Plus': '/dell_14_1.png',
+  'Dell AIO Pro 24': '/aio_dell_1.png',
+  'Dell P2425HE': '/P2425HE_1.png',
+  'Dell P2725HE USB-C': '/P2425HE_1.png',
+  'Dell P2424HEB': '/P2424HEB_1.png',
+  'HP EliteBook 6 G1ah 16': '/hp_elite_16_1.png',
+  'Brother DCP-B7620DW': '/dcpb75620dwph.png',
+  'Brother DCP-L5510DW': '/DCPL5510DW_1.png',
+  'Brother HL-L6210DW': '/HLL6210DW_1.png',
+  'Brother HL-L6410DN': '/HLL6410DN_1.png',
+  'Brother MFC-L5710DW': '/MFCL5710DW_1.png',
+  'Brother MFC-L6710DW': '/MFCL6710DW_1.png',
+  'Brother MFC-L8390CDW': '/MFCL8390CDW_1.png',
+  'Brother MFC-L8690CDW': '/MFCL8690CDW_1.png',
+  'Brother MFC-L8900CDW': '/MFCL8900CDW_1.png',
+  'Posnet Pospay': '/pospay_3.png',
+  'Posnet Temo': '/temo_online_1.png',
+  'Torba na laptop': '/torba_na_laptopa_15.png',
 };
+
+const uprosc = (s: string) => s.toLowerCase().replace(/[\s\-_.+]/g, '');
+
+/** Klucze od najdłuższego, żeby „Dell Pro 16 Plus” wygrało z „Dell Pro 16”. */
+const KLUCZE_ZDJEC = Object.keys(ZDJECIA_SPRZETU).sort((a, b) => b.length - a.length);
+
+/**
+ * Materiały i dodatki noszą w nazwie model urządzenia („Papier termiczny do
+ * drukarki ZEBRA ZQ521”), więc dopasowanie po zawieraniu podstawiłoby im zdjęcie
+ * samego urządzenia. Dla takich pozycji dopuszczamy wyłącznie trafienie dokładne.
+ */
+const AKCESORIUM =
+  /papier|ta[śs]m|szk[łl]o|folia|etui|kabur|pasek|handstrap|akumulator|bateria|stacja|dokuj|[łl]adowark|zasilacz|kabel|podstawk|czytnik|toner|b[ęe]ben/i;
+
+const znajdzZdjecie = (deviceName: string): string | null => {
+  if (!deviceName) return null;
+  const nazwa = uprosc(deviceName);
+  const dokladne = KLUCZE_ZDJEC.find((k) => uprosc(k) === nazwa);
+  if (dokladne) return ZDJECIA_SPRZETU[dokladne];
+  if (AKCESORIUM.test(deviceName)) return null;
+  const zawiera = KLUCZE_ZDJEC.find((k) => nazwa.includes(uprosc(k)));
+  return zawiera ? ZDJECIA_SPRZETU[zawiera] : null;
+};
+
+const getDeviceImage = (deviceName: string): string | null => znajdzZdjecie(deviceName);
 
 export default function Dashboard() {
   const [devices, setDevices] = React.useState<DeviceWithStatus[]>([]);
@@ -154,16 +197,8 @@ export default function Dashboard() {
   };
 
   // Mapowanie obrazków dla rejestratorów
-  const getRegistratorImage = (deviceName: string): string | null => {
-    const imageMap: Record<string, string> = {
-      'Zebra EM45': '/em45_1.webp',
-      'Zebra TC27': '/tc27_1.png',
-      'Samsung A56': '/a56_1.png',
-      'Samsung S25 Ultra': '/s25ultra_1.png',
-      'Samsung S25 FE': '/s25plus_1.png', // używamy s25plus jako placeholder
-    };
-    return imageMap[deviceName] || null;
-  };
+  const getRegistratorImage = (deviceName: string): string | null =>
+    znajdzZdjecie(deviceName);
 
   // Location (leśnictwo) editing states
   const [editingDeviceId, setEditingDeviceId] = React.useState<string | null>(null);
@@ -534,17 +569,17 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="h-12 w-12 text-emerald-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600">Ładowanie danych...</p>
+          <span className="mx-auto mb-4 block h-12 w-12 animate-spin rounded-full border-[3px] border-stone-200 border-t-emerald-600" />
+          <p className="text-stone-600">Ładowanie danych...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-stone-50">
       <Header activeTab="produkty" />
 
       <div className="container mx-auto px-4 py-6">
@@ -552,7 +587,7 @@ export default function Dashboard() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-6 relative overflow-hidden rounded-xl shadow-lg"
+          className="mb-6 relative overflow-hidden rounded-2xl shadow-lg"
         >
           <img
             src="/baner_em45_1.png"
@@ -585,7 +620,7 @@ export default function Dashboard() {
                 href="https://www.em45.info"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white hover:bg-emerald-50 text-emerald-700 font-bold px-6 py-2.5 rounded-lg shadow-xl hover:shadow-2xl transition-all text-sm"
+                className="bg-white hover:bg-emerald-50 text-emerald-700 font-bold px-6 py-2.5 rounded-xl shadow-xl hover:shadow-2xl transition-all text-sm"
               >
                 Zobacz więcej →
               </a>
@@ -602,17 +637,20 @@ export default function Dashboard() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-1">
+              <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-700">
+                Panel klienta
+              </p>
+              <h1 className="mb-1 text-3xl font-bold tracking-tight text-stone-900">
                 Twoje urządzenia
               </h1>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-stone-600">
                 {clientName.toLowerCase().startsWith('nadleśnictwo') ? clientName : `Nadleśnictwo ${clientName}`}
                 {devices.length > 0 && ` • ${devices.length} ${devices.length === 1 ? 'urządzenie fiskalne' : 'urządzeń fiskalnych'}`}
                 {registrators.length > 0 && ` • ${registrators.length} ${registrators.length === 1 ? 'rejestrator' : 'rejestratorów'}`}
               </p>
               {/* Osoba kontaktowa - email z rejestratorów */}
               {registrators.length > 0 && registrators[0]?.client_email && (
-                <p className="text-xs text-blue-600 mt-1 flex items-center gap-1">
+                <p className="text-xs text-emerald-700 mt-1 flex items-center gap-1">
                   <User className="h-3 w-3" />
                   Osoba kontaktowa: {registrators[0].client_email}
                 </p>
@@ -624,9 +662,9 @@ export default function Dashboard() {
                 localStorage.removeItem('serial_number');
                 window.location.href = '/panel-klienta';
               }}
-              className="flex items-center gap-2 bg-red-50 hover:bg-red-100 text-red-700 px-4 py-2 rounded-lg transition-colors text-sm font-medium border border-red-200"
+              className="flex items-center gap-2 rounded-xl border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 transition-colors hover:border-stone-400 hover:bg-stone-50"
             >
-              <LogOut className="h-4 w-4" />
+              <img src={ICON.wyloguj} alt="" className="h-4 w-4 mix-blend-multiply" />
               Wyloguj
             </button>
           </div>
@@ -636,7 +674,7 @@ export default function Dashboard() {
         {devices.length > 0 && (
           <>
         {/* Nagłówek sekcji fiskalnych */}
-        <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+        <h2 className="text-lg font-bold text-stone-900 mb-3 flex items-center gap-2">
           <Printer className="h-4 w-4 text-emerald-600" />
           Urządzenia fiskalne ({devices.length})
         </h2>
@@ -646,36 +684,36 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="mb-4 bg-white rounded-lg border border-gray-200 p-3"
+          className="mb-4 bg-white rounded-xl border border-stone-200 p-3"
         >
           <div className="flex flex-col md:flex-row gap-3">
             {/* Wyszukiwarka */}
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <img src={ICON.lupa} alt="" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 mix-blend-multiply" />
               <input
                 type="text"
                 placeholder="Szukaj po nazwie, numerze seryjnym lub leśnictwie..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm"
+                className="w-full pl-10 pr-4 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 text-sm"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
                 >
-                  <X className="h-4 w-4" />
+                  <img src={ICON.zamknij} alt="" className="h-4 w-4 mix-blend-multiply" />
                 </button>
               )}
             </div>
 
             {/* Filtr po leśnictwie */}
             <div className="relative min-w-[200px]">
-              <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <img src={ICON.filtr} alt="" className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 mix-blend-multiply" />
               <select
                 value={locationFilter}
                 onChange={(e) => setLocationFilter(e.target.value)}
-                className="w-full pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm appearance-none bg-white"
+                className="w-full pl-10 pr-8 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 text-sm appearance-none bg-white"
               >
                 <option value="all">Wszystkie leśnictwa ({devices.length})</option>
                 <option value="unassigned">
@@ -687,14 +725,14 @@ export default function Dashboard() {
                   </option>
                 ))}
               </select>
-              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+              <img src={ICON.chevronDol} alt="" className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 pointer-events-none mix-blend-multiply" />
             </div>
           </div>
 
           {/* Info o filtrowanych wynikach */}
           {(searchQuery || locationFilter !== "all") && (
             <div className="mt-2 flex items-center justify-between text-sm">
-              <span className="text-gray-600">
+              <span className="text-stone-600">
                 Znaleziono: <strong>{filteredDevices.length}</strong> z {devices.length} urządzeń
               </span>
               <button
@@ -713,9 +751,9 @@ export default function Dashboard() {
         {/* Lista urządzeń */}
         <div className="space-y-2">
           {filteredDevices.length === 0 ? (
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
-              <Printer className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-              <p className="text-gray-600">
+            <div className="bg-white rounded-xl shadow-sm border border-stone-200 p-8 text-center">
+              <Printer className="h-12 w-12 text-stone-400 mx-auto mb-3" />
+              <p className="text-stone-600">
                 {devices.length === 0 
                   ? "Brak urządzeń do wyświetlenia" 
                   : "Brak urządzeń pasujących do wyszukiwania"}
@@ -746,12 +784,12 @@ export default function Dashboard() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 + index * 0.05 }}
-                      className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow transition-shadow"
+                      className="flex-1 bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:shadow transition-shadow"
                     >
                       <div className="p-3 flex items-center gap-3">
                         {/* Zdjęcie lub ikona urządzenia */}
                         {getDeviceImage(device.device_name) ? (
-                          <div className="bg-gray-50 rounded flex-shrink-0 overflow-hidden w-10 h-10">
+                          <div className="bg-stone-50 rounded flex-shrink-0 overflow-hidden w-10 h-10">
                             <img 
                               src={getDeviceImage(device.device_name)!} 
                               alt={device.device_name}
@@ -759,24 +797,24 @@ export default function Dashboard() {
                             />
                           </div>
                         ) : (
-                          <div className="bg-gray-50 p-1.5 rounded flex-shrink-0">
-                            <Printer className="h-4 w-4 text-gray-500" />
+                          <div className="bg-stone-50 p-1.5 rounded flex-shrink-0">
+                            <Printer className="h-4 w-4 text-stone-500" />
                           </div>
                         )}
 
                         {/* Nazwa, numer seryjny i leśnictwo */}
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-sm font-semibold text-gray-900 truncate">
+                          <h3 className="text-sm font-semibold text-stone-900 truncate">
                             {device.device_name}
                           </h3>
-                          <p className="text-xs text-gray-500 truncate">
+                          <p className="text-xs text-stone-500 truncate">
                             {device.serial_number}
                           </p>
                           
                           {/* Leśnictwo - inline edit */}
                           {isEditing ? (
                             <div className="flex items-center gap-1 mt-1">
-                              <MapPin className="h-3 w-3 text-emerald-500 flex-shrink-0" />
+                              <img src={ICON.lokalizacja} alt="" className="h-3 w-3 flex-shrink-0 mix-blend-multiply" />
                               <input
                                 type="text"
                                 value={editingLocation}
@@ -785,7 +823,7 @@ export default function Dashboard() {
                                   if (e.key === 'Enter') saveForestryUnit(device.id, editingLocation);
                                   if (e.key === 'Escape') cancelInlineEdit();
                                 }}
-                                className="flex-1 text-xs px-1.5 py-0.5 border border-emerald-300 rounded focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
+                                className="flex-1 text-xs px-1.5 py-0.5 border border-emerald-300 rounded focus:ring-1 focus:ring-emerald-600/20 focus:border-emerald-600"
                                 placeholder="Wpisz nazwę leśnictwa..."
                                 autoFocus
                                 list={`forestry-units-${device.id}`}
@@ -800,13 +838,13 @@ export default function Dashboard() {
                                 disabled={isSavingLocation}
                                 className="p-0.5 text-emerald-600 hover:text-emerald-700 disabled:opacity-50"
                               >
-                                <Save className="h-3.5 w-3.5" />
+                                <img src={ICON.zapisz} alt="" className="h-3.5 w-3.5 mix-blend-multiply" />
                               </button>
                               <button
                                 onClick={cancelInlineEdit}
-                                className="p-0.5 text-gray-400 hover:text-gray-600"
+                                className="p-0.5 text-stone-400 hover:text-stone-600"
                               >
-                                <X className="h-3.5 w-3.5" />
+                                <img src={ICON.zamknij} alt="" className="h-3.5 w-3.5 mix-blend-multiply" />
                               </button>
                             </div>
                           ) : (
@@ -814,24 +852,24 @@ export default function Dashboard() {
                               onClick={() => startInlineEdit(device)}
                               className="flex items-center gap-1 mt-1 group"
                             >
-                              <MapPin className="h-3 w-3 text-emerald-500 flex-shrink-0" />
+                              <img src={ICON.lokalizacja} alt="" className="h-3 w-3 flex-shrink-0 mix-blend-multiply" />
                               {device.forestry_unit && device.forestry_unit.trim() ? (
                                 <span className="text-xs text-emerald-700 font-medium group-hover:text-emerald-800 truncate">
                                   {device.forestry_unit}
                                 </span>
                               ) : (
-                                <span className="text-xs text-gray-400 italic group-hover:text-emerald-600">
+                                <span className="text-xs text-stone-400 italic group-hover:text-emerald-600">
                                   Przypisz leśnictwo...
                                 </span>
                               )}
-                              <Pencil className="h-2.5 w-2.5 text-gray-300 group-hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <img src={ICON.edytuj} alt="" className="h-2.5 w-2.5 group-hover: opacity-0 group-hover:opacity-100 transition-opacity mix-blend-multiply" />
                             </button>
                           )}
                         </div>
 
                         {/* Status badge */}
                         <div className={`flex items-center gap-1.5 ${statusConfig.bgColor} ${statusConfig.color} px-2 py-1 rounded-full text-xs font-medium flex-shrink-0`}>
-                          <StatusIcon className="h-3 w-3" />
+                          <img src={StatusIcon} alt="" className="h-3 w-3 mix-blend-multiply" />
                           {statusConfig.label}
                         </div>
 
@@ -840,16 +878,16 @@ export default function Dashboard() {
                           {device.status === 'new' ? (
                             <>
                               <div>
-                                <p className="text-gray-400 text-xs">Fiskalizacja</p>
-                                <p className="font-medium text-gray-900">
+                                <p className="text-stone-400 text-xs">Fiskalizacja</p>
+                                <p className="font-medium text-stone-900">
                                   {device.fiscalization_date 
                                     ? new Date(device.fiscalization_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
                                     : '-'}
                                 </p>
                               </div>
                               <div>
-                                <p className="text-gray-400 text-xs">Przegląd do</p>
-                                <p className="font-medium text-blue-600">
+                                <p className="text-stone-400 text-xs">Przegląd do</p>
+                                <p className="font-medium text-emerald-700">
                                   {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
                                 </p>
                               </div>
@@ -857,16 +895,16 @@ export default function Dashboard() {
                           ) : (
                             <>
                           <div>
-                            <p className="text-gray-400 text-xs">Ostatni</p>
-                            <p className="font-medium text-gray-900">
+                            <p className="text-stone-400 text-xs">Ostatni</p>
+                            <p className="font-medium text-stone-900">
                                   {device.last_inspection_date 
                                     ? new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
                                     : '-'}
                             </p>
                           </div>
                           <div>
-                            <p className="text-gray-400 text-xs">Następny</p>
-                            <p className="font-medium text-gray-900">
+                            <p className="text-stone-400 text-xs">Następny</p>
+                            <p className="font-medium text-stone-900">
                               {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
                             </p>
                           </div>
@@ -882,11 +920,11 @@ export default function Dashboard() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 + index * 0.05 }}
-                      className="relative group flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
+                      className="relative group flex-shrink-0 w-12 bg-stone-50 hover:bg-emerald-100 border border-stone-200 rounded-xl transition-colors flex items-center justify-center"
                       title="Problem z urządzeniem? Zamów kuriera po odbiór sprzętu"
                     >
-                      <Truck className="h-4 w-4 text-orange-600" />
-                      <span className="absolute bottom-full right-0 mb-2 hidden group-hover:block w-48 bg-gray-900 text-white text-xs rounded-lg py-2 px-3 z-50">
+                      <img src={ICON.kurier} alt="" className="h-4 w-4 mix-blend-multiply" />
+                      <span className="absolute bottom-full right-0 mb-2 hidden group-hover:block w-48 bg-[#0A1B12] text-white text-xs rounded-xl py-2 px-3 z-50">
                         Problem z urządzeniem? Zamów kuriera po odbiór sprzętu
                         <span className="absolute top-full right-4 -mt-1 border-4 border-transparent border-t-gray-900"></span>
                       </span>
@@ -913,11 +951,11 @@ export default function Dashboard() {
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ delay: index * 0.05 }}
                         >
-                          <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow transition-shadow">
+                          <div className="flex-1 bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden hover:shadow transition-shadow">
                             <div className="p-3 flex items-center gap-3">
                               {/* Zdjęcie lub ikona urządzenia */}
                               {getDeviceImage(device.device_name) ? (
-                                <div className="bg-gray-50 rounded flex-shrink-0 overflow-hidden w-10 h-10">
+                                <div className="bg-stone-50 rounded flex-shrink-0 overflow-hidden w-10 h-10">
                                   <img 
                                     src={getDeviceImage(device.device_name)!} 
                                     alt={device.device_name}
@@ -925,24 +963,24 @@ export default function Dashboard() {
                                   />
                                 </div>
                               ) : (
-                                <div className="bg-gray-50 p-1.5 rounded flex-shrink-0">
-                                  <Printer className="h-4 w-4 text-gray-500" />
+                                <div className="bg-stone-50 p-1.5 rounded flex-shrink-0">
+                                  <Printer className="h-4 w-4 text-stone-500" />
                                 </div>
                               )}
 
                               {/* Nazwa, numer seryjny i leśnictwo */}
                               <div className="flex-1 min-w-0">
-                                <h3 className="text-sm font-semibold text-gray-900 truncate">
+                                <h3 className="text-sm font-semibold text-stone-900 truncate">
                                   {device.device_name}
                                 </h3>
-                                <p className="text-xs text-gray-500 truncate">
+                                <p className="text-xs text-stone-500 truncate">
                                   {device.serial_number}
                                 </p>
                                 
                                 {/* Leśnictwo - inline edit */}
                                 {isEditing ? (
                                   <div className="flex items-center gap-1 mt-1">
-                                    <MapPin className="h-3 w-3 text-emerald-500 flex-shrink-0" />
+                                    <img src={ICON.lokalizacja} alt="" className="h-3 w-3 flex-shrink-0 mix-blend-multiply" />
                                     <input
                                       type="text"
                                       value={editingLocation}
@@ -951,7 +989,7 @@ export default function Dashboard() {
                                         if (e.key === 'Enter') saveForestryUnit(device.id, editingLocation);
                                         if (e.key === 'Escape') cancelInlineEdit();
                                       }}
-                                      className="flex-1 text-xs px-1.5 py-0.5 border border-emerald-300 rounded focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500"
+                                      className="flex-1 text-xs px-1.5 py-0.5 border border-emerald-300 rounded focus:ring-1 focus:ring-emerald-600/20 focus:border-emerald-600"
                                       placeholder="Wpisz nazwę leśnictwa..."
                                       autoFocus
                                       list={`forestry-units-expanded-${device.id}`}
@@ -966,13 +1004,13 @@ export default function Dashboard() {
                                       disabled={isSavingLocation}
                                       className="p-0.5 text-emerald-600 hover:text-emerald-700 disabled:opacity-50"
                                     >
-                                      <Save className="h-3.5 w-3.5" />
+                                      <img src={ICON.zapisz} alt="" className="h-3.5 w-3.5 mix-blend-multiply" />
                                     </button>
                                     <button
                                       onClick={cancelInlineEdit}
-                                      className="p-0.5 text-gray-400 hover:text-gray-600"
+                                      className="p-0.5 text-stone-400 hover:text-stone-600"
                                     >
-                                      <X className="h-3.5 w-3.5" />
+                                      <img src={ICON.zamknij} alt="" className="h-3.5 w-3.5 mix-blend-multiply" />
                                     </button>
                                   </div>
                                 ) : (
@@ -980,24 +1018,24 @@ export default function Dashboard() {
                                     onClick={() => startInlineEdit(device)}
                                     className="flex items-center gap-1 mt-1 group"
                                   >
-                                    <MapPin className="h-3 w-3 text-emerald-500 flex-shrink-0" />
+                                    <img src={ICON.lokalizacja} alt="" className="h-3 w-3 flex-shrink-0 mix-blend-multiply" />
                                     {device.forestry_unit && device.forestry_unit.trim() ? (
                                       <span className="text-xs text-emerald-700 font-medium group-hover:text-emerald-800 truncate">
                                         {device.forestry_unit}
                                       </span>
                                     ) : (
-                                      <span className="text-xs text-gray-400 italic group-hover:text-emerald-600">
+                                      <span className="text-xs text-stone-400 italic group-hover:text-emerald-600">
                                         Przypisz leśnictwo...
                                       </span>
                                     )}
-                                    <Pencil className="h-2.5 w-2.5 text-gray-300 group-hover:text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <img src={ICON.edytuj} alt="" className="h-2.5 w-2.5 group-hover: opacity-0 group-hover:opacity-100 transition-opacity mix-blend-multiply" />
                                   </button>
                                 )}
                               </div>
 
                               {/* Status badge */}
                               <div className={`flex items-center gap-1.5 ${statusConfig.bgColor} ${statusConfig.color} px-2 py-1 rounded-full text-xs font-medium flex-shrink-0`}>
-                                <StatusIcon className="h-3 w-3" />
+                                <img src={StatusIcon} alt="" className="h-3 w-3 mix-blend-multiply" />
                                 {statusConfig.label}
                               </div>
 
@@ -1006,16 +1044,16 @@ export default function Dashboard() {
                                 {device.status === 'new' ? (
                                   <>
                                     <div>
-                                      <p className="text-gray-400 text-xs">Fiskalizacja</p>
-                                      <p className="font-medium text-gray-900">
+                                      <p className="text-stone-400 text-xs">Fiskalizacja</p>
+                                      <p className="font-medium text-stone-900">
                                         {device.fiscalization_date 
                                           ? new Date(device.fiscalization_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
                                           : '-'}
                                       </p>
                                     </div>
                                     <div>
-                                      <p className="text-gray-400 text-xs">Przegląd do</p>
-                                      <p className="font-medium text-blue-600">
+                                      <p className="text-stone-400 text-xs">Przegląd do</p>
+                                      <p className="font-medium text-emerald-700">
                                         {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
                                       </p>
                                     </div>
@@ -1023,16 +1061,16 @@ export default function Dashboard() {
                                 ) : (
                                   <>
                                 <div>
-                                  <p className="text-gray-400 text-xs">Ostatni</p>
-                                  <p className="font-medium text-gray-900">
+                                  <p className="text-stone-400 text-xs">Ostatni</p>
+                                  <p className="font-medium text-stone-900">
                                         {device.last_inspection_date 
                                           ? new Date(device.last_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })
                                           : '-'}
                                   </p>
                                 </div>
                                 <div>
-                                  <p className="text-gray-400 text-xs">Następny</p>
-                                  <p className="font-medium text-gray-900">
+                                  <p className="text-stone-400 text-xs">Następny</p>
+                                  <p className="font-medium text-stone-900">
                                     {new Date(device.next_inspection_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
                                   </p>
                                 </div>
@@ -1045,11 +1083,11 @@ export default function Dashboard() {
                           {/* Osobny mały box z przyciskiem kuriera */}
                           <button
                             onClick={() => handleOpenCourierModal(device)}
-                            className="relative group flex-shrink-0 w-12 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-lg transition-colors flex items-center justify-center"
+                            className="relative group flex-shrink-0 w-12 bg-stone-50 hover:bg-emerald-100 border border-stone-200 rounded-xl transition-colors flex items-center justify-center"
                             title="Problem z urządzeniem? Zamów kuriera po odbiór sprzętu"
                           >
-                            <Truck className="h-4 w-4 text-orange-600" />
-                            <span className="absolute bottom-full right-0 mb-2 hidden group-hover:block w-48 bg-gray-900 text-white text-xs rounded-lg py-2 px-3 z-50">
+                            <img src={ICON.kurier} alt="" className="h-4 w-4 mix-blend-multiply" />
+                            <span className="absolute bottom-full right-0 mb-2 hidden group-hover:block w-48 bg-[#0A1B12] text-white text-xs rounded-xl py-2 px-3 z-50">
                               Problem z urządzeniem? Zamów kuriera po odbiór sprzętu
                               <span className="absolute top-full right-4 -mt-1 border-4 border-transparent border-t-gray-900"></span>
                             </span>
@@ -1068,16 +1106,16 @@ export default function Dashboard() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
-                  className="w-full bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm font-medium text-gray-700 flex items-center justify-center gap-2 transition-colors"
+                  className="w-full bg-white hover:bg-stone-50 border border-stone-200 rounded-xl p-3 text-sm font-medium text-stone-700 flex items-center justify-center gap-2 transition-colors"
                 >
                   {showAllDevices ? (
                     <>
-                      <ChevronUp className="h-4 w-4" />
+                      <img src={ICON.chevronGora} alt="" className="h-4 w-4 mix-blend-multiply" />
                       Pokaż mniej
                     </>
                   ) : (
                     <>
-                      <ChevronDown className="h-4 w-4" />
+                      <img src={ICON.chevronDol} alt="" className="h-4 w-4 mix-blend-multiply" />
                       Pokaż więcej ({filteredDevices.length - 3} urządzeń)
                     </>
                   )}
@@ -1102,10 +1140,10 @@ export default function Dashboard() {
               transition={{ delay: 0.25 + catIndex * 0.1 }}
               className="mt-6"
             >
-              <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+              <h2 className="text-lg font-bold text-stone-900 mb-3 flex items-center gap-2">
                 {(() => {
                   const CategoryIcon = getCategoryIcon(category);
-                  return <CategoryIcon className="h-4 w-4 text-blue-600" />;
+                  return <CategoryIcon className="h-4 w-4 text-emerald-700" />;
                 })()}
                 {getCategoryName(category)} ({categoryDevices.length})
               </h2>
@@ -1122,11 +1160,11 @@ export default function Dashboard() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 + index * 0.05 }}
-                      className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 p-3"
+                      className="flex-1 bg-white rounded-xl shadow-sm border border-stone-200 p-3"
                     >
                       <div className="flex items-center gap-3">
                       {/* Zdjęcie urządzenia */}
-                      <div className="bg-gray-50 rounded flex-shrink-0 w-12 h-12 flex items-center justify-center overflow-hidden">
+                      <div className="bg-stone-50 rounded flex-shrink-0 w-12 h-12 flex items-center justify-center overflow-hidden">
                         {getRegistratorImage(reg.device_name) ? (
                           <img 
                             src={getRegistratorImage(reg.device_name)!} 
@@ -1134,23 +1172,23 @@ export default function Dashboard() {
                             className="w-10 h-10 object-contain"
                           />
                         ) : (
-                          <Smartphone className="h-5 w-5 text-blue-600" />
+                          <Smartphone className="h-5 w-5 text-emerald-700" />
                         )}
                       </div>
 
                         {/* Info o urządzeniu */}
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-sm font-semibold text-gray-900">
+                          <h3 className="text-sm font-semibold text-stone-900">
                             {reg.device_name}
                           </h3>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-stone-500">
                             SN: {reg.serial_number}
                           </p>
                           
                           {/* Leśnictwo - inline edit */}
                           {editingRegistratorId === reg.id ? (
                             <div className="flex items-center gap-1 mt-1">
-                              <MapPin className="h-3 w-3 text-blue-500 flex-shrink-0" />
+                              <img src={ICON.lokalizacja} alt="" className="h-3 w-3 flex-shrink-0 mix-blend-multiply" />
                               <input
                                 type="text"
                                 value={editingLocation}
@@ -1162,7 +1200,7 @@ export default function Dashboard() {
                                     setEditingLocation("");
                                   }
                                 }}
-                                className="flex-1 text-xs px-1.5 py-0.5 border border-blue-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                className="flex-1 text-xs px-1.5 py-0.5 border border-emerald-300 rounded focus:ring-1 focus:ring-emerald-600/20 focus:border-emerald-600"
                                 placeholder="Wpisz nazwę leśnictwa..."
                                 autoFocus
                                 list={`forestry-units-reg-${reg.id}`}
@@ -1175,18 +1213,18 @@ export default function Dashboard() {
                               <button
                                 onClick={() => saveRegistratorForestryUnit(reg.id, editingLocation)}
                                 disabled={isSavingLocation}
-                                className="p-0.5 text-blue-600 hover:text-blue-700 disabled:opacity-50"
+                                className="p-0.5 text-emerald-700 hover:text-emerald-800 disabled:opacity-50"
                               >
-                                <Save className="h-3.5 w-3.5" />
+                                <img src={ICON.zapisz} alt="" className="h-3.5 w-3.5 mix-blend-multiply" />
                               </button>
                               <button
                                 onClick={() => {
                                   setEditingRegistratorId(null);
                                   setEditingLocation("");
                                 }}
-                                className="p-0.5 text-gray-400 hover:text-gray-600"
+                                className="p-0.5 text-stone-400 hover:text-stone-600"
                               >
-                                <X className="h-3.5 w-3.5" />
+                                <img src={ICON.zamknij} alt="" className="h-3.5 w-3.5 mix-blend-multiply" />
                               </button>
                             </div>
                           ) : (
@@ -1197,17 +1235,17 @@ export default function Dashboard() {
                               }}
                               className="flex items-center gap-1 mt-1 group"
                             >
-                              <MapPin className="h-3 w-3 text-blue-500 flex-shrink-0" />
+                              <img src={ICON.lokalizacja} alt="" className="h-3 w-3 flex-shrink-0 mix-blend-multiply" />
                               {reg.forestry_unit && reg.forestry_unit.trim() ? (
-                                <span className="text-xs text-blue-700 font-medium group-hover:text-blue-800 truncate">
+                                <span className="text-xs text-emerald-800 font-medium group-hover:text-emerald-800 truncate">
                                   {reg.forestry_unit}
                                 </span>
                               ) : (
-                                <span className="text-xs text-gray-400 italic group-hover:text-blue-600">
+                                <span className="text-xs text-stone-400 italic group-hover:text-emerald-700">
                                   Przypisz leśnictwo...
                                 </span>
                               )}
-                              <Pencil className="h-2.5 w-2.5 text-gray-300 group-hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <img src={ICON.edytuj} alt="" className="h-2.5 w-2.5 group-hover: opacity-0 group-hover:opacity-100 transition-opacity mix-blend-multiply" />
                             </button>
                           )}
                         </div>
@@ -1216,13 +1254,13 @@ export default function Dashboard() {
                         {reg.service_contract_years && (
                           <div className={`flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
                             isContractActive 
-                              ? 'bg-green-50 text-green-700' 
-                              : 'bg-gray-100 text-gray-500'
+                              ? 'bg-emerald-50/60 text-emerald-800' 
+                              : 'bg-stone-100 text-stone-500'
                           }`}>
                             {isContractActive ? (
-                              <ShieldCheck className="h-3 w-3" />
+                              <img src={ICON.tarcza} alt="" className="h-3 w-3 mix-blend-multiply" />
                             ) : (
-                              <Shield className="h-3 w-3" />
+                              <img src={ICON.tarcza} alt="" className="h-3 w-3 mix-blend-multiply" />
                             )}
                             {isContractActive 
                               ? `Kontrakt ${reg.service_contract_years}L (${contractDaysLeft} dni)` 
@@ -1232,8 +1270,8 @@ export default function Dashboard() {
 
                         {/* Data zakupu */}
                         <div className="hidden md:block text-right flex-shrink-0">
-                          <p className="text-xs text-gray-400">Zakup</p>
-                          <p className="text-sm font-medium text-gray-900">
+                          <p className="text-xs text-stone-400">Zakup</p>
+                          <p className="text-sm font-medium text-stone-900">
                             {new Date(reg.purchase_date).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: '2-digit' })}
                           </p>
                         </div>
@@ -1241,10 +1279,10 @@ export default function Dashboard() {
 
                       {/* Szczegóły kontraktu - rozwinięte */}
                       {reg.service_contract_years && isContractActive && (
-                        <div className="mt-2 pt-2 border-t border-gray-100">
-                          <div className="bg-green-50 rounded-lg p-2 flex items-center gap-2">
-                            <ShieldCheck className="h-4 w-4 text-green-600 flex-shrink-0" />
-                            <p className="text-xs text-green-700">
+                        <div className="mt-2 pt-2 border-t border-stone-100">
+                          <div className="bg-emerald-50/60 rounded-xl p-2 flex items-center gap-2">
+                            <img src={ICON.tarcza} alt="" className="h-4 w-4 flex-shrink-0 mix-blend-multiply" />
+                            <p className="text-xs text-emerald-800">
                               <strong>Kontrakt serwisowy aktywny</strong> do {new Date(reg.service_contract_end!).toLocaleDateString('pl-PL')} 
                               {' '}• Serwis w ramach kontraktu
                             </p>
@@ -1273,20 +1311,16 @@ export default function Dashboard() {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 + index * 0.05 }}
-                      className={`relative group flex-shrink-0 w-12 border rounded-lg transition-colors flex items-center justify-center ${
+                      className={`relative group flex-shrink-0 w-12 border rounded-xl transition-colors flex items-center justify-center ${
                         reg.device_name?.toLowerCase().includes('zebra')
                           ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200'
-                          : 'bg-orange-50 hover:bg-orange-100 border-orange-200'
+                          : 'bg-stone-50 hover:bg-emerald-100 border-stone-200'
                       }`}
                       title={reg.device_name?.toLowerCase().includes('zebra') 
                         ? "Zgłoś naprawę w autoryzowanym serwisie Zebra" 
                         : "Problem z urządzeniem? Zamów kuriera"}
                     >
-                      <Truck className={`h-4 w-4 ${
-                        reg.device_name?.toLowerCase().includes('zebra')
-                          ? 'text-emerald-600'
-                          : 'text-orange-600'
-                      }`} />
+                      <img src={ICON.kurier} alt="" className="h-4 w-4 ${ reg.device_name?.toLowerCase().includes('zebra') ? '' : '' } mix-blend-multiply" />
                     </motion.button>
                   </div>
                 );
@@ -1296,16 +1330,16 @@ export default function Dashboard() {
               {categoryDevices.length > 3 && (
                 <button
                   onClick={() => setShowAllRegistrators(!showAllRegistrators)}
-                  className="w-full bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm font-medium text-gray-700 flex items-center justify-center gap-2 transition-colors"
+                  className="w-full bg-white hover:bg-stone-50 border border-stone-200 rounded-xl p-3 text-sm font-medium text-stone-700 flex items-center justify-center gap-2 transition-colors"
                 >
                   {showAllRegistrators ? (
                     <>
-                      <ChevronUp className="h-4 w-4" />
+                      <img src={ICON.chevronGora} alt="" className="h-4 w-4 mix-blend-multiply" />
                       Pokaż mniej
                     </>
                   ) : (
                     <>
-                      <ChevronDown className="h-4 w-4" />
+                      <img src={ICON.chevronDol} alt="" className="h-4 w-4 mix-blend-multiply" />
                       Pokaż więcej ({categoryDevices.length - 3})
                     </>
                   )}
@@ -1328,29 +1362,29 @@ export default function Dashboard() {
               transition={{ delay: 0.35 }}
               className="mt-6"
             >
-              <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <FileText className="h-4 w-4 text-blue-600" />
+              <h2 className="text-lg font-bold text-stone-900 mb-3 flex items-center gap-2">
+                <img src={ICON.dokumenty} alt="" className="h-4 w-4 mix-blend-multiply" />
                 Dokumenty
               </h2>
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                <div className="divide-y divide-gray-100">
+              <div className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+                <div className="divide-y divide-stone-100">
                   {nonProtocolDocuments.map((doc, index) => (
                     <motion.div
                       key={doc.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + index * 0.1 }}
-                      className="p-3 hover:bg-blue-50 transition-colors flex items-center justify-between"
+                      className="p-3 hover:bg-emerald-50/60 transition-colors flex items-center justify-between"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="bg-blue-50 p-2 rounded">
-                          <FileText className="h-4 w-4 text-blue-600" />
+                        <div className="bg-emerald-50/60 p-2 rounded">
+                          <img src={ICON.dokumenty} alt="" className="h-4 w-4 mix-blend-multiply" />
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-gray-900">
+                          <p className="text-sm font-semibold text-stone-900">
                             {doc.document_name}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-stone-500">
                             {doc.document_type === 'contract' ? 'Umowa' : 'Dokument'}
                             {' • '}
                             {new Date(doc.created_at).toLocaleDateString('pl-PL')}
@@ -1361,9 +1395,9 @@ export default function Dashboard() {
                         href={doc.document_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors"
+                        className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors"
                       >
-                        <Download className="h-3 w-3" />
+                        <img src={naCiemnym(ICON.pobierz)} alt="" className="h-3 w-3" />
                         Pobierz
                       </a>
                     </motion.div>
@@ -1389,12 +1423,12 @@ export default function Dashboard() {
           transition={{ delay: 0.4 }}
           className="mt-6"
         >
-          <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-            <FileText className="h-4 w-4 text-emerald-600" />
+          <h2 className="text-lg font-bold text-stone-900 mb-3 flex items-center gap-2">
+            <img src={ICON.dokumenty} alt="" className="h-4 w-4 mix-blend-multiply" />
             Protokoły przeglądów
           </h2>
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-              <div className="divide-y divide-gray-100">
+          <div className="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+              <div className="divide-y divide-stone-100">
                   {/* Protokoły dodane przez admin */}
                   {protocolDocuments.map((doc, index) => (
                   <motion.div
@@ -1406,13 +1440,13 @@ export default function Dashboard() {
                   >
                     <div className="flex items-center gap-3">
                       <div className="bg-emerald-50 p-2 rounded">
-                        <FileText className="h-4 w-4 text-emerald-600" />
+                        <img src={ICON.dokumenty} alt="" className="h-4 w-4 mix-blend-multiply" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-gray-900">
+                        <p className="text-sm font-semibold text-stone-900">
                             {doc.document_name}
                         </p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-stone-500">
                             Protokół • {new Date(doc.created_at).toLocaleDateString('pl-PL')}
                         </p>
                       </div>
@@ -1423,7 +1457,7 @@ export default function Dashboard() {
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors"
                       >
-                        <Download className="h-3 w-3" />
+                        <img src={naCiemnym(ICON.pobierz)} alt="" className="h-3 w-3" />
                         PDF
                       </a>
                     </motion.div>
@@ -1440,13 +1474,13 @@ export default function Dashboard() {
                     >
                       <div className="flex items-center gap-3">
                         <div className="bg-emerald-50 p-2 rounded">
-                          <FileText className="h-4 w-4 text-emerald-600" />
+                          <img src={ICON.dokumenty} alt="" className="h-4 w-4 mix-blend-multiply" />
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-gray-900">
+                          <p className="text-sm font-semibold text-stone-900">
                             Przegląd {formatDate(inspection.inspection_date)}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-stone-500">
                             {inspection.device_count} urządzeń
                           </p>
                         </div>
@@ -1457,7 +1491,7 @@ export default function Dashboard() {
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors"
                       >
-                        <Download className="h-3 w-3" />
+                        <img src={naCiemnym(ICON.pobierz)} alt="" className="h-3 w-3" />
                         PDF
                       </a>
                   </motion.div>
@@ -1494,10 +1528,10 @@ export default function Dashboard() {
               transition={{ delay: 0.5 }}
               className="mt-6"
             >
-              <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-                <BookOpen className="h-4 w-4 text-purple-600" />
+              <h2 className="text-lg font-bold text-stone-900 mb-3 flex items-center gap-2">
+                <img src={ICON.instrukcja} alt="" className="h-4 w-4 mix-blend-multiply" />
                 Instrukcje dla nowych urządzeń
-                <span className="text-xs font-normal text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                <span className="text-xs font-normal text-stone-500 bg-stone-100 px-2 py-0.5 rounded-full">
                   Widoczne przez 30 dni
                 </span>
               </h2>
@@ -1507,7 +1541,7 @@ export default function Dashboard() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.55 }}
-                  className="bg-white rounded-lg border border-purple-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
+                  className="bg-white rounded-xl border border-stone-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
                   onClick={() => setPreviewImage({
                     src: '/instrukcja-kod-autoryzacyjny.png',
                     title: 'Wprowadzenie kodu autoryzacyjnego'
@@ -1520,14 +1554,14 @@ export default function Dashboard() {
                       className="w-full h-40 object-cover object-top"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                      <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <img src={naCiemnym(ICON.podglad)} alt="" className="w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                   </div>
                   <div className="p-3">
-                    <h3 className="font-semibold text-gray-900 text-sm">
+                    <h3 className="font-semibold text-stone-900 text-sm">
                       Wprowadzenie kodu autoryzacyjnego
                     </h3>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-stone-500 mt-1">
                       Kliknij aby powiększyć
                     </p>
                   </div>
@@ -1538,7 +1572,7 @@ export default function Dashboard() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6 }}
-                  className="bg-white rounded-lg border border-purple-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
+                  className="bg-white rounded-xl border border-stone-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group"
                   onClick={() => setPreviewImage({
                     src: '/instrukcja-aktualizacja-menu-pospay.png',
                     title: 'Aktualizacja menu aplikacji płatniczej - Posnet Pospay 2'
@@ -1551,14 +1585,14 @@ export default function Dashboard() {
                       className="w-full h-40 object-cover object-top"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                      <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <img src={naCiemnym(ICON.podglad)} alt="" className="w-8 h-8 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                   </div>
                   <div className="p-3">
-                    <h3 className="font-semibold text-gray-900 text-sm">
+                    <h3 className="font-semibold text-stone-900 text-sm">
                       Aktualizacja menu aplikacji płatniczej
                     </h3>
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-stone-500 mt-1">
                       Posnet Pospay 2 • Kliknij aby powiększyć
                     </p>
                   </div>
@@ -1576,27 +1610,27 @@ export default function Dashboard() {
             transition={{ delay: 0.65 }}
           className="mt-6"
         >
-          <h2 className="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
-            <Download className="h-4 w-4 text-gray-600" />
+          <h2 className="text-lg font-bold text-stone-900 mb-3 flex items-center gap-2">
+            <img src={ICON.pobierz} alt="" className="h-4 w-4 mix-blend-multiply" />
             Przydatne dokumenty
           </h2>
-          <div className="bg-white rounded-lg border border-gray-300 p-4">
+          <div className="bg-white rounded-xl border border-stone-300 p-4">
             <a
               href="/zgloszenie-wydania-duplikatu-ksiazki-kasy.pdf"
               download
-              className="flex items-center justify-between hover:bg-gray-50 -m-4 p-4 rounded-lg transition-colors"
+              className="flex items-center justify-between hover:bg-stone-50 -m-4 p-4 rounded-xl transition-colors"
             >
               <div className="flex items-center gap-3">
-                <div className="bg-gray-100 p-2 rounded">
-                  <FileText className="h-4 w-4 text-gray-600" />
+                <div className="bg-stone-100 p-2 rounded">
+                  <img src={ICON.dokumenty} alt="" className="h-4 w-4 mix-blend-multiply" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">
+                  <p className="text-sm font-semibold text-stone-900">
                     Zgłoszenie wydania duplikatu książki serwisowej
                   </p>
-                  <p className="text-xs text-gray-500">PDF • 91 KB</p>
-                  <p className="text-xs text-gray-700 mt-1">
-                    Wypełniony wniosek proszę wysłać na: <span className="font-semibold text-red-600">handel@wroclaw.posnet.com</span>
+                  <p className="text-xs text-stone-500">PDF • 91 KB</p>
+                  <p className="text-xs text-stone-700 mt-1">
+                    Wypełniony wniosek proszę wysłać na: <a href="mailto:handel@wroclaw.posnet.com" className="font-semibold text-emerald-700 hover:underline">handel@wroclaw.posnet.com</a>
                   </p>
                 </div>
               </div>
@@ -1640,17 +1674,17 @@ export default function Dashboard() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-3"
+          className="mt-6 bg-emerald-50/60 border border-emerald-200 rounded-xl p-3"
         >
-          <h3 className="text-sm font-semibold text-blue-900 mb-1">
+          <h3 className="text-sm font-semibold text-emerald-900 mb-1">
             Potrzebujesz pomocy?
           </h3>
-          <p className="text-xs text-blue-700 mb-2">
+          <p className="text-xs text-emerald-800 mb-2">
             Problem z urządzeniem lub umówienie przeglądu
           </p>
           <a
             href="tel:+48607819688"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors inline-block"
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded text-xs font-medium transition-colors inline-block"
           >
             +48 607 819 688
           </a>
@@ -1672,7 +1706,7 @@ export default function Dashboard() {
             }}
           >
             <motion.div
-              className="bg-white rounded-lg max-w-md w-full shadow-xl"
+              className="bg-white rounded-xl max-w-md w-full shadow-xl"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -1681,12 +1715,12 @@ export default function Dashboard() {
               <div className="p-6">
                 <div className="flex justify-between items-center mb-6">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-emerald-600" />
+                    <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                      <img src={ICON.lokalizacja} alt="" className="w-5 h-5 mix-blend-multiply" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-gray-900">Przypisz leśnictwo</h3>
-                      <p className="text-sm text-gray-600">{selectedDeviceForLocation.device_name}</p>
+                      <h3 className="text-lg font-bold text-stone-900">Przypisz leśnictwo</h3>
+                      <p className="text-sm text-stone-600">{selectedDeviceForLocation.device_name}</p>
                     </div>
                   </div>
                   <button
@@ -1695,17 +1729,17 @@ export default function Dashboard() {
                       setSelectedDeviceForLocation(null);
                       setEditingLocation("");
                     }}
-                    className="p-2 hover:bg-gray-100 rounded-full"
+                    className="p-2 hover:bg-stone-100 rounded-full"
                   >
-                    <X className="w-5 h-5" />
+                    <img src={ICON.zamknij} alt="" className="w-5 h-5 mix-blend-multiply" />
                   </button>
                 </div>
 
                 {/* Informacja o urządzeniu */}
-                <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                <div className="bg-stone-50 rounded-xl p-4 mb-4">
                   <div className="flex items-center gap-3">
                     {getDeviceImage(selectedDeviceForLocation.device_name) ? (
-                      <div className="bg-white rounded-lg overflow-hidden w-12 h-12 flex-shrink-0 border border-gray-200">
+                      <div className="bg-white rounded-xl overflow-hidden w-12 h-12 flex-shrink-0 border border-stone-200">
                         <img 
                           src={getDeviceImage(selectedDeviceForLocation.device_name)!} 
                           alt={selectedDeviceForLocation.device_name}
@@ -1713,18 +1747,18 @@ export default function Dashboard() {
                         />
                       </div>
                     ) : (
-                      <Printer className="h-8 w-8 text-gray-400" />
+                      <Printer className="h-8 w-8 text-stone-400" />
                     )}
                     <div>
-                      <p className="font-medium text-gray-900">{selectedDeviceForLocation.device_name}</p>
-                      <p className="text-sm text-gray-500">{selectedDeviceForLocation.serial_number}</p>
+                      <p className="font-medium text-stone-900">{selectedDeviceForLocation.device_name}</p>
+                      <p className="text-sm text-stone-500">{selectedDeviceForLocation.serial_number}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Input z autocomplete */}
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-stone-700 mb-2">
                     Nazwa leśnictwa
                   </label>
                   <input
@@ -1737,7 +1771,7 @@ export default function Dashboard() {
                       }
                     }}
                     placeholder="np. Leśnictwo Rybaki"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    className="w-full px-4 py-3 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
                     autoFocus
                     list="forestry-units-modal"
                   />
@@ -1746,7 +1780,7 @@ export default function Dashboard() {
                       <option key={unit} value={unit} />
                     ))}
                   </datalist>
-                  <p className="mt-2 text-xs text-gray-500">
+                  <p className="mt-2 text-xs text-stone-500">
                     Zacznij pisać, aby zobaczyć podpowiedzi z wcześniej używanych nazw
                   </p>
                 </div>
@@ -1754,7 +1788,7 @@ export default function Dashboard() {
                 {/* Podpowiedzi - szybki wybór */}
                 {uniqueForestryUnits.length > 0 && (
                   <div className="mb-6">
-                    <p className="text-xs font-medium text-gray-500 mb-2">Szybki wybór:</p>
+                    <p className="text-xs font-medium text-stone-500 mb-2">Szybki wybór:</p>
                     <div className="flex flex-wrap gap-2">
                       {uniqueForestryUnits.slice(0, 6).map(unit => (
                         <button
@@ -1763,7 +1797,7 @@ export default function Dashboard() {
                           className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                             editingLocation === unit
                               ? 'bg-emerald-600 text-white'
-                              : 'bg-gray-100 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700'
+                              : 'bg-stone-100 text-stone-700 hover:bg-emerald-100 hover:text-emerald-700'
                           }`}
                         >
                           {unit}
@@ -1781,23 +1815,23 @@ export default function Dashboard() {
                       setSelectedDeviceForLocation(null);
                       setEditingLocation("");
                     }}
-                    className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                    className="flex-1 px-4 py-2.5 border border-stone-300 rounded-xl text-stone-700 font-medium hover:bg-stone-50 transition-colors"
                   >
                     Anuluj
                   </button>
                   <button
                     onClick={() => saveForestryUnit(selectedDeviceForLocation.id, editingLocation)}
                     disabled={isSavingLocation || !editingLocation.trim()}
-                    className="flex-1 px-4 py-2.5 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 px-4 py-2.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isSavingLocation ? (
                       <>
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                         Zapisywanie...
                       </>
                     ) : (
                       <>
-                        <Save className="h-4 w-4" />
+                        <img src={ICON.zapisz} alt="" className="h-4 w-4 mix-blend-multiply" />
                         Zapisz
                       </>
                     )}
@@ -1820,7 +1854,7 @@ export default function Dashboard() {
             onClick={() => setIsModalOpen(false)}
           >
             <motion.div
-              className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
@@ -1829,37 +1863,37 @@ export default function Dashboard() {
               <div className="p-6">
                 <div className="flex justify-between items-center mb-6">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                      <Truck className="w-5 h-5 text-orange-600" />
+                    <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                      <img src={ICON.kurier} alt="" className="w-5 h-5 mix-blend-multiply" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900">Zamówienie kuriera</h3>
-                      <p className="text-sm text-gray-600">Wypełnij formularz aby zamówić odbiór {selectedDevice?.device_name}</p>
+                      <h3 className="text-xl font-bold text-stone-900">Zamówienie kuriera</h3>
+                      <p className="text-sm text-stone-600">Wypełnij formularz aby zamówić odbiór {selectedDevice?.device_name}</p>
                     </div>
                   </div>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="p-2 hover:bg-gray-100 rounded-full"
+                    className="p-2 hover:bg-stone-100 rounded-full"
                   >
-                    <X className="w-5 h-5" />
+                    <img src={ICON.zamknij} alt="" className="w-5 h-5 mix-blend-multiply" />
                   </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Info o aktywnym kontrakcie */}
                   {activeContract && (
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <div className="bg-emerald-50/60 border border-emerald-200 rounded-xl p-4">
                       <div className="flex items-start gap-3">
-                        <ShieldCheck className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                        <img src={ICON.tarcza} alt="" className="w-6 h-6 flex-shrink-0 mt-0.5 mix-blend-multiply" />
                         <div>
                           <h4 className="font-bold text-green-800">
                             Aktywny kontrakt serwisowy ({activeContract.years} lata)
                           </h4>
-                          <p className="text-sm text-green-700 mt-1">
+                          <p className="text-sm text-emerald-800 mt-1">
                             Twoje urządzenie jest objęte kontraktem serwisowym ważnym do{' '}
                             <strong>{new Date(activeContract.endDate).toLocaleDateString('pl-PL')}</strong>.
                           </p>
-                          <p className="text-sm text-green-600 mt-2">
+                          <p className="text-sm text-emerald-700 mt-2">
                             ✓ Serwis w ramach kontraktu • ✓ Priorytetowa obsługa
                           </p>
                         </div>
@@ -1869,10 +1903,10 @@ export default function Dashboard() {
 
                   {/* Personal Data */}
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Dane kontaktowe</h4>
+                    <h4 className="font-semibold text-stone-900 mb-3">Dane kontaktowe</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-stone-700 mb-1">
                           Imię <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -1882,11 +1916,11 @@ export default function Dashboard() {
                           onChange={handleInputChange}
                           required
                           disabled={isSubmitting}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                          className="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 disabled:bg-stone-100 disabled:cursor-not-allowed"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-stone-700 mb-1">
                           Nazwisko <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -1896,12 +1930,12 @@ export default function Dashboard() {
                           onChange={handleInputChange}
                           required
                           disabled={isSubmitting}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                          className="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 disabled:bg-stone-100 disabled:cursor-not-allowed"
                         />
                       </div>
                     </div>
                     <div className="mt-4">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-stone-700 mb-1">
                         Nadleśnictwo <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -1911,17 +1945,17 @@ export default function Dashboard() {
                         onChange={handleInputChange}
                         required
                         disabled={isSubmitting}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        className="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 disabled:bg-stone-100 disabled:cursor-not-allowed"
                       />
                     </div>
                   </div>
 
                   {/* Address */}
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Adres odbioru</h4>
+                    <h4 className="font-semibold text-stone-900 mb-3">Adres odbioru</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-stone-700 mb-1">
                           Miasto <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -1931,11 +1965,11 @@ export default function Dashboard() {
                           onChange={handleInputChange}
                           required
                           disabled={isSubmitting}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                          className="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 disabled:bg-stone-100 disabled:cursor-not-allowed"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-stone-700 mb-1">
                           Kod pocztowy <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -1947,13 +1981,13 @@ export default function Dashboard() {
                           pattern="[0-9]{2}-[0-9]{3}"
                           placeholder="00-000"
                           disabled={isSubmitting}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                          className="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 disabled:bg-stone-100 disabled:cursor-not-allowed"
                         />
                       </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                       <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-stone-700 mb-1">
                           Ulica <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -1963,11 +1997,11 @@ export default function Dashboard() {
                           onChange={handleInputChange}
                           required
                           disabled={isSubmitting}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                          className="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 disabled:bg-stone-100 disabled:cursor-not-allowed"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-stone-700 mb-1">
                           Numer <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -1977,7 +2011,7 @@ export default function Dashboard() {
                           onChange={handleInputChange}
                           required
                           disabled={isSubmitting}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                          className="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 disabled:bg-stone-100 disabled:cursor-not-allowed"
                         />
                       </div>
                     </div>
@@ -1985,10 +2019,10 @@ export default function Dashboard() {
 
                   {/* Device Info */}
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-3">Informacje o urządzeniu</h4>
+                    <h4 className="font-semibold text-stone-900 mb-3">Informacje o urządzeniu</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-stone-700 mb-1">
                           Nazwa urządzenia <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -1998,12 +2032,12 @@ export default function Dashboard() {
                           onChange={handleInputChange}
                           required
                           disabled={isSubmitting}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                          className="w-full px-3 py-2 border border-stone-300 rounded-xl bg-stone-50 focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
                           readOnly
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-stone-700 mb-1">
                           Numer seryjny <span className="text-red-500">*</span>
                         </label>
                         <input
@@ -2013,13 +2047,13 @@ export default function Dashboard() {
                           onChange={handleInputChange}
                           required
                           disabled={isSubmitting}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                          className="w-full px-3 py-2 border border-stone-300 rounded-xl bg-stone-50 focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
                           readOnly
                         />
                       </div>
                     </div>
                     <div className="mt-4">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-sm font-medium text-stone-700 mb-1">
                         Opis usterki <span className="text-red-500">*</span>
                       </label>
                       <textarea
@@ -2030,30 +2064,30 @@ export default function Dashboard() {
                         rows={4}
                         disabled={isSubmitting}
                         placeholder="Opisz szczegółowo problem z urządzeniem..."
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                        className="w-full px-3 py-2 border border-stone-300 rounded-xl focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 disabled:bg-stone-100 disabled:cursor-not-allowed"
                       />
                     </div>
                   </div>
 
                   {/* Submit Button */}
-                  <div className="border-t border-gray-200 pt-6">
+                  <div className="border-t border-stone-200 pt-6">
                     <div className="flex justify-end space-x-3">
                       <button
                         type="button"
                         onClick={() => setIsModalOpen(false)}
                         disabled={isSubmitting}
-                        className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-4 py-2 text-stone-700 border border-stone-300 rounded-xl hover:bg-stone-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         Anuluj
                       </button>
                       <motion.button
                         type="submit"
                         disabled={isSubmitting}
-                        className="bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-orange-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="bg-emerald-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-emerald-700 transition-colors flex items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         whileHover={isSubmitting ? {} : { scale: 1.02 }}
                         whileTap={isSubmitting ? {} : { scale: 0.98 }}
                       >
-                        <Truck className="w-4 h-4" />
+                        <img src={ICON.kurier} alt="" className="w-4 h-4 mix-blend-multiply" />
                         <span>{isSubmitting ? 'Wysyłanie...' : 'Zamów kuriera'}</span>
                       </motion.button>
                     </div>
@@ -2076,7 +2110,7 @@ export default function Dashboard() {
             onClick={() => setIsConfirmationOpen(false)}
           >
             <motion.div
-              className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.5, opacity: 0 }}
@@ -2085,25 +2119,25 @@ export default function Dashboard() {
               <div className="p-6">
                 <div className="flex justify-between items-center mb-6">
                   <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                      <Check className="w-6 h-6 text-green-600" />
+                    <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
+                      <img src={ICON.ptaszek} alt="" className="w-6 h-6 mix-blend-multiply" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900">Zamówienie kuriera wysłane!</h3>
-                      <p className="text-sm text-gray-600">Otrzymasz wiadomość email z dalszymi instrukcjami</p>
+                      <h3 className="text-xl font-bold text-stone-900">Zamówienie kuriera wysłane!</h3>
+                      <p className="text-sm text-stone-600">Otrzymasz wiadomość email z dalszymi instrukcjami</p>
                     </div>
                   </div>
                   <button
                     onClick={() => setIsConfirmationOpen(false)}
-                    className="p-2 hover:bg-gray-100 rounded-full"
+                    className="p-2 hover:bg-stone-100 rounded-full"
                   >
-                    <X className="w-5 h-5" />
+                    <img src={ICON.zamknij} alt="" className="w-5 h-5 mix-blend-multiply" />
                   </button>
                 </div>
 
-                <div className="bg-orange-50 p-4 rounded-lg mb-6">
-                  <h4 className="font-semibold text-orange-900 mb-2">Co dalej?</h4>
-                  <p className="text-sm text-orange-800">
+                <div className="bg-stone-50 p-4 rounded-xl mb-6">
+                  <h4 className="font-semibold text-stone-900 mb-2">Co dalej?</h4>
+                  <p className="text-sm text-stone-700">
                     Przygotuj urządzenie do odbioru zgodnie z poniższą listą. Kurier skontaktuje się z Tobą
                     w ciągu 24 godzin od otrzymania zgłoszenia.
                   </p>
@@ -2134,34 +2168,34 @@ export default function Dashboard() {
                   ].map((item, index) => (
                     <motion.div
                       key={index}
-                      className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg border border-gray-200"
+                      className="flex items-start space-x-3 p-4 bg-stone-50 rounded-xl border border-stone-200"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.2 }}
                     >
                       <motion.div
-                        className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                        className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: index * 0.2 + 0.1, type: "spring" }}
                       >
-                        <Check className="w-4 h-4 text-white" />
+                        <img src={naCiemnym(ICON.ptaszek)} alt="" className="w-4 h-4" />
                       </motion.div>
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900">{index + 1}. {item.text}</p>
-                        <p className="text-sm text-gray-600 mt-1">{item.detail}</p>
+                        <p className="font-semibold text-stone-900">{index + 1}. {item.text}</p>
+                        <p className="text-sm text-stone-600 mt-1">{item.detail}</p>
                       </div>
                     </motion.div>
                   ))}
                 </div>
 
-                <div className="mt-6 border-t border-gray-200 pt-6">
-                  <div className="bg-blue-50 p-4 rounded-lg">
+                <div className="mt-6 border-t border-stone-200 pt-6">
+                  <div className="bg-emerald-50/60 p-4 rounded-xl">
                     <div className="flex items-start space-x-3">
-                      <Info className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                      <div className="text-sm text-blue-900">
+                      <img src={ICON.info} alt="" className="w-5 h-5 mt-0.5 flex-shrink-0 mix-blend-multiply" />
+                      <div className="text-sm text-emerald-900">
                         <p className="font-semibold mb-1">Ważne informacje:</p>
-                        <ul className="space-y-1 text-blue-800">
+                        <ul className="space-y-1 text-emerald-800">
                           <li>• Numer przesyłki otrzymasz w wiadomości email</li>
                           <li>• Śledź status naprawy w systemie lub kontaktując się z nami</li>
                           <li>• W razie pytań zadzwoń: <span className="font-semibold">607 819 688</span></li>
@@ -2174,7 +2208,7 @@ export default function Dashboard() {
                 <div className="mt-6">
                   <motion.button
                     onClick={() => setIsConfirmationOpen(false)}
-                    className="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+                    className="w-full bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -2207,10 +2241,10 @@ export default function Dashboard() {
               {/* Close button */}
               <button
                 onClick={() => setPreviewImage(null)}
-                className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors flex items-center gap-2"
+                className="absolute -top-12 right-0 text-white hover:text-stone-300 transition-colors flex items-center gap-2"
               >
                 <span className="text-sm">Zamknij</span>
-                <X className="w-6 h-6" />
+                <img src={ICON.zamknij} alt="" className="w-6 h-6 mix-blend-multiply" />
               </button>
               
               {/* Title */}
@@ -2222,7 +2256,7 @@ export default function Dashboard() {
               <img
                 src={previewImage.src}
                 alt={previewImage.title}
-                className="w-full h-auto max-h-[85vh] object-contain rounded-lg shadow-2xl"
+                className="w-full h-auto max-h-[85vh] object-contain rounded-xl shadow-2xl"
               />
             </motion.div>
           </motion.div>

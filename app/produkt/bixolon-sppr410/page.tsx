@@ -44,7 +44,7 @@ const data: ProductData = {
     {
       title: 'Nośniki',
       rows: [
-        { k: 'Rodzaje', v: 'paragony i etykiety z podkładem' },
+        { k: 'Rodzaj', v: 'papier termiczny w rolce' },
         { k: 'Szerokość', v: '112 mm lub 105 mm' },
         { k: 'Średnica rolki', v: 'do 57 mm' },
         { k: 'Ładowanie', v: 'system łatwej wymiany rolki' },

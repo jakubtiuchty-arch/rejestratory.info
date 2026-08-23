@@ -60,37 +60,64 @@ const getCategoryUrl = (categoryName: string) => {
   return urlMap[categoryName] || "#";
 };
 
-const featuredProducts = [
+type PolecanyProdukt = {
+  slug: string;
+  nazwa: string;
+  kategoria: string;
+  opis: string;
+  zdjecie: string;
+  sztuk?: number;
+  nadlesnictwa?: number;
+};
+
+/**
+ * Zapas na wypadek, gdyby ranking z panelu nie odpowiedział — trzy modele
+ * najczęściej występujące u klientów w chwili pisania kodu. Normalnie sekcja
+ * bierze dane z `/api/najczestsze-urzadzenia`, więc sama nadąża za sprzedażą.
+ */
+const POLECANE_ZAPASOWO: PolecanyProdukt[] = [
   {
-    id: 1,
-    name: "Zebra EM45",
-    category: "Rejestrator",
-    description: "To nie tylko smartfon!",
-    price: "Cena na zapytanie",
-    image: "em45_1.webp"
+    slug: 'zebra-zq521',
+    nazwa: 'Zebra ZQ521',
+    kategoria: 'Drukarka do rejestratora',
+    opis: 'Mobilna drukarka 4-calowa do pracy w terenie',
+    zdjecie: '/zq521_1.png',
   },
   {
-    id: 2,
-    name: "Dell Pro 16\" Plus", 
-    category: "Laptop",
-    description: "Wydajny komputer dla biura leśnika",
-    price: "3 299 PLN",
-    image: "dell_16_1.png"
+    slug: 'zebra-em45',
+    nazwa: 'Zebra EM45',
+    kategoria: 'Rejestrator',
+    opis: 'Terminal terenowy w obudowie smartfona',
+    zdjecie: '/em45_1.webp',
   },
   {
-    id: 3,
-    name: "Brother MFC-L8690CDW",
-    category: "Urządzenie wielofunkcyjne", 
-    description: "Wszechstronne urządzenie biurowe",
-    price: "899 PLN",
-    image: "MFCL8690CDW_1.png"
-  }
+    slug: 'samsung-a56',
+    nazwa: 'Samsung Galaxy A56',
+    kategoria: 'Telefon',
+    opis: 'Smartfon służbowy z zapasem pamięci',
+    zdjecie: '/a56_1.png',
+  },
 ];
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [categoriesView, setCategoriesView] = React.useState(0); // 0=4, 1=8, 2=all
   const [promoOpen, setPromoOpen] = React.useState(false);
+  const [polecane, setPolecane] = React.useState<PolecanyProdukt[]>(POLECANE_ZAPASOWO);
+
+  // ranking liczony z panelu: co faktycznie stoi w nadleśnictwach
+  React.useEffect(() => {
+    let aktualne = true;
+    fetch('/api/najczestsze-urzadzenia?ile=3')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (aktualne && d?.ranking?.length) setPolecane(d.ranking);
+      })
+      .catch(() => {});
+    return () => {
+      aktualne = false;
+    };
+  }, []);
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
   // Force video to play on mount
@@ -421,40 +448,45 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Polecane produkty</h2>
-            <p className="text-gray-600">Najpopularniejsze rozwiązania w naszej ofercie</p>
+            <p className="text-stone-600">Sprzęt, który najczęściej pracuje w nadleśnictwach</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {featuredProducts.map((product) => (
-              <motion.div
-                key={product.id}
+            {polecane.map((produkt, i) => (
+              <motion.a
+                key={produkt.slug}
+                href={`/produkt/${produkt.slug}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: product.id * 0.1 }}
-                className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
+                transition={{ duration: 0.5, delay: (i + 1) * 0.1 }}
+                className="group flex flex-col rounded-2xl border border-stone-200 bg-white transition hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div className="aspect-square rounded-t-lg flex items-center justify-center overflow-hidden">
-                  <img 
-                    src={`/${product.image}`} 
-                    alt={product.name}
-                    className="w-4/5 h-4/5 object-contain"
+                <div className="flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl">
+                  <img
+                    src={produkt.zdjecie}
+                    alt={produkt.nazwa}
+                    className="h-4/5 w-4/5 object-contain"
                   />
                 </div>
-                <div className="border-t border-gray-200"></div>
-                <div className="p-6">
-                  <div className="text-sm text-emerald-600 font-medium mb-2">{product.category}</div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
-                  <p className="text-gray-600 mb-4">{product.description}</p>
-                  <div className="flex justify-end">
-                    <a 
-                      href={`/produkt/${product.name.toLowerCase().replace(/\s+/g, '-').replace(/"/g, '')}`}
-                      className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors"
-                    >
-                      Zobacz więcej
-                    </a>
+                <div className="border-t border-stone-200"></div>
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-700">
+                    {produkt.kategoria}
                   </div>
+                  <h3 className="mt-2 text-xl font-semibold text-stone-900">{produkt.nazwa}</h3>
+                  <p className="mt-2 text-stone-600">{produkt.opis}</p>
+                  {typeof produkt.nadlesnictwa === 'number' && produkt.nadlesnictwa > 0 && (
+                    <p className="mt-3 text-sm text-stone-500">
+                      Pracuje w {produkt.nadlesnictwa}{' '}
+                      {produkt.nadlesnictwa === 1 ? 'nadleśnictwie' : 'nadleśnictwach'}
+                    </p>
+                  )}
+                  <span className="mt-5 inline-flex items-center gap-2 self-start rounded-xl bg-emerald-600 px-4 py-2 font-medium text-white transition group-hover:bg-emerald-700">
+                    Zobacz więcej
+                    <img src={naCiemnym(ICON.strzalka)} alt="" className="h-4 w-4" />
+                  </span>
                 </div>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
         </div>

@@ -18,7 +18,7 @@ const data: ProductData = {
   whyLabel: 'Przy odbiorze drewna',
   highlights: [
     { icon: ICON.szybkosc, label: 'Prędkość druku', value: '127 mm/s, 203 dpi' },
-    { icon: ICON.etykieta, label: 'Nośniki', value: 'paragony termiczne, etykiety' },
+    { icon: ICON.rozdzielczosc, label: 'Szerokość druku', value: '104 mm, 832 punkty/linię' },
     { icon: ICON.siec, label: 'Łączność', value: 'Wi-Fi ac, Bluetooth 4.2, NFC' },
     { icon: ICON.rolka, label: 'Rolka', value: 'do Ø 57,5 mm, szerokość 50–112 mm' },
   ],
@@ -42,7 +42,7 @@ const data: ProductData = {
     {
       title: 'Nośniki',
       rows: [
-        { k: 'Rodzaje', v: 'paragony termiczne, etykiety' },
+        { k: 'Rodzaj', v: 'papier termiczny w rolce' },
         { k: 'Szerokość papieru', v: '50–112 mm' },
         { k: 'Grubość', v: '0,06–0,16 mm' },
         { k: 'Średnica rolki', v: 'do Ø 57,5 mm' },
@@ -81,7 +81,7 @@ const data: ProductData = {
       icon: ICON.rolka,
       title: 'Szeroki zakres nośników',
       body:
-        'Papier od 50 do 112 mm szerokości pozwala używać tej samej drukarki do kwitów i etykiet.',
+        'Papier od 50 do 112 mm szerokości obejmuje wszystkie formaty kwitu wywozowego używane w nadleśnictwach.'
     },
   ],
   usedBy: { device: 'Sewoo LKP400' },

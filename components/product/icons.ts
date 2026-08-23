@@ -155,6 +155,13 @@ export const ICON = {
   ptaszek: '/icons/line/ptaszek.png',
   info: '/icons/line/info.png',
   koperta: '/icons/line/koperta.png',
+  // panel klienta
+  pobierz: '/icons/line/pobierz.png',
+  wyloguj: '/icons/line/wyloguj.png',
+  edytuj: '/icons/line/edytuj.png',
+  zapisz: '/icons/line/zapisz.png',
+  instrukcja: '/icons/line/instrukcja.png',
+  umowa: '/icons/line/umowa.png',
   // obsługa
   tarcza: '/icons/em45/line/tarcza.png',
   wsparcie: '/icons/line/wsparcie.png',

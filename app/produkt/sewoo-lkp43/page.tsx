@@ -20,7 +20,7 @@ const data: ProductData = {
     { icon: ICON.szybkosc, label: 'Prędkość druku', value: '100 mm/s, 203 dpi' },
     { icon: ICON.rolka, label: 'Rolka', value: 'do Ø 56 mm, szerokość 50–112 mm' },
     { icon: ICON.bluetooth, label: 'Łączność', value: 'Bluetooth' },
-    { icon: ICON.etykieta, label: 'Rodzaje nośników', value: 'papier termiczny, etykiety' },
+    { icon: ICON.waga, label: 'Waga', value: '0,52 kg z akumulatorem' },
   ],
   specGroups: [
     {
@@ -42,7 +42,7 @@ const data: ProductData = {
     {
       title: 'Nośniki',
       rows: [
-        { k: 'Rodzaje', v: 'papier termiczny, etykiety' },
+        { k: 'Rodzaj', v: 'papier termiczny w rolce' },
         { k: 'Szerokość papieru', v: '50–112 mm' },
         { k: 'Grubość', v: '0,06–0,16 mm' },
         { k: 'Średnica rolki', v: 'do Ø 56 mm' },
@@ -67,7 +67,7 @@ const data: ProductData = {
       icon: ICON.szybkosc,
       title: 'Sto milimetrów na sekundę',
       body:
-        'Prędkość wystarczająca do kwitów odbioru i etykiet — model dla stanowisk o umiarkowanym ruchu.',
+        'Prędkość wystarczająca do kwitów wywozowych — model dla leśnictw o umiarkowanym wywozie.',
     },
     {
       icon: ICON.rolka,
@@ -83,7 +83,7 @@ const data: ProductData = {
       icon: ICON.szybkosc,
       title: 'Podstawowy model do kwitów odbioru',
       body:
-        'Prosta konstrukcja z transmisją Bluetooth — wybór tam, gdzie drukarka ma wystawiać kwity i etykiety przy rejestratorze, bez rozbudowanej łączności sieciowej.',
+        'Prosta konstrukcja z transmisją Bluetooth — wybór tam, gdzie drukarka ma wystawiać kwity wywozowe przy rejestratorze, bez rozbudowanej łączności sieciowej.',
       tone: 'akcent',
     },
   ],
@@ -91,7 +91,7 @@ const data: ProductData = {
     {
       name: 'Sewoo LK-P400',
       href: '/produkt/sewoo-lkp400',
-      note: 'Szybszy druk, linerless i NFC w standardzie',
+      note: 'Szybszy druk, Wi-Fi i NFC w standardzie',
     },
   ],
 }

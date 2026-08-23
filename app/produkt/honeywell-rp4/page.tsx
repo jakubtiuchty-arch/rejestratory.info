@@ -20,7 +20,7 @@ const data: ProductData = {
     { icon: ICON.szybkosc, label: 'Prędkość druku', value: 'do 125 mm/s' },
     { icon: ICON.czaspracy, label: 'Bateria', value: '4900 mAh' },
     { icon: ICON.upadek, label: 'Odporność', value: 'IP54, upadki z 2 m' },
-    { icon: ICON.rolka, label: 'Nośniki', value: 'etykiety, paragony, tagi' },
+    { icon: ICON.rolka, label: 'Papier', value: 'rolka do 58 mm średnicy' },
   ],
   specGroups: [
     {
@@ -44,7 +44,7 @@ const data: ProductData = {
     {
       title: 'Nośniki',
       rows: [
-        { k: 'Rodzaje', v: 'etykiety, paragony, tagi' },
+        { k: 'Rodzaj', v: 'papier termiczny w rolce' },
         { k: 'Średnica rolki', v: 'do 58 mm' },
         { k: 'Wydajność', v: 'do 2000 wydruków dziennie' },
       ],
@@ -65,15 +65,15 @@ const data: ProductData = {
   why: [
     {
       icon: ICON.rolka,
-      title: 'Etykiety, paragony i przywieszki',
+      title: 'Rolka na cały objazd',
       body:
-        'Jedno urządzenie obsługuje kwity odbioru, etykiety na stos i tagi — rolka do 58 mm średnicy starcza na długi objazd.',
+        'Rolka do 58 mm średnicy mieści komplet kwitów wywozowych na dzień jazdy po powierzchniach — bez przezbrajania w połowie trasy.',
     },
     {
       icon: ICON.adf,
       title: 'Dwa tysiące wydruków dziennie',
       body:
-        'Producent podaje taką dzienną objętość pracy — to drukarka na intensywny odbiór drewna, nie na kilka kwitów.',
+        'Producent podaje taką dzienną objętość pracy — to drukarka na nadleśnictwo z dużym wywozem, nie na kilka kwitów dziennie.',
     },
     {
       icon: ICON.czaspracy,
