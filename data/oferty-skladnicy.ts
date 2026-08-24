@@ -33,6 +33,54 @@ export type OfertaSkladnicy = {
 
 export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
+    "slug": "bixolon-sppr410",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
+    "formularz": null,
+    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-07-01",
+      "do": "2026-08-31"
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Drukarka BIOXOLON SPP-R410 - w zestawie:",
+      "cenaNetto": 1921,
+      "promocja": true,
+      "wZestawie": [
+        "Moduł Bluetooth",
+        "Akumulator, ładowarka sieciowa i samochodowa",
+        "Torba na zestaw z rejestratorem"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 126.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 113.3,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator",
+        "cenaNetto": 408.1,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Papier termiczny",
+        "cenaNetto": 7.6,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
     "slug": "brother-dcp-b7620dw",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
@@ -1107,6 +1155,54 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
+    "slug": "honeywell-rp4",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
+    "formularz": null,
+    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-07-01",
+      "do": "2026-08-31"
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Drukarka HONEYWELL RP4 w zestawie:",
+      "cenaNetto": 2525,
+      "promocja": false,
+      "wZestawie": [
+        "Moduł Bluetooth",
+        "Akumulator, ładowarka sieciowa i samochodowa",
+        "Torba na zestaw z rejestratorem"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 192.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 126.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator",
+        "cenaNetto": 429,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Papier termiczny",
+        "cenaNetto": 7.48,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
     "slug": "hp-460",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
@@ -1247,8 +1343,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       "cenaNetto": 1390,
       "promocja": false,
       "wZestawie": [
-        "- Zasilacz zintegrowany/wbudowany trwale w monitor",
-        "- kabel zasilający."
+        "Zasilacz zintegrowany/wbudowany trwale w monitor",
+        "kabel zasilający."
       ]
     },
     "dodatki": []
@@ -1269,7 +1365,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       "cenaNetto": 1022,
       "promocja": false,
       "wZestawie": [
-        "- Zasilacz zintegrowany/wbudowany trwale w monitor"
+        "Zasilacz zintegrowany/wbudowany trwale w monitor"
       ]
     },
     "dodatki": []
@@ -1290,8 +1386,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       "cenaNetto": 1733,
       "promocja": false,
       "wZestawie": [
-        "- Zasilacz zintegrowany/wbudowany trwale w monitor",
-        "- kabel zasilający."
+        "Zasilacz zintegrowany/wbudowany trwale w monitor",
+        "kabel zasilający."
       ]
     },
     "dodatki": []
@@ -1467,6 +1563,42 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       "wZestawie": []
     },
     "dodatki": []
+  },
+  {
+    "slug": "samsung-a36",
+    "skladnica": "zpuh-olsztyn",
+    "plik": "Druk zamówienia na dostawę drukarek termicznych i akcesoriów 16.10.2024.docx",
+    "formularz": null,
+    "strona": "https://zpuh.olsztyn.lasy.gov.pl/drukarki",
+    "okres": {
+      "od": "2024-10-16",
+      "do": null
+    },
+    "dostawca": null,
+    "urzadzenie": {
+      "nazwa": "Drukarka termiczna Brother RJ-4230B",
+      "cenaNetto": 2420,
+      "promocja": false,
+      "wZestawie": [
+        "Akumulator",
+        "Ładowarka sieciowa",
+        "Gwarancja 36 miesiące"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Torba transportowa do drukarki Brother RJ4230B",
+        "cenaNetto": 198,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Papier termiczny do drukarki Brother RJ4230B (karton 40 szt.)",
+        "cenaNetto": 5.5,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
   },
   {
     "slug": "samsung-a36",
@@ -1764,6 +1896,205 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
+    "slug": "seiko-mpa40",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
+    "formularz": null,
+    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-07-01",
+      "do": "2026-08-31"
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Drukarka SEIKO MPA-40 - w zestawie:",
+      "cenaNetto": 2078,
+      "promocja": false,
+      "wZestawie": [
+        "Moduł Bluetooth",
+        "Akumulator, ładowarka sieciowa i samochodowa",
+        "Torba na zestaw z rejestratorem"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 214.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 209,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator",
+        "cenaNetto": 492.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Papier termiczny",
+        "cenaNetto": 7.5,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
+    "slug": "sewoo-lkp400",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
+    "formularz": null,
+    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-07-01",
+      "do": "2026-08-31"
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Drukarka SEWOO LK-P400 - w zestawie:",
+      "cenaNetto": 2536,
+      "promocja": false,
+      "wZestawie": [
+        "Moduł Bluetooth",
+        "Akumulator, ładowarka sieciowa i samochodowa",
+        "Torba na zestaw z rejestratorem"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 104.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 64.9,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator",
+        "cenaNetto": 496.1,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Papier termiczny",
+        "cenaNetto": 7.09,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
+    "slug": "sewoo-lkp43",
+    "skladnica": "zpuh-olsztyn",
+    "plik": "Druk zamówienia na dostawę drukarek termicznych i akcesoriów 16.10.2024.docx",
+    "formularz": null,
+    "strona": "https://zpuh.olsztyn.lasy.gov.pl/drukarki",
+    "okres": {
+      "od": "2024-10-16",
+      "do": null
+    },
+    "dostawca": null,
+    "urzadzenie": {
+      "nazwa": "Drukarka termiczna SEWOO LK-P43",
+      "cenaNetto": 2744.5,
+      "promocja": false,
+      "wZestawie": [
+        "Akumulator",
+        "Ładowarka sieciowa i samochodowa",
+        "Torba",
+        "Gwarancja 24 miesiące"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 231,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 231,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator",
+        "cenaNetto": 434.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Papier termiczny 110/30 (karton 60 szt.)",
+        "cenaNetto": 7.54,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
+    "slug": "sewoo-lkp43",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
+    "formularz": null,
+    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-07-01",
+      "do": "2026-08-31"
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Drukarka SEWOO LK-P43 - w zestawie:",
+      "cenaNetto": 2654,
+      "promocja": false,
+      "wZestawie": [
+        "Moduł Bluetooth",
+        "Akumulator, ładowarka sieciowa i samochodowa",
+        "Torba na zestaw z rejestratorem"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 231,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 231,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator",
+        "cenaNetto": 434.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Kabel RS",
+        "cenaNetto": 74.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Papier termiczny",
+        "cenaNetto": 7.48,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
     "slug": "torba-hp-15",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
@@ -1779,7 +2110,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       "cenaNetto": 148.5,
       "promocja": false,
       "wZestawie": [
-        "- otwór na uchwyt od walizki"
+        "otwór na uchwyt od walizki"
       ]
     },
     "dodatki": []
@@ -1800,8 +2131,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       "cenaNetto": 275,
       "promocja": false,
       "wZestawie": [
-        "- wyposażona w otwór na uchwyt walizki",
-        "- posiada wykładane uchwyty do przenoszenia"
+        "wyposażona w otwór na uchwyt walizki",
+        "posiada wykładane uchwyty do przenoszenia"
       ]
     },
     "dodatki": []
@@ -2337,6 +2668,115 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       {
         "nazwa": "Kasety z woskowo/żywiczną taśmą barwiącą",
         "cenaNetto": 58.3,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
+    "slug": "zebra-zq521",
+    "skladnica": "zpuh-olsztyn",
+    "plik": "Druk zamówienia na dostawę drukarek termicznych i akcesoriów 16.10.2024.docx",
+    "formularz": null,
+    "strona": "https://zpuh.olsztyn.lasy.gov.pl/drukarki",
+    "okres": {
+      "od": "2024-10-16",
+      "do": null
+    },
+    "dostawca": null,
+    "urzadzenie": {
+      "nazwa": "Drukarka termiczna ZEBRA ZQ521",
+      "cenaNetto": 2596,
+      "promocja": false,
+      "wZestawie": [
+        "Akumulator",
+        "Ładowarka sieciowa i samochodowa",
+        "Torba",
+        "Gwarancja 24 miesiące"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 181.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 143,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator",
+        "cenaNetto": 466.4,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
+    "slug": "zebra-zq521",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
+    "formularz": null,
+    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-07-01",
+      "do": "2026-08-31"
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Drukarka ZEBRA ZQ521- w zestawie:",
+      "cenaNetto": 2514.5,
+      "promocja": false,
+      "wZestawie": [
+        "Moduł Bluetooth",
+        "Akumulator, ładowarka sieciowa i samochodowa",
+        "Torba na zestaw z rejestratorem"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 104.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 99,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator o pojemności standardowej",
+        "cenaNetto": 467.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator o pojemności rozszerzonej",
+        "cenaNetto": 665.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Stacja dokująca dla pojedyń. akumulatora w wersji std i rozszerz.",
+        "cenaNetto": 544.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Papier termiczny",
+        "cenaNetto": 6.55,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Kontrakt serwisowy",
+        "cenaNetto": 460.9,
         "promocja": false,
         "wZestawie": []
       }

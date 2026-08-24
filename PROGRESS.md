@@ -1,5 +1,40 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-23 — drukarki termiczne ZUP Łódź, koniec wpisów ręcznych
+
+`Oferta na drukarki termiczne_01.07.2026.docx` — **sześć drukarek z wyposażeniem**, wszystkie z kartami. 70 ofert w pliku generowanym.
+
+| model | cena netto | pozycji dodatkowych |
+|---|---|---|
+| Bixolon SPP-R410 | **1 921,00 zł — promocja** | 4 |
+| Seiko MPA-40 | 2 078,00 zł | 4 |
+| Zebra ZQ521 | 2 514,50 zł | 7 |
+| Honeywell RP4 | 2 525,00 zł | 4 |
+| Sewoo LK-P400 | 2 536,00 zł | 4 |
+| Sewoo LK-P43 | 2 654,00 zł | 5 |
+
+**Uwaga terminowa: cała ta oferta wygasa 31.08.2026** — cron zgłosi ją tego dnia.
+
+**Sewoo LK-P43 ma teraz dwie składnice** — Łódź 2 654,00 zł i Olsztyn 2 744,50 zł — więc karta pokazuje porównanie.
+
+**Zawartość zestawu czytana z dokumentu, nie zgadywana.** Druki otwierają listę słowami „w zestawie:”, a parser dotąd wybierał z niej pozycje po słowach kluczowych i gubił „Moduł Bluetooth”, „Torba”, „Gwarancja 24 miesiące”. Teraz bierze dokładnie to, co dokument wypisał pod nagłówkiem, kończąc listę na zdaniu albo na nocie o dostawie i serwisie. Poprawione dane na dziewięciu ofertach.
+
+**`data/oferty-reczne.ts` schudł do jednego wpisu.** ZQ521 z Łodzi i z Olsztyna były przepisywane ze zrzutów, bo nie mieliśmy dokumentów źródłowych — teraz mamy oba, i to z okresami obowiązywania, których zrzuty nie zawierały. Zostaje wyłącznie ZSLP Stargard (cennik przetargowy, bez pliku). Pozycję „Papier termiczny 104/33/25”, której nie pokazujemy na karcie, pomija teraz sam parser (`POMIJANE_POZYCJE`) — wcześniej trzymała ją ręczna edycja, którą regeneracja by nadpisała.
+
+**Poprawki w tabeli cen:** oznaczenie „najtaniej” pojawia się tylko wtedy, gdy któraś składnica jest realnie tańsza (przy 231,00 zł kontra 231,00 zł znikło z obu kolumn), a z nazw pozycji zniknęły spacje wewnątrz nawiasów („( karton 60 szt. )” → „(karton 60 szt.)”).
+
+## 2026-08-23 — pierwszy druk spoza ZUP Łódź: Sewoo LK-P43 z Olsztyna
+
+`Druk zamówienia na dostawę drukarek termicznych i akcesoriów 16.10.2024.docx` (ZPUH Olsztyn). Dodany **Sewoo LK-P43 — 2 744,50 zł netto**, oferta od 16.10.2024 do odwołania, w cenie ładowarka sieciowa i samochodowa; osobno ładowarki po 231,00 zł, akumulator 434,50 zł i papier termiczny 110/30 za 7,54 zł. Brother RJ-4230B pominięty — nie jest z naszej oferty. 64 oferty w pliku generowanym.
+
+**Parser rozpoznaje składnicę.** Dotąd każdy dokument szedł jako ZUP Łódź. Teraz składnica wynika z nagłówka dokumentu (ZPUH/Olsztyn, ZSLP/Stargard, domyślnie ZUP Łódź), a `strona` z linkiem do asortymentu jest dobierana per składnica.
+
+**Czwarty format okresu**: „( oferta ważna od dnia 16.10.2024r.)”.
+
+**Wpis ręczny wygrywa z generowanym.** Ten sam plik zawiera ofertę na Zebrę ZQ521 z Olsztyna, którą mamy przepisaną ręcznie w `data/oferty-reczne.ts` — bez pozycji „Papier termiczny 104/33/25”, usuniętej na wyraźne polecenie. Gdyby wersja generowana miała pierwszeństwo, papier wracałby na kartę przy każdym uruchomieniu parsera, a karta pokazywałaby dwie kolumny Olsztyna. `data/oferty.ts` scala więc listy tak, że przy tym samym modelu w tej samej składnicy zostaje wpis ręczny. Sprawdzone na karcie ZQ521: trzy kolumny, Olsztyn bez papieru.
+
+**Myślniki wypunktowania** usuwane z listy „W cenie” — druk Olsztyna wypunktowuje zawartość zestawu i na karcie wychodziło „W cenie: - Ładowarka sieciowa i samochodowa”.
+
 ## 2026-08-23 — trzy karty sprzętu EZD
 
 Domknięta oferta na sprzęt do EZD: **wszystkie osiem urządzeń na kartach**, 61 ofert, 81 kart produktu.

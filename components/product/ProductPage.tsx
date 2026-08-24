@@ -886,9 +886,11 @@ const CenySkladnic = ({ oferty: wejscie, nazwa }: { oferty: OfertaZUP[]; nazwa: 
   // pierwszy niepusty, żeby nie powtarzać tej samej listy w każdej kolumnie
   const wZestawie = oferty.map((o) => o.urzadzenie.wZestawie ?? []).find((x) => x.length) ?? []
 
+  // „najtaniej” ma sens tylko wtedy, gdy któraś składnica jest realnie tańsza —
+  // przy jednakowych kwotach oznaczenie przy każdej kolumnie niczego nie mówi
   const najtansza = (klucz: string) => {
     const kwoty = oferty.map((o) => cena(o, klucz)?.cenaNetto).filter((k): k is number => !!k)
-    return kwoty.length > 1 ? Math.min(...kwoty) : null
+    return new Set(kwoty).size > 1 ? Math.min(...kwoty) : null
   }
 
   return (

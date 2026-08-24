@@ -8,8 +8,20 @@ import { OFERTY_RECZNE } from './oferty-reczne'
 
 export type { OfertaSkladnicy, PozycjaOferty } from './oferty-skladnicy'
 
-/** Komplet ofert — używane też przez cron kontrolujący ich aktualność. */
-export const WSZYSTKIE_OFERTY: OfertaSkladnicy[] = [...OFERTY_SKLADNICY, ...OFERTY_RECZNE]
+/**
+ * Komplet ofert — używane też przez cron kontrolujący ich aktualność.
+ *
+ * Przy tym samym modelu w tej samej składnicy wygrywa wpis ręczny: powstał
+ * świadomie (najczęściej ze zrzutu albo z poprawkami), a wersja generowana
+ * nadpisałaby te decyzje przy każdym uruchomieniu parsera.
+ */
+const klucz = (o: OfertaSkladnicy) => `${o.slug}::${o.skladnica}`
+const reczne = new Set(OFERTY_RECZNE.map(klucz))
+
+export const WSZYSTKIE_OFERTY: OfertaSkladnicy[] = [
+  ...OFERTY_RECZNE,
+  ...OFERTY_SKLADNICY.filter((o) => !reczne.has(klucz(o))),
+]
 
 /** Wszystkie oferty na dany model — po jednej z każdej składnicy, która go ma. */
 export const ofertyDla = (slug: string): OfertaSkladnicy[] =>

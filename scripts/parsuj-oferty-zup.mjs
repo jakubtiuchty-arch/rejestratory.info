@@ -50,6 +50,9 @@ const MODELE = [
   ['PC42E-T', 'honeywell-pc42e-t'],
   ['DS2278', 'zebra-ds2278'],
   ['1250g', 'honeywell-1250g'],
+  ['LK-P400', 'sewoo-lkp400'],
+  ['LK-P43', 'sewoo-lkp43'],
+  ['ZQ521', 'zebra-zq521'],
   ['524PM', 'hp-seria-5-pro-524pm'],
   ['524PU', 'hp-seria-5-pro-524pu'],
   ['527PM', 'hp-seria-5-pro-527pm'],
@@ -116,7 +119,8 @@ const okresObowiazywania = (linie) => {
   const naISO = (d) => d.split('.').reverse().join('-')
 
   // część druków pisze „w okresie od…”, część „na zamówienia złożone od…”
-  const wstep = '(?:okresie|złożone|zlozone|obowiązuje|obowiazuje)\\s*(?:w\\s*okresie\\s*)?(?:od\\s*)?'
+  const wstep =
+    '(?:okresie|złożone|zlozone|obowiązuje|obowiazuje|ważna|wazna)\\s*(?:w\\s*okresie\\s*)?(?:od\\s*)?(?:dnia\\s*)?'
 
   const zData = tekst.match(
     new RegExp(`${wstep}(\\d{2}\\.\\d{2}\\.\\d{4})\\s*r?\\.?\\s*do\\s*(\\d{2}\\.\\d{2}\\.\\d{4})`, 'i')
@@ -143,13 +147,46 @@ const okresObowiazywania = (linie) => {
  */
 const W_CENIE =
   /(ładowark|karta pamięci|etui|kabur|rysik|pasek na rękę|handstrap|szkło ochronne|folia ochronna|uchwyt|zasilacz|kabel)/i
-const NIE_W_CENIE = /(uwaga|opcjonalnie|można doposażyć|doposaż|dostawa, serwis)/i
+const NIE_W_CENIE =
+  /(uwaga|opcjonalnie|można doposażyć|doposaż|dostawa\s*[,i]\s*serwis|serwis gwarancyjny)/i
 
-const wZestawie = (linie) =>
-  linie
+/**
+ * Pozycje świadomie pomijane, mimo że stoją w druku. Decyzja Jakuba z 23.08.2026:
+ * papieru 104/33/25 z oferty ZPUH Olsztyn nie pokazujemy na karcie.
+ */
+const POMIJANE_POZYCJE = [/^papier termiczny 104\/33\/25/i]
+
+const pomijana = (nazwa) => POMIJANE_POZYCJE.some((wzor) => wzor.test(nazwa))
+
+const bezPunktora = (l) => l.replace(/^[-–—•*]\s*/, '').replace(/\s+/g, ' ').trim()
+
+/**
+ * Co wchodzi w cenę urządzenia.
+ *
+ * Gdy druk sam otwiera listę słowami „w zestawie:”, bierzemy dokładnie to, co
+ * pod nią wypisał — to jedyne wiarygodne źródło. Lista kończy się na zdaniu
+ * (linia zamknięta kropką) albo na nocie o dostawie i serwisie.
+ *
+ * Druki bez takiego nagłówka wymieniają zawartość między parametrami, więc tam
+ * zostaje wybieranie po nazwach przedmiotów. Wiersze „UWAGA”, „opcjonalnie”
+ * czy „można doposażyć” świadomie odpadają: opisują wyposażenie dodatkowe.
+ */
+const wZestawie = (linie) => {
+  const marker = linie.findIndex((l) => /w zestawie\s*:?\s*$/i.test(l))
+  if (marker !== -1) {
+    const wynik = []
+    for (const l of linie.slice(marker + 1)) {
+      if (NIE_W_CENIE.test(l) || /\.\s*$/.test(l)) break
+      const czysta = bezPunktora(l)
+      if (czysta) wynik.push(czysta)
+    }
+    if (wynik.length) return wynik
+  }
+  return linie
     .slice(1) // pierwsza linia to nazwa pozycji
     .filter((l) => W_CENIE.test(l) && !NIE_W_CENIE.test(l))
-    .map((l) => l.replace(/\s+/g, ' ').trim())
+    .map(bezPunktora)
+}
 
 /**
  * ZUP wstawia przy nazwie modelu link do naszej karty. To najpewniejsze
@@ -253,6 +290,25 @@ const wyglądaNaUrzadzenie = (pozycja) =>
  * ZUP Łódź dzieli asortyment na podstrony i tam wiesza dokumenty. Rejestratory
  * i drukarki są razem pod `/rejestratory` — to domyślny dział; reszta poniżej.
  */
+/**
+ * Która składnica wystawia ofertę. Rozpoznajemy po nagłówku dokumentu; gdy nic
+ * nie pasuje, zostaje ZUP Łódź — z niego pochodzi większość druków.
+ */
+const SKLADNICE_PO_TRESCI = [
+  [/zpuh|olsztyn/i, 'zpuh-olsztyn'],
+  [/zslp|stargard/i, 'zslp-stargard'],
+  [/zup|łód|lodz/i, 'zup-lodz'],
+]
+
+const rozpoznajSkladnice = (tekst) =>
+  SKLADNICE_PO_TRESCI.find(([wzor]) => wzor.test(tekst))?.[1] ?? 'zup-lodz'
+
+/** Strona z asortymentem w składnicach innych niż ZUP Łódź. */
+const STRONY_POZOSTALE = {
+  'zpuh-olsztyn': 'https://zpuh.olsztyn.lasy.gov.pl/drukarki',
+  'zslp-stargard': 'https://zslpstargard.szczecin.lasy.gov.pl',
+}
+
 const DZIALY_ZUP = {
   'akcesoria-komputerowe': [
     'hp-460',
@@ -319,7 +375,8 @@ const DZIALY_ZUP = {
   ],
 }
 
-const stronaZup = (slug) => {
+const stronaSkladnicy = (slug, skladnica) => {
+  if (skladnica !== 'zup-lodz') return STRONY_POZOSTALE[skladnica]
   const dzial = Object.keys(DZIALY_ZUP).find((d) => DZIALY_ZUP[d].includes(slug)) ?? 'rejestratory'
   return `https://zup.lodz.lasy.gov.pl/${dzial}`
 }
@@ -380,6 +437,7 @@ for (const plik of readdirSync(KATALOG).sort()) {
   }
 
   const linie = akapity(xml)
+  const skladnica = rozpoznajSkladnice(linie.slice(0, 20).join(' '))
 
   // Jeden plik bywa kilkoma ofertami — oferta na laptopy ma osobną część na sam
   // laptop i osobną na laptop ze stacją dokującą, każdą z własnym terminem.
@@ -413,7 +471,14 @@ for (const plik of readdirSync(KATALOG).sort()) {
     s.tabele.push(t[0])
   }
 
-  const bezPromo = (t) => t.replace(/\s*PROMOCJA\s*/gi, ' ').replace(/\s+/g, ' ').trim()
+  // druki wstawiają spacje wewnątrz nawiasów („( karton 60 szt. )”)
+  const bezPromo = (t) =>
+    t
+      .replace(/\s*PROMOCJA\s*/gi, ' ')
+      .replace(/\(\s+/g, '(')
+      .replace(/\s+\)/g, ')')
+      .replace(/\s+/g, ' ')
+      .trim()
 
   for (const sekcja of sekcje) {
     if (!sekcja.tabele.length) continue
@@ -456,11 +521,17 @@ for (const plik of readdirSync(KATALOG).sort()) {
         continue
       }
 
+      const nazwaPozycji = skrocNazwe(oczekujacyNaglowek || bezPromo(nazwa.etykieta))
+      if (pomijana(nazwaPozycji)) {
+        oczekujacyNaglowek = null
+        continue
+      }
+
       pozycje.push({
         // nagłówek nad wierszem bywa właściwą nazwą pozycji („Stacja dokująca do
         // rejestratora Zebra EM45”); nagłówki bloków wyposażenia są zdejmowane
         // wcześniej, więc nie podmieniają nazw tonerów
-        nazwa: skrocNazwe(oczekujacyNaglowek || bezPromo(nazwa.etykieta)),
+        nazwa: nazwaPozycji,
         cenaNetto: kwota,
         promocja: /PROMOCJA/i.test(nazwa.pelny) || /PROMOCJA/i.test(cena.pelny),
         wZestawie: wZestawie(nazwa.linie),
@@ -563,10 +634,10 @@ for (const plik of readdirSync(KATALOG).sort()) {
     for (const g of grupy.filter((g) => g.slug)) {
       oferty.push({
         slug: g.slug,
-        skladnica: 'zup-lodz',
+        skladnica,
         plik,
         formularz: FORMULARZE_PDF[g.slug] ?? null,
-        strona: stronaZup(g.slug),
+        strona: stronaSkladnicy(g.slug, skladnica),
         okres: sekcja.okres,
         dostawca: g.urzadzenie._dostawca,
         urzadzenie: czysta(g.urzadzenie),
