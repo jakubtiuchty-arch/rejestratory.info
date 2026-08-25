@@ -128,13 +128,6 @@ const data: ProductData = {
   ],
   usedBy: { device: 'Zebra EM45' },
   serviceContract: '3 lub 5 lat',
-  microsite: {
-    href: 'https://www.em45.info',
-    label: 'em45.info',
-    heading: 'Zobacz EM45 w akcji na dedykowanej stronie',
-    body: 'Zdjęcia z terenu, scenariusze pracy w nadleśnictwie i porównanie z prywatnym telefonem.',
-    image: '/baner_em45_header.webp',
-  },
 }
 
 export default function ZebraEM45Page() {
