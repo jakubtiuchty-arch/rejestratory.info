@@ -328,6 +328,7 @@ const DZIALY_ZUP = {
   ],
   'komputery-pc-laptopy-all-in-one': [
     'aio-dell-pro-24',
+    'aio-dell-pro-24-bez-systemu',
     'dell-pro-14-plus',
     'dell-pro-16',
     'dell-pro-16-plus',
@@ -407,6 +408,10 @@ const POJEDYNCZE_POZYCJE = [
   ['KM5221W', 'dell-km5221'],
   ['KM7321W', 'dell-km7321'],
   ['WRLS KB/MSE Combo', 'hp-655'],
+  // Obie wersje all-in-one linkują w druku do tej samej karty, a różnią się
+  // systemem, pamięcią i dyskiem — rozróżnia je dopisek przy nazwie.
+  ['DELL PRO 24 AiO bez systemu', 'aio-dell-pro-24-bez-systemu'],
+  ['DELL PRO 24 AiO z systemem', 'aio-dell-pro-24'],
   ['460 Multi-device', 'hp-460'],
   ['715-6E6FOAA', 'hp-715'],
   ['Torba do laptopów HP', 'torba-hp-15'],

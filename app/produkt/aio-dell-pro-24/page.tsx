@@ -109,6 +109,11 @@ const data: ProductData = {
   usedBy: { device: 'Dell AIO Pro 24' },
   related: [
     {
+      name: 'Dell Pro 24 All in One bez systemu',
+      href: '/produkt/aio-dell-pro-24-bez-systemu',
+      note: 'Ta sama maszyna bez licencji, z 8 GB i dyskiem 256 GB',
+    },
+    {
       name: 'Dell Pro 16 Plus',
       href: '/produkt/dell-pro-16-plus',
       note: 'Ta sama platforma w laptopie, gdy stanowisko bywa mobilne',

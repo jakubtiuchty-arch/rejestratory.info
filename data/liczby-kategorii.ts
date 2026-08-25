@@ -4,7 +4,7 @@
 
 export const LICZBY_KATEGORII: Record<string, number> = {
   "akcesoria-komputerowe": 14,
-  "all-in-one": 1,
+  "all-in-one": 2,
   "drukarki-do-rejestratora": 6,
   "drukarki-laserowe": 3,
   "ezd": 8,

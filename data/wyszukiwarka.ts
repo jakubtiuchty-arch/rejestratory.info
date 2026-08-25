@@ -309,6 +309,24 @@ export const INDEKS_PRODUKTOW: PozycjaIndeksu[] = [
     ]
   },
   {
+    "name": "Dell Pro 24 All in One bez systemu",
+    "category": "Komputer All in One",
+    "url": "/produkt/aio-dell-pro-24-bez-systemu",
+    "keywords": [
+      "dell",
+      "pro",
+      "24",
+      "all",
+      "in",
+      "one",
+      "bez",
+      "systemu",
+      "aio",
+      "all in one",
+      "komputer"
+    ]
+  },
+  {
     "name": "Dell Pro 24 P2424HEB",
     "category": "Monitor",
     "url": "/produkt/dell-pro-24-plus-p2424heb",

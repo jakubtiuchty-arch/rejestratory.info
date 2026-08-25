@@ -12,14 +12,29 @@ const products = [
     id: 2,
     name: "AIO Dell Pro 24 All in One",
     category: "All In One", 
-    description: "Kompaktowy komputer All-in-One z regulowanym ekranem 23,8'' i szybkim procesorem do zadań biurowych.",
-    price: "3 400 PLN",
+    description: "Komputer All-in-One z ekranem 23,8'' i regulowaną podstawą, z Windows 11 Pro i pięcioletnią gwarancją ProSupport.",
+    specifications: "23,8\" FHD 100 Hz, Core Ultra 5 235, 16GB DDR5, 512GB SSD, Windows 11 Pro",
+    price: "6 260 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
     image: "aio_dell_1.png",
     badge: null,
     featured: true,
     customUrl: "/produkt/aio-dell-pro-24"
+  },
+  {
+    id: 3,
+    name: "AIO Dell Pro 24 All in One bez systemu",
+    category: "All In One",
+    description: "Ta sama maszyna dostarczana bez systemu operacyjnego — dla stanowisk z własną licencją Windows.",
+    specifications: "23,8\" FHD 100 Hz, Core Ultra 5 235, 8GB DDR5, 256GB SSD, bez systemu",
+    price: "4 687 PLN",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź",
+    image: "aio_dell_1.png",
+    badge: null,
+    featured: false,
+    customUrl: "/produkt/aio-dell-pro-24-bez-systemu"
   }
 ];
 

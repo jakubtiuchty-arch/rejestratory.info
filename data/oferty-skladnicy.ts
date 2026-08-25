@@ -33,6 +33,44 @@ export type OfertaSkladnicy = {
 
 export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
+    "slug": "aio-dell-pro-24",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na komputery ALL IN ONE HP 17.04.2026.docx",
+    "formularz": null,
+    "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
+    "okres": {
+      "od": "2026-03-10",
+      "do": null
+    },
+    "dostawca": "SCANTER",
+    "urzadzenie": {
+      "nazwa": "Komputer typu ALL IN ONE – DELL PRO 24 AiO z systemem operacyjnym",
+      "cenaNetto": 6260,
+      "promocja": false,
+      "wZestawie": []
+    },
+    "dodatki": []
+  },
+  {
+    "slug": "aio-dell-pro-24-bez-systemu",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na komputery ALL IN ONE HP 17.04.2026.docx",
+    "formularz": null,
+    "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
+    "okres": {
+      "od": "2026-03-10",
+      "do": null
+    },
+    "dostawca": "SCANTER",
+    "urzadzenie": {
+      "nazwa": "Komputer typu ALL IN ONE – DELL PRO 24 AiO bez systemu operacyjnego",
+      "cenaNetto": 4687,
+      "promocja": false,
+      "wZestawie": []
+    },
+    "dodatki": []
+  },
+  {
     "slug": "bixolon-sppr410",
     "skladnica": "zup-lodz",
     "plik": "Oferta na drukarki termiczne_01.07.2026.docx",

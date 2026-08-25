@@ -1,5 +1,24 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-25 — All in One: obie wersje z oferty ZUP
+
+`Oferta na komputery ALL IN ONE HP 17.04.2026.docx` wymienia **dwie pozycje**, obie prowadzące w druku do tej samej karty, choć różnią się nie tylko systemem:
+
+| wersja | RAM | dysk | system | cena netto |
+|---|---|---|---|---|
+| z systemem operacyjnym | 16 GB | 512 GB | Windows 11 Pro | 6 260,00 zł |
+| bez systemu operacyjnego | 8 GB | 256 GB | brak | 4 687,00 zł |
+
+Istniejąca karta `aio-dell-pro-24` opisywała wersję z Windows, więc powstała druga: **`aio-dell-pro-24-bez-systemu`**. Rozwiązanie takie samo, jakie katalog ma już przy laptopach (Dell Pro 16 bez licencji obok Dell Pro 16 Plus). Karty linkują do siebie i wprost podają, na czym polega różnica — ekran, procesor, gwarancja i zestaw z klawiaturą są identyczne, różni je licencja, pamięć i dysk.
+
+Karta bez systemu mówi „dostarczany bez systemu operacyjnego", zgodnie z drukiem — bez dopisywania Ubuntu, którego dokument nie wymienia.
+
+**Parser rozróżnia obie pozycje** po dopisku przy nazwie („DELL PRO 24 AiO bez systemu" / „z systemem"), bo link w druku jest w obu wierszach ten sam. 72 oferty, 82 karty.
+
+**Cena w listingu poprawiona**: kafelek All in One podawał 3 400 PLN, czyli kwotę bez pokrycia w jakiejkolwiek ofercie.
+
+**Wyjaśnione**: karta `dell-pro-16` deklaruje Ubuntu 24.04 LTS, choć druk ZUP mówi „System: BEZ SYSTEMU" — Ubuntu wgrywa z automatu producent, więc karta jest w porządku i nie należy jej „poprawiać". W nomenklaturze ZUP „bez systemu" znaczy bez licencji Windows.
+
 ## 2026-08-25 — film w hero: szerszy plan, przesunięty w prawo, prawdziwy pomiar
 
 Trzecia wersja filmu, po uwagach z przeglądu. **26,8 s, pięć ujęć, 5,9 MB.**
