@@ -1,8 +1,12 @@
 # PROGRESS — rejestratory.info
 
-## 2026-08-25 — newsletter: urządzenia Apple (wydanie na 01.09)
+## 2026-08-25 — newsletter: urządzenia Apple (bulk zaplanowany na 02.09)
 
-`public/newsletter/editions/2026-09-01-apple-iphone-ipad.html`, kampania `apple-2026-09-01`. Manifest przestawiony na to wydanie z `bulkAt` 01.09 8:30, kolejka przesunięta: TC58e na 07.09, Brother na 14.09.
+`public/newsletter/editions/2026-09-01-apple-iphone-ipad.html`, kampania `apple-2026-09-01`. Kolejka przesunięta: TC58e na 07.09, Brother na 14.09.
+
+**Wysyłka zaplanowana na środę 02.09 o 8:30**, nie we wtorek jak zwykle — tak zdecydował Jakub po zamknięciu treści. 603 maile poszły do Resend przez `scripts/send-newsletter.mjs --send --send-at`, identyfikatory zapisane w `scheduled-2026-09-02.json` (anulowanie pojedynczego: `resend.emails.cancel(id)`).
+
+**Pułapka duplikatu i co ją rozbraja.** Ręczna wysyłka omija pipeline, więc cron i tak wyśle w poniedziałek testówkę z przyciskiem zatwierdzenia — jedno kliknięcie zaplanowałoby te same 603 maile drugi raz. Wydanie zostało więc wpisane do tabeli `newsletter_sends` nowym skryptem `scripts/zarezerwuj-wydanie.mjs`. To dokładnie ta sama rezerwacja, którą robi `/api/newsletter/approve`, więc przycisk odpowie „Już zatwierdzone ✓" i nic nie wyśle.
 
 **Hero.** Jakub chciał kadru z filmu ze strony głównej — leśniczy mierzy stos iPhone'em, siatka LiDAR z wymiarami — tylko z mniejszym ruchem, bo to mail. Wycięte z `hero-nadlesnictwo.mp4` (20,4–21,6 s), kadr 600 × 250 z przesunięciem pionowym 117 px, sześć klatek tam i z powrotem po 0,5 s. Ruch to łagodne odjechanie kamery i powrót, bez przeskoku na pętli.
 

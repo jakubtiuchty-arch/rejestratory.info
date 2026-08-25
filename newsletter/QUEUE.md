@@ -10,7 +10,7 @@ a `public/newsletter/manifest.json` wskazuje bieżące wydanie.
 | 2026-08-11 | Zebra EM45 | /produkt/zebra-em45 | wysłane (bulk 12.08 8:30) — 587/588 dostarczonych, 5 kliknięć |
 | 2026-08-17 | Dell Pro 16 Plus | /produkt/dell-pro-16-plus | ZATWIERDZONE — zaplanowane 603 maile na 18.08 8:30 |
 | 2026-08-24 | Monitory Dell Pro (P2725HE) | /produkt/dell-pro-27-plus-p2725he-usbc | ZATWIERDZONE — 602 maile zaplanowane na 25.08 8:30 |
-| 2026-08-31 | Apple iPhone 17 Pro i iPad Pro | /produkt/iphone-17-pro | PRZYGOTOWANE — czeka na testówkę 31.08 9:00, bulk 01.09 8:30 |
+| 2026-08-31 | Apple iPhone 17 Pro i iPad Pro | /produkt/iphone-17-pro | ZAPLANOWANE ręcznie — 603 maile na **środę 02.09 8:30**. ID w `scheduled-2026-09-02.json`. **Nie zatwierdzać testówki z poniedziałku** — wysyłka jest już w Resend, drugie zatwierdzenie wysłałoby duplikat (rezerwacja w `newsletter_sends` blokuje, ale nie ryzykować). |
 | 2026-09-07 | Zebra TC58e | /produkt/zebra-tc58e | do przygotowania |
 | 2026-09-14 | Brother MFC-L8690CDW | /produkty (wielofunkcyjne) | do przygotowania |
 
