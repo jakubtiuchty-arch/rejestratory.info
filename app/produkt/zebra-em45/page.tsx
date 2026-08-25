@@ -69,6 +69,17 @@ const data: ProductData = {
         { k: 'Sieć', v: 'LTE, Wi-Fi 6, Bluetooth 5.0' }, // ? do potwierdzenia 5G
       ],
     },
+    {
+      title: 'Stacja dokująca (osobno)',
+      rows: [
+        { k: 'Model', v: 'Zebra Connect Cradle, CRD-EM4X-1SNWS-01' },
+        { k: 'Obraz', v: 'HDMI do monitora zewnętrznego' },
+        { k: 'Sieć', v: 'gniazdo Ethernet — telefon w sieci nadleśnictwa po kablu' },
+        { k: 'Peryferia', v: '4 × USB-A na klawiaturę, mysz i drukarkę' },
+        { k: 'Audio', v: 'gniazdo 3,5 mm' },
+        { k: 'Zasilanie', v: 'zasilacz i przewody kupowane osobno' },
+      ],
+    },
   ],
   why: [
     {
@@ -100,11 +111,18 @@ const data: ProductData = {
         'i kontrakt serwisowy na 3 lub 5 lat — zamiast wymiany telefonu co dwa sezony.',
     },
   ],
-  accessories: [
-    { id: 'case', name: 'Etui ochronne Zebra', description: 'Wzmocnione etui z paskiem na nadgarstek' },
-    { id: 'charger', name: 'Ładowarka sieciowa USB-C', description: 'Zasilacz z kablem USB-C do stanowiska' },
-    { id: 'car-charger', name: 'Ładowarka samochodowa', description: 'Ładowanie w trasie, gniazdo 12 V' },
-    { id: 'holster', name: 'Kabura na pasek', description: 'Obrotowa klamra, dostęp jedną ręką' },
+  signature: [
+    {
+      icon: ICON.dok,
+      title: 'Po powrocie z lasu ten sam telefon jest stanowiskiem w biurze',
+      body:
+        'Stacja dokująca Zebra Connect Cradle ma wyjście HDMI, gniazdo Ethernet i cztery porty ' +
+        'USB-A. Telefon wchodzi w nią jednym ruchem i pokazuje swój ekran na monitorze, ' +
+        'a leśniczy pracuje na klawiaturze i myszy — na tych samych danych, które zebrał ' +
+        'w terenie, bez przegrywania czegokolwiek. Jedno urządzenie zamiast telefonu ' +
+        'i osobnego komputera na stanowisku.',
+      tone: 'akcent',
+    },
   ],
   usedBy: { device: 'Zebra EM45' },
   serviceContract: '3 lub 5 lat',
