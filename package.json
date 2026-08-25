@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "prebuild": "node scripts/policz-karty.mjs"
+    "prebuild": "node scripts/policz-karty.mjs && node scripts/indeks-wyszukiwarki.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^5.2.1",

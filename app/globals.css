@@ -91,3 +91,11 @@
   width: 0;
   height: 0;
 }
+
+/* Pulsująca obwódka lupy w nagłówku. Rytm celowo powolny i z długą przerwą:
+   ikona ma raz na jakiś czas przyciągnąć wzrok, a nie migać bez przerwy. */
+@keyframes puls-lupy {
+  0%, 70%, 100% { opacity: 0; transform: scale(1); }
+  8%            { opacity: 1; transform: scale(1); }
+  30%           { opacity: 0; transform: scale(1.35); }
+}

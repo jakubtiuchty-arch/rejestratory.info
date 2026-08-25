@@ -1,5 +1,78 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-25 — film w hero: szerszy plan, przesunięty w prawo, prawdziwy pomiar
+
+Trzecia wersja filmu, po uwagach z przeglądu. **26,8 s, pięć ujęć, 5,9 MB.**
+
+**Szerszy plan.** Poprzednia wersja miała kamerę blisko, więc przycięcie w hero ścinało głowy i blaty. Wszystkie ujęcia wygenerowane od nowa z cofniętą kamerą i warunkiem kompozycyjnym: górna i dolna ćwiartka kadru to zapas (korony sosen, ściółka, sufit, podłoga), a treść mieści się w środkowej połowie. Sprawdzone symulacją przycięcia do 53% wysokości — nic istotnego nie wypada.
+
+**Plan przesunięty w prawo.** Tekst hero leży po lewej i zasłaniał sceny. Lewa trzecia każdego kadru jest teraz pusta: pnie i mgła w lesie, ciemna ściana z bali w biurze. Nie dało się tego załatwić przesunięciem wideo w CSS — przy tej proporcji sekcji film jest skalowany do szerokości i nie ma zapasu na boki, więc musiało wejść w kompozycję. Sprawdzone symulacją z zaciemnioną lewą trzecią.
+
+**Pomiar stosu to teraz pomiar bryły.** Pojedyncza linia na połowie stosu była nieuczciwa — LiDAR mierzy bryłę. Ujęcie ma siatkę prostopadłościanu obejmującą cały stos, z trzema opisanymi krawędziami: **10,00 m** długości wzdłuż czoła, **2,00 m** wysokości przy bliższym końcu, **2,40 m** głębokości wzdłuż górnej krawędzi (długość wyrzynków). Te same liczby na ekranie telefonu.
+
+**Ostatnie ujęcie wydłużone do 9 s** (reszta po 5 s), z ciągłym ruchem przez całą długość — przy pięciu sekundach wyglądało na zdjęcie z jedną sekundą życia.
+
+Poprzednie wersje filmu zachowane w `~/Downloads`: `hero-nadlesnictwo-bliski-kadr.mp4` i `hero-nadlesnictwo-szeroki.mp4`.
+
+**Zapamiętane na przyszłość**: udział widocznego kadru zależy od szerokości okna, nie od poziomu powiększenia — przy oknie ~2500 px (monitor 2560 px albo zoom 80%) hero pokazuje ~43% kadru. Przesunięcie `object-position` z 42% na 58% ratuje wtedy pierwsze ujęcie i nie psuje pozostałych; zmiana jednej wartości, gdyby okazała się potrzebna.
+
+## 2026-08-25 — wyszukiwarka w nagłówku
+
+Pas z wyszukiwarką nad filmem zabierał 75–150 px każdej strony, a pod filmem lista podpowiedzi wypadała poniżej zgięcia. Wyszukiwarka trafiła więc tam, gdzie wytyczne ją widzą od początku — **do nagłówka**, jako lupa rozwijająca pole.
+
+- ikona w rzędzie nagłówka (desktop i mobile), po kliknięciu rozwija się pole na całą szerokość pod nagłówkiem, z przyciskiem „Szukaj"
+- kursor ląduje w polu od razu, Escape zamyka i czyści
+- podpowiedzi rozwijają się nad treścią strony; przy oknie 900 px lista kończy się na 369 px, więc mieści się z zapasem
+- **wyszukiwarka działa teraz na każdej podstronie**, nie tylko na stronie głównej — nagłówek jest wspólny
+
+**Animacja lupy.** Sama ikona w rzędzie ikon bywa przeoczana, więc co cztery sekundy obwódka rozbłyska i rozpływa się w ciągu sekundy, po czym ikona wraca do spokoju na trzy sekundy. Rytm celowo z długą przerwą — ma raz na jakiś czas złapać wzrok, a nie migać. Klatki `@keyframes puls-lupy` w `globals.css`, animacja gaśnie przy `prefers-reduced-motion` i po otwarciu pola (wtedy ikona zmienia się w krzyżyk zamykający).
+
+Ze strony głównej zniknęła sekcja z wyszukiwarką razem z nieużywanym już stanem `searchQuery`.
+
+## 2026-08-24 — wyszukiwarka: własny pas, przycisk i generowany indeks
+
+**Wyszukiwarka nie znajdowała iPhone'ów ani iPadów** — i nie tylko ich. Indeks był wpisany ręcznie w `SearchAutocomplete.tsx` i rozjechał się z katalogiem: **brakowało dziesięciu kart** (oba iPhone'y, oba iPady, EliteBook 6 G1ah 14, Bixolon SPP-R410, Galaxy Tab Active5, Galaxy S25 FE, oba UPS-y Vertiv), a wpis Bixolona prowadził na `bixolon-spp-r410`, czyli adres, którego nie ma — klik kończył się błędem 404.
+
+Indeks buduje teraz `scripts/indeks-wyszukiwarki.mjs` → `data/wyszukiwarka.ts`, wpięty w hook `prebuild` obok licznika kart. Nazwa i kategoria pochodzą z karty, słowa kluczowe z nazwy, sluga i kategorii, a do tego tabela synonimów: „ekran" znajduje monitory, „czytnik" i „skaner" czytniki kodów, „ksero" urządzenia wielofunkcyjne, „ups" zasilacze awaryjne. Sprawdzone czternaście fraz, wszystkie trafiają.
+
+**Pas z wyszukiwarką przeprojektowany według wytycznych.** Wcześniejsza wersja podkreślała pole zieloną obwódką — czyli tym, co w formularzach czyta się jak stan walidacji. NN/g: pole ma być widoczne i wystarczająco szerokie na typowe zapytanie. Baymard wskazuje trzy dźwignie — pozycję (wyśrodkowana mocniejsza niż w rogu), kontrast otoczenia i rozmiar — oraz przycisk zatwierdzenia obok pola. Stąd: jasnozielony pas odcinający się od ciemnego filmu nad nim, nagłówek i pole wyśrodkowane, neutralna ramka pola, a kolor marki przeniesiony na przycisk **„Szukaj"**. Placeholder podpowiada zakres.
+
+**Przycisk musiał zacząć działać.** Katalog nie ma osobnej strony wyników, więc Enter reagował wyłącznie po strzałkowaniu do pozycji. Teraz Enter i „Szukaj" otwierają podświetloną podpowiedź, a gdy żadna nie jest wybrana — pierwszą z listy. Sprawdzone: „em45" + „Szukaj" prowadzi na `/produkt/zebra-em45`.
+
+## 2026-08-24 — film w hero: dwie poprawki po przeglądzie
+
+**Morfing biurka wycofany.** Pomysł, żeby laptop zamienił się w dwa monitory w jednym ujęciu, dał efekt monitorów wyrastających z blatu — fizycznie nie do przyjęcia. Zamiast tego dwa osobne ujęcia tego samego biurka złączone zwykłym przenikaniem: praca na laptopie, potem to samo miejsce z dwoma monitorami. Zmiana stanowiska nadal się czyta. W promptach obu klipów jawnie: nic się nie pojawia, nic nie znika, sprzęt nie rusza się z miejsca.
+
+**iPhone — dwie pomyłki pod rząd, w tym moja.** Ujęcie pokazywało telefon z **ekranem na plecach** — interfejs pomiaru i wysepka aparatu na tej samej ścianie. Defekt był już na kadrze zatwierdzonym wcześniej i przeszedł niezauważony. Poprawiłem to odwracając telefon tyłem — i to było **błędne rozumowanie**: skoro LiDAR mierzy stos, obiektywy muszą celować w drewno, a leśniczy patrzy na ekran. Czyli od strony kamery widać **ekran**, a soczewek nie widać wcale. Wersja końcowa: ekran zwrócony do nas z podglądem stosu i odczytem „2,45 m", ta sama linia wymiarowa narysowana na prawdziwym stosie, obiektywy po drugiej stronie. Bez wiązki, bez połączenia telefonu z drewnem.
+
+Film ma teraz **pięć ujęć, 22,8 s, 5,0 MB**. Sprawdzone na pięciu momentach w hero przy 1440 px.
+
+**Drobiazg do ewentualnej poprawki**: w ostatnim ujęciu etykieta „2,45 m" wypada za akapitem w hero. Jest przygaszona gradientem i czyta się jako tło, ale gdyby przeszkadzała, wystarczy przesunąć linię wymiarową wyżej przy kolejnym generowaniu.
+
+## 2026-08-24 — nowy film w hero strony głównej
+
+`public/las_video.mp4` (ujęcie ściółki, 20 s) zastąpiony filmem opowiadającym dzień leśniczego: **`public/hero-nadlesnictwo.mp4`, 22,8 s, 1920 × 1080, bez dźwięku, 4,0 MB**.
+
+Pięć ujęć, sklejonych przenikaniami po 0,6 s:
+
+1. **las** — leśniczy z rejestratorem przy stosie, w tle dźwig ładujący drewno (5 s)
+2. **biuro** — praca na laptopie (5 s)
+2b. **biuro, drugie stanowisko** — to samo biurko z dwoma monitorami (5 s)
+3. **drukarka** — wyciąga wydruk z Brothera MFC i podnosi go do oczu (5 s)
+4. **pomiar** — mierzy stos iPhone'em 17 Pro w zachodzącym słońcu (5 s)
+
+Ostatnie ujęcie wraca do lasu w tej samej porze dnia, więc pętla domyka się bez zgrzytu.
+
+**Materiał źródłowy.** Ujęcia 1–3 powstały z grafik newsletterowych (`biuro-nadlesnictwa-anim`, `biuro-monitory-anim`, `las-em45-anim`), które miały tylko 600 × 338 px — odtworzone wiernie w 2688 × 1520 przed animacją. Ujęcia z drukarką i pomiarem trzeba było stworzyć od zera; drukarka jest 1:1 z renderu MFC-L6710DW, iPhone 1:1 z renderu karty produktu.
+
+**Dwa razy trzeba było powtórzyć generowanie**, bo model dorabiał leśniczemu naszywkę **„Straż Leśna" z godłem** — emblemat prawdziwej służby państwowej. Prompty mają teraz jawny zakaz naszywek, emblematów i symboli narodowych. Poza tym: żadnych obrotów urządzeń (model zmyśla niewidoczne ścianki) i żadnej wiązki lasera przy pomiarze.
+
+**Nakładka w hero przebudowana.** Płaskie `bg-black/40` na całej szerokości gasiło film — z kadru 16:9 w sekcji 1440 × 460 widać i tak tylko środkowe 57% wysokości. Teraz gradient od lewej (`from-black/75 via-black/45 to-black/20`) plus delikatny cień od dołu: nagłówek i akapit zachowują kontrast, wyszukiwarka po prawej pozostaje czytelna, a film jest widoczny. Sprawdzone na czterech momentach filmu w 1440 px i na 390 px.
+
+**Zauważone przy okazji, nie naprawione**: na 390 px placeholder w polu wyszukiwarki jest ucięty („min. 3 zr") — pole jest węższe niż tekst. Defekt wcześniejszy, niezwiązany z filmem.
+
+Pliki robocze: `~/Downloads/hero-kadry/` (pięć kadrów 2k + cztery klipy), gotowy film także w `~/Downloads/hero-nadlesnictwo.mp4`.
+
 ## 2026-08-23 — drukarki termiczne ZUP Łódź, koniec wpisów ręcznych
 
 `Oferta na drukarki termiczne_01.07.2026.docx` — **sześć drukarek z wyposażeniem**, wszystkie z kartami. 70 ofert w pliku generowanym.

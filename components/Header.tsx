@@ -2,7 +2,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInquiry } from '@/components/InquiryContext';
+import { AnimatePresence } from "framer-motion";
 import { ICON, naCiemnym } from '@/components/product/icons'
+import SearchAutocomplete from '@/app/components/SearchAutocomplete'
 
 interface HeaderProps {
   activeTab?: 'home' | 'produkty' | 'serwis' | 'kontakt';
@@ -10,7 +12,28 @@ interface HeaderProps {
 
 export default function Header({ activeTab = 'home' }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [searchOpen, setSearchOpen] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState('');
   const { inquiryCount, openCart } = useInquiry();
+
+  // po otwarciu kursor od razu w polu — inaczej trzeba klikać dwa razy
+  React.useEffect(() => {
+    if (!searchOpen) return;
+    const t = setTimeout(() => {
+      document.querySelector<HTMLInputElement>('#szukaj-naglowek input')?.focus();
+    }, 120);
+    return () => clearTimeout(t);
+  }, [searchOpen]);
+
+  // Escape zamyka i czyści
+  React.useEffect(() => {
+    if (!searchOpen) return;
+    const naKlawisz = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { setSearchOpen(false); setSearchQuery(''); }
+    };
+    document.addEventListener('keydown', naKlawisz);
+    return () => document.removeEventListener('keydown', naKlawisz);
+  }, [searchOpen]);
 
   const isActive = (tab: string) => activeTab === tab;
 
@@ -77,6 +100,27 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
               </li>
             </ul>
             
+            {/* Wyszukiwarka w nagłówku: lupa rozwijająca pole. Delikatna pulsująca
+                obwódka co kilka sekund, żeby ikona nie ginęła w rzędzie — sama
+                lupa bez żadnego sygnału bywa przeoczana. Animacja wyłącza się,
+                gdy pole jest otwarte i gdy system prosi o ograniczenie ruchu. */}
+            <button
+              type="button"
+              onClick={() => setSearchOpen((o) => !o)}
+              aria-label="Szukaj produktów"
+              aria-expanded={searchOpen}
+              className="relative flex h-10 w-10 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-700 transition-colors hover:bg-gray-100"
+            >
+              {!searchOpen && (
+                <span className="pointer-events-none absolute inset-0 rounded-lg ring-2 ring-emerald-500/70 motion-safe:animate-[puls-lupy_4s_ease-out_infinite] motion-reduce:hidden" />
+              )}
+              <img
+                src={searchOpen ? ICON.zamknij : ICON.lupa}
+                alt=""
+                className="h-5 w-5 mix-blend-multiply"
+              />
+            </button>
+
             <a 
               href="/panel-klienta"
               className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center gap-2 border border-gray-300 transition-colors"
@@ -96,6 +140,19 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
 
           {/* Mobile Menu Button & Cart */}
           <div className="flex md:hidden items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setSearchOpen((o) => !o)}
+              aria-label="Szukaj produktów"
+              aria-expanded={searchOpen}
+              className="relative flex h-10 w-10 items-center justify-center rounded-lg border border-gray-300 bg-white text-gray-700"
+            >
+              {!searchOpen && (
+                <span className="pointer-events-none absolute inset-0 rounded-lg ring-2 ring-emerald-500/70 motion-safe:animate-[puls-lupy_4s_ease-out_infinite] motion-reduce:hidden" />
+              )}
+              <img src={searchOpen ? ICON.zamknij : ICON.lupa} alt="" className="h-5 w-5 mix-blend-multiply" />
+            </button>
+
             <button 
               onClick={openCart}
               className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg flex items-center gap-2"
@@ -112,6 +169,27 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
             </button>
           </div>
         </nav>
+
+        {/* Pole wyszukiwania rozwijane pod nagłówkiem — na całą szerokość, więc
+            podpowiedzi mają miejsce i nie przepychają układu strony. */}
+        <AnimatePresence>
+          {searchOpen && (
+            <motion.div
+              id="szukaj-naglowek"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-visible"
+            >
+              <div className="border-t border-gray-200 py-4">
+                <div className="mx-auto max-w-3xl [&_input]:border-slate-300 [&_input]:py-3 [&_input]:text-base [&_input]:placeholder:text-slate-500">
+                  <SearchAutocomplete value={searchQuery} onChange={setSearchQuery} withButton />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (

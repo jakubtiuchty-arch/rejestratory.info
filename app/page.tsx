@@ -3,7 +3,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ileKart } from "@/data/liczby-kategorii";
 import { useInquiry } from '@/components/InquiryContext';
-import SearchAutocomplete from './components/SearchAutocomplete';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import {
@@ -95,7 +94,6 @@ const POLECANE_ZAPASOWO: PolecanyProdukt[] = [
 ];
 
 export default function HomePage() {
-  const [searchQuery, setSearchQuery] = React.useState("");
   const [categoriesView, setCategoriesView] = React.useState(0); // 0=4, 1=8, 2=all
   const [promoOpen, setPromoOpen] = React.useState(false);
   const [polecane, setPolecane] = React.useState<PolecanyProdukt[]>(POLECANE_ZAPASOWO);
@@ -271,8 +269,14 @@ export default function HomePage() {
       {/* Header */}
       <Header activeTab="home" />
 
+
       {/* Hero Section */}
-      <section className="text-white py-16 relative">
+      {/* Film jest 16:9, a `object-cover` przycina go do kształtu sekcji, więc
+          im niższa sekcja, tym więcej ucina z góry i z dołu. Wysokość rośnie
+          więc z szerokością okna, ale z sufitem 600 px — bez niego na szerokim
+          monitorze hero zajmowałby cały ekran. Na wąskich ekranach o wysokości
+          decyduje długość tekstu. */}
+      <section className="relative flex items-center py-16 text-white md:min-h-[clamp(460px,42vw,600px)]">
         {/* Video Background */}
         <div className="absolute inset-0 overflow-hidden">
           <video
@@ -282,20 +286,25 @@ export default function HomePage() {
             muted
             playsInline
             preload="auto"
-            className="absolute inset-0 w-full h-full object-cover"
+            // kadr wycinany nieco powyżej środka — na dole zwykle jest sam blat albo droga
+            className="absolute inset-0 h-full w-full object-cover object-[50%_42%]"
           >
-            <source src="/las_video.mp4" type="video/mp4" />
+            <source src="/hero-nadlesnictwo.mp4" type="video/mp4" />
           </video>
         </div>
         
-        {/* Ciemne nakładka dla lepszej czytelności tekstu */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        {/* Przyciemnienie tylko tam, gdzie leży treść. Płaska nakładka 40% na
+            całej szerokości gasiła film — a to on ma tu opowiadać. Gradient od
+            lewej trzyma kontrast pod nagłówkiem i akapitem, prawa strona
+            zostaje jasna; dodatkowy cień u dołu ratuje wyszukiwarkę. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
         
         {/* Zakomentowane zielone tło - może wrócić */}
         {/* bg-gradient-to-r from-emerald-600 to-emerald-800 */}
         
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="container relative z-10 mx-auto w-full px-4">
+          <div className="max-w-2xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -316,21 +325,10 @@ export default function HomePage() {
                 </a>
               </div>
             </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="bg-white/10 backdrop-blur rounded-2xl p-8">
-                <h3 className="text-xl font-semibold mb-4">Szukasz konkretnego produktu?</h3>
-                <SearchAutocomplete value={searchQuery} onChange={setSearchQuery} />
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>
+
 
       {/* Categories Section */}
       <section id="produkty" className="relative py-16 bg-emerald-50/50">

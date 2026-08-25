@@ -2,122 +2,19 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ICON } from '@/components/product/icons'
+import { INDEKS_PRODUKTOW } from '@/data/wyszukiwarka'
 
-// Lista wszystkich produktów
-const allProducts = [
-  // Rejestratory Zebra
-  { name: "Zebra EM45", category: "Rejestrator", url: "/produkt/zebra-em45", keywords: ["zebra", "em45", "rejestrator", "terminal", "android"] },
-  { name: "Zebra TC27", category: "Rejestrator", url: "/produkt/zebra-tc27", keywords: ["zebra", "tc27", "rejestrator", "terminal", "android"] },
-  { name: "Zebra TC58e", category: "Rejestrator", url: "/produkt/zebra-tc58e", keywords: ["zebra", "tc58e", "rejestrator", "terminal", "android"] },
-  
-  // Rejestratory Honeywell
-  { name: "Honeywell CT30", category: "Rejestrator", url: "/produkt/honeywell-ct30", keywords: ["honeywell", "ct30", "rejestrator", "terminal"] },
-  { name: "Honeywell CT40 XP", category: "Rejestrator", url: "/produkt/honeywell-ct40xp", keywords: ["honeywell", "ct40", "xp", "rejestrator", "terminal"] },
-  { name: "Honeywell CT47", category: "Rejestrator", url: "/produkt/honeywell-ct47", keywords: ["honeywell", "ct47", "rejestrator", "terminal"] },
-  { name: "Honeywell EDA52", category: "Rejestrator", url: "/produkt/honeywell-eda52", keywords: ["honeywell", "eda52", "rejestrator", "terminal"] },
-  
-  // Rejestratory Unitech
-  { name: "Unitech EA660", category: "Rejestrator", url: "/produkt/unitech-ea660", keywords: ["unitech", "ea660", "rejestrator", "terminal"] },
-  { name: "Unitech PA768", category: "Rejestrator", url: "/produkt/unitech-pa768", keywords: ["unitech", "pa768", "rejestrator", "terminal"] },
-  
-  // M3 Mobile
-  { name: "M3 SL20", category: "Rejestrator", url: "/produkt/m3-sl20", keywords: ["m3", "sl20", "rejestrator", "terminal"] },
-  
-  // Telefony Samsung
-  { name: "Samsung Galaxy A36", category: "Telefon", url: "/produkt/samsung-a36", keywords: ["samsung", "galaxy", "a36", "telefon", "smartfon"] },
-  { name: "Samsung Galaxy A56", category: "Telefon", url: "/produkt/samsung-a56", keywords: ["samsung", "galaxy", "a56", "telefon", "smartfon"] },
-  { name: "Samsung Galaxy S25 Plus", category: "Telefon", url: "/produkt/samsung-s25-plus", keywords: ["samsung", "galaxy", "s25", "plus", "telefon", "smartfon"] },
-  { name: "Samsung Galaxy S25 Ultra", category: "Telefon", url: "/produkt/samsung-s25-ultra", keywords: ["samsung", "galaxy", "s25", "ultra", "telefon", "smartfon"] },
-  { name: "Samsung Galaxy XCover7", category: "Telefon", url: "/produkt/samsung-xcover7", keywords: ["samsung", "galaxy", "xcover", "7", "telefon", "smartfon", "wytrzymały"] },
-  
-  // Laptopy Dell
-  { name: "Dell Pro 14 Plus", category: "Laptop", url: "/produkt/dell-pro-14-plus", keywords: ["dell", "pro", "14", "plus", "laptop", "notebook"] },
-  { name: "Dell Pro 16", category: "Laptop", url: "/produkt/dell-pro-16", keywords: ["dell", "pro", "16", "laptop", "notebook"] },
-  { name: "Dell Pro 16 Plus", category: "Laptop", url: "/produkt/dell-pro-16-plus", keywords: ["dell", "pro", "16", "plus", "laptop", "notebook"] },
-  
-  // Laptop HP
-  { name: "HP EliteBook 6 G1AH 16", category: "Laptop", url: "/produkt/hp-elitebook-6-g1ah-16", keywords: ["hp", "elitebook", "6", "g1ah", "16", "laptop", "notebook"] },
-  
-  // All in One
-  { name: "AIO Dell Pro 24", category: "All in One", url: "/produkt/aio-dell-pro-24", keywords: ["dell", "pro", "24", "all", "in", "one", "aio", "komputer"] },
-  
-  // Monitory Dell
-  { name: "Dell Pro 24 Plus P2424HEB", category: "Monitor", url: "/produkt/dell-pro-24-plus-p2424heb", keywords: ["dell", "pro", "24", "p2424heb", "monitor", "ekran"] },
-  { name: "Dell Pro 24 Plus P2425HE", category: "Monitor", url: "/produkt/dell-pro-24-plus-p2425he", keywords: ["dell", "pro", "24", "p2425he", "monitor", "ekran"] },
-  { name: "Dell Pro 24 Plus P2425HE USB-C", category: "Monitor", url: "/produkt/dell-pro-24-plus-p2425he-usbc", keywords: ["dell", "pro", "24", "p2425he", "usb-c", "monitor", "ekran"] },
-  { name: "Dell Pro 27 Plus P2724DEB", category: "Monitor", url: "/produkt/dell-pro-27-plus-p2724deb", keywords: ["dell", "pro", "27", "p2724deb", "monitor", "ekran"] },
-  { name: "Dell Pro 27 P2726H", category: "Monitor", url: "/produkt/dell-pro-27-p2726h", keywords: ["dell", "pro", "27", "p2726he", "monitor", "ekran"] },
-  { name: "Dell Pro 27 P2726HE USB-C", category: "Monitor", url: "/produkt/dell-pro-27-p2726he", keywords: ["dell", "pro", "27", "p2726he", "usb-c", "monitor", "ekran"] },
-  
-  // Monitory HP
-  { name: "HP Seria 3 Pro 324PV", category: "Monitor", url: "/produkt/hp-seria-3-pro-324pv", keywords: ["hp", "seria", "3", "pro", "324pv", "monitor", "ekran"] },
-  { name: "HP Seria 5 Pro 527PQ", category: "Monitor", url: "/produkt/hp-seria-5-pro-527pq", keywords: ["hp", "seria", "5", "pro", "527pq", "monitor", "ekran"] },
-  { name: "HP Seria 5 Pro 527PU", category: "Monitor", url: "/produkt/hp-seria-5-pro-527pu", keywords: ["hp", "seria", "5", "pro", "527pu", "monitor", "ekran"] },
-  { name: "HP Seria 5 Pro 524PU", category: "Monitor", url: "/produkt/hp-seria-5-pro-524pu", keywords: ["hp", "seria", "5", "pro", "524pu", "monitor", "ekran", "usb-c", "stacja"] },
-  { name: "HP Seria 5 Pro 524PM", category: "Monitor", url: "/produkt/hp-seria-5-pro-524pm", keywords: ["hp", "seria", "5", "pro", "524pm", "monitor", "ekran", "kamera", "wideokonferencja"] },
-  { name: "HP Seria 5 Pro 527PM", category: "Monitor", url: "/produkt/hp-seria-5-pro-527pm", keywords: ["hp", "seria", "5", "pro", "527pm", "monitor", "ekran", "kamera", "wideokonferencja"] },
-  
-  // Serwery Dell
-  { name: "Dell PowerEdge R360", category: "Serwer", url: "/produkt/dell-poweredge-r360", keywords: ["dell", "poweredge", "r360", "serwer", "server"] },
-  { name: "Dell PowerEdge R550", category: "Serwer", url: "/produkt/dell-poweredge-r550", keywords: ["dell", "poweredge", "r550", "serwer", "server"] },
-  { name: "Dell PowerEdge R660xs", category: "Serwer", url: "/produkt/dell-poweredge-r660xs", keywords: ["dell", "poweredge", "r660xs", "serwer", "server"] },
-  
-  // Urządzenia wielofunkcyjne Brother
-  { name: "Brother MFC-L5710DW", category: "Urządzenie wielofunkcyjne", url: "/produkt/brother-mfc-l5710dw", keywords: ["brother", "mfc", "l5710dw", "wielofunkcyjne", "drukarka", "skaner"] },
-  { name: "Brother MFC-L6710DW", category: "Urządzenie wielofunkcyjne", url: "/produkt/brother-mfc-l6710dw", keywords: ["brother", "mfc", "l6710dw", "wielofunkcyjne", "drukarka", "skaner"] },
-  { name: "Brother MFC-L8390CDW", category: "Urządzenie wielofunkcyjne", url: "/produkt/brother-mfc-l8390cdw", keywords: ["brother", "mfc", "l8390cdw", "wielofunkcyjne", "drukarka", "skaner", "kolor"] },
-  { name: "Brother MFC-L8690CDW", category: "Urządzenie wielofunkcyjne", url: "/produkt/brother-mfc-l8690cdw", keywords: ["brother", "mfc", "l8690cdw", "wielofunkcyjne", "drukarka", "skaner", "kolor"] },
-  { name: "Brother MFC-L8900CDW", category: "Urządzenie wielofunkcyjne", url: "/produkt/brother-mfc-l8900cdw", keywords: ["brother", "mfc", "l8900cdw", "wielofunkcyjne", "drukarka", "skaner", "kolor"] },
-  
-  // Drukarki laserowe Brother
-  { name: "Brother DCP-B7620DW", category: "Drukarka laserowa", url: "/produkt/brother-dcp-b7620dw", keywords: ["brother", "dcp", "b7620dw", "drukarka", "laserowa"] },
-  { name: "Brother DCP-L5510DW", category: "Drukarka laserowa", url: "/produkt/brother-dcp-l5510dw", keywords: ["brother", "dcp", "l5510dw", "drukarka", "laserowa"] },
-  { name: "Brother HL-L6210DW", category: "Drukarka laserowa", url: "/produkt/brother-hl-l6210dw", keywords: ["brother", "hl", "l6210dw", "drukarka", "laserowa"] },
-  { name: "Brother HL-L6410", category: "Drukarka laserowa", url: "/produkt/brother-hl-l6410", keywords: ["brother", "hl", "l6410", "drukarka", "laserowa"] },
-  
-  // Drukarki do rejestratora
-  { name: "Bixolon SPP-R410", category: "Drukarka do rejestratora", url: "/produkt/bixolon-spp-r410", keywords: ["bixolon", "spp", "r410", "drukarka", "mobilna", "paragon"] },
-  { name: "Honeywell RP4", category: "Drukarka do rejestratora", url: "/produkt/honeywell-rp4", keywords: ["honeywell", "rp4", "drukarka", "mobilna", "paragon"] },
-  { name: "Seiko MPA40", category: "Drukarka do rejestratora", url: "/produkt/seiko-mpa40", keywords: ["seiko", "mpa40", "drukarka", "mobilna", "paragon"] },
-  { name: "Sewoo LKP400", category: "Drukarka do rejestratora", url: "/produkt/sewoo-lkp400", keywords: ["sewoo", "lkp400", "drukarka", "mobilna", "paragon"] },
-  { name: "Sewoo LKP43", category: "Drukarka do rejestratora", url: "/produkt/sewoo-lkp43", keywords: ["sewoo", "lkp43", "drukarka", "mobilna", "paragon"] },
-  { name: "Zebra ZQ521", category: "Drukarka do rejestratora", url: "/produkt/zebra-zq521", keywords: ["zebra", "zq521", "drukarka", "mobilna", "paragon"] },
-  { name: "Honeywell PC45t", category: "Drukarka do rejestratora", url: "/produkt/honeywell-pc45t", keywords: ["honeywell", "pc45t", "drukarka", "etykiet"] },
-  { name: "Zebra ZD421c", category: "Drukarka do rejestratora", url: "/produkt/zebra-zd421c", keywords: ["zebra", "zd421c", "drukarka", "etykiet"] },
-  
-  // Skanery
-  { name: "Epson DS-730N", category: "Skaner", url: "/produkt/epson-ds730n", keywords: ["epson", "ds", "730n", "skaner", "dokumentów"] },
-  { name: "Honeywell 1450g", category: "Skaner", url: "/produkt/honeywell-1450g", keywords: ["honeywell", "1450g", "skaner", "kodów"] },
-  { name: "Zebra DS2208", category: "Skaner", url: "/produkt/zebra-ds2208", keywords: ["zebra", "ds2208", "skaner", "kodów"] },
-  { name: "Zebra DS2278 — czytnik bezprzewodowy", category: "EZD", url: "/produkt/zebra-ds2278", keywords: ["zebra", "ds2278", "czytnik", "skaner", "kody", "bezprzewodowy", "bluetooth"] },
-  { name: "Honeywell PC42E-T — drukarka etykiet", category: "EZD", url: "/produkt/honeywell-pc42e-t", keywords: ["honeywell", "pc42e", "drukarka", "etykiety", "termotransfer"] },
-  { name: "Honeywell Voyager 1250g — czytnik", category: "EZD", url: "/produkt/honeywell-1250g", keywords: ["honeywell", "1250g", "voyager", "czytnik", "skaner", "kody", "laser"] },
-  
-  // Urządzenia fiskalne
-  { name: "Posnet Pospay 2", category: "Urządzenie fiskalne", url: "/produkt/posnet-pospay-2", keywords: ["posnet", "pospay", "2", "kasa", "fiskalna", "terminal"] },
-  { name: "Posnet Temo Online", category: "Urządzenie fiskalne", url: "/produkt/posnet-temo-online", keywords: ["posnet", "temo", "online", "kasa", "fiskalna", "drukarka"] },
-  
-  // Akcesoria komputerowe
-  { name: "Torba na laptopa 15,6\u2033", category: "Akcesoria komputerowe", url: "/produkt/torba-na-laptopa-15", keywords: ["torba", "laptop", "15", "plecak", "futerał", "pokrowiec"] },
-  { name: "Podkładka pod mysz", category: "Akcesoria komputerowe", url: "/produkt/podkladka-pod-mysz", keywords: ["podkładka", "mysz", "myszka", "ergonomiczna", "nadgarstek"] },
-  { name: "Podnóżek biurowy", category: "Akcesoria komputerowe", url: "/produkt/podnozek-biurowy", keywords: ["podnóżek", "biurowy", "ergonomia", "regulowany", "stopy"] },
-  { name: "Samsung SSD T9 1TB", category: "Akcesoria komputerowe", url: "/produkt/samsung-ssd-t9", keywords: ["samsung", "ssd", "t9", "1tb", "dysk", "zewnętrzny", "usb"] },
-  { name: "Samsung SSD T7", category: "Akcesoria komputerowe", url: "/produkt/samsung-ssd-t7", keywords: ["samsung", "ssd", "t7", "dysk", "zewnętrzny", "usb"] },
-  { name: "Microsoft 365 Business Standard", category: "Akcesoria komputerowe", url: "/produkt/ms-365", keywords: ["microsoft", "365", "office", "licencja", "oprogramowanie", "business"] },
-  { name: "Dell Pro KM5221W — klawiatura i mysz", category: "Akcesoria komputerowe", url: "/produkt/dell-km5221", keywords: ["dell", "km5221", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] },
-  { name: "Dell Pro Plus KM7321W — klawiatura i mysz", category: "Akcesoria komputerowe", url: "/produkt/dell-km7321", keywords: ["dell", "km7321", "klawiatura", "mysz", "bezprzewodowa", "zestaw", "premium"] },
-  { name: "HP 655 — klawiatura i mysz", category: "Akcesoria komputerowe", url: "/produkt/hp-655", keywords: ["hp", "655", "klawiatura", "mysz", "bezprzewodowa", "zestaw"] },
-  { name: "HP 460 — klawiatura", category: "Akcesoria komputerowe", url: "/produkt/hp-460", keywords: ["hp", "460", "klawiatura", "bezprzewodowa", "bluetooth", "usb-c"] },
-  { name: "HP 715 — mysz", category: "Akcesoria komputerowe", url: "/produkt/hp-715", keywords: ["hp", "715", "mysz", "bezprzewodowa", "bluetooth", "akumulator"] },
-  { name: "Torba HP do laptopów 15,6\"", category: "Akcesoria komputerowe", url: "/produkt/torba-hp-15", keywords: ["torba", "hp", "laptop", "15,6", "przenoszenie"] }
-]
+const allProducts = INDEKS_PRODUKTOW
 
 interface SearchAutocompleteProps {
   value: string
   onChange: (value: string) => void
+  /** przycisk „Szukaj” obok pola — na stronie głównej, gdzie wyszukiwanie jest
+   *  główną drogą do produktu; w mniejszych kontekstach zbędny */
+  withButton?: boolean
 }
 
-export default function SearchAutocomplete({ value, onChange }: SearchAutocompleteProps) {
+export default function SearchAutocomplete({ value, onChange, withButton = false }: SearchAutocompleteProps) {
   const [filteredProducts, setFilteredProducts] = useState<typeof allProducts>([])
   const [isOpen, setIsOpen] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
@@ -153,6 +50,16 @@ export default function SearchAutocomplete({ value, onChange }: SearchAutocomple
     }
   }, [value])
 
+  /**
+   * Otwiera wybraną podpowiedź, a gdy żadna nie jest podświetlona — pierwszą
+   * z listy. Katalog nie ma osobnej strony wyników, więc to jest całe
+   * „zatwierdzenie” wyszukiwania: Enter i przycisk robią to samo.
+   */
+  const otworz = () => {
+    const cel = filteredProducts[selectedIndex >= 0 ? selectedIndex : 0]
+    if (cel) window.location.href = cel.url
+  }
+
   // Obsługa klawiatury (góra/dół/enter)
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!isOpen || filteredProducts.length === 0) return
@@ -163,9 +70,9 @@ export default function SearchAutocomplete({ value, onChange }: SearchAutocomple
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       setSelectedIndex(prev => (prev > 0 ? prev - 1 : -1))
-    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+    } else if (e.key === 'Enter') {
       e.preventDefault()
-      window.location.href = filteredProducts[selectedIndex].url
+      otworz()
     } else if (e.key === 'Escape') {
       setIsOpen(false)
     }
@@ -189,11 +96,12 @@ export default function SearchAutocomplete({ value, onChange }: SearchAutocomple
   return (
     <div ref={wrapperRef} className="relative w-full">
       {/* Input */}
-      <div className="relative">
+      <div className="relative flex gap-2">
+        <div className="relative min-w-0 flex-1">
         <img src={ICON.lupa} alt="" className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 mix-blend-multiply" />
         <input
           type="text"
-          placeholder="Szukaj produktów... (min. 3 znaki)"
+          placeholder="np. Zebra EM45, drukarka etykiet, monitor 24 cale"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -208,6 +116,16 @@ export default function SearchAutocomplete({ value, onChange }: SearchAutocomple
             className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
           >
             <img src={ICON.zamknij} alt="" className="h-4 w-4 mix-blend-multiply" />
+          </button>
+        )}
+        </div>
+        {withButton && (
+          <button
+            type="button"
+            onClick={otworz}
+            className="shrink-0 rounded-lg bg-emerald-700 px-6 font-semibold text-white transition hover:bg-emerald-800"
+          >
+            Szukaj
           </button>
         )}
       </div>
