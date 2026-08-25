@@ -18,6 +18,8 @@ Praktyczne konsekwencje, które trafiły do treści: zasięg pięciu metrów ozn
 
 Ta sama poprawka poszła na cztery karty produktu, żeby mail nie mówił więcej niż źródło, z którego ma czerpać.
 
+**Baner na dole.** Duży ciemny baner dostał Zebrę EM45 zamiast Posneta, a Posnet zszedł do małego kafla po Dellu Pro 16 Plus. Grafika `em45-banner.jpg` wygenerowana w gpt_image_2 z renderem `em45_3.webp` jako referencją, w tej samej konwencji co baner Pospaya (ciemny las, mgła, zielone iskry), więc oba wyglądają jak komplet. Akcenty w limonce Zebry `#A8F000`. Kafel Posneta zbudowany z `pospay_1.png` spłaszczonego na biel, 200 × 140 jak poprzedni kafel Della.
+
 **Treść.** Fakty wyłącznie z czterech kart w repo. Model wiodący to iPhone 17 Pro (siedem wierszy specyfikacji), pozostałe trzy jako kafelki. Bloku ceny nie ma, bo żadna karta Apple nie ma oferty składnicy — zamiast niego czarny blok „Wycena indywidualna" z logo Apple, w stylu marki, i przycisk mailowy. Zwykły baner Apple z poprzednich wydań wypadł, bo cały mail jest o Apple.
 
 Logo Apple w dwóch miejscach: mały znak nad nagłówkiem w zielonym bloku i większy w czarnym bloku wyceny. W stopce dopisana nota o znakach towarowych Apple Inc. Kafelek „Serwery i All-in-One" zastąpiony przez „Komputery All-in-One", a „Telefony" rozszerzone na „Telefony i tablety" z Apple na pierwszym miejscu.
