@@ -12,6 +12,12 @@ Rozmiar był tu prawdziwym ograniczeniem: las w mgle to sama faktura, więc każ
 
 **Zdjęcia.** Z kart produktu (`public/products/*.webp`) spłaszczone na biel — źródłowe pliki mają półprzezroczystą obwódkę wokół ekranu, która na białym tle maila zostawiała białe plamy. Kolejność ma znaczenie: najpierw `-alpha remove` na bieli, dopiero potem `-trim` i skalowanie. Cztery duże po ~60–90 kB, trzy kafelki po ~10 kB. Cały mail to 720 kB obrazów i 36 kB HTML-a (limit obcięcia w Gmailu: 102 kB).
 
+**Jak właściwie działa ten LiDAR.** Pierwsza wersja leadu mówiła, że „skaner mierzy odległość do stosu" — za mało i nie o to chodzi. Skaner jest typu dToF: dioda VCSEL wysyła 64 impulsy podczerwieni, element dyfrakcyjny 3 × 3 zwielokrotnia je do 576 punktów, a matryca SPAD mierzy czas powrotu. Same punkty są rzadkie — dopiero ich połączenie z obrazem z aparatu daje mapę głębi 256 × 192 odświeżaną 60 razy na sekundę, na dystansie do pięciu metrów. System łączy tę mapę z ruchem kamery, więc urządzenie opisuje scenę w metrach: stąd bierze się skala bez wzorca kładzionego na kłodach, a nie z „pomiaru odległości".
+
+Praktyczne konsekwencje, które trafiły do treści: zasięg pięciu metrów oznacza, że stos nie mieści się w jednym kadrze i idzie się wzdłuż niego; mapa głębi jest za rzadka, żeby rozróżnić czoła kłód, więc te rozpoznaje obraz z aparatów, a z nich liczy się przelicznik zamienny. Opublikowane w 2026 r. porównanie metod cyfrowych dało dla urządzenia z LiDAR-em błąd RMSE 2,44% na miąższości stosu brutto wobec 6,9–7,5% dla aplikacji opartych na samych zdjęciach — liczb nie wstawiłem do maila, bo dotyczą konkretnego oprogramowania, a my sprzedajemy sprzęt.
+
+Ta sama poprawka poszła na cztery karty produktu, żeby mail nie mówił więcej niż źródło, z którego ma czerpać.
+
 **Treść.** Fakty wyłącznie z czterech kart w repo. Model wiodący to iPhone 17 Pro (siedem wierszy specyfikacji), pozostałe trzy jako kafelki. Bloku ceny nie ma, bo żadna karta Apple nie ma oferty składnicy — zamiast niego czarny blok „Wycena indywidualna" z logo Apple, w stylu marki, i przycisk mailowy. Zwykły baner Apple z poprzednich wydań wypadł, bo cały mail jest o Apple.
 
 Logo Apple w dwóch miejscach: mały znak nad nagłówkiem w zielonym bloku i większy w czarnym bloku wyceny. W stopce dopisana nota o znakach towarowych Apple Inc. Kafelek „Serwery i All-in-One" zastąpiony przez „Komputery All-in-One", a „Telefony" rozszerzone na „Telefony i tablety" z Apple na pierwszym miejscu.

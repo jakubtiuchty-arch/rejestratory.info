@@ -73,9 +73,14 @@ const data: ProductData = {
       icon: ICON.lidar,
       title: 'LiDAR do pomiaru fotooptycznego',
       body:
-        'Skaner LiDAR mierzy odległość do obiektu wiązką światła, więc aplikacja do fotooptycznego ' +
-        'pomiaru drewna zna skalę kadru i geometrię stosu — bez wzorca odniesienia kładzionego na mygle. ' +
-        'Zdjęcia uzupełniają trzy aparaty 48 Mpx: ogólne, detal i kadr z dystansu.',
+        'Skaner wysyła 576 impulsów podczerwieni i mierzy czas ich powrotu; z tych punktów i obrazu ' +
+        'z aparatu powstaje mapa głębi kadru, odświeżana sześćdziesiąt razy na sekundę na dystansie ' +
+        'do pięciu metrów. System łączy ją z ruchem kamery, więc telefon opisuje scenę w metrach, ' +
+        'a nie w pikselach — aplikacja do fotooptycznego pomiaru drewna dostaje skalę i geometrię ' +
+        'stosu bez wzorca odniesienia kładzionego na mygle. Czoła kłód, których rzadka mapa głębi ' +
+        'nie rozróżni, rozpoznaje obraz z trzech aparatów 48 Mpx — z nich liczy się przelicznik ' +
+        'zamienny. Stos nie musi zmieścić się w jednym kadrze: idzie się wzdłuż niego z telefonem ' +
+        'w ręku, a pomiar składa się na bieżąco.',
     },
     {
       icon: ICON.procesor,

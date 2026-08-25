@@ -75,8 +75,10 @@ const data: ProductData = {
       icon: ICON.lidar,
       title: 'LiDAR do pomiaru fotooptycznego',
       body:
-        'Skaner LiDAR podaje odległość i geometrię sceny, dzięki czemu aplikacje do fotooptycznego ' +
-        'pomiaru drewna liczą wymiary stosu na podstawie zdjęcia. Duży ekran pomaga skorygować obrys ' +
+        'Skaner wysyła 576 impulsów podczerwieni i mierzy czas ich powrotu; z tych punktów i obrazu ' +
+        'z aparatu powstaje mapa głębi kadru na dystansie do pięciu metrów. Tablet opisuje więc scenę ' +
+        'w metrach, a nie w pikselach, i aplikacja do fotooptycznego pomiaru drewna dostaje skalę ' +
+        'bez wzorca odniesienia kładzionego na mygle. Duży ekran pomaga skorygować obrys ' +
         'i sprawdzić wynik jeszcze przy mygle.',
     },
     {
