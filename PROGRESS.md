@@ -6,7 +6,9 @@ Kafel o stacji był napisany zbyt swobodnie („telefon wchodzi w nią jednym ru
 
 Do kafla doszło zdjęcie stacji. `Signature` w `ProductPage` dostał opcjonalne pola `image` i `imageAlt`; kafel z obrazkiem układa się wtedy w dwie kolumny (tekst z lewej, zdjęcie z prawej, na wąskim ekranie jedno pod drugim). Pole jest opcjonalne, więc pozostałe karty z wyróżnikami renderują się bez zmian — sprawdzone na `aio-dell-pro-24`. Uwaga na scalanie wyróżnika z bliźniaczym powodem: `lepszy` może być kartą z `why`, która obrazka nie ma, więc `image` trzeba przy scaleniu przenieść jawnie.
 
-Źródło zdjęcia: `public/stacja-1.png` (3840 px, 5,3 MB, leżało w repo nieużywane) → `public/stacja-dokujaca-em45.png`, 900 px i 100 kB po spłaszczeniu na biel i kwantyzacji.
+Źródło zdjęcia: `public/stacja-1.png` (3840 px, 5,3 MB, leżało w repo nieużywane) → `public/stacja-dokujaca-em45.png`, 700 px i 58 kB.
+
+Pierwsze podejście spłaszczało PNG na biel, przez co na zielonym kafelku siedział brzydki biały prostokąt. Przezroczystość zostaje nietknięta — stacja leży wprost na tle. Zdjęcie zeszło też z 38% na 24% szerokości kafelka, bo w poprzedniej wielkości przytłaczało tekst.
 
 ## 2026-08-25 — newsletter: urządzenia Apple (bulk zaplanowany na 02.09)
 

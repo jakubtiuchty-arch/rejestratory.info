@@ -1495,11 +1495,13 @@ export default function ProductPage({ data }: { data: ProductData }) {
                     </h3>
                     <p className="mt-2 leading-relaxed">{k.body}</p>
                   </div>
+                  {/* zdjęcie bez tła — kładzie się wprost na kafelku, żaden biały
+                      prostokąt nie odcina się od zielonego pola */}
                   {k.image && (
                     <img
                       src={k.image}
                       alt={k.imageAlt ?? ''}
-                      className="mt-6 w-full max-w-[260px] self-center rounded-xl sm:mt-0 sm:w-[38%] sm:max-w-none"
+                      className="mx-auto mt-6 w-full max-w-[180px] self-center sm:mx-0 sm:mt-0 sm:w-[26%] sm:max-w-[220px]"
                     />
                   )}
                 </div>
