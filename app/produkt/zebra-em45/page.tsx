@@ -70,14 +70,14 @@ const data: ProductData = {
       ],
     },
     {
-      title: 'Stacja dokująca (osobno)',
+      title: 'Stacja dokująca (wyposażenie dodatkowe)',
       rows: [
         { k: 'Model', v: 'Zebra Connect Cradle, CRD-EM4X-1SNWS-01' },
         { k: 'Obraz', v: 'HDMI do monitora zewnętrznego' },
-        { k: 'Sieć', v: 'gniazdo Ethernet — telefon w sieci nadleśnictwa po kablu' },
-        { k: 'Peryferia', v: '4 × USB-A na klawiaturę, mysz i drukarkę' },
+        { k: 'Sieć', v: 'gniazdo Ethernet — połączenie przewodowe z siecią jednostki' },
+        { k: 'Peryferia', v: '4 × USB-A: klawiatura, mysz, drukarka' },
         { k: 'Audio', v: 'gniazdo 3,5 mm' },
-        { k: 'Zasilanie', v: 'zasilacz i przewody kupowane osobno' },
+        { k: 'Zasilanie', v: 'zasilacz i przewody zamawiane oddzielnie' },
       ],
     },
   ],
@@ -114,14 +114,16 @@ const data: ProductData = {
   signature: [
     {
       icon: ICON.dok,
-      title: 'Po powrocie z lasu ten sam telefon jest stanowiskiem w biurze',
+      title: 'Stacja dokująca zamienia telefon w stanowisko biurowe',
       body:
-        'Stacja dokująca Zebra Connect Cradle ma wyjście HDMI, gniazdo Ethernet i cztery porty ' +
-        'USB-A. Telefon wchodzi w nią jednym ruchem i pokazuje swój ekran na monitorze, ' +
-        'a leśniczy pracuje na klawiaturze i myszy — na tych samych danych, które zebrał ' +
-        'w terenie, bez przegrywania czegokolwiek. Jedno urządzenie zamiast telefonu ' +
-        'i osobnego komputera na stanowisku.',
+        'Zebra Connect Cradle udostępnia wyjście HDMI, gniazdo Ethernet oraz cztery porty USB-A. ' +
+        'Po umieszczeniu telefonu w stacji obraz trafia na monitor, a obsługa odbywa się ' +
+        'klawiaturą i myszą — na danych zebranych w terenie, bez przenoszenia ich na inny ' +
+        'komputer. Jedno urządzenie obsługuje zatem pracę terenową i stanowisko w biurze. ' +
+        'Zasilacz oraz przewody zamawiane są oddzielnie.',
       tone: 'akcent',
+      image: '/stacja-dokujaca-em45.png',
+      imageAlt: 'Zebra EM45 umieszczony w stacji dokującej Connect Cradle',
     },
   ],
   usedBy: { device: 'Zebra EM45' },

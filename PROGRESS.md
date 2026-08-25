@@ -1,5 +1,13 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-25 — karta EM45: stacja dokująca ze zdjęciem, oficjalny rejestr
+
+Kafel o stacji był napisany zbyt swobodnie („telefon wchodzi w nią jednym ruchem", „leśniczy pracuje na klawiaturze") — przepisany na język umowy: „Po umieszczeniu telefonu w stacji obraz trafia na monitor, a obsługa odbywa się klawiaturą i myszą". Ta sama korekta w wierszach specyfikacji.
+
+Do kafla doszło zdjęcie stacji. `Signature` w `ProductPage` dostał opcjonalne pola `image` i `imageAlt`; kafel z obrazkiem układa się wtedy w dwie kolumny (tekst z lewej, zdjęcie z prawej, na wąskim ekranie jedno pod drugim). Pole jest opcjonalne, więc pozostałe karty z wyróżnikami renderują się bez zmian — sprawdzone na `aio-dell-pro-24`. Uwaga na scalanie wyróżnika z bliźniaczym powodem: `lepszy` może być kartą z `why`, która obrazka nie ma, więc `image` trzeba przy scaleniu przenieść jawnie.
+
+Źródło zdjęcia: `public/stacja-1.png` (3840 px, 5,3 MB, leżało w repo nieużywane) → `public/stacja-dokujaca-em45.png`, 900 px i 100 kB po spłaszczeniu na biel i kwantyzacji.
+
 ## 2026-08-25 — newsletter: urządzenia Apple (bulk zaplanowany na 02.09)
 
 `public/newsletter/editions/2026-09-01-apple-iphone-ipad.html`, kampania `apple-2026-09-01`. Kolejka przesunięta: TC58e na 07.09, Brother na 14.09.

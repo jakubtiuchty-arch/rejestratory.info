@@ -44,6 +44,11 @@ export type Signature = {
   body: string
   /** 'akcent' = jasny zielony (korzyść handlowa), 'ciemny' = leśny panel (wyróżnik techniczny) */
   tone?: 'akcent' | 'ciemny'
+  /** zdjęcie obok tekstu — dla wyróżników, których nie da się opisać samym słowem
+   *  (np. stacja dokująca: dopóki się jej nie zobaczy, nie wiadomo, o czym mowa) */
+  image?: string
+  /** opis zdjęcia dla czytnika ekranu */
+  imageAlt?: string
 }
 
 /** Krok wdrożenia — używane przez urządzenia fiskalne, gdzie zakup to proces, nie dostawa. */
@@ -1170,14 +1175,21 @@ export default function ProductPage({ data }: { data: ProductData }) {
     wyrozniki.map((w) => {
       const bliznjak = data.why.find((p) => p.icon === w.icon)
       const lepszy = bliznjak && bliznjak.body.length > w.body.length ? bliznjak : w
-      return [w.icon, { ...lepszy, tone: w.tone, wyrozniony: true as const }]
+      // zdjęcie żyje tylko na wyróżniku, więc przy scaleniu trzeba je przenieść
+      return [w.icon, { ...lepszy, tone: w.tone, image: w.image, imageAlt: w.imageAlt, wyrozniony: true as const }]
     }),
   )
   const kafelki = [
     ...Array.from(scalone.values()),
     ...data.why
       .filter((p) => !scalone.has(p.icon))
-      .map((p) => ({ ...p, tone: undefined, wyrozniony: false as const })),
+      .map((p) => ({
+        ...p,
+        tone: undefined,
+        image: undefined,
+        imageAlt: undefined,
+        wyrozniony: false as const,
+      })),
   ]
   // nieparzysta liczba kafelków zostawiłaby dziurę w ostatnim wierszu — pierwszy
   // (wyróżniony) rozpina się wtedy na obie kolumny i siatka kończy się równo
@@ -1467,19 +1479,30 @@ export default function ProductPage({ data }: { data: ProductData }) {
                       : 'border border-stone-200 bg-white text-stone-600'
                 }`}
               >
-                <img
-                  src={ciemny ? naCiemnym(k.icon) : k.icon}
-                  alt=""
-                  className={`h-8 w-8 ${ciemny ? 'opacity-90' : 'mix-blend-multiply'}`}
-                />
-                <h3
-                  className={`mt-5 text-lg font-semibold ${
-                    ciemny ? 'text-white' : k.wyrozniony ? 'text-emerald-900' : 'text-stone-900'
-                  }`}
-                >
-                  {k.title}
-                </h3>
-                <p className="mt-2 leading-relaxed">{k.body}</p>
+                <div className={k.image ? 'gap-6 sm:flex sm:items-center' : undefined}>
+                  <div className={k.image ? 'sm:flex-1' : undefined}>
+                    <img
+                      src={ciemny ? naCiemnym(k.icon) : k.icon}
+                      alt=""
+                      className={`h-8 w-8 ${ciemny ? 'opacity-90' : 'mix-blend-multiply'}`}
+                    />
+                    <h3
+                      className={`mt-5 text-lg font-semibold ${
+                        ciemny ? 'text-white' : k.wyrozniony ? 'text-emerald-900' : 'text-stone-900'
+                      }`}
+                    >
+                      {k.title}
+                    </h3>
+                    <p className="mt-2 leading-relaxed">{k.body}</p>
+                  </div>
+                  {k.image && (
+                    <img
+                      src={k.image}
+                      alt={k.imageAlt ?? ''}
+                      className="mt-6 w-full max-w-[260px] self-center rounded-xl sm:mt-0 sm:w-[38%] sm:max-w-none"
+                    />
+                  )}
+                </div>
               </div>
             )
           })}
