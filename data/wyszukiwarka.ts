@@ -216,42 +216,6 @@ export const INDEKS_PRODUKTOW: PozycjaIndeksu[] = [
     ]
   },
   {
-    "name": "Dell PowerEdge R360",
-    "category": "Serwer",
-    "url": "/produkt/dell-poweredge-r360",
-    "keywords": [
-      "dell",
-      "poweredge",
-      "r360",
-      "serwer",
-      "rack"
-    ]
-  },
-  {
-    "name": "Dell PowerEdge R550",
-    "category": "Serwer",
-    "url": "/produkt/dell-poweredge-r550",
-    "keywords": [
-      "dell",
-      "poweredge",
-      "r550",
-      "serwer",
-      "rack"
-    ]
-  },
-  {
-    "name": "Dell PowerEdge R660xs",
-    "category": "Serwer",
-    "url": "/produkt/dell-poweredge-r660xs",
-    "keywords": [
-      "dell",
-      "poweredge",
-      "r660xs",
-      "serwer",
-      "rack"
-    ]
-  },
-  {
     "name": "Dell Pro 14 Plus",
     "category": "Laptop",
     "url": "/produkt/dell-pro-14-plus",

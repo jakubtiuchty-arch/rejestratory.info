@@ -1,5 +1,15 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-25 — serwery zdjęte z oferty
+
+Jakub: „Nie mamy już w ofercie serwerów". Kategoria usunięta z części katalogowej w całości — listing `app/kategoria/serwery/`, trzy karty (`dell-poweredge-r360`, `-r550`, `-r660xs`), kafelek na stronie głównej, pozycja w stopce, blok `"serwery"` w nieużywanym `lib/products-data.ts` i akapit na starej trasie `/produkty/[category]`. Z generatora indeksu wypadły etykieta i synonimy, po czym `data/liczby-kategorii.ts` i `data/wyszukiwarka.ts` przeliczone: **79 kart w 12 kategoriach** (było 82 w 13).
+
+Trzy wysłane newslettery niosą kafelek „Serwery i All-in-One" z linkiem `rejestratory.info/kategoria/serwery` prosto do skrzynek nadleśnictw — ostatni poszedł dziś rano do 590 adresów. Te linki będą klikane jeszcze długo, więc zamiast 404 stoi teraz przekierowanie 308 w `next.config.js`: `/kategoria/serwery`, `/produkt/dell-poweredge-*` i `/produkty/serwery` prowadzą na `/kategoria/all-in-one`, czyli do drugiej połowy tej samej obietnicy. Niewysłane wydanie `newsletter/2026-08-posnet-pospay-2.html` ma już kafelek „Komputery All-in-One / Dell Pro 24, z systemem i bez".
+
+W panelu handlowca zniknęły serwery z listy do wyboru (`PRODUCT_CATEGORIES` i `PRODUCTS_BY_CATEGORY`), więc nowej oferty z PowerEdge nie da się złożyć.
+
+**Świadomie nietknięte**: mapy etykiet, kolorów i ikon dla `serwery` w `/handlowy`, `/szef` i `/panel-klienta`. To ścieżki odczytu danych z localStorage — jeśli nadleśnictwo ma u siebie zapisany serwer albo w archiwum leży stara oferta, ma się dalej wyświetlać z nazwą, a nie z surowym identyfikatorem. Filtr u szefa pokaże po prostu „Serwery (0)", kiedy takich rekordów nie ma.
+
 ## 2026-08-25 — komplet brakujących zdjęć, katalog bez dziur
 
 Sześć renderów dostarczonych przez Jakuba, wgranych bez przeróbek pod nazwy, które karty nosiły od początku:

@@ -11,7 +11,6 @@ export const LICZBY_KATEGORII: Record<string, number> = {
   "laptopy": 5,
   "monitory": 12,
   "rejestratory": 10,
-  "serwery": 3,
   "tablety": 3,
   "telefony": 8,
   "urzadzenia-fiskalne": 2,

@@ -11,7 +11,6 @@ import {
   Printer,
   Laptop,
   Monitor,
-  Server,
   LayoutGrid,
   FileText,
   Trash2,
@@ -159,7 +158,6 @@ const PRODUCT_CATEGORIES = [
   { id: "laptopy", name: "Laptopy", icon: Laptop, color: "green" },
   { id: "urzadzenia_wielofunkcyjne", name: "Urządzenia wielofunkcyjne", icon: Printer, color: "pink" },
   { id: "monitory", name: "Monitory", icon: Monitor, color: "cyan" },
-  { id: "serwery", name: "Serwery", icon: Server, color: "red" },
   { id: "all_in_one", name: "All in One", icon: LayoutGrid, color: "indigo" },
   { id: "akcesoria", name: "Akcesoria", icon: Package, color: "amber" },
 ];
@@ -216,7 +214,6 @@ const DEVICE_TYPES: Record<string, string[]> = {
     "Dell P2724HEB", "Dell P2725HE", "Dell P2725HE USB-C",
     "HP Serie 5 Pro 527pq", "HP Serie 5 Pro 527pu"
   ],
-  serwery: ["Dell PowerEdge R360", "Dell PowerEdge R550", "Dell PowerEdge R660xs"],
   all_in_one: ["Dell AIO Pro 24"],
   akcesoria: [], // Puste - wpisywane ręcznie "z palca"
 };

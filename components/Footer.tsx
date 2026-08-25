@@ -20,7 +20,6 @@ const KATEGORIE = [
   ['Laptopy', '/kategoria/laptopy'],
   ['All in One', '/kategoria/all-in-one'],
   ['Monitory', '/kategoria/monitory'],
-  ['Serwery', '/kategoria/serwery'],
   ['Drukarki laserowe', '/kategoria/drukarki-laserowe'],
   ['Urządzenia wielofunkcyjne', '/kategoria/urzadzenia-wielofunkcyjne'],
   ['Drukarki do rejestratora', '/kategoria/drukarki-do-rejestratora'],

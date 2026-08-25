@@ -120,27 +120,6 @@ export const productsByCategory = {
       price: '3200 PLN',
       availability: 'Dostępny'
     }
-  ],
-  "serwery": [
-    {
-      id: 7,
-      slug: 'dell-poweredge-t140',
-      name: 'Dell PowerEdge T140',
-      category: 'Serwer',
-      description: 'Kompaktowy serwer wieżowy dla małych biur',
-      shortDescription: 'Serwer tower z Intel Xeon',
-      specifications: [
-        { label: 'Procesor', value: 'Intel Xeon E-2224' },
-        { label: 'RAM', value: '16 GB DDR4' },
-        { label: 'Dyski', value: '2x 1TB SATA' }
-      ],
-      accessories: ['Rails kit', 'UPS'],
-      whereToBuy: 'ZUP Lublin',
-      imageUrl: '/images/dell-t140.jpg',
-      serviceContract: '5 lat',
-      price: 'Cena na zapytanie',
-      availability: 'Na zamówienie'
-    }
   ]
 };
 

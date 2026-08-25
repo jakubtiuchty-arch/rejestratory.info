@@ -135,9 +135,8 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
               {categoryParam === 'laptopy' && "Biznesowe laptopy wysokiej wydajności dla biura i pracy mobilnej w nadleśnictwach."}
               {categoryParam === 'drukarki-laserowe' && "Profesjonalne drukarki laserowe do intensywnej pracy biurowej w nadleśnictwach."}
               {categoryParam === 'monitory' && "Wysokiej jakości monitory dla stanowisk pracy w biurach nadleśnictw."}
-              {categoryParam === 'serwery' && "Niezawodne serwery dla infrastruktury IT nadleśnictw i regionalnych dyrekcji."}
               {categoryParam === 'ezd' && "Systemy elektronicznego zarządzania dokumentacją zgodne z wymaganiami administracji publicznej."}
-              {!['rejestratory', 'telefony', 'laptopy', 'drukarki-laserowe', 'monitory', 'serwery', 'ezd'].includes(categoryParam) && "Profesjonalne rozwiązania technologiczne dedykowane dla służb leśnych."}
+              {!['rejestratory', 'telefony', 'laptopy', 'drukarki-laserowe', 'monitory', 'ezd'].includes(categoryParam) && "Profesjonalne rozwiązania technologiczne dedykowane dla służb leśnych."}
             </p>
           </motion.div>
         </div>

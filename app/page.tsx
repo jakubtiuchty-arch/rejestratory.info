@@ -16,7 +16,6 @@ import {
   ReceiptText,
   ScanBarcode,
   ScrollText,
-  Server,
   Smartphone,
   Tablet,
 } from "lucide-react";
@@ -42,7 +41,6 @@ const categories = [
   { id: 3, name: "Laptopy", href: "/kategoria/laptopy", Icon: Laptop },
   { id: 4, name: "Urządzenia wielofunkcyjne", href: "/kategoria/urzadzenia-wielofunkcyjne", Icon: PrinterCheck },
   { id: 5, name: "Monitory", href: "/kategoria/monitory", Icon: Monitor },
-  { id: 7, name: "Serwery", href: "/kategoria/serwery", Icon: Server },
   { id: 8, name: "Drukarki do rejestratora", href: "/kategoria/drukarki-do-rejestratora", Icon: ScrollText },
   { id: 9, name: "Drukarki laserowe", href: "/kategoria/drukarki-laserowe", Icon: Printer },
   { id: 10, name: "All in One", href: "/kategoria/all-in-one", Icon: Computer },
