@@ -1,5 +1,15 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-25 — EDA52 także z ZPUH Olsztyn
+
+Cennik ze zrzutu ekranu (bez pliku źródłowego), więc wpis ręczny w `data/oferty-reczne.ts`: **Honeywell EDA 52 — 2 838,00 zł netto**, ZPUH Olsztyn, plus kontrakt serwisowy i siedem akcesoriów. Karta pokazuje teraz porównanie dwóch składnic.
+
+**Ta sama maszyna jest w Łodzi o 77 zł taniej** — 2 761,00 zł — a wszystkie akcesoria kosztują w obu składnicach dokładnie tyle samo, co do grosza. Różnica leży wyłącznie w cenie samego urządzenia i w zawartości zestawu: Łódź dokłada pasek na rękę, Olsztyn deklaruje 24 miesiące gwarancji.
+
+**Nazwy pozycji ujednolicone z drukiem ZUP Łódź.** Obie składnice opisują te same akcesoria innymi słowami („Akumulator" kontra „Akumulator 4500mAh", „szkło ochronne" kontra „szkło lub folia ochronna") i po tych samych cenach. Przy dosłownym przepisaniu tabela robiła z nich osiem osobnych wierszy z myślnikiem w drugiej kolumnie — czyli sugerowała, że składnica danego akcesorium nie ma. Kwoty i dostępność pozostają zgodne ze źródłem; zmieniony jest wyłącznie zapis nazwy.
+
+73 oferty.
+
 ## 2026-08-25 — All in One: obie wersje z oferty ZUP
 
 `Oferta na komputery ALL IN ONE HP 17.04.2026.docx` wymienia **dwie pozycje**, obie prowadzące w druku do tej samej karty, choć różnią się nie tylko systemem:
