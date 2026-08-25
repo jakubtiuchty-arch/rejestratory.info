@@ -1,5 +1,15 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-25 — zdjęcia trzech monitorów HP
+
+Rendery dostarczone przez Jakuba: `524pu_1.png`, `524pm_1.png`, `527pm_1.png` — po 1600 × 1200, PNG z przezroczystością (sprawdzona średnia alfa ≈ 0,4, więc tło faktycznie jest wycięte, a nie czarne). Karty wskazywały te nazwy od chwili powstania, więc wystarczyło wgrać pliki.
+
+**Kategoria Monitory jest kompletna**: dwanaście modeli z oferty ZUP, wszystkie z cenami i ze zdjęciami.
+
+Galeria używa `object-contain`, więc dokładny rozmiar nie ma znaczenia — karty mają zdjęcia od 800 × 800 do 4462 × 3427 i wszystkie wyglądają poprawnie. Znaczenie ma przezroczyste tło (kontener ma gradient z bieli do szarości, na którym wypalona biel zrobiłaby prostokąt) i poziomy kadr z zapasem wokół produktu.
+
+**Nadal brakuje sześciu zdjęć**: `pc42e_t_1.png`, `zebra-ds2278.png`, `honeywell-1250g.png`, `hp460_1.png`, `hp715_1.png`, `torba_hp_15.png`.
+
 ## 2026-08-25 — EDA52 także z ZPUH Olsztyn
 
 Cennik ze zrzutu ekranu (bez pliku źródłowego), więc wpis ręczny w `data/oferty-reczne.ts`: **Honeywell EDA 52 — 2 838,00 zł netto**, ZPUH Olsztyn, plus kontrakt serwisowy i siedem akcesoriów. Karta pokazuje teraz porównanie dwóch składnic.
