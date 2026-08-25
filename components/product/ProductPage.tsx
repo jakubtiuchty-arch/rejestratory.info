@@ -49,6 +49,9 @@ export type Signature = {
   image?: string
   /** opis zdjęcia dla czytnika ekranu */
   imageAlt?: string
+  /** krótka pętla wideo w miejsce zdjęcia; `image` służy wtedy za plakat,
+   *  więc kafelek wygląda poprawnie także zanim plik się wczyta */
+  video?: string
 }
 
 /** Krok wdrożenia — używane przez urządzenia fiskalne, gdzie zakup to proces, nie dostawa. */
@@ -1176,7 +1179,10 @@ export default function ProductPage({ data }: { data: ProductData }) {
       const bliznjak = data.why.find((p) => p.icon === w.icon)
       const lepszy = bliznjak && bliznjak.body.length > w.body.length ? bliznjak : w
       // zdjęcie żyje tylko na wyróżniku, więc przy scaleniu trzeba je przenieść
-      return [w.icon, { ...lepszy, tone: w.tone, image: w.image, imageAlt: w.imageAlt, wyrozniony: true as const }]
+      return [
+        w.icon,
+        { ...lepszy, tone: w.tone, image: w.image, imageAlt: w.imageAlt, video: w.video, wyrozniony: true as const },
+      ]
     }),
   )
   const kafelki = [
@@ -1188,6 +1194,7 @@ export default function ProductPage({ data }: { data: ProductData }) {
         tone: undefined,
         image: undefined,
         imageAlt: undefined,
+        video: undefined,
         wyrozniony: false as const,
       })),
   ]
@@ -1479,8 +1486,8 @@ export default function ProductPage({ data }: { data: ProductData }) {
                       : 'border border-stone-200 bg-white text-stone-600'
                 }`}
               >
-                <div className={k.image ? 'gap-6 sm:flex sm:items-center' : undefined}>
-                  <div className={k.image ? 'sm:flex-1' : undefined}>
+                <div className={k.image || k.video ? 'gap-6 sm:flex sm:items-center' : undefined}>
+                  <div className={k.image || k.video ? 'sm:flex-1' : undefined}>
                     <img
                       src={ciemny ? naCiemnym(k.icon) : k.icon}
                       alt=""
@@ -1495,14 +1502,29 @@ export default function ProductPage({ data }: { data: ProductData }) {
                     </h3>
                     <p className="mt-2 leading-relaxed">{k.body}</p>
                   </div>
-                  {/* zdjęcie bez tła — kładzie się wprost na kafelku, żaden biały
-                      prostokąt nie odcina się od zielonego pola */}
-                  {k.image && (
-                    <img
-                      src={k.image}
-                      alt={k.imageAlt ?? ''}
-                      className="mx-auto mt-6 w-full max-w-[180px] self-center sm:mx-0 sm:mt-0 sm:w-[26%] sm:max-w-[220px]"
+                  {/* Zdjęcie bez tła kładzie się wprost na kafelku — żaden biały
+                      prostokąt nie odcina się od zielonego pola. Wideo tego nie
+                      potrafi (brak kanału alfa), więc jego tło jest wypalone
+                      w kolorze kafelka i musi się z nim zgadzać co do jednostki. */}
+                  {k.video ? (
+                    <video
+                      src={k.video}
+                      poster={k.image}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      aria-label={k.imageAlt}
+                      className="mx-auto mt-6 w-full max-w-[300px] self-center rounded-lg sm:mx-0 sm:mt-0 sm:w-[42%] sm:max-w-[340px]"
                     />
+                  ) : (
+                    k.image && (
+                      <img
+                        src={k.image}
+                        alt={k.imageAlt ?? ''}
+                        className="mx-auto mt-6 w-full max-w-[180px] self-center sm:mx-0 sm:mt-0 sm:w-[26%] sm:max-w-[220px]"
+                      />
+                    )
                   )}
                 </div>
               </div>

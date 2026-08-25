@@ -122,8 +122,11 @@ const data: ProductData = {
         'komputer. Jedno urządzenie obsługuje zatem pracę terenową i stanowisko w biurze. ' +
         'Zasilacz oraz przewody zamawiane są oddzielnie.',
       tone: 'akcent',
-      image: '/stacja-dokujaca-em45.png',
-      imageAlt: 'Zebra EM45 umieszczony w stacji dokującej Connect Cradle',
+      video: '/stacja-dokujaca-em45.mp4',
+      image: '/stacja-dokujaca-em45-poster.jpg',
+      imageAlt:
+        'Zebra EM45 w stacji dokującej — animacja pokazuje, jak po podłączeniu ' +
+        'monitora, klawiatury i myszy telefon staje się stanowiskiem biurowym',
     },
   ],
   usedBy: { device: 'Zebra EM45' },

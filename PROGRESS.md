@@ -1,5 +1,15 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-25 — karta EM45: animacja przemiany w stanowisko biurowe
+
+Zdjęcie stacji zastąpione pętlą wideo: dok z telefonem zmniejsza się i odjeżdża w prawo, w środku kadru wstaje monitor i zapala się tą samą tapetą co telefon, z dołu wsuwają się klawiatura i mysz. Potem to samo wstecz, więc pętla wraca do punktu wyjścia bez cięcia. 800 × 450, 11 s, **241 kB**.
+
+Jak powstała: klatka początkowa złożona lokalnie (przezroczysty PNG stacji na płaskim tle w kolorze kafelka), klatka końcowa w `gpt_image_2` z tą pierwszą jako referencją, a między nimi `seedance_2_0` z rolami `start_image` / `end_image`. Kamera statyczna, urządzenie ani razu się nie obraca — model nie ma okazji dopowiedzieć sobie niewidocznych ścianek.
+
+**Kolor tła to tu cała sztuka.** Wideo nie ma kanału alfa, więc tło musi być wypalone dokładnie w kolorze kafelka, inaczej na zielonym polu widać prostokąt. Kafelek to `bg-emerald-50/60` na bieli, czyli `#F4FEF9`. Generator oddał `#F3FBF6`, a kodowanie H.264 przesunęło to jeszcze raz — dopiero mnożnik kanałów `rr=1.0337:gg=1.0160:bb=1.0205` wpasował tło z dokładnością do jednego poziomu. Przy każdej zmianie kodowania trzeba to przemierzyć od nowa.
+
+`Signature` w `ProductPage` dostał pole `video`; `image` służy wtedy za plakat. Przezroczysty `stacja-dokujaca-em45.png` zostaje w repo — nieużywany, ale to gotowa grafika tego samego produktu.
+
 ## 2026-08-25 — karta EM45: stacja dokująca ze zdjęciem, bez banera em45.info
 
 Z karty zniknął baner „Zobacz EM45 w akcji na dedykowanej stronie" — Jakub uznał go za zbędny. Pole `microsite` w `ProductPage` zostaje, bo to udokumentowana opcja szablonu, tylko żadna karta z niej teraz nie korzysta. Link do em45.info dalej wisi w panelu klienta (`/panel-klienta/dashboard`) — inny kontekst, nie ruszałem.
