@@ -1,5 +1,19 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-25 — newsletter: urządzenia Apple (wydanie na 01.09)
+
+`public/newsletter/editions/2026-09-01-apple-iphone-ipad.html`, kampania `apple-2026-09-01`. Manifest przestawiony na to wydanie z `bulkAt` 01.09 8:30, kolejka przesunięta: TC58e na 07.09, Brother na 14.09.
+
+**Hero.** Jakub chciał kadru z filmu ze strony głównej — leśniczy mierzy stos iPhone'em, siatka LiDAR z wymiarami — tylko z mniejszym ruchem, bo to mail. Wycięte z `hero-nadlesnictwo.mp4` (19,0–23,4 s), kadr 600 × 250 z przesunięciem pionowym 117 px, sześć klatek tam i z powrotem po 0,5 s. Ruch to łagodne odjechanie kamery i powrót, bez przeskoku na pętli.
+
+Rozmiar był tu prawdziwym ograniczeniem: las w mgle to sama faktura, więc każda klatka waży ~90 kB niezależnie od palety i ditheringu (sprawdzone: 48/64/96/128 kolorów, `none`/`bayer`/`sierra2_4a` — różnice poniżej 2%). Jedyna dźwignia to liczba klatek. Stąd sześć zamiast dwudziestu: **374 kB** wobec 1,6 MB produkcyjnego `las-it-anim.gif`.
+
+**Zdjęcia.** Z kart produktu (`public/products/*.webp`) spłaszczone na biel — źródłowe pliki mają półprzezroczystą obwódkę wokół ekranu, która na białym tle maila zostawiała białe plamy. Kolejność ma znaczenie: najpierw `-alpha remove` na bieli, dopiero potem `-trim` i skalowanie. Cztery duże po ~60–90 kB, trzy kafelki po ~10 kB. Cały mail to 720 kB obrazów i 36 kB HTML-a (limit obcięcia w Gmailu: 102 kB).
+
+**Treść.** Fakty wyłącznie z czterech kart w repo. Model wiodący to iPhone 17 Pro (siedem wierszy specyfikacji), pozostałe trzy jako kafelki. Bloku ceny nie ma, bo żadna karta Apple nie ma oferty składnicy — zamiast niego czarny blok „Wycena indywidualna" z logo Apple, w stylu marki, i przycisk mailowy. Zwykły baner Apple z poprzednich wydań wypadł, bo cały mail jest o Apple.
+
+Logo Apple w dwóch miejscach: mały znak nad nagłówkiem w zielonym bloku i większy w czarnym bloku wyceny. W stopce dopisana nota o znakach towarowych Apple Inc. Kafelek „Serwery i All-in-One" zastąpiony przez „Komputery All-in-One", a „Telefony" rozszerzone na „Telefony i tablety" z Apple na pierwszym miejscu.
+
 ## 2026-08-25 — serwery zdjęte z oferty
 
 Jakub: „Nie mamy już w ofercie serwerów". Kategoria usunięta z części katalogowej w całości — listing `app/kategoria/serwery/`, trzy karty (`dell-poweredge-r360`, `-r550`, `-r660xs`), kafelek na stronie głównej, pozycja w stopce, blok `"serwery"` w nieużywanym `lib/products-data.ts` i akapit na starej trasie `/produkty/[category]`. Z generatora indeksu wypadły etykieta i synonimy, po czym `data/liczby-kategorii.ts` i `data/wyszukiwarka.ts` przeliczone: **79 kart w 12 kategoriach** (było 82 w 13).
