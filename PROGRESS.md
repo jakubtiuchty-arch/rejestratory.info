@@ -14,6 +14,13 @@ Rozmiar był tu prawdziwym ograniczeniem: las w mgle to sama faktura, więc każ
 
 **Rama całego maila.** Jakub: mamy powiedzieć wprost, że wiemy o wchodzącym oprogramowaniu do pomiaru mygieł LiDAR-em i że dlatego wprowadziliśmy urządzenia Apple do oferty. Lead zaczyna się więc od powodu, a dopiero potem tłumaczy mechanizm. Nazwa dostawcy oprogramowania świadomie nie pada — piszemy o warunku sprzętowym, nie o cudzym produkcie.
 
+**Dwie drogi pomiaru — poprawka merytoryczna.** Napisałem, że oprogramowanie do pomiaru stosów „pracuje wyłącznie na urządzeniach ze skanerem LiDAR". To nieprawda i Jakub to wyłapał. Drogi są dwie:
+
+1. **Z aparatu (fotogrametria)** — aplikacja analizuje zdjęcie czoła stosu, ale skalę musi skądś wziąć: albo z wzorca o znanym wymiarze położonego na drewnie, albo z ręcznie zmierzonej długości wałków wpisanej do aplikacji. Działa na zwykłym telefonie, więc i na Samsungu, i na Zebrze EM45.
+2. **Ze skanera LiDAR** — i to nie jest pomiar ze zdjęcia, tylko z czujnika głębi. Wzorzec odpada, bo urządzenie od razu opisuje scenę w metrach. Skanuje się czoło i tył stosu, a aplikacja składa z tego wymiary, objętość i przelicznik zamienny bez ani jednego ręcznego pomiaru.
+
+Nas interesuje ta druga droga, bezreferencyjna — i to jest cały powód, dla którego urządzenia Apple są w ofercie. Wyleciało też zdanie, jakoby czoła kłód rozpoznawał obraz z aparatów: w rozwiązaniach LiDAR-owych czoła wychodzą z chmury punktów, więc przypisywanie tego aparatom było zgadywaniem.
+
 **Jak właściwie działa ten LiDAR.** Pierwsza wersja leadu mówiła, że „skaner mierzy odległość do stosu" — za mało i nie o to chodzi. Skaner jest typu dToF: dioda VCSEL wysyła 64 impulsy podczerwieni, element dyfrakcyjny 3 × 3 zwielokrotnia je do 576 punktów, a matryca SPAD mierzy czas powrotu. Same punkty są rzadkie — dopiero ich połączenie z obrazem z aparatu daje mapę głębi 256 × 192 odświeżaną 60 razy na sekundę, na dystansie do pięciu metrów. System łączy tę mapę z ruchem kamery, więc urządzenie opisuje scenę w metrach: stąd bierze się skala bez wzorca kładzionego na kłodach, a nie z „pomiaru odległości".
 
 Praktyczne konsekwencje, które trafiły do treści: zasięg pięciu metrów oznacza, że stos nie mieści się w jednym kadrze i idzie się wzdłuż niego; mapa głębi jest za rzadka, żeby rozróżnić czoła kłód, więc te rozpoznaje obraz z aparatów, a z nich liczy się przelicznik zamienny. Opublikowane w 2026 r. porównanie metod cyfrowych dało dla urządzenia z LiDAR-em błąd RMSE 2,44% na miąższości stosu brutto wobec 6,9–7,5% dla aplikacji opartych na samych zdjęciach — liczb nie wstawiłem do maila, bo dotyczą konkretnego oprogramowania, a my sprzedajemy sprzęt.
