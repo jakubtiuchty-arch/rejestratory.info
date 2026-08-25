@@ -1,5 +1,30 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-25 — komplet brakujących zdjęć, katalog bez dziur
+
+Sześć renderów dostarczonych przez Jakuba, wgranych bez przeróbek pod nazwy, które karty nosiły od początku:
+
+- `pc42e_t_1.png`, `zebra-ds2278.png`, `honeywell-1250g.png` — po 800 × 800 (sprzęt EZD),
+- `hp460_1.png`, `hp715_1.png`, `torba_hp_15.png` — po 1200 × 1200, jak obie klawiatury Dell i HP 655 w Akcesoriach.
+
+Wszystkie PNG z wyciętym tłem. Kadr HP 460 mieści urządzenie na 991 px szerokości przy 1049 px w `km5221_1.png` i 1119 px w `hp655_1.png` — w listingu obok siebie wygląda spójnie, więc nic nie przycinałem.
+
+Audyt całego repo (396 odwołań do plików graficznych w `app/`, `components/`, `data/`) wykazał jedno martwe: `app/products-data.ts` wskazywało na `/images/zebra-em45.jpg`, ścieżkę, której nigdy nie było. To stara warstwa danych, ale trasa `/produkty/[category]` nadal odpowiada 200, więc kafelek EM45 świecił pustym miejscem. Podmienione na istniejące `/em45_1.webp`.
+
+Po tej rundzie **żadna karta w katalogu nie ma brakującego ani zastępczego zdjęcia**.
+
+## 2026-08-25 — przycisk „Zobacz produkt” równo na dole każdej karty
+
+Na listingach przycisk stał zaraz pod tekstem, więc w rzędzie czterech kart siedział na czterech różnych wysokościach — im dłuższy opis, tym niżej. Poprawka to trzy klasy Tailwinda na kartę:
+
+- kafelek dostaje `flex flex-col h-full` (w widoku listy `flex gap-6 h-full`), żeby rozciągał się na wysokość rzędu,
+- kontener treści `p-6 flex-1 flex flex-col`,
+- owijka przycisku `mt-auto` — wolna przestrzeń ląduje nad przyciskiem, nie pod nim.
+
+Rozjechane były cztery listingi: Monitory, EZD, Serwery, Urządzenia wielofunkcyjne. Przy okazji `h-full` dopisane w Laptopach i Urządzeniach fiskalnych — działały dzięki domyślnemu `stretch` siatki, ale wyglądały inaczej niż reszta.
+
+Sprawdzone pomiarem przez CDP przy szerokości 1600 px na wszystkich czternastu listingach: w każdym rzędzie dolna krawędź przycisku ma tę samą współrzędną, a odstęp do dolnej krawędzi karty wynosi wszędzie 24 px.
+
 ## 2026-08-25 — zdjęcia trzech monitorów HP
 
 Rendery dostarczone przez Jakuba: `524pu_1.png`, `524pm_1.png`, `527pm_1.png` — po 1600 × 1200, PNG z przezroczystością (sprawdzona średnia alfa ≈ 0,4, więc tło faktycznie jest wycięte, a nie czarne). Karty wskazywały te nazwy od chwili powstania, więc wystarczyło wgrać pliki.

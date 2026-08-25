@@ -32,7 +32,7 @@ export const productsByCategory: { [key: string]: Product[] } = {
       slug: "zebra-em45",
       specification: "Android 14, 6GB RAM",
       where_to_buy: "ZUP Łódź",
-      image_link: "/images/zebra-em45.jpg",
+      image_link: "/em45_1.webp",
       accessories: "Ładowarka, etui",
       service_contract: "3 lata"
     },

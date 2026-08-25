@@ -260,7 +260,7 @@ export default function CategoryPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                   className={`bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
-                    viewMode === "list" ? "flex gap-6" : "flex flex-col"
+                    viewMode === "list" ? "flex gap-6 h-full" : "flex flex-col h-full"
                   }`}
                 >
                   {/* Obrazek lub grafika dla Panelu Klienta */}

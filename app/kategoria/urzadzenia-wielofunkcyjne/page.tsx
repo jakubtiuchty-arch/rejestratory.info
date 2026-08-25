@@ -299,7 +299,7 @@ export default function CategoryPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
               className={`bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden ${
-                viewMode === "list" ? "flex gap-6" : ""
+                viewMode === "list" ? "flex gap-6 h-full" : "flex flex-col h-full"
               }`}
             >
               {/* Obrazek */}
@@ -319,7 +319,7 @@ export default function CategoryPage() {
               </div>
 
               {/* Treść */}
-              <div className="p-6 flex-1">
+              <div className="p-6 flex-1 flex flex-col">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
                 <p className="text-gray-600 mb-3">{product.description}</p>
                 <p className="text-sm text-gray-500 mb-4">{product.specifications}</p>
@@ -334,7 +334,7 @@ export default function CategoryPage() {
 
                 <a 
                   href={`/produkt/${productSlug}`}
-                  className="block w-full bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-center"
+                  className="mt-auto block w-full bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-center"
                 >
                   Zobacz produkt
                 </a>
