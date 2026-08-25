@@ -1,6 +1,8 @@
 # PROGRESS — rejestratory.info
 
-## 2026-08-25 — karta EM45: stacja dokująca ze zdjęciem, oficjalny rejestr
+## 2026-08-25 — karta EM45: stacja dokująca ze zdjęciem, bez banera em45.info
+
+Z karty zniknął baner „Zobacz EM45 w akcji na dedykowanej stronie" — Jakub uznał go za zbędny. Pole `microsite` w `ProductPage` zostaje, bo to udokumentowana opcja szablonu, tylko żadna karta z niej teraz nie korzysta. Link do em45.info dalej wisi w panelu klienta (`/panel-klienta/dashboard`) — inny kontekst, nie ruszałem.
 
 Kafel o stacji był napisany zbyt swobodnie („telefon wchodzi w nią jednym ruchem", „leśniczy pracuje na klawiaturze") — przepisany na język umowy: „Po umieszczeniu telefonu w stacji obraz trafia na monitor, a obsługa odbywa się klawiaturą i myszą". Ta sama korekta w wierszach specyfikacji.
 
