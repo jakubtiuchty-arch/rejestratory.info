@@ -1,5 +1,15 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-26 — druki składnic wjechały do repo
+
+Wszystkie ceny w katalogu powstają z dokumentów `.docx`, które dotąd leżały w Pobranych. Okazało się to kruche na dwa sposoby naraz: `Oferta Laptopy_06.2026.docx` po prostu zniknęła z dysku, a wskazanie parserowi całego folderu Pobranych wciągało dokumenty, których w katalogu nie chcemy. Trzydzieści trzy druki (8,6 MB) leżą teraz w `oferty-zrodla/` razem z kodem, który je czyta.
+
+Parser domyślnie czyta ten folder, `scripts/odswiez-oferty.sh` skurczył się do trzech linii i przelicza przy okazji liczniki kategorii oraz indeks wyszukiwarki. W folderze stoi `README.md` z instrukcją dla nowego cennika i wykazem druków celowo pomijanych.
+
+Cztery nazwy plików przyszły z macOS w NFD i zostały przemianowane na NFC, żeby repo wyglądało tak samo niezależnie od systemu. Po przeniesieniu dane wyszły **co do bajta identyczne** — 72 oferty, żadnej różnicy.
+
+**Nadal brakuje `Oferta Laptopy_06.2026.docx`.** Ceny laptopów żyją, bo parser przenosi oferty z druków, których nie widzi, ale do czasu odzyskania tego pliku nie da się ich odświeżyć ani zweryfikować. Jakub miał ściągnąć komplet druków na nowo do `oferty-zrodla/`.
+
 ## 2026-08-26 — dwa nowe rejestratory i parser, który przestaje gubić dane
 
 Z folderu `REJESTRATORY 3` doszedł **Honeywell CT32** (2 915 zł netto) — karta napisana wyłącznie z treści druku, który nie podaje klasy szczelności ani czasu pracy, więc karta ich nie deklaruje.

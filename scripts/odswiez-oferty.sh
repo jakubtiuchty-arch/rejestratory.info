@@ -1,27 +1,22 @@
 #!/bin/bash
-# Odświeża `data/oferty-skladnicy.ts` ze wszystkich druków, które składają się
-# na katalog. Trzymamy to w skrypcie, bo lista miejsc nie jest oczywista:
-# rejestratory mają własny folder, reszta leży w folderach tematycznych,
-# a cztery druki stoją luzem w Pobranych obok dokumentów, których do katalogu
-# nie chcemy — dlatego są wskazane pojedynczo, a nie całym folderem.
+# Odświeża ceny na kartach: czyta druki z `oferty-zrodla/` i przepisuje
+# `data/oferty-skladnicy.ts`, a potem przelicza liczniki kategorii i indeks
+# wyszukiwarki, żeby nowy model od razu był do znalezienia.
 #
 #   bash scripts/odswiez-oferty.sh
 #
-# Druki modeli wycofanych z produkcji pomija sam parser (stała WYCOFANE).
-# Oferty z druków, których nie ma już na dysku, parser przenosi ze starego
-# pliku i wypisuje na końcu — sprawdź tę listę, zanim zacommitujesz.
+# Co robić, gdy przychodzi nowy cennik:
+#   1. wrzuć plik .docx do `oferty-zrodla/` (stary zostaw albo podmień),
+#   2. odpal ten skrypt,
+#   3. przejrzyj `git diff data/oferty-skladnicy.ts` — widać każdą zmianę ceny,
+#   4. commit.
+#
+# Druków wycofanych modeli i pozycji innych dostawców parser nie czyta —
+# listy WYCOFANE i NIE_NASZE stoją w scripts/parsuj-oferty-zup.mjs i są
+# jedynym miejscem, gdzie te decyzje żyją.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-P=~/Downloads
-
-node scripts/parsuj-oferty-zup.mjs \
-  "$P/REJESTRATORY 3" \
-  "$P/MONITORY" \
-  "$P/KOMPUTERY ALL IN ONE" \
-  "$P/TABLETY" \
-  "$P/URZĄDZENIA WIELOFUNKCYJNE" \
-  "$P/Oferta na akcesoria komputerow_03.2026r.docx" \
-  "$P/Oferta na drukarki termiczne_01.07.2026.docx" \
-  "$P/Oferta na sprzęt do EZD 03.2026.docx" \
-  "$P/Druk zamówienia na dostawę drukarek termicznych i akcesoriów 16.10.2024.docx"
+node scripts/parsuj-oferty-zup.mjs oferty-zrodla
+node scripts/policz-karty.mjs
+node scripts/indeks-wyszukiwarki.mjs

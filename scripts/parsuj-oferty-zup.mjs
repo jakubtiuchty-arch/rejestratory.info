@@ -18,12 +18,13 @@ import { join, basename } from 'node:path'
 import { execFileSync } from 'node:child_process'
 
 /**
- * Katalogi z ofertami. Można podać kilka, bo druki leżą w Pobranych w osobnych
- * folderach tematycznych (REJESTRATORY 3, MONITORY, KOMPUTERY ALL IN ONE…).
+ * Skąd czytać druki. Domyślnie z `oferty-zrodla/` w repo — dokumenty leżą tam
+ * od 26.08.2026, odkąd okazało się, że w Pobranych bywają kasowane i pierwsze
+ * odświeżenie po takim zniknięciu wycinało ceny z katalogu.
+ *
+ * Argumentem może być katalog albo pojedynczy plik .docx; da się podać kilka.
  */
-const KATALOGI = process.argv.slice(2).length
-  ? process.argv.slice(2)
-  : ['/Users/jakubtiuchty/Downloads/REJESTRATORY 3']
+const KATALOGI = process.argv.slice(2).length ? process.argv.slice(2) : ['oferty-zrodla']
 const WYJSCIE = 'data/oferty-skladnicy.ts'
 
 /**
