@@ -232,11 +232,24 @@ const skrocNazwe = (nazwa) => {
 /** Do porównań: same litery i cyfry, bo druki piszą „MFCL-6710DW” i „MFC L 6710 DW”. */
 const uprosc = (tekst) => tekst.toUpperCase().replace(/[^A-Z0-9]/g, '')
 
+/**
+ * Wzorzec modelu tolerujący spacje, myślniki i kropki wewnątrz oznaczenia,
+ * ale wymagający, żeby zaczynało się ono od granicy słowa.
+ *
+ * Porównywanie na tekście z wyciętymi spacjami (`uprosc`) samo w sobie sklejało
+ * sąsiednie wyrazy i produkowało fałszywe oznaczenia: „Gwarancja 36 miesięcy”
+ * dawało ciąg …CJA36MIES…, w którym siedzi „A36”, więc drukarka Brother RJ-4230B
+ * z druku ZPUH Olsztyn trafiła na kartę Samsunga Galaxy A36. Stąd `(?<![A-Z0-9])`
+ * z przodu. Z tyłu blokujemy tylko cyfrę, bo litera bywa wariantem tego samego
+ * modelu, który chcemy złapać („TC58” w „TC58e”, „P2726H” w „P2726HE”).
+ */
+const wzorzecModelu = (fragment) =>
+  new RegExp(`(?<![A-Z0-9])${uprosc(fragment).split('').join('[\\s\\-_.]?')}(?![0-9])`, 'i')
+
 const dopasujSlug = (nazwa) => {
-  const duze = uprosc(nazwa)
   const trafienie = [...MODELE]
     .sort((a, b) => b[0].length - a[0].length)
-    .find(([fragment]) => duze.includes(uprosc(fragment)))
+    .find(([fragment]) => wzorzecModelu(fragment).test(nazwa))
   return trafienie ? trafienie[1] : null
 }
 

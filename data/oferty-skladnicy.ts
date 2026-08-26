@@ -1604,42 +1604,6 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   },
   {
     "slug": "samsung-a36",
-    "skladnica": "zpuh-olsztyn",
-    "plik": "Druk zamówienia na dostawę drukarek termicznych i akcesoriów 16.10.2024.docx",
-    "formularz": null,
-    "strona": "https://zpuh.olsztyn.lasy.gov.pl/drukarki",
-    "okres": {
-      "od": "2024-10-16",
-      "do": null
-    },
-    "dostawca": null,
-    "urzadzenie": {
-      "nazwa": "Drukarka termiczna Brother RJ-4230B",
-      "cenaNetto": 2420,
-      "promocja": false,
-      "wZestawie": [
-        "Akumulator",
-        "Ładowarka sieciowa",
-        "Gwarancja 36 miesiące"
-      ]
-    },
-    "dodatki": [
-      {
-        "nazwa": "Torba transportowa do drukarki Brother RJ4230B",
-        "cenaNetto": 198,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Papier termiczny do drukarki Brother RJ4230B (karton 40 szt.)",
-        "cenaNetto": 5.5,
-        "promocja": false,
-        "wZestawie": []
-      }
-    ]
-  },
-  {
-    "slug": "samsung-a36",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY A36_03.2026.docx",
     "formularz": null,

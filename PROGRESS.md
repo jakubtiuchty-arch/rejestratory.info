@@ -1,5 +1,17 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-26 — Galaxy A36 pokazywał ofertę ZPUH Olsztyn, której nigdy nie było
+
+Karta A36 obiecywała ceny w dwóch składnicach: 1 451 zł w Łodzi i 2 420 zł w Olsztynie. Ta druga to była drukarka Brother RJ-4230B z olsztyńskiego druku, podpięta pod kartę Samsunga.
+
+**Skąd to się wzięło.** Parser porównywał oznaczenia modeli na tekście z wyciętymi spacjami (`uprosc`), żeby złapać „MFCL-6710DW” i „MFC L 6710 DW” jako jedno. Wycięcie spacji sklejało jednak sąsiednie wyrazy i produkowało oznaczenia, których w dokumencie nie ma: „Gwarancja 36 miesięcy” dawało ciąg …CJ**A36**MIES…, a w tabeli modeli stoi `['A36', 'samsung-a36']`. Brother miał w zestawie gwarancję 36 miesięcy, więc trafił na kartę A36.
+
+**Poprawka.** Dopasowanie idzie teraz przez wzorzec tolerujący spacje i myślniki wewnątrz oznaczenia, ale wymagający granicy słowa przed nim: `(?<![A-Z0-9])`. Z tyłu blokujemy tylko cyfrę, bo litera bywa wariantem tego samego modelu, który chcemy złapać — „TC58” w „TC58e”, „P2726H” w „P2726HE”. Zestaw przypadków brzegowych sprawdzony osobno (`scratchpad/test-modele.mjs`, 15 przypadków): Brother odpada, a S25 FE, Elite Book 645 i SL20+ dalej trafiają.
+
+Parser puszczony ponownie na sam druk z Olsztyna daje dokładnie dwie oferty — Sewoo LK-P43 i Zebra ZQ521 — a Brothera odrzuca z komunikatem „urządzenie bez karty”. Błędny wpis usunięty z `data/oferty-skladnicy.ts`; zostaje 71 ofert.
+
+**Uwaga przy następnym odświeżeniu danych.** Nie da się dziś przepuścić parsera przez komplet — `Oferta Laptopy_06.2026.docx` zniknęła z Pobranych, a jest źródłem ofert na laptopy. Pełna regeneracja bez niej wycięłaby te oferty. Audyt pozostałych 71 wpisów (`scratchpad/sprawdz-oferty.mjs`) nie znalazł drugiego takiego przypadku.
+
 ## 2026-08-25 — karta EM45: animacja przemiany w stanowisko biurowe
 
 Zdjęcie stacji zastąpione pętlą wideo: dok z telefonem zmniejsza się i odjeżdża w prawo, w środku kadru wstaje monitor i zapala się tą samą tapetą co telefon, z dołu wsuwają się klawiatura i mysz. Potem to samo wstecz, więc pętla wraca do punktu wyjścia bez cięcia. 800 × 450, 11 s, **241 kB**.
