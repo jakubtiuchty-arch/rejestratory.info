@@ -13,12 +13,32 @@
  * rejestrator leśniczego”) nie przypomina slugu.
  */
 
-import { writeFileSync, readdirSync, existsSync } from 'node:fs'
+import { writeFileSync, readFileSync, readdirSync, existsSync } from 'node:fs'
 import { join, basename } from 'node:path'
 import { execFileSync } from 'node:child_process'
 
-const KATALOG = process.argv[2] ?? '/Users/jakubtiuchty/Downloads/REJESTRATORY 3'
+/**
+ * Katalogi z ofertami. Można podać kilka, bo druki leżą w Pobranych w osobnych
+ * folderach tematycznych (REJESTRATORY 3, MONITORY, KOMPUTERY ALL IN ONE…).
+ */
+const KATALOGI = process.argv.slice(2).length
+  ? process.argv.slice(2)
+  : ['/Users/jakubtiuchty/Downloads/REJESTRATORY 3']
 const WYJSCIE = 'data/oferty-skladnicy.ts'
+
+/**
+ * Druki modeli, których producent już nie wytwarza. Leżą w katalogu razem
+ * z resztą, ale do katalogu nie trafiają — decyzja Jakuba z 26.08.2026.
+ */
+const WYCOFANE = [
+  'Oferta na Rejestrator Zebra EC55_03.2026.docx',
+  'Oferta na Rejestrator Zebra TC26_03.2026.docx',
+  'Oferta na Rejestrator Zebra TC57_03.2026.docx',
+  'Oferta na Rejestrator Zebra TC77_03.2026.docx',
+  'Oferta na Rejestrator typu Smartfon HMD XR21_03.2026.docx',
+  // sam SL20 zszedł z produkcji; SL20+ z osobnego druku zostaje
+  'Oferta na Rejestrator M3 Mobile SL20_03.2026.docx',
+]
 
 /** Fragment nazwy z druku → slug karty produktu. Kolejność: od najdłuższego. */
 const MODELE = [
@@ -35,6 +55,8 @@ const MODELE = [
   ['PA768', 'unitech-pa768'],
   ['A56', 'samsung-a56'],
   ['A36', 'samsung-a36'],
+  ['CT32', 'honeywell-ct32'],
+  ['PM95', 'point-mobile-pm95'],
   ['S25 FE', 'samsung-s25-fe'],
   ['S25 ULTRA', 'samsung-s25-ultra'],
   ['XCOVER', 'samsung-xcover7'],
@@ -244,7 +266,8 @@ const uprosc = (tekst) => tekst.toUpperCase().replace(/[^A-Z0-9]/g, '')
  * modelu, który chcemy złapać („TC58” w „TC58e”, „P2726H” w „P2726HE”).
  */
 const wzorzecModelu = (fragment) =>
-  new RegExp(`(?<![A-Z0-9])${uprosc(fragment).split('').join('[\\s\\-_.]?')}(?![0-9])`, 'i')
+  // separatorów może być kilka, bo druki piszą „BROTHER HLL – 6210DW”
+  new RegExp(`(?<![A-Z0-9])${uprosc(fragment).split('').join('[\\s\\-_.–—]*')}(?![0-9])`, 'i')
 
 const dopasujSlug = (nazwa) => {
   const trafienie = [...MODELE]
@@ -443,9 +466,40 @@ const FORMULARZE_PDF = {
 const oferty = []
 const pominiete = []
 
-for (const plik of readdirSync(KATALOG).sort()) {
-  if (!plik.endsWith('.docx') || plik.startsWith('~$')) continue
-  const sciezka = join(KATALOG, plik)
+/**
+ * Wszystkie druki ze wskazanych miejsc, bez duplikatów nazw.
+ *
+ * Argumentem może być katalog albo pojedynczy plik .docx. Pojedyncze pliki są
+ * potrzebne, bo w Pobranych obok naszych druków leżą dokumenty, których do
+ * katalogu nie chcemy — wskazanie całego folderu wciągnęłoby je razem z resztą.
+ */
+const dokumenty = new Map()
+for (const sciezka of KATALOGI) {
+  if (!existsSync(sciezka)) {
+    console.error(`nie istnieje: ${sciezka}`)
+    process.exit(1)
+  }
+  // macOS podaje nazwy plików w NFD („ą” = a + ogonek), a w zapisanych danych
+  // stoją NFC. Bez ujednolicenia ten sam druk raz wygląda na nowy, a raz na
+  // zniknięty z dysku — klucze map trzymamy więc zawsze w NFC.
+  const klucz = (nazwa) => nazwa.normalize('NFC')
+  if (sciezka.endsWith('.docx')) {
+    const plik = klucz(basename(sciezka))
+    if (!dokumenty.has(plik)) dokumenty.set(plik, sciezka)
+    continue
+  }
+  for (const nazwa of readdirSync(sciezka).sort()) {
+    if (!nazwa.endsWith('.docx') || nazwa.startsWith('~$')) continue
+    const plik = klucz(nazwa)
+    if (!dokumenty.has(plik)) dokumenty.set(plik, join(sciezka, nazwa))
+  }
+}
+
+for (const [plik, sciezka] of dokumenty) {
+  if (WYCOFANE.includes(plik)) {
+    pominiete.push([plik, 'model wycofany z produkcji — druk celowo pomijany'])
+    continue
+  }
   let xml
   try {
     xml = czytajDocx(sciezka)
@@ -665,6 +719,32 @@ for (const plik of readdirSync(KATALOG).sort()) {
   }
 }
 
+/**
+ * Oferty z druków, których w skanowanych katalogach nie było.
+ *
+ * Druki wędrują po Pobranych i bywają kasowane — `Oferta Laptopy_06.2026.docx`
+ * zniknęła stamtąd w sierpniu 2026, a jest jedynym źródłem cen na laptopy.
+ * Bez tego przeniesienia każde odświeżenie danych po cichu wycinałoby oferty,
+ * których dokumentu akurat nie ma pod ręką. Zachowane wpisy są wypisywane
+ * na konsolę, żeby nikt nie odkrył ich przypadkiem za pół roku.
+ */
+const zachowane = []
+if (existsSync(WYJSCIE)) {
+  const stary = readFileSync(WYJSCIE, 'utf8')
+  // uwaga: `indexOf('[')` po samej nazwie stałej trafiłby w nawias adnotacji
+  // typu (`OfertaSkladnicy[]`), więc szukamy dopiero za znakiem równości
+  const naglowek = 'OFERTY_SKLADNICY: OfertaSkladnicy[] ='
+  const start = stary.indexOf('[', stary.indexOf(naglowek) + naglowek.length)
+  const koniec = stary.indexOf('\n]', start) + 2
+  if (start > 0 && koniec > start) {
+    for (const o of JSON.parse(stary.slice(start, koniec))) {
+      const plik = o.plik.normalize('NFC')
+      if (!dokumenty.has(plik) && !WYCOFANE.includes(plik)) zachowane.push(o)
+    }
+  }
+}
+oferty.push(...zachowane)
+
 // jeden model w jednej składnicy = jedna oferta; przy duplikatach wygrywa nowsza
 const najnowsze = new Map()
 for (const o of oferty) {
@@ -681,8 +761,9 @@ const wynik = [...najnowsze.values()].sort(
 // bramka jakości — lepiej nie wygenerować pliku niż wpuścić na kartę bzdurną cenę
 const bledy = []
 for (const o of wynik) {
-  if (!existsSync(join('app/produkt', o.slug))) bledy.push(`${o.slug}: brak karty produktu`)
-  if (!o.okres) bledy.push(`${o.slug}: nie rozpoznano okresu obowiązywania`)
+  // druk w komunikacie, bo bez niego szukanie winowajcy w kilku katalogach to zgadywanka
+  if (!existsSync(join('app/produkt', o.slug))) bledy.push(`${o.slug}: brak karty produktu (${o.plik})`)
+  if (!o.okres) bledy.push(`${o.slug}: nie rozpoznano okresu obowiązywania (${o.plik})`)
   const kwoty = [o.urzadzenie, ...o.dodatki]
   for (const k of kwoty) {
     if (!(k.cenaNetto > 0 && k.cenaNetto < 100000)) bledy.push(`${o.slug}: podejrzana kwota ${k.cenaNetto} (${k.nazwa})`)
@@ -744,6 +825,12 @@ for (const o of wynik) {
     `  ${o.slug.padEnd(22)} ${String(o.urzadzenie.cenaNetto).padStart(9)} zł netto` +
       `  ${o.okres ? o.okres.od + '…' + (o.okres.do ?? 'do odwołania') : 'BRAK OKRESU'}  (+${ile} pozycji)`
   )
+}
+if (zachowane.length) {
+  const zDrukow = [...new Set(zachowane.map((o) => o.plik))]
+  console.log(`\nzachowane z poprzedniego przebiegu (${zachowane.length} ofert z ${zDrukow.length} druków,`)
+  console.log('których nie było w skanowanych katalogach):')
+  for (const p of zDrukow) console.log(`  ${p}`)
 }
 if (pominiete.length) {
   console.log('\npominięte:')

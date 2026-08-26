@@ -438,6 +438,19 @@ export const INDEKS_PRODUKTOW: PozycjaIndeksu[] = [
     ]
   },
   {
+    "name": "Honeywell CT32",
+    "category": "Rejestrator",
+    "url": "/produkt/honeywell-ct32",
+    "keywords": [
+      "honeywell",
+      "ct32",
+      "rejestrator",
+      "terminal",
+      "kolektor",
+      "android"
+    ]
+  },
+  {
     "name": "Honeywell CT40XP",
     "category": "Rejestrator",
     "url": "/produkt/honeywell-ct40xp",
@@ -768,6 +781,20 @@ export const INDEKS_PRODUKTOW: PozycjaIndeksu[] = [
       "podnozek",
       "akcesoria",
       "ergonomia"
+    ]
+  },
+  {
+    "name": "Point Mobile PM95",
+    "category": "Rejestrator",
+    "url": "/produkt/point-mobile-pm95",
+    "keywords": [
+      "point",
+      "mobile",
+      "pm95",
+      "rejestrator",
+      "terminal",
+      "kolektor",
+      "android"
     ]
   },
   {

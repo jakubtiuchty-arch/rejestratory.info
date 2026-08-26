@@ -1,5 +1,23 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-26 — dwa nowe rejestratory i parser, który przestaje gubić dane
+
+Z folderu `REJESTRATORY 3` doszły dwa druki, których w katalogu nie było: **Honeywell CT32** (2 915 zł netto) i **Point Mobile PM95** (4 378 zł netto). Obie karty napisane wyłącznie z treści druków — CT32 nie podaje klasy szczelności ani czasu pracy, więc karta ich nie deklaruje.
+
+**PM95 ma innego dostawcę.** Druk mówi wprost „Dostawca firma TAXUS IT", więc karta też to mówi, a blok serwisu kurierskiego jest wyłączony (`hideService`), bo naprawy nie idą do nas. Warto o tym pamiętać, gdyby ta pozycja miała trafić do newslettera.
+
+**Sześć druków celowo pomijanych** (stała `WYCOFANE` w parserze) — modele zeszły z produkcji: Zebra EC55, TC26, TC57, TC77, HMD XR21 i sam M3 SL20. SL20+ z osobnego druku zostaje. Samsung S25+ ma kartę, ale nie ma u nas ceny i to się nie zmienia.
+
+**Trzy poprawki w parserze**, każda po napotkaniu konkretnego błędu:
+
+1. **Wiele źródeł naraz.** Argumentem może być katalog albo pojedynczy plik `.docx`. Pojedyncze pliki są konieczne, bo w Pobranych obok naszych druków leżą dokumenty, których do katalogu nie chcemy — wskazanie całego folderu wciągnęło m.in. druk ZPUH Olsztyn z Newlandem NTF 10, dla którego nie mamy karty. Komplet ścieżek stoi w `scripts/odswiez-oferty.sh`, żeby nie odtwarzać go z pamięci.
+2. **Oferty z druków, których nie ma na dysku, są przenoszone** ze starego pliku i wypisywane na koniec przebiegu. Bez tego każde odświeżenie po cichu kasowałoby ceny laptopów — `Oferta Laptopy_06.2026.docx` zniknęła z Pobranych.
+3. **Nazwy plików porównywane w NFC.** macOS zwraca je w NFD, a w danych stoją w NFC, więc „urządzenia" z dysku i „urządzenia" z pliku danych to były dwa różne łańcuchy. Efekt: druki wielofunkcyjnych wyglądały jednocześnie na przetworzone i na zniknięte z dysku.
+
+Przy okazji dopasowanie modeli dopuszcza teraz kilka separatorów w oznaczeniu — druk pisze „BROTHER HLL – 6210DW" i po wcześniejszym zaostrzeniu wzorca ta oferta wypadła z danych. Zestaw przypadków brzegowych wszedł do repo jako `scripts/test-dopasowania-modeli.mjs` (19 przypadków).
+
+Po odświeżeniu: **73 oferty** (było 71), różnica to dokładnie CT32 i PM95, żaden istniejący wpis się nie zmienił. Katalog ma 81 kart.
+
 ## 2026-08-26 — Galaxy A36 pokazywał ofertę ZPUH Olsztyn, której nigdy nie było
 
 Karta A36 obiecywała ceny w dwóch składnicach: 1 451 zł w Łodzi i 2 420 zł w Olsztynie. Ta druga to była drukarka Brother RJ-4230B z olsztyńskiego druku, podpięta pod kartę Samsunga.

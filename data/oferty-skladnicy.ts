@@ -879,6 +879,95 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
+    "slug": "honeywell-ct32",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na Rejestrator Honeywell CT32 23.03.2026.docx",
+    "formularz": null,
+    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-03-21",
+      "do": null
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Mobilny komputer dotykowy Honeywell CT32 rejestrator leśniczego",
+      "cenaNetto": 2915,
+      "promocja": false,
+      "wZestawie": [
+        "Dodatkowa karta pamięci micro SD 64 GB",
+        "Ładowarka sieciowa i ładowarka samochodowa"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Kontrakt serwisowy producenta (3 letni)",
+        "cenaNetto": 583,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Pasek na rękę",
+        "cenaNetto": 104.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Rysik do ekranu",
+        "cenaNetto": 77,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Folia lub szkło ochronne na ekran",
+        "cenaNetto": 77,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Stacja dokująca z portem USB + zasilacz +kabel USB",
+        "cenaNetto": 924,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Stacja dokująca z portem Ethernet + zasilacz",
+        "cenaNetto": 1507,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Standardowy akumulator główny 4500 mAh",
+        "cenaNetto": 407,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator o zwiększonej pojemności 6120 mAh",
+        "cenaNetto": 693,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 104.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 99,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Nakładka na obudowę zabezpieczająca przed uszkodzeniem",
+        "cenaNetto": 104.5,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
     "slug": "honeywell-ct40xp",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Honeywell CT40XP_23.03.2026.docx",
@@ -1599,6 +1688,27 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       "cenaNetto": 165,
       "promocja": false,
       "wZestawie": []
+    },
+    "dodatki": []
+  },
+  {
+    "slug": "point-mobile-pm95",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na urządzenie Point Mobile_03.2026.docx",
+    "formularz": null,
+    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-03-10",
+      "do": null
+    },
+    "dostawca": null,
+    "urzadzenie": {
+      "nazwa": "URZĄDZENIE DO WYKONYWANIA RAPORTÓW I POMIARU GNSS POINT MOBILE PM95",
+      "cenaNetto": 4378,
+      "promocja": false,
+      "wZestawie": [
+        "Zasilacz sieciowy, kabel USB-C ,folia ochronna na ekran"
+      ]
     },
     "dodatki": []
   },
