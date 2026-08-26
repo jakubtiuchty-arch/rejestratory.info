@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Placeholder produkty dla kategorii Urządzenia wielofunkcyjne
 const products = [
@@ -13,7 +14,6 @@ const products = [
     category: "Urządzenia wielofunkcyjne",
     description: "Kolorowe urządzenie wielofunkcyjne z drukiem dwustronnym i Wi-Fi",
     specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 31 ppm",
-    price: "2 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/MFCL8690CDW_1.png",
@@ -26,7 +26,6 @@ const products = [
     category: "Urządzenia wielofunkcyjne", 
     description: "Czarno-białe urządzenie wielofunkcyjne z automatycznym podajnikiem",
     specifications: "Drukarka monochromatyczna, skaner, kopiarka, fax, A4, 40 ppm",
-    price: "1 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/MFCL5710DW_1.png",
@@ -39,7 +38,6 @@ const products = [
     category: "Urządzenia wielofunkcyjne",
     description: "Profesjonalne kolorowe urządzenie wielofunkcyjne A4 z NFC",
     specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 33 ppm, NFC",
-    price: "3 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
     image: "/MFCL8900CDW_1.png",
@@ -52,7 +50,6 @@ const products = [
     category: "Urządzenia wielofunkcyjne",
     description: "Wydajne czarno-białe urządzenie wielofunkcyjne dla średnich biur",
     specifications: "Drukarka monochromatyczna, skaner, kopiarka, fax, A4, 46 ppm",
-    price: "1 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/MFCL6710DW_1.png", 
@@ -65,7 +62,6 @@ const products = [
     category: "Urządzenia wielofunkcyjne",
     description: "Kompaktowe urządzenie 3w1 bez funkcji faxu z drukiem dwustronnym",
     specifications: "Drukarka monochromatyczna, skaner, kopiarka, A4, 40 ppm",
-    price: "1 100 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/DCPL5510DW_1.png",
@@ -78,7 +74,6 @@ const products = [
     category: "Urządzenia wielofunkcyjne",
     description: "Zaawansowane kolorowe urządzenie wielofunkcyjne z dużą wydajnością",
     specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 31 ppm, duplex",
-    price: "2 600 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/MFCL8390CDW_1.png",
@@ -133,9 +128,9 @@ export default function CategoryPage() {
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          return porownajCeny(a, b, 1);
         case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          return porownajCeny(a, b, -1);
         case "newest":
           return b.id - a.id;
         default:

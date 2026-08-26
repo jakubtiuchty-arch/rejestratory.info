@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Placeholder produkty dla kategorii Drukarki do rejestratora
 const products = [
@@ -13,7 +14,6 @@ const products = [
     name: "Zebra ZQ521",
     category: "Drukarki do rejestratora",
     description: "Mobilna drukarka termiczna o szerokości druku 112 mm, idealna do pracy terenowej w lesie.",
-    price: "2 100 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, ZPUH Olsztyn, ZSLP Stargard, TAKMA",
     image: "zq521_1.png",
@@ -26,7 +26,6 @@ const products = [
     name: "Sewoo LK-P43",
     category: "Drukarki do rejestratora", 
     description: "Kompaktowa drukarka mobilna 4-calowa z długą żywotnością baterii i łączą Bluetooth.",
-    price: "1 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "lkp43_1.png",
@@ -39,7 +38,6 @@ const products = [
     name: "Honeywell RP4",
     category: "Drukarki do rejestratora",
     description: "Wytrzymała drukarka mobilna 4-calowa z certyfikatem IP54, odporna na upadki i trudne warunki.",
-    price: "2 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
     image: "rp4_1.png",
@@ -52,7 +50,6 @@ const products = [
     name: "Seiko MP-A40",
     category: "Drukarki do rejestratora",
     description: "Lekka i kompaktowa drukarka mobilna z obsługą WiFi i Bluetooth oraz długim czasem pracy.",
-    price: "1 900 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "mpa40_1.png", 
@@ -65,7 +62,6 @@ const products = [
     name: "Sewoo LK-P400",
     category: "Drukarki do rejestratora",
     description: "Wydajna drukarka mobilna 4-calowa z szybkim drukiem i obsługą różnych systemów operacyjnych.",
-    price: "1 700 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "lkp400_1.png",
@@ -78,7 +74,6 @@ const products = [
     name: "Bixolon SPP-R410",
     category: "Drukarki do rejestratora",
     description: "Profesjonalna drukarka mobilna z obsługą NFC, Bluetooth 5.0 i długim czasem pracy na baterii.",
-    price: "2 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "sppr410_1.png",
@@ -137,9 +132,9 @@ export default function CategoryPage() {
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          return porownajCeny(a, b, 1);
         case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          return porownajCeny(a, b, -1);
         case "newest":
           return b.id - a.id;
         default:

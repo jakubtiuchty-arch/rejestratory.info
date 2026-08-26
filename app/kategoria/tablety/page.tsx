@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Produkty w kategorii Tablety
 const products = [
@@ -14,7 +15,6 @@ const products = [
     category: "Tablety",
     description: "Wzmocniony tablet do pracy w terenie — IP68, upadki z 1,8 m i wymienna bateria",
     specifications: "Android 14 (One UI 6), 8\" 1920 × 1200 120 Hz, Exynos 1380, 6/8 GB RAM, 128/256 GB + microSD, 5050 mAh (wymienna), IP68 i MIL-STD-810H, 5G, S Pen w zestawie",
-    price: "Cena na zapytanie",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "products/tab-active5-2.webp",
@@ -28,7 +28,6 @@ const products = [
     category: "Tablety",
     description: "Wersja Wi-Fi + Cellular z 2024 roku — ekran Ultra Retina XDR i chip M4",
     specifications: "iPadOS, 11\" Ultra Retina XDR (tandem OLED) 2420 × 1668, ProMotion 10–120 Hz, Apple M4, 8 lub 16 GB RAM, 256 GB – 2 TB, aparaty 12 Mpx, Wi-Fi 6E i 5G, Thunderbolt / USB 4, Face ID, 5,3 mm",
-    price: "Cena na zapytanie",
     availability: "Dostępny",
     whereToBuy: "TAKMA",
     image: "products/ipad-pro-11-1.webp",
@@ -42,7 +41,6 @@ const products = [
     category: "Tablety",
     description: "Najnowsza wersja Wi-Fi + Cellular z 2025 roku — chip M5 i modem Apple C1X",
     specifications: "iPadOS 26, 11\" Ultra Retina XDR (tandem OLED) 2420 × 1668, ProMotion 10–120 Hz, Apple M5, 12 lub 16 GB RAM, 256 GB – 2 TB, aparaty 12 Mpx, Wi-Fi 7 i 5G (modem Apple C1X), Thunderbolt / USB 4, Face ID, 5,3 mm",
-    price: "Cena na zapytanie",
     availability: "Dostępny",
     whereToBuy: "TAKMA",
     image: "products/ipad-pro-11-2.webp",
@@ -98,9 +96,9 @@ export default function CategoryPage() {
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          return porownajCeny(a, b, 1);
         case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          return porownajCeny(a, b, -1);
         case "newest":
           return b.id - a.id;
         default:

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Placeholder produkty dla kategorii Laptopy
 type Product = {
@@ -12,7 +13,6 @@ type Product = {
   category: string;
   description: string;
   specifications: string;
-  price: string;
   availability: string;
   whereToBuy: string;
   image: string;
@@ -28,7 +28,6 @@ const products: Product[] = [
     category: "Laptopy", 
     description: "Wydajny laptop z dużym ekranem 16 cali do pracy biurowej",
     specifications: "AMD Ryzen 7 PRO, 16GB RAM, 1TB SSD, 16\" WUXGA IPS",
-    price: "5 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/hp_elite_16_1.png",
@@ -41,7 +40,6 @@ const products: Product[] = [
     category: "Laptopy",
     description: "Profesjonalny laptop Dell z ekranem 14 cali i długą żywotnością baterii",
     specifications: "Intel Core Ultra 5, 16GB RAM, 512GB SSD, 14\" FHD+ IPS",
-    price: "3 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
     image: "/dell_14_1.png",
@@ -55,7 +53,6 @@ const products: Product[] = [
     category: "Laptopy",
     description: "Zaawansowany laptop z dużym ekranem do profesjonalnych zastosowań",
     specifications: "Intel Core Ultra 5, 16GB RAM, 1TB SSD, 16\" FHD+ IPS",
-    price: "5 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/dell_16_1.png", 
@@ -68,7 +65,6 @@ const products: Product[] = [
     category: "Laptopy",
     description: "Ekonomiczny laptop z Ubuntu Linux, bez Windows - idealny dla stanowiska leśniczego",
     specifications: "Intel Core 3 100U (6 rdzeni), 8GB RAM, 256GB SSD, 16\" FHD+ IPS, Ubuntu Linux 24.04 LTS",
-    price: "2 900 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/dell_16_bs_1.png",
@@ -82,7 +78,6 @@ const products: Product[] = [
     category: "Laptopy",
     description: "Kompaktowy laptop 14 cali z czytnikiem kart kryptograficznych, do pracy w kancelarii i w terenie",
     specifications: "AMD Ryzen 5 220, 16GB DDR5, 512GB SSD, 14\" WUXGA, Smart Card, Windows 11 Pro",
-    price: "5 329 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/hp_elite_14_1.png",
@@ -138,9 +133,9 @@ export default function CategoryPage() {
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          return porownajCeny(a, b, 1);
         case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          return porownajCeny(a, b, -1);
         case "newest":
           return b.id - a.id;
         default:

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Produkty dla kategorii Elektroniczne Zarządzanie Dokumentacją
 const products = [
@@ -14,7 +15,6 @@ const products = [
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Kompaktowa drukarka etykiet kolorowych do oznaczania dokumentów",
     specifications: "Druk termiczny, 203 dpi, USB, Ethernet, Wi-Fi, kolorowe etykiety",
-    price: "1 850 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/zd421c_1.png",
@@ -27,7 +27,6 @@ const products = [
     category: "Elektroniczne Zarządzanie Dokumentacją", 
     description: "Przemysłowa drukarka kodów kreskowych do dokumentacji leśnej",
     specifications: "Druk termotransferowy, 203 dpi, USB, RS-232, Ethernet",
-    price: "2 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/pc45t_1.png",
@@ -40,7 +39,6 @@ const products = [
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Sieciowy skaner dokumentów do digitalizacji archiwów leśnych",
     specifications: "A4, 600 dpi, 40 str/min, duplex, USB 3.0, Ethernet, Wi-Fi",
-    price: "3 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ds730_1.png",
@@ -53,7 +51,6 @@ const products = [
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Uniwersalny skaner kodów kreskowych 1D/2D do biura",
     specifications: "Imager 2D, USB, czytanie z ekranu, zasięg do 61cm",
-    price: "680 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/zebra-ds2208.png",
@@ -66,7 +63,6 @@ const products = [
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Ręczny skaner kodów kreskowych 2D do szybkiego skanowania",
     specifications: "Imager 2D, USB, dekodowanie omnidyrektional, zasięg do 90cm",
-    price: "750 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/1450g_1.png",
@@ -79,7 +75,6 @@ const products = [
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Biurkowa drukarka etykiet z Ethernetem, z opcjonalną gilotyną i dyspenserem",
     specifications: "Termotransfer, 203 lub 300 dpi, do 6 ips, Ethernet i USB, 128 MB RAM",
-    price: "556 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/pc42e_t_1.png",
@@ -92,7 +87,6 @@ const products = [
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Bezprzewodowy czytnik kodów 1D i 2D z podstawką ładującą",
     specifications: "Bluetooth, akumulator 2400 mAh do 84 h, kody 1D i 2D, IP52",
-    price: "486 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/zebra-ds2278.png",
@@ -105,7 +99,6 @@ const products = [
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Laserowy czytnik kodów kreskowych 1D z trybem prezentacyjnym na podstawce",
     specifications: "Laser jednoliniowy, 100 odczytów/s, zasięg do 58 cm, USB",
-    price: "294 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/honeywell-1250g.png",
@@ -162,9 +155,9 @@ export default function CategoryPage() {
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          return porownajCeny(a, b, 1);
         case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          return porownajCeny(a, b, -1);
         case "newest":
           return b.id - a.id;
         default:

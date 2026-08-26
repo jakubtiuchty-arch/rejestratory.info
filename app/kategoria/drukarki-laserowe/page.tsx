@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Placeholder produkty dla kategorii Drukarki laserowe
 const products = [
@@ -13,7 +14,6 @@ const products = [
     category: "Drukarki laserowe",
     description: "Wydajna drukarka laserowa monochromatyczna dla biur średniej wielkości",
     specifications: "Drukarka laserowa, A4, 50 ppm, duplex, USB, Ethernet",
-    price: "1 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/hll6410ph.png",
@@ -26,7 +26,6 @@ const products = [
     category: "Drukarki laserowe", 
     description: "Kompaktowa drukarka 3w1 z funkcją skanowania i kopiowania - idealna do stanowiska leśniczego",
     specifications: "Drukarka laserowa, skaner, kopiarka, A4, 34 ppm, Wi-Fi, duplex",
-    price: "1 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/dcpb75620dwph.png",
@@ -39,7 +38,6 @@ const products = [
     category: "Drukarki laserowe",
     description: "Profesjonalna drukarka laserowa z bezprzewodowym połączeniem Wi-Fi",
     specifications: "Drukarka laserowa, A4, 48 ppm, Wi-Fi, duplex, USB, Ethernet",
-    price: "1 600 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
     image: "/hll6210dwph.png",
@@ -94,9 +92,9 @@ export default function CategoryPage() {
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          return porownajCeny(a, b, 1);
         case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          return porownajCeny(a, b, -1);
         case "newest":
           return b.id - a.id;
         default:

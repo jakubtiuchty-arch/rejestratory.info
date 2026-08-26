@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Placeholder produkty dla kategorii Monitory
 const products = [
@@ -13,7 +14,6 @@ const products = [
     category: "Monitory",
     description: "Profesjonalny monitor QHD 27 cali do pracy biurowej",
     specifications: "27\" QHD 2560x1440, IPS, 75Hz, HDMI, DisplayPort, USB-A",
-    price: "1 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/527pu_1.png",
@@ -27,7 +27,6 @@ const products = [
     category: "Monitory", 
     description: "Monitor QHD 27 cali z zaawansowanymi funkcjami zarządzania",
     specifications: "27\" QHD 2560x1440, IPS, 75Hz, HDMI, DisplayPort, USB-C, pivot",
-    price: "1 600 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/527pq_1.png",
@@ -41,7 +40,6 @@ const products = [
     category: "Monitory",
     description: "Monitor biznesowy 24 cale z ładowaniem USB-C do laptopów",
     specifications: "24\" FHD 1920x1080, IPS, 60Hz, HDMI, DisplayPort, USB-C 90W",
-    price: "1 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
     image: "/P2425HE_1.png",
@@ -56,7 +54,6 @@ const products = [
     category: "Monitory",
     description: "Kompaktowy monitor biznesowy 24 cale do codziennej pracy",
     specifications: "24\" FHD 1920x1080, IPS, 60Hz, HDMI, DisplayPort, USB-A",
-    price: "1 000 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/P2425HE_1.png",
@@ -71,7 +68,6 @@ const products = [
     category: "Monitory",
     description: "Duży monitor 27 cali z ładowaniem USB-C i wysoką rozdzielczością",
     specifications: "27\" QHD 2560x1440, IPS, 60Hz, HDMI, DisplayPort, USB-C 90W",
-    price: "1 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/P2425HE_1.png",
@@ -86,7 +82,6 @@ const products = [
     category: "Monitory",
     description: "Profesjonalny monitor 27 cali QHD do zastosowań biurowych",
     specifications: "27\" QHD 2560x1440, IPS, 60Hz, HDMI, DisplayPort, USB-A",
-    price: "1 500 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/P2425HE_1.png",
@@ -101,7 +96,6 @@ const products = [
     category: "Monitory",
     description: "Ergonomiczny monitor 24 cale z regulacją wysokości",
     specifications: "24\" FHD 1920x1080, IPS, 60Hz, HDMI, DisplayPort, regulowana podstawa",
-    price: "1 100 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/P2424HEB_1.png",
@@ -116,7 +110,6 @@ const products = [
     category: "Monitory",
     description: "Ergonomiczny monitor 27 cali z pełną regulacją i pivot",
     specifications: "27\" FHD 1920x1080, IPS, 75Hz, HDMI, DisplayPort, regulowana podstawa",
-    price: "1 300 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/P2424HEB_1.png",
@@ -131,7 +124,6 @@ const products = [
     category: "Monitory",
     description: "Monitor biznesowy 24 cale z funkcją pivot i regulacją wysokości",
     specifications: "24\" FHD 1920x1080, IPS, 75Hz, HDMI, DisplayPort, VGA, pivot",
-    price: "",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/hp_series_1.png",
@@ -146,7 +138,6 @@ const products = [
     category: "Monitory",
     description: "Monitor 23,8 cala ze stacją dokującą i gniazdem sieciowym w obudowie",
     specifications: "23,8\" FHD 1920x1080, IPS, 100Hz, USB-C 100W, RJ-45, DisplayPort, HDMI",
-    price: "1 022 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/524pu_1.png",
@@ -160,7 +151,6 @@ const products = [
     category: "Monitory",
     description: "Monitor 23,8 cala z chowaną kamerą 5 Mpix, czterema głośnikami i stacją dokującą",
     specifications: "23,8\" FHD 1920x1080, IPS, 100Hz, kamera 5 Mpix, 4 głośniki, USB-C 100W",
-    price: "1 390 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/524pm_1.png",
@@ -174,7 +164,6 @@ const products = [
     category: "Monitory",
     description: "Monitor 27 cali QHD z chowaną kamerą 5 Mpix, czterema głośnikami i stacją dokującą",
     specifications: "27\" QHD 2560x1440, IPS, 100Hz, kamera 5 Mpix, 4 głośniki, USB-C 100W, RJ-45",
-    price: "1 733 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/527pm_1.png",
@@ -230,9 +219,9 @@ export default function CategoryPage() {
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          return porownajCeny(a, b, 1);
         case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          return porownajCeny(a, b, -1);
         case "newest":
           return b.id - a.id;
         default:

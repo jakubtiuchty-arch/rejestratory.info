@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Produkty dla kategorii Urządzenia fiskalne
 const products = [
@@ -13,7 +14,6 @@ const products = [
     category: "Urządzenia fiskalne",
     description: "Fiskalny terminal płatniczy",
     specifications: "Płatność kartą, BLIK, kompatybilny z Leśnik+",
-    price: "1 799 PLN",
     availability: "Dostępny",
     whereToBuy: "TAKMA",
     image: "/pospay_3.png",
@@ -27,7 +27,6 @@ const products = [
     category: "Urządzenia fiskalne",
     description: "Mobilna kasa fiskalna online do rozliczeń w terenie",
     specifications: "Online, 315 g, akumulator na 50 000 wierszy, USB i Wi-Fi, papier 57 mm",
-    price: "1 450 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/temo_online_1.png",
@@ -41,7 +40,6 @@ const products = [
     category: "Urządzenia fiskalne",
     description: "Sprawdź status swoich urządzeń i historię przeglądów",
     specifications: "Dostęp do protokołów, terminów przeglądów i statusu urządzeń",
-    price: "",
     availability: "Dostępny",
     whereToBuy: "",
     image: "",
@@ -100,9 +98,9 @@ export default function CategoryPage() {
           case "name":
             return a.name.localeCompare(b.name, "pl");
           case "price-asc":
-            return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+            return porownajCeny(a, b, 1);
           case "price-desc":
-            return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+            return porownajCeny(a, b, -1);
           case "newest":
             return b.id - a.id;
           default:

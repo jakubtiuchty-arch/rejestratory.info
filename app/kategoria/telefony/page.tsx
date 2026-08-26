@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Placeholder produkty dla kategorii Telefony
 const products = [
@@ -14,7 +15,6 @@ const products = [
     category: "Telefony",
     description: "Wszechstronny smartfon z wydajnym procesorem i długą żywotnością baterii",
     specifications: "Android 14, 6,6\" FHD+, Exynos 1380, 6GB RAM, 128GB",
-    price: "1 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "a36_1.png",
@@ -28,7 +28,6 @@ const products = [
     category: "Telefony", 
     description: "Zaawansowany smartfon z profesjonalnym aparatem i szybkim ładowaniem",
     specifications: "Android 14, 6,7\" FHD+, Exynos 1480, 8GB RAM, 256GB",
-    price: "1 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "a56_1.png",
@@ -42,7 +41,6 @@ const products = [
     category: "Telefony",
     description: "Flagowy smartfon z AI i aparatem 50MP idealny do dokumentacji terenowej",
     specifications: "Android 15, 6,7\" QHD+, Snapdragon 8 Elite, 12GB RAM, 256GB",
-    price: "4 500 PLN",
     availability: "Dostępny",
     whereToBuy: "TAKMA", 
     image: "s25plus_1.png",
@@ -56,7 +54,6 @@ const products = [
     category: "Telefony",
     description: "Topowy smartfon z S Pen i aparatem 200MP do profesjonalnej dokumentacji",
     specifications: "Android 15, 6,8\" QHD+, Snapdragon 8 Elite, 12GB RAM, 512GB",
-    price: "6 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "s25ultra_1.png", 
@@ -70,7 +67,6 @@ const products = [
     category: "Telefony",
     description: "Flagowe funkcje w przystępnej cenie — smartfon z AI i aparatem 50MP",
     specifications: "Android 16, 6,7\" FHD+ AMOLED 120Hz, Exynos 2400, 8GB RAM, 128GB",
-    price: "2 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "s25fe_1.png",
@@ -84,7 +80,6 @@ const products = [
     category: "Telefony",
     description: "Wytrzymały smartfon przemysłowy z certyfikatem IP68 i wymienną baterią",
     specifications: "Android 14, 6,3\" FHD+, Exynos 1380, 6GB RAM, 128GB",
-    price: "2 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "xcover7_1.png",
@@ -98,7 +93,6 @@ const products = [
     category: "Telefony",
     description: "Aparat 48 Mpx z teleobiektywem i obudowa aluminiowa — do dokumentacji terenowej",
     specifications: "iOS 26, 6,3\" Super Retina XDR 120 Hz, A19 Pro, 3 × aparat 48 Mpx, USB-C",
-    price: "Cena na zapytanie",
     availability: "Dostępny",
     whereToBuy: "TAKMA",
     image: "products/iphone-17-pro-1.webp",
@@ -112,7 +106,6 @@ const products = [
     category: "Telefony",
     description: "Największy ekran i najdłuższy czas pracy w rodzinie iPhone 17 Pro",
     specifications: "iOS 26, 6,9\" Super Retina XDR 120 Hz, A19 Pro, 3 × aparat 48 Mpx, USB-C",
-    price: "Cena na zapytanie",
     availability: "Dostępny",
     whereToBuy: "TAKMA",
     image: "products/iphone-17-pro-max-1.webp",
@@ -168,9 +161,9 @@ export default function CategoryPage() {
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          return porownajCeny(a, b, 1);
         case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          return porownajCeny(a, b, -1);
         case "newest":
           return b.id - a.id;
         default:

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Placeholder produkty dla kategorii Akcesoria komputerowe
 const products = [
@@ -14,7 +15,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Wytrzymała torba na laptopa z miejscem na dokumenty i akcesoria",
     specifications: "Laptopy do 15,6\u2033, materiał wodoodporny, wyściełana komora",
-    price: "150 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "torba_na_laptopa_15.png",
@@ -28,7 +28,6 @@ const products = [
     category: "Akcesoria komputerowe", 
     description: "Ergonomiczna podkładka pod mysz z podpórką nadgarstka",
     specifications: "Powierzchnia antypoślizgowa, wymiary 25x20cm",
-    price: "45 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "podkladka_pod_myszke_1.png",
@@ -42,7 +41,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Regulowany podnóżek biurowy poprawiający ergonomię pracy",
     specifications: "Regulacja kąta nachylenia, powierzchnia antypoślizgowa",
-    price: "120 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
     image: "podnozek_pod_biurko_1.png",
@@ -56,7 +54,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Szybki zewnętrzny dysk SSD z interfejsem USB 3.2 Gen 2x2",
     specifications: "Pojemność 1TB, USB-C, szybkość do 2000 MB/s",
-    price: "650 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "ssd_t7_1.png", 
@@ -70,7 +67,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Pojemny zewnętrzny dysk SSD z zabezpieczeniem hasłem",
     specifications: "500 GB / 1 TB / 2 TB, USB-C, odczyt do 1050 MB/s",
-    price: "1 850 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "ssd_t9_1.png",
@@ -84,7 +80,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Pakiet aplikacji biurowych z chmurą OneDrive i Teams",
     specifications: "Licencja roczna, 1 użytkownik, pełny pakiet Office",
-    price: "550 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "ms365_1.png",
@@ -98,7 +93,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Bezprzewodowy zestaw klawiatura + mysz z długą żywotnością baterii",
     specifications: "2,4 GHz, bateria do 36 miesięcy, mysz do 4000 dpi",
-    price: "180 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "km5221_1.png",
@@ -112,7 +106,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Zestaw bezprzewodowy z przełączaniem między trzema urządzeniami",
     specifications: "Bluetooth 5.0 i 2,4 GHz, do 3 urządzeń, mechanizm nożycowy",
-    price: "320 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "km7321_1.png",
@@ -126,7 +119,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Ergonomiczny zestaw klawiatura + mysz dla komfortowej pracy",
     specifications: "2,4 GHz, zasięg do 10 m, mysz 4000 dpi",
-    price: "140 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "hp655_1.png",
@@ -140,7 +132,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Niezawodny zasilacz UPS typu line-interactive do ochrony komputerów i sprzętu IT",
     specifications: "600 VA / 360 W, 230V, 2 gniazda Schuko, bateria VRLA 7Ah 12V",
-    price: "450 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "vertin_600_1.png",
@@ -154,7 +145,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Niezawodny zasilacz UPS line-interactive z AVR do ochrony sprzętu IT w nadleśnictwach",
     specifications: "1000 VA / 600 W, 230V, bateria VRLA 2x7Ah 12V, 3x Schuko + 3x C13",
-    price: "650 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "vertin_1000_1.png",
@@ -168,7 +158,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Bezprzewodowa klawiatura obsługująca trzy urządzenia, ładowana przez USB-C",
     specifications: "Bluetooth 5.3 + 2,4 GHz, do 3 urządzeń, blok numeryczny, bateria do 24 miesięcy",
-    price: "189 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "hp460_1.png",
@@ -182,7 +171,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Bezprzewodowa mysz dla osób oburęcznych, pracuje także na szkle",
     specifications: "Bluetooth 5.3 + 2,4 GHz, do 3 urządzeń, 1200-3000 dpi, akumulator do 90 dni",
-    price: "274 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "hp715_1.png",
@@ -196,7 +184,6 @@ const products = [
     category: "Akcesoria komputerowe",
     description: "Dwukomorowa torba na laptopa z otworem na uchwyt walizki",
     specifications: "Laptopy 15,6\", dwie komory z przegrodami, odporna na wilgoć i zarysowania, 600 g",
-    price: "149 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "torba_hp_15.png",
@@ -252,9 +239,9 @@ export default function CategoryPage() {
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          return porownajCeny(a, b, 1);
         case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          return porownajCeny(a, b, -1);
         case "newest":
           return b.id - a.id;
         default:

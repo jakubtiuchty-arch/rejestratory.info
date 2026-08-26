@@ -1,5 +1,17 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-26 — listingi sortują po prawdziwych cenach, zmyślone kwoty wycięte
+
+Pytanie Jakuba o brak ceny Galaxy S25+ odsłoniło większą rzecz. W listingach kategorii siedziało pole `price` wpisywane ręcznie: **45 pozycji na 79 rozjeżdżało się z ofertami składnic**, część grubo (Unitech EA660 miał 4 600 zł przy ofercie 2 440 zł, M3 SL20+ 4 700 przy 2 113), a kolejne 22 nie miały pokrycia w żadnym druku — w tym właśnie S25+, z wpisanym „4 500 PLN" mimo braku oferty.
+
+Na szczęście pole nie było nigdzie renderowane, więc żadna zła cena nie trafiła przed oczy nadleśnictwa. Karmiło za to sortowanie: `parseFloat('4 500 PLN')` daje **4**, a „Cena na zapytanie" zero, więc opcja „Cena rosnąco" układała produkty według pierwszej cyfry.
+
+Osiemdziesiąt jeden pól `price` usuniętych z dwunastu listingów, sortowanie idzie teraz przez `porownajCeny` z `data/oferty.ts` — najniższa cena z ofert składnic, a pozycje bez oferty (iPhone'y, S25+) lądują na końcu w obie strony. Pomocnik przyjmuje wszystkie cztery kształty, jakimi listingi identyfikują produkt (`customUrl`, `link`, `slug`, sama nazwa), bo ujednolicanie trzynastu plików było tu drugorzędne.
+
+Sprawdzone na żywej stronie: rejestratory rosnąco to SL20+ 2 113 → EA660 2 440 → EM45 2 563 → EDA52 2 761 → TC27 2 873 → CT32 2 915 → PA768 3 103 → TC58e 3 691 → CT30P 3 906 → CT47 5 232 → CT40XP 5 575, czyli dokładnie kolejność z ofert.
+
+Sama karta S25+ była i jest w porządku — bez oferty nie pokazuje bloku ceny, tylko „Zapytaj o produkt", tak samo jak oba iPhone'y.
+
 ## 2026-08-26 — druki składnic wjechały do repo
 
 Wszystkie ceny w katalogu powstają z dokumentów `.docx`, które dotąd leżały w Pobranych. Okazało się to kruche na dwa sposoby naraz: `Oferta Laptopy_06.2026.docx` po prostu zniknęła z dysku, a wskazanie parserowi całego folderu Pobranych wciągało dokumenty, których w katalogu nie chcemy. Trzydzieści trzy druki (8,6 MB) leżą teraz w `oferty-zrodla/` razem z kodem, który je czyta.

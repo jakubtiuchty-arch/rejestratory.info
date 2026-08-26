@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { ICON, naCiemnym } from '@/components/product/icons'
+import { porownajCeny } from '@/data/oferty'
 
 // Placeholder produkty dla kategorii Rejestratory
 const products = [
@@ -13,7 +14,6 @@ const products = [
     category: "Rejestratory",
     description: "To nie tylko zwykły smartfon!",
     specifications: "Android 14, 6,7'' FHD+, 8GB RAM, Snapdragon 2,2 GHz",
-    price: "Cena na zapytanie",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/em45_1.webp",
@@ -26,7 +26,6 @@ const products = [
     category: "Rejestratory", 
     description: "Wytrzymały terminal mobilny do pracy w trudnych warunkach",
     specifications: "Android 14, 6\" FHD, Qualcomm 2,2 GHz, 4GB RAM",
-    price: "4 200 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/tc27_1.png",
@@ -39,7 +38,6 @@ const products = [
     category: "Rejestratory",
     description: "Zaawansowany terminal do najtrudniejszych warunków terenowych",
     specifications: "Android 14, 6\" FHD+, Snapdragon 6490, 8GB RAM",
-    price: "5 100 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/tc58_1.png", 
@@ -52,7 +50,6 @@ const products = [
     category: "Rejestratory",
     description: "Mobilny komputer 5G z najwyższej półki do zastosowań terenowych",
     specifications: "Android 13, 5,5\" FHD, Snapdragon 6490, 6GB RAM",
-    price: "5 300 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ct47_1.png",
@@ -65,7 +62,6 @@ const products = [
     category: "Rejestratory",
     description: "Wszechstronny komputer mobilny z wydajnymi podzespołami",
     specifications: "Android 12, 6\" FHD+, Snapdragon 662, 6GB RAM",
-    price: "4 600 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ea660_1.png",
@@ -78,7 +74,6 @@ const products = [
     category: "Rejestratory",
     description: "Profesjonalny terminal przemysłowy z zaawansowanymi funkcjami",
     specifications: "Android 12, 6,45\" FHD+, Snapdragon 660, 4GB RAM",
-    price: "4 900 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/pa768_1.png",
@@ -91,7 +86,6 @@ const products = [
     category: "Rejestratory",
     description: "Kompaktowy komputer mobilny idealny dla leśników",
     specifications: "Android 13, 5,5\" HD+, Snapdragon 2,0 GHz, 4GB RAM",
-    price: "3 800 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA, ZPUH Olsztyn", 
     image: "/eda52_1.png",
@@ -104,7 +98,6 @@ const products = [
     category: "Rejestratory",
     description: "Ekstremalnie wytrzymały terminal do najtrudniejszych zadań",
     specifications: "Android 12, 5\" HD, Snapdragon 662, 4GB RAM",
-    price: "3 900 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ct40xp_1.png",
@@ -117,7 +110,6 @@ const products = [
     category: "Rejestratory",
     description: "Lekki i wytrzymały terminal z długą żywotnością baterii",
     specifications: "Android 13, 5,5\" FHD, Snapdragon 662, 4GB RAM",
-    price: "3 400 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ct30p_1.png",
@@ -131,7 +123,6 @@ const products = [
     category: "Rejestratory",
     description: "Ekonomiczne rozwiązanie dla mniej wymagających",
     specifications: "Android 12, 8\" WXGA, MSM8953 2,2 GHz, 4GB RAM",
-    price: "4 700 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/sl20_1.png",
@@ -145,7 +136,6 @@ const products = [
     category: "Rejestratory",
     description: "Rejestrator ze skanerem 1D i 2D oraz dwiema kartami SIM",
     specifications: "Android 13 z aktualizacją do 16, 5,5\", 6GB RAM, 128GB",
-    price: "2 915 PLN",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/placeholder-produkt.png",
@@ -204,9 +194,9 @@ export default function CategoryPage() {
         case "name":
           return a.name.localeCompare(b.name, "pl");
         case "price-asc":
-          return (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0);
+          return porownajCeny(a, b, 1);
         case "price-desc":
-          return (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0);
+          return porownajCeny(a, b, -1);
         case "newest":
           return b.id - a.id;
         default:
