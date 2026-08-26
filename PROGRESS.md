@@ -8,7 +8,7 @@ Parser domyślnie czyta ten folder, `scripts/odswiez-oferty.sh` skurczył się d
 
 Cztery nazwy plików przyszły z macOS w NFD i zostały przemianowane na NFC, żeby repo wyglądało tak samo niezależnie od systemu. Po przeniesieniu dane wyszły **co do bajta identyczne** — 72 oferty, żadnej różnicy.
 
-**Nadal brakuje `Oferta Laptopy_06.2026.docx`.** Ceny laptopów żyją, bo parser przenosi oferty z druków, których nie widzi, ale do czasu odzyskania tego pliku nie da się ich odświeżyć ani zweryfikować. Jakub miał ściągnąć komplet druków na nowo do `oferty-zrodla/`.
+Jakub odzyskał tego samego dnia `Oferta Laptopy_06.2026.docx` — ostatni brakujący druk. Komplet to 34 dokumenty, a parser czyta teraz wszystkie oferty wprost ze źródeł: przy odświeżeniu nie zostaje ani jeden wpis przeniesiony ze starego pliku. Pięć ofert na laptopy przeliczyło się z druku co do złotówki tak samo, jak stało w danych.
 
 ## 2026-08-26 — dwa nowe rejestratory i parser, który przestaje gubić dane
 

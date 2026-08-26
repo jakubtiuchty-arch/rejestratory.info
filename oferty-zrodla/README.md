@@ -20,14 +20,6 @@ mieszkają więc w repo, razem z kodem, który je czyta.
 3. `git diff data/oferty-skladnicy.ts` — widać każdą zmienioną kwotę.
 4. Commit razem z drukiem, żeby dało się odtworzyć, skąd wzięła się cena.
 
-## Czego tu nie ma
-
-**`Oferta Laptopy_06.2026.docx`** — zniknęła z Pobranych, zanim dokumenty
-trafiły do repo. Ceny laptopów (Dell Pro 14/16/16 Plus, HP EliteBook) żyją
-dalej, bo parser przenosi oferty z druków, których nie widzi na dysku, i wypisuje
-je na końcu przebiegu. Warto ten druk odzyskać — do tego czasu tych pięciu ofert
-nie da się odświeżyć ani zweryfikować.
-
 ## Druki, których parser celowo nie czyta
 
 Leżą tu dla porządku, ale do katalogu nie wchodzą. Powody są dwa i są zapisane
