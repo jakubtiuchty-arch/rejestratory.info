@@ -163,10 +163,7 @@ export default function CategoryPage() {
       {/* Header kategorii */}
       <section className="bg-white py-8">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 bg-emerald-100 rounded-lg flex items-center justify-center">
-              <img src={ICON.drukarka} alt="" className="h-8 w-8 mix-blend-multiply" />
-            </div>
+          <div className="mb-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Urządzenia wielofunkcyjne</h1>
               <p className="text-gray-600">{products.length} produktów dostępnych</p>

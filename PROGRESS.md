@@ -1,5 +1,9 @@
 # PROGRESS — rejestratory.info
 
+## 2026-08-26 — nagłówki kategorii bez kafelka z ikoną
+
+Z nagłówka każdej z dwunastu kategorii zniknął zielony kwadrat z ikoną urządzenia. Zostaje sama nazwa kategorii i liczba produktów. Przy okazji zbędny `flex items-center gap-4` zamieniony na `mb-6` — po usunięciu ikony układ w rzędzie nie miał już czego układać.
+
 ## 2026-08-26 — listingi sortują po prawdziwych cenach, zmyślone kwoty wycięte
 
 Pytanie Jakuba o brak ceny Galaxy S25+ odsłoniło większą rzecz. W listingach kategorii siedziało pole `price` wpisywane ręcznie: **45 pozycji na 79 rozjeżdżało się z ofertami składnic**, część grubo (Unitech EA660 miał 4 600 zł przy ofercie 2 440 zł, M3 SL20+ 4 700 przy 2 113), a kolejne 22 nie miały pokrycia w żadnym druku — w tym właśnie S25+, z wpisanym „4 500 PLN" mimo braku oferty.
