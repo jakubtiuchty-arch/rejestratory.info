@@ -152,20 +152,6 @@ const products = [
     badges: [],
     featured: false,
     customUrl: "/produkt/honeywell-ct32"
-  },
-  {
-    id: 12,
-    name: "Point Mobile PM95",
-    category: "Rejestratory",
-    description: "Urządzenie do raportów i pomiaru GNSS",
-    specifications: "Android 13, 6\", 6GB RAM, 64GB, akumulator 7020 mAh",
-    price: "4 378 PLN",
-    availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAXUS IT",
-    image: "/placeholder-produkt.png",
-    badges: [],
-    featured: false,
-    customUrl: "/produkt/point-mobile-pm95"
   }
 ];
 

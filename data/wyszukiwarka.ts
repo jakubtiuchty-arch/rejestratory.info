@@ -784,20 +784,6 @@ export const INDEKS_PRODUKTOW: PozycjaIndeksu[] = [
     ]
   },
   {
-    "name": "Point Mobile PM95",
-    "category": "Rejestrator",
-    "url": "/produkt/point-mobile-pm95",
-    "keywords": [
-      "point",
-      "mobile",
-      "pm95",
-      "rejestrator",
-      "terminal",
-      "kolektor",
-      "android"
-    ]
-  },
-  {
     "name": "Posnet Pospay 2",
     "category": "Urządzenie fiskalne",
     "url": "/produkt/posnet-pospay-2",

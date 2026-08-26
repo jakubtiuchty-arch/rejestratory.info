@@ -11,7 +11,6 @@ const MODELE = [
   ['SL20', 'm3-sl20'],
   ['HL-L6210DW', 'brother-hl-l6210dw'],
   ['CT32', 'honeywell-ct32'],
-  ['PM95', 'point-mobile-pm95'],
 ]
 
 const uprosc = (tekst) => tekst.toUpperCase().replace(/[^A-Z0-9]/g, '')
@@ -44,7 +43,8 @@ const testy = [
   ['Gwarancja 56 miesięcy', null],
   ['BROTHER HLL – 6210DW', 'brother-hl-l6210dw'],
   ['Mobilny komputer dotykowy Honeywell CT32 rejestrator leśniczego', 'honeywell-ct32'],
-  ['URZĄDZENIE DO WYKONYWANIA RAPORTÓW I POMIARU GNSS POINT MOBILE PM95', 'point-mobile-pm95'],
+  // PM95 nie jest naszą pozycją — druk pomijany w całości, modelu nie ma w tabeli
+  ['URZĄDZENIE DO POMIARU GNSS POINT MOBILE PM95', null],
   ['Kontrakt serwisowy producenta (3 letni)', null],
 ]
 

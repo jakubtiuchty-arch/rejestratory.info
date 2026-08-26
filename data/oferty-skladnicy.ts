@@ -1692,27 +1692,6 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "dodatki": []
   },
   {
-    "slug": "point-mobile-pm95",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na urządzenie Point Mobile_03.2026.docx",
-    "formularz": null,
-    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
-    "okres": {
-      "od": "2026-03-10",
-      "do": null
-    },
-    "dostawca": null,
-    "urzadzenie": {
-      "nazwa": "URZĄDZENIE DO WYKONYWANIA RAPORTÓW I POMIARU GNSS POINT MOBILE PM95",
-      "cenaNetto": 4378,
-      "promocja": false,
-      "wZestawie": [
-        "Zasilacz sieciowy, kabel USB-C ,folia ochronna na ekran"
-      ]
-    },
-    "dodatki": []
-  },
-  {
     "slug": "samsung-a36",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY A36_03.2026.docx",

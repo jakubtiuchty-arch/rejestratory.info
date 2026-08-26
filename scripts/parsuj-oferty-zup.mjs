@@ -40,6 +40,20 @@ const WYCOFANE = [
   'Oferta na Rejestrator M3 Mobile SL20_03.2026.docx',
 ]
 
+/**
+ * Druki pozycji, których nie dostarczamy — składnica prowadzi je z innym
+ * dostawcą. Katalog pokazuje naszą ofertę, więc te wpisy do niego nie wchodzą.
+ * Point Mobile PM95 idzie przez TAXUS IT (decyzja Jakuba z 26.08.2026).
+ */
+const NIE_NASZE = ['Oferta na urządzenie Point Mobile_03.2026.docx']
+
+const pomijanyDruk = (plik) =>
+  WYCOFANE.includes(plik)
+    ? 'model wycofany z produkcji — druk celowo pomijany'
+    : NIE_NASZE.includes(plik)
+      ? 'pozycja innego dostawcy — nie nasza oferta'
+      : null
+
 /** Fragment nazwy z druku → slug karty produktu. Kolejność: od najdłuższego. */
 const MODELE = [
   ['EM45', 'zebra-em45'],
@@ -56,7 +70,6 @@ const MODELE = [
   ['A56', 'samsung-a56'],
   ['A36', 'samsung-a36'],
   ['CT32', 'honeywell-ct32'],
-  ['PM95', 'point-mobile-pm95'],
   ['S25 FE', 'samsung-s25-fe'],
   ['S25 ULTRA', 'samsung-s25-ultra'],
   ['XCOVER', 'samsung-xcover7'],
@@ -496,8 +509,9 @@ for (const sciezka of KATALOGI) {
 }
 
 for (const [plik, sciezka] of dokumenty) {
-  if (WYCOFANE.includes(plik)) {
-    pominiete.push([plik, 'model wycofany z produkcji — druk celowo pomijany'])
+  const powodPominiecia = pomijanyDruk(plik)
+  if (powodPominiecia) {
+    pominiete.push([plik, powodPominiecia])
     continue
   }
   let xml
@@ -739,7 +753,7 @@ if (existsSync(WYJSCIE)) {
   if (start > 0 && koniec > start) {
     for (const o of JSON.parse(stary.slice(start, koniec))) {
       const plik = o.plik.normalize('NFC')
-      if (!dokumenty.has(plik) && !WYCOFANE.includes(plik)) zachowane.push(o)
+      if (!dokumenty.has(plik) && !pomijanyDruk(plik)) zachowane.push(o)
     }
   }
 }

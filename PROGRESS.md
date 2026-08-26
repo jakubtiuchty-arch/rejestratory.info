@@ -2,9 +2,9 @@
 
 ## 2026-08-26 — dwa nowe rejestratory i parser, który przestaje gubić dane
 
-Z folderu `REJESTRATORY 3` doszły dwa druki, których w katalogu nie było: **Honeywell CT32** (2 915 zł netto) i **Point Mobile PM95** (4 378 zł netto). Obie karty napisane wyłącznie z treści druków — CT32 nie podaje klasy szczelności ani czasu pracy, więc karta ich nie deklaruje.
+Z folderu `REJESTRATORY 3` doszedł **Honeywell CT32** (2 915 zł netto) — karta napisana wyłącznie z treści druku, który nie podaje klasy szczelności ani czasu pracy, więc karta ich nie deklaruje.
 
-**PM95 ma innego dostawcę.** Druk mówi wprost „Dostawca firma TAXUS IT", więc karta też to mówi, a blok serwisu kurierskiego jest wyłączony (`hideService`), bo naprawy nie idą do nas. Warto o tym pamiętać, gdyby ta pozycja miała trafić do newslettera.
+**Point Mobile PM95 wszedł i wypadł tego samego dnia.** Druk mówił wprost „Dostawca firma TAXUS IT"; Jakub: „to nie my oferujemy". Karta i wpis w listingu usunięte, model wyjęty z tabeli `MODELE`, a druk trafił do nowej stałej `NIE_NASZE`, żeby kolejne odświeżenie danych nie wciągnęło go z powrotem. `WYCOFANE` zostaje osobno — to inny powód pominięcia i inna decyzja, więc i komunikat w logu jest inny.
 
 **Sześć druków celowo pomijanych** (stała `WYCOFANE` w parserze) — modele zeszły z produkcji: Zebra EC55, TC26, TC57, TC77, HMD XR21 i sam M3 SL20. SL20+ z osobnego druku zostaje. Samsung S25+ ma kartę, ale nie ma u nas ceny i to się nie zmienia.
 
@@ -16,7 +16,7 @@ Z folderu `REJESTRATORY 3` doszły dwa druki, których w katalogu nie było: **H
 
 Przy okazji dopasowanie modeli dopuszcza teraz kilka separatorów w oznaczeniu — druk pisze „BROTHER HLL – 6210DW" i po wcześniejszym zaostrzeniu wzorca ta oferta wypadła z danych. Zestaw przypadków brzegowych wszedł do repo jako `scripts/test-dopasowania-modeli.mjs` (19 przypadków).
 
-Po odświeżeniu: **73 oferty** (było 71), różnica to dokładnie CT32 i PM95, żaden istniejący wpis się nie zmienił. Katalog ma 81 kart.
+Po odświeżeniu: **72 oferty** (było 71), różnica to CT32, żaden istniejący wpis się nie zmienił. Katalog ma 80 kart.
 
 ## 2026-08-26 — Galaxy A36 pokazywał ofertę ZPUH Olsztyn, której nigdy nie było
 
