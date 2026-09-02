@@ -1,5 +1,25 @@
 # PROGRESS — rejestratory.info
 
+## 2026-09-02 — newsletter: urządzenia wielofunkcyjne Brother (przygotowane na 08.09)
+
+Jakub przesunął kolejkę: po Apple (bulk poszedł dziś 8:30) idzie kategoria `/kategoria/urzadzenia-wielofunkcyjne`, nie TC58e. TC58e przesunięty na 14.09. Plik `public/newsletter/editions/2026-09-08-brother-wielofunkcyjne.html`, kampania `brother-mfp-2026-09-08`, manifest wskazuje wydanie z `bulkAt` wtorek 08.09 8:30 — poniedziałkowa testówka i przycisk „Zatwierdź” działają normalnie (to nie jest ręczna wysyłka jak przy Apple).
+
+**Format kategorii** jak przy Apple: model wiodący z galerią i siedmioma wierszami specyfikacji, pod nim kafle pozostałych modeli — tym razem **z ceną w prawej kolumnie**, bo wszystkie mają ofertę ZUP Łódź. Wiodący **MFC-L8900CDW** (3 103 zł netto, kolor, NFC — „Nowość” i `featured` w kategorii); kafle posortowane po cenie: DCP-L5510DW 1 375, MFC-L8390CDW 1 700, MFC-L5710DW 2 119, MFC-L6710DW 2 300. Blok ceny zielony „Zamów w ZUP Łódź” z linkiem na stronę składnicy z `data/oferty-skladnicy.ts` (`strona`), trzy stopki: dostawa i serwis TAKMA, tonery w tej samej ofercie, VAT 23%. Fakty wyłącznie z sześciu kart w repo i z danych ofert. Mały kafel poprzedniego wydania = iPhone 17 Pro (LiDAR), duży ciemny baner = EM45 bez zmian. Kafel kategorii „Drukarki laserowe” dostał podpis z modelami HL i „DCP-B7620DW od 958 zł”.
+
+**MFC-L8690CDW celowo NIE ma w mailu.** Kategoria oznacza go „Bestseller”, ale nie ma ceny w żadnym druku. W `Oferta na urządzenia wielofunkcyjne_04.2026.docx` ZUP sprzedaje **MFC-L8730CDW za 2 086 zł netto** (33 str./min, toner startowy CMYK w cenie), a materiały eksploatacyjne w tym samym druku opisuje jako „do MFC-L8690CDW”. Parser pomija ten wiersz jako model bez karty. **Do decyzji Jakuba**: dopisać kartę L8730CDW (i wtedy dołożyć do maila przed poniedziałkiem) albo zostawić.
+
+**Hero** `kancelaria-brother-anim.gif` (600 × 250, 545 kB): gpt_image_2 z referencją `brother-l8900_1.png` (render spłaszczony na biel), 21:9, 2k, quality high. Pierwsza para wyszła z wymyśloną naszywką „Lasy Państwowe” na rękawie — druga generacja z wyraźnym „no patches, no emblems, no text on clothing” i dłonią trzymającą wydruk. Animacja to sam ruch kamery: najazd 1,00 → 1,036 i powrót, 6 klatek po 0,5 s (`scratchpad/brother/hero-gif.sh`, skalowanie z bazy 2× i paleta 128 kolorów z `stats_mode=diff`). Urządzenie na hero jest 1:1 z renderu.
+
+**Zdjęcia**: `brother-l8900_1/2/3.png` (galeria) i cztery `-small.png` (kafle 152 px) z `public/*.png` przez `-alpha remove` na bieli → `-trim` → `-resize`; `apple-iphone17pro_tile.png` 200 px do kafla poprzedniego wydania. Podgląd sprawdzony w headless Chrome z lokalnymi ścieżkami zamiast produkcyjnych (obrazki są dostępne dopiero po deployu). Nic nie wysłane — testówka do Jakuba po commicie i deployu.
+
+## 2026-09-02 — formularz EM45 wypełnia się z klawiatury
+
+Pytanie Jakuba: czy PDF z ofertą EM45 + stacja da się zrobić edytowalny, żeby nadleśnictwo wpisało dane z klawiatury zamiast długopisem. Da się bez odtwarzania źródła HTML (które przepadło ze scratchpadem sesji z 21.08): na gotowy PDF nałożone są pola AcroForm.
+
+Nowy `scripts/formularz-edytowalny.py` (PyMuPDF) **wykrywa pola z rysunku strony**, nie ze współrzędnych wpisanych na sztywno: linie w boksie „Zamawiający” (szerokość ~240 pt, etykieta nad kreską) → pola tekstowe; kreski ~39 pt przed „szt.” → pola ilości wyrównane do prawej; linia nad „Podpis zamawiającego” → pole na imię i nazwisko. Zadziała więc na każdym kolejnym formularzu z tego szablonu. 13 pól na EM45: 4 w „Zamawiający”, 8 ilości, 1 podpis.
+
+Pola bez obwódki i tła, `NeedAppearances` włączone, więc przeglądarka rysuje tekst własną czcionką — polskie znaki (ś, ł, ó, Ż) sprawdzone w renderze. Pusty formularz renderuje się **piksel w piksel** identycznie z wersją sprzed zmiany (porównanie bitmap obu stron w 72 dpi: 0 różnic). Plik w `public/formularze/` podmieniony, link z karty EM45 bez zmian.
+
 ## 2026-08-26 — nagłówki kategorii bez kafelka z ikoną
 
 Z nagłówka każdej z dwunastu kategorii zniknął zielony kwadrat z ikoną urządzenia. Zostaje sama nazwa kategorii i liczba produktów. Przy okazji zbędny `flex items-center gap-4` zamieniony na `mb-6` — po usunięciu ikony układ w rzędzie nie miał już czego układać.
