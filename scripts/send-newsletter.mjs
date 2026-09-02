@@ -61,11 +61,16 @@ function normalize(raw) {
 }
 
 const recipients = new Map() // email -> client_name
-// adresy ogólne nadleśnictw + wydziały informatyki RDLP (pliki w newsletter/)
-for (const f of ['newsletter/odbiorcy-ogolne.json', 'newsletter/odbiorcy-rdlp-informatyka.json']) {
+// adresy ogólne nadleśnictw + wydziały informatyki RDLP + adresy dodatkowe (pliki w newsletter/)
+const ZRODLA = {
+  'newsletter/odbiorcy-ogolne.json': '(adres ogólny nadleśnictwa)',
+  'newsletter/odbiorcy-rdlp-informatyka.json': '(wydział informatyki RDLP)',
+  'newsletter/odbiorcy-dodatkowi.json': '(adres dodatkowy: TAKMA / ZUP Łódź)',
+}
+for (const [f, etykieta] of Object.entries(ZRODLA)) {
   for (const e of JSON.parse(readFileSync(f, 'utf8'))) {
     const n = normalize(e)
-    if (n && !recipients.has(n)) recipients.set(n, f.includes('rdlp') ? '(wydział informatyki RDLP)' : '(adres ogólny nadleśnictwa)')
+    if (n && !recipients.has(n)) recipients.set(n, etykieta)
   }
 }
 for (const table of ['registrators', 'sales_products', 'inspections']) {

@@ -30,9 +30,11 @@ export async function getRecipients(): Promise<string[]> {
   // 1) adresy OGÓLNE nadleśnictw (nadlesnictwo@rdlp.lasy.gov.pl) — baza zbudowana
   //    2026-08-04 z portali 17 RDLP + korespondencji, walidacja DNS; plik w repo
   //    + wydziały informatyki 17 RDLP (odbiorcy-rdlp-informatyka.json)
+  //    + adresy dodatkowe wskazane przez Jakuba: dział handlowy TAKMA i ZUP Łódź (odbiorcy-dodatkowi.json)
   const general = (await import('@/newsletter/odbiorcy-ogolne.json')).default as string[]
   const rdlp = (await import('@/newsletter/odbiorcy-rdlp-informatyka.json')).default as string[]
-  for (const e of [...general, ...rdlp]) {
+  const extra = (await import('@/newsletter/odbiorcy-dodatkowi.json')).default as string[]
+  for (const e of [...general, ...rdlp, ...extra]) {
     const n = normalizeEmail(e)
     if (n) uniq.add(n)
   }

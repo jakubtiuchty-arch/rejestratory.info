@@ -41,6 +41,10 @@
 - Linki w wydaniach dostają UTM: `utm_source=newsletter&utm_medium=email&utm_campaign=<slug>-<data>`
   (ruch widoczny w GA4 jako kampania). Dodawać przy budowie każdego wydania.
 
+## Adresy dodatkowe (od 2026-09-02)
+- `newsletter/odbiorcy-dodatkowi.json` — dział handlowy TAKMA (handlowy@) i dwie osoby z ZUP Łódź;
+  dostają każde wydanie razem z bazą (scalane w `getRecipients` i w `send-newsletter.mjs`).
+
 ## Wydziały informatyki RDLP (od 2026-08-05)
 - 17 adresów w `newsletter/odbiorcy-rdlp-informatyka.json` — częścią zwykłej bazy odbiorców
   (getRecipients je scala), dostają IDENTYCZNY mail co nadleśnictwa, bez żadnego banera
