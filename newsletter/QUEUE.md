@@ -11,7 +11,7 @@ a `public/newsletter/manifest.json` wskazuje bieżące wydanie.
 | 2026-08-17 | Dell Pro 16 Plus | /produkt/dell-pro-16-plus | ZATWIERDZONE — zaplanowane 603 maile na 18.08 8:30 |
 | 2026-08-24 | Monitory Dell Pro (P2725HE) | /produkt/dell-pro-27-plus-p2725he-usbc | ZATWIERDZONE — 602 maile zaplanowane na 25.08 8:30 |
 | 2026-08-31 | Apple iPhone 17 Pro i iPad Pro | /produkt/iphone-17-pro | ZAPLANOWANE ręcznie — 603 maile na **środę 02.09 8:30**. ID w `scheduled-2026-09-02.json`. **Nie zatwierdzać testówki z poniedziałku** — wysyłka jest już w Resend, drugie zatwierdzenie wysłałoby duplikat (rezerwacja w `newsletter_sends` blokuje, ale nie ryzykować). |
-| 2026-09-07 | Urządzenia wielofunkcyjne Brother (wiodący MFC-L8900CDW) | /kategoria/urzadzenia-wielofunkcyjne | ZAPLANOWANE ręcznie 02.09 — bulk na **wtorek 08.09 8:30**, ID w `scheduled-2026-09-08.json`, rezerwacja w `newsletter_sends`. **Nie zatwierdzać testówki z poniedziałku** (przycisk odpowie „Już zatwierdzone”). |
+| 2026-09-07 | Urządzenia wielofunkcyjne Brother (wiodący MFC-L8900CDW) | /kategoria/urzadzenia-wielofunkcyjne | WSTRZYMANE 02.09 — bulk na 08.09 zaplanowany i **anulowany** (592 wycofane, 13 suppressed; `scheduled-2026-09-08.cancelled.json`). Treść bez cen czeka na akceptację Jakuba, potem ręczne `--send --send-at`. Rezerwacja w `newsletter_sends` ZOSTAJE (blokuje poniedziałkowy przycisk) — bez ręcznego zaplanowania nic nie pójdzie. |
 | 2026-09-14 | Zebra TC58e | /produkt/zebra-tc58e | do przygotowania |
 
 Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie zapasu.
