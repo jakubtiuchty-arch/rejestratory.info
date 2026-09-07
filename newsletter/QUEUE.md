@@ -13,5 +13,8 @@ a `public/newsletter/manifest.json` wskazuje bieżące wydanie.
 | 2026-08-31 | Apple iPhone 17 Pro i iPad Pro | /produkt/iphone-17-pro | ZAPLANOWANE ręcznie — 603 maile na **środę 02.09 8:30**. ID w `scheduled-2026-09-02.json`. **Nie zatwierdzać testówki z poniedziałku** — wysyłka jest już w Resend, drugie zatwierdzenie wysłałoby duplikat (rezerwacja w `newsletter_sends` blokuje, ale nie ryzykować). |
 | 2026-09-07 | Urządzenia wielofunkcyjne Brother (wiodący MFC-L8900CDW) | /kategoria/urzadzenia-wielofunkcyjne | ZAPLANOWANE ręcznie 04.09 (po akceptacji wersji bez cen) — 607 maili na **wtorek 08.09 8:30**, ID w `scheduled-2026-09-08.json`; pierwsza próba z 02.09 anulowana (`scheduled-2026-09-08.cancelled.json`). Rezerwacja w `newsletter_sends` blokuje poniedziałkowy przycisk — **nie zatwierdzać testówki**. |
 | 2026-09-14 | Zebra TC58e | /produkt/zebra-tc58e | do przygotowania |
+| 2026-09-21 | HP EliteBook 6 G1a 14" | /produkt/hp-elitebook-6-g1ah-14 | propozycja — do akceptacji |
+| 2026-09-28 | Zebra ZD421c (drukarka etykiet) | /produkt/zebra-zd421c | propozycja — do akceptacji |
+| 2026-10-05 | Samsung Galaxy Tab Active5 (tablet terenowy) | /produkt/samsung-galaxy-tab-active5 | propozycja — do akceptacji |
 
 Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie zapasu.
