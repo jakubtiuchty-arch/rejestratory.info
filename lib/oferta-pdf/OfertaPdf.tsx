@@ -88,7 +88,6 @@ const s = StyleSheet.create({
   /** flex:1 dopycha ciemny pas z kwotą do dołu, gdy boks obok jest wyższy */
   sumBody: { flex: 1, justifyContent: 'center', paddingHorizontal: 12, paddingTop: 10, paddingBottom: 8 },
   sumNota: { paddingHorizontal: 12, paddingTop: 5, paddingBottom: 7, fontSize: 7.5, color: C.muted },
-  sumTitle: { fontSize: 7.5, fontWeight: 'bold', color: C.emerald, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 6 },
   sumRow: { flexDirection: 'row', marginBottom: 4 },
   sumLabel: { flex: 1, color: C.muted },
   sumValue: { width: 100, textAlign: 'right', color: C.ink },
@@ -234,7 +233,6 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
             ) : null}
             <View style={s.summary}>
               <View style={s.sumBody}>
-                <Text style={s.sumTitle}>Zakup urządzeń — jednorazowo</Text>
                 <View style={s.sumRow}><Text style={s.sumLabel}>Wartość netto</Text><Text style={s.sumValue}>{zl(netto)}</Text></View>
                 <View style={s.sumRow}><Text style={s.sumLabel}>VAT 23%</Text><Text style={s.sumValue}>{zl(vat)}</Text></View>
               </View>
