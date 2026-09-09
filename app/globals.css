@@ -125,21 +125,40 @@
   animation: oferta-gradient 7s linear infinite;
 }
 
-/* Każda drobinka dryfuje w górę i gaśnie; opóźnienia rozstawione w kodzie,
-   żeby ruch nie był zsynchronizowany. */
-@keyframes oferta-drobinka {
-  0%   { opacity: 0; transform: translate3d(0, 5px, 0) scale(0.4); }
-  20%  { opacity: 1; transform: translate3d(2px, 1px, 0) scale(1); }
-  55%  { opacity: 0.85; }
-  100% { opacity: 0; transform: translate3d(9px, -8px, 0) scale(0.5); }
+/* Poziomice z sekcji wdrożenia, wprawione w powolny ruch: dwie kopie obok
+   siebie przesuwają się o połowę szerokości toru, więc pętla jest niewidoczna
+   (ten sam chwyt co w karuzeli logotypów). Drugi plan oddycha skalą, żeby
+   linie nie wyglądały jak sztywna tapeta. */
+@keyframes oferta-poziomice {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 
-.oferta-drobinka {
-  animation: oferta-drobinka linear infinite;
+@keyframes oferta-oddech {
+  0%, 100% { transform: scale(1); opacity: 0.75; }
+  50%      { transform: scale(1.06); opacity: 1; }
+}
+
+.oferta-tor {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  animation: oferta-poziomice 26s linear infinite;
+}
+
+.oferta-tor > * {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  flex: none;
+}
+
+.oferta-oddech {
+  animation: oferta-oddech 9s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .oferta-tlo,
-  .oferta-drobinka { animation: none; }
-  .oferta-drobinka { opacity: 0.5; }
+  .oferta-tor,
+  .oferta-oddech { animation: none; }
 }
