@@ -78,15 +78,14 @@ const s = StyleSheet.create({
   desc: { fontSize: 8, color: C.muted, marginTop: 2 },
   bold: { fontWeight: 'bold' },
 
-  summaryWrap: { flexDirection: 'row', alignItems: 'stretch', justifyContent: 'flex-end', gap: 10, marginTop: 8, marginBottom: 10 },
+  summaryWrap: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end', gap: 10, marginTop: 8, marginBottom: 8 },
   box: { flex: 1, backgroundColor: C.soft, borderWidth: 1, borderColor: C.line, borderRadius: 6, padding: 10 },
   boxTitle: { fontSize: 7.5, fontWeight: 'bold', color: C.emerald, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 },
   condRow: { flexDirection: 'row', marginBottom: 3 },
   condLabel: { width: 58, color: C.muted, fontSize: 9 },
   condValue: { flex: 1, fontWeight: 'bold', color: C.ink, fontSize: 9 },
-  summary: { width: 236, flexDirection: 'column', backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, overflow: 'hidden' },
-  /** flex:1 dopycha ciemny pas z kwotą do dołu, gdy boks obok jest wyższy */
-  sumBody: { flex: 1, justifyContent: 'center', paddingHorizontal: 12, paddingTop: 10, paddingBottom: 8 },
+  summary: { width: 236, backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, overflow: 'hidden' },
+  sumBody: { paddingHorizontal: 12, paddingTop: 10, paddingBottom: 8 },
   sumNota: { paddingHorizontal: 12, paddingTop: 5, paddingBottom: 7, fontSize: 7.5, color: C.muted },
   sumRow: { flexDirection: 'row', marginBottom: 4 },
   sumLabel: { flex: 1, color: C.muted },
@@ -100,8 +99,10 @@ const s = StyleSheet.create({
   feeBig: { fontSize: 14, fontWeight: 'bold', color: C.ink, marginTop: 2 },
   feeUnit: { fontSize: 8, color: C.muted },
   feeText: { fontSize: 8, color: '#374151', marginTop: 4 },
-  commissions: { flexDirection: 'row', gap: 6, marginTop: 4, marginBottom: 2 },
-  commission: { flex: 1, backgroundColor: C.soft, borderRadius: 4, paddingVertical: 6, alignItems: 'center' },
+  prowizjeBox: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 10, marginBottom: 8 },
+  prowizjeLewa: { flex: 1 },
+  commissions: { flexDirection: 'row', gap: 6, width: 250 },
+  commission: { flex: 1, backgroundColor: C.soft, borderRadius: 4, paddingVertical: 7, alignItems: 'center' },
   commissionLabel: { fontSize: 7, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.6 },
   commissionValue: { fontSize: 11, fontWeight: 'bold', color: C.emerald, marginTop: 1 },
 
@@ -212,23 +213,6 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
                   {o.ilosc > 1 ? ` · ${zl(p.abonament.cenaNetto)} netto za urządzenie × ${o.ilosc} szt.` : ''}
                 </Text>
                 <Text style={s.feeText}>{p.abonament.opis}</Text>
-                {p.prowizje ? (
-                  <>
-                    <Text style={[s.boxTitle, { marginTop: 8 }]}>Prowizja od transakcji</Text>
-                    <View style={s.commissions}>
-                      {p.prowizje.map((c) => (
-                        <View key={c.label} style={s.commission}>
-                          <Text style={s.commissionLabel}>{c.label}</Text>
-                          <Text style={s.commissionValue}>{c.value}</Text>
-                        </View>
-                      ))}
-                    </View>
-                    <Text style={s.feeText}>
-                      Nalicza ją operator płatności eService od wartości każdej transakcji; stawki
-                      VISA i MasterCard dotyczą kart wydanych w Polsce.
-                    </Text>
-                  </>
-                ) : null}
               </View>
             ) : null}
             <View style={s.summary}>
@@ -243,6 +227,26 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
               <Text style={s.sumNota}>Bez opłat miesięcznych wymienionych obok.</Text>
             </View>
           </View>
+
+          {p.prowizje ? (
+            <View style={s.prowizjeBox} wrap={false}>
+              <View style={s.prowizjeLewa}>
+                <Text style={s.boxTitle}>Prowizja od transakcji</Text>
+                <Text style={s.feeText}>
+                  Nalicza ją operator płatności eService od wartości każdej transakcji. Stawki VISA
+                  i MasterCard dotyczą kart wydanych w Polsce.
+                </Text>
+              </View>
+              <View style={s.commissions}>
+                {p.prowizje.map((c) => (
+                  <View key={c.label} style={s.commission}>
+                    <Text style={s.commissionLabel}>{c.label}</Text>
+                    <Text style={s.commissionValue}>{c.value}</Text>
+                  </View>
+                ))}
+              </View>
+            </View>
+          ) : null}
 
 
           <View wrap={false}>
