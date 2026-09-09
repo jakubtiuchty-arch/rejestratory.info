@@ -3,8 +3,19 @@ const nextConfig = {
   experimental: {
     // /api/oferta-pdf czyta fonty DejaVu i logo z public/ przez system plików —
     // bez tego wpisu funkcja na Vercelu nie ma ich w bundlu i musi sięgać po URL.
+    // pdfkit ładuje standardowe fonty (Helvetica.cjs i spółka) dynamicznie w runtime,
+    // więc tracing Next ich nie widzi i funkcja na Vercelu wywala się na
+    // „Cannot find module … /pdfkit/js/standard-fonts/Helvetica.cjs”. Kopii pdfkit
+    // jest kilka (@react-pdf/renderer, @react-pdf/font, top-level), stąd glob.
     outputFileTracingIncludes: {
-      '/api/oferta-pdf': ['./public/fonts/DejaVuSans.ttf', './public/fonts/DejaVuSans-Bold.ttf', './public/takma_logo_footer.png'],
+      '/api/oferta-pdf': [
+        './public/fonts/DejaVuSans.ttf',
+        './public/fonts/DejaVuSans-Bold.ttf',
+        './public/takma_logo_footer.png',
+        './node_modules/pdfkit/js/**',
+        './node_modules/@react-pdf/*/node_modules/pdfkit/js/**',
+        './node_modules/**/fontkit/**',
+      ],
     },
   },
   async headers() {
