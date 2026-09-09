@@ -570,7 +570,7 @@ const PrzyciskOferty = ({ onClick }: { onClick: () => void }) => (
   <button
     type="button"
     onClick={onClick}
-    className="group relative mt-4 flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-full px-6 py-3.5 shadow-lg shadow-emerald-900/20 transition hover:shadow-xl hover:shadow-emerald-900/25"
+    className="group relative mt-4 flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-full px-6 py-3.5"
   >
     <span aria-hidden className="oferta-tlo absolute inset-0" />
     {/* drobinki ledwo widoczne — mają dawać życie, nie migać w oczy */}
@@ -592,6 +592,13 @@ const PrzyciskOferty = ({ onClick }: { onClick: () => void }) => (
         />
       ))}
     </span>
+
+    {/* wklęsłość: cień wewnętrzny musi być NAD tłem i drobinkami, inaczej
+        przykrywają go warstwy leżące w środku przycisku */}
+    <span
+      aria-hidden
+      className="pointer-events-none absolute inset-0 rounded-full shadow-[inset_0_3px_7px_rgba(0,0,0,0.55),inset_0_-1px_1px_rgba(255,255,255,0.10)] transition group-hover:shadow-[inset_0_4px_10px_rgba(0,0,0,0.62),inset_0_-1px_1px_rgba(255,255,255,0.12)]"
+    />
 
     <img src={naCiemnym(ICON.pobierz)} alt="" className="relative h-4 w-4 shrink-0" />
     <span className="relative text-sm font-semibold text-white">Pobierz ofertę w PDF</span>
