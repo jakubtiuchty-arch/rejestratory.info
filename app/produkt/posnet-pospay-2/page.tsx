@@ -120,8 +120,10 @@ const data: ProductData = {
       { label: 'MasterCard', value: '0,79 %' },
       { label: 'BLIK', value: '0,39 %' },
     ],
-    note: 'Abonament dotyczy wynajmu terminala płatniczego. Przeglądy ustawowe co 2 lata rozliczane osobno.',
+    note: 'W abonamencie: wynajem terminala płatniczego z dożywotnią gwarancją, aplikacja sprzedażowa POS-UP z aktualizacjami oraz karta SIM z transmisją danych do Centralnego Repozytorium Kas. Stawki VISA i MasterCard dotyczą kart wydanych w Polsce. Przeglądy ustawowe co 2 lata rozliczane osobno.',
   },
+  // klient generuje ofertę PDF sam — dane w lib/oferta-pdf/produkty.ts
+  ofertaPdf: true,
   timeline: {
     label: 'Od zamówienia do pierwszego paragonu',
     heading: 'Proces zakupu i wdrożenia',

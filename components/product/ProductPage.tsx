@@ -16,6 +16,7 @@ import ContourTexture from '@/components/ContourTexture'
 import CourierServiceSection from '@/components/CourierServiceSection'
 import { useInquiry } from '@/components/InquiryContext'
 import { ICON } from '@/components/product/icons'
+import OfertaPdfModal from '@/components/product/OfertaPdfModal'
 import { ofertyDla, type OfertaSkladnicy as OfertaZUP } from '@/data/oferty'
 import { SKLADNICE } from '@/data/skladnice'
 
@@ -118,6 +119,9 @@ export type ProductData = {
   timeline?: Timeline
   /** cennik urządzenia i prowizje od transakcji */
   pricing?: Pricing
+  /** przycisk „Pobierz ofertę w PDF” w bloku cennika — produkt musi być
+   *  opisany w lib/oferta-pdf/produkty.ts pod tym samym slugiem */
+  ofertaPdf?: boolean
   /** kontrakt serwisowy pokazywany w bloku serwisu, np. '3 lub 5 lat' */
   serviceContract?: string
   /** ukrywa blok serwisu kurierskiego — dla licencji i drobnych akcesoriów,
@@ -1216,6 +1220,8 @@ export default function ProductPage({ data }: { data: ProductData }) {
     .map((g) => `${g.label}: ${variant[g.id]}`)
     .join(', ')
 
+  const [ofertaOtwarta, setOfertaOtwarta] = useState(false)
+
   const askForProduct = () => {
     addToInquiry({
       // konfiguracja jest częścią identyfikatora — dwie różne konfiguracje tego
@@ -1370,6 +1376,17 @@ export default function ProductPage({ data }: { data: ProductData }) {
                           </div>
                         ))}
                       </dl>
+                    )}
+
+                    {data.ofertaPdf && (
+                      <button
+                        type="button"
+                        onClick={() => setOfertaOtwarta(true)}
+                        className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#0A1B12] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#14532d]"
+                      >
+                        <img src={naCiemnym(ICON.pobierz)} alt="" className="h-4 w-4" />
+                        Pobierz ofertę w PDF
+                      </button>
                     )}
                   </div>
 
@@ -1627,6 +1644,14 @@ export default function ProductPage({ data }: { data: ProductData }) {
       )}
 
       <Footer />
+
+      {data.ofertaPdf && (
+        <OfertaPdfModal
+          open={ofertaOtwarta}
+          onClose={() => setOfertaOtwarta(false)}
+          produkt={{ slug: data.slug, name: data.name }}
+        />
+      )}
 
       {/* Mobilne CTA przyklejone do dołu */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-stone-200 bg-white/95 p-3 backdrop-blur sm:hidden">

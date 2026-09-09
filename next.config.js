@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    // /api/oferta-pdf czyta fonty DejaVu i logo z public/ przez system plików —
+    // bez tego wpisu funkcja na Vercelu nie ma ich w bundlu i musi sięgać po URL.
+    outputFileTracingIncludes: {
+      '/api/oferta-pdf': ['./public/fonts/DejaVuSans.ttf', './public/fonts/DejaVuSans-Bold.ttf', './public/takma_logo_footer.png'],
+    },
+  },
   async headers() {
     return [
       {
