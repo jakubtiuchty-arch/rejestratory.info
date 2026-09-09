@@ -39,14 +39,16 @@ export const PRODUKTY_OFERTY: Record<string, ProduktOferty> = {
       { label: 'MasterCard', value: '0,79 %' },
       { label: 'BLIK', value: '0,39 %' },
     ],
+    // podpisy krótkie, po jednej linii — dłuższe łamią się na trzy wiersze
+    // i cała oferta przestaje mieścić się na jednej stronie
     wdrozenie: [
-      { title: 'Zamówienie', note: 'Posnet Pospay 2 w TAKMA' },
+      { title: 'Zamówienie', note: 'w TAKMA' },
       { title: 'Dokumenty', note: 'do fiskalizacji' },
-      { title: 'Fiskalizacja', note: 'i zgłoszenie do eService' },
-      { title: 'Dostawa', note: 'urządzenia do nadleśnictwa' },
-      { title: 'Szkolenie', note: 'leśniczych z obsługi' },
+      { title: 'Fiskalizacja', note: 'w eService' },
+      { title: 'Dostawa', note: 'do nadleśnictwa' },
+      { title: 'Szkolenie', note: 'leśniczych' },
       { title: 'Integracja', note: 'z rejestratorami' },
-      { title: 'Przeglądy', note: 'ustawowe co 2 lata' },
+      { title: 'Przeglądy', note: 'co 2 lata' },
     ],
     uwagi: ['Przeglądy ustawowe co 2 lata rozliczane są osobno.'],
   },

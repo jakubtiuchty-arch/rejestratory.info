@@ -44,7 +44,7 @@ const C = {
 }
 
 const s = StyleSheet.create({
-  page: { paddingTop: 0, paddingBottom: 34, paddingHorizontal: 0, fontFamily: 'DejaVu', fontSize: 9.5, color: C.body, lineHeight: 1.35 },
+  page: { paddingTop: 0, paddingBottom: 44, paddingHorizontal: 0, fontFamily: 'DejaVu', fontSize: 9.5, color: C.body, lineHeight: 1.35 },
   band: { backgroundColor: '#ffffff', paddingTop: 22, paddingBottom: 14, paddingHorizontal: 44, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 2, borderBottomColor: C.green },
   logo: { width: 118, height: 46, objectFit: 'contain', objectPositionX: 0 } as never,
   docTitleWrap: { alignItems: 'flex-end' },
@@ -78,7 +78,7 @@ const s = StyleSheet.create({
   desc: { fontSize: 8, color: C.muted, marginTop: 2 },
   bold: { fontWeight: 'bold' },
 
-  summaryWrap: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end', gap: 10, marginTop: 12, marginBottom: 10 },
+  summaryWrap: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end', gap: 10, marginTop: 12, marginBottom: 8 },
   box: { flex: 1, backgroundColor: C.soft, borderWidth: 1, borderColor: C.line, borderRadius: 6, padding: 10 },
   boxTitle: { fontSize: 7.5, fontWeight: 'bold', color: C.emerald, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 },
   condRow: { flexDirection: 'row', marginBottom: 3 },
@@ -98,14 +98,14 @@ const s = StyleSheet.create({
   feeBig: { fontSize: 14, fontWeight: 'bold', color: C.ink, marginTop: 2 },
   feeUnit: { fontSize: 8, color: C.muted },
   feeText: { fontSize: 8, color: '#374151', marginTop: 4 },
-  prowizjeBox: { flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 12, marginBottom: 10 },
+  prowizjeBox: { flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 12, marginBottom: 8 },
   prowizjeLewa: { flex: 1 },
   commissions: { flexDirection: 'row', gap: 8, width: 288 },
   commission: { flex: 1, backgroundColor: C.soft, borderRadius: 5, paddingVertical: 11, alignItems: 'center' },
   commissionLabel: { fontSize: 7.5, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.6 },
   commissionValue: { fontSize: 14, fontWeight: 'bold', color: C.emerald, marginTop: 3 },
 
-  steps: { flexDirection: 'row', backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 11, marginBottom: 9 },
+  steps: { flexDirection: 'row', backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 8, marginBottom: 4 },
   step: { flex: 1, alignItems: 'center', paddingHorizontal: 2 },
   stepNo: { width: 17, height: 17, borderRadius: 8.5, backgroundColor: C.green, alignItems: 'center', justifyContent: 'center', marginBottom: 4 },
   stepNoText: { color: C.white, fontSize: 8, fontWeight: 'bold', lineHeight: 1 },
@@ -113,10 +113,14 @@ const s = StyleSheet.create({
   stepNote: { fontSize: 7, color: C.muted, textAlign: 'center', marginTop: 1 },
   stepsTitle: { fontSize: 7.5, fontWeight: 'bold', color: C.emerald, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 },
 
-  notes: { borderTopWidth: 1, borderTopColor: C.line, paddingTop: 9, marginTop: 3, color: C.muted, fontSize: 8 },
-  clientNotes: { backgroundColor: C.soft, borderLeftWidth: 3, borderLeftColor: C.green, borderTopRightRadius: 6, borderBottomRightRadius: 6, paddingHorizontal: 12, paddingVertical: 9, marginBottom: 10, fontSize: 9, color: '#374151' },
+  /* jeden pasek zamiast dwóch kolumn — niższy, więc mieści się także wtedy,
+     gdy klient wpisze długie uwagi */
+  kontaktBox: { backgroundColor: C.soft, borderRadius: 6, padding: 8, marginBottom: 4 },
+  kontaktText: { fontSize: 7.5, lineHeight: 1.4, color: '#374151' },
+  clientNotes: { backgroundColor: C.soft, borderLeftWidth: 3, borderLeftColor: C.green, borderTopRightRadius: 6, borderBottomRightRadius: 6, paddingHorizontal: 12, paddingVertical: 8, marginBottom: 8, fontSize: 9, color: '#374151' },
 
-  footer: { position: 'absolute', bottom: 14, left: 44, right: 44, borderTopWidth: 1, borderTopColor: C.line, paddingTop: 6, fontSize: 7.5, color: C.muted },
+  footer: { position: 'absolute', bottom: 12, left: 44, right: 44, borderTopWidth: 1, borderTopColor: C.line, paddingTop: 6, fontSize: 7.5, color: C.muted },
+  footerDrobne: { textAlign: 'center', marginBottom: 4, fontSize: 7 },
 })
 
 /** Kwoty bez toLocaleString — okrojony ICU w Node dawał inne separatory niż przeglądarka. */
@@ -199,6 +203,12 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
             <Text style={[s.colTotal, s.bold]}>{zl(netto)}</Text>
           </View>
 
+          {o.uwagiKlienta ? (
+            <View style={s.clientNotes} wrap={false}>
+              <Text><Text style={s.bold}>Uwagi zamawiającego: </Text>{o.uwagiKlienta}</Text>
+            </View>
+          ) : null}
+
           <View style={s.summaryWrap} wrap={false}>
             {p.abonament ? (
               <View style={s.feeBox}>
@@ -259,20 +269,26 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
             </View>
           </View>
 
-          {o.uwagiKlienta ? (
-            <View style={s.clientNotes} wrap={false}>
-              <Text><Text style={s.bold}>Uwagi zamawiającego: </Text>{o.uwagiKlienta}</Text>
-            </View>
-          ) : null}
 
-          <View style={s.notes} wrap={false}>
-            <Text>
-              {p.uwagi.join(' ')} Ceny netto; do cen doliczany jest podatek VAT 23%.
+          {/* Pasek domyka stronę, gdy zostaje na niej puste miejsce. Przy długich
+              uwagach zamawiającego dół jest już wypełniony, a pasek wypchnąłby
+              treść na drugą stronę — wtedy go nie pokazujemy. */}
+          {(o.uwagiKlienta?.length ?? 0) < 120 ? (
+          <View style={s.kontaktBox} wrap={false}>
+            <Text style={s.boxTitle}>Jak zamówić</Text>
+            <Text style={s.kontaktText}>
+              Wystarczy odpowiedzieć na tę ofertę albo zadzwonić: {SPRZEDAWCA.telefon}. Potwierdzimy
+              termin dostawy i prześlemy dokumenty do fiskalizacji.
             </Text>
           </View>
+          ) : null}
+
         </View>
 
         <View fixed style={s.footer}>
+          <Text style={s.footerDrobne}>
+            {p.uwagi.join(' ')} Ceny netto; do cen doliczany jest podatek VAT 23%.
+          </Text>
           <Text style={{ textAlign: 'center' }}>
             {SPRZEDAWCA.nazwa} · {SPRZEDAWCA.adres1}, {SPRZEDAWCA.adres2} · NIP {SPRZEDAWCA.nip} · {SPRZEDAWCA.email} · {SPRZEDAWCA.telefon} · {SPRZEDAWCA.www}
           </Text>
