@@ -192,18 +192,18 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
                   <div>
                     <label htmlFor="of-nadl" className={etykieta}>Nadleśnictwo / jednostka</label>
                     <input id="of-nadl" className={pole} required minLength={3} value={pola.nadlesnictwo}
-                      onChange={(e) => ustaw('nadlesnictwo', e.target.value)} placeholder="Nadleśnictwo Wipsowo" />
+                      onChange={(e) => ustaw('nadlesnictwo', e.target.value)} />
                   </div>
                   <div>
                     <label htmlFor="of-adres" className={etykieta}>Adres</label>
                     <input id="of-adres" className={pole} required minLength={5} value={pola.adres}
-                      onChange={(e) => ustaw('adres', e.target.value)} placeholder="ul. Leśna 3, 11-010 Barczewo" />
+                      onChange={(e) => ustaw('adres', e.target.value)} />
                   </div>
                   <div className="grid gap-3.5 sm:grid-cols-2">
                     <div>
                       <label htmlFor="of-nip" className={etykieta}>NIP{opcjonalnie}</label>
                       <input id="of-nip" className={pole} inputMode="numeric" value={pola.nip}
-                        onChange={(e) => ustaw('nip', e.target.value)} placeholder="739-000-00-00" />
+                        onChange={(e) => ustaw('nip', e.target.value)} />
                     </div>
                     <div>
                       <label htmlFor="of-ilosc" className={etykieta}>Ilość urządzeń</label>
@@ -214,24 +214,24 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
                   <div>
                     <label htmlFor="of-osoba" className={etykieta}>Osoba do kontaktu</label>
                     <input id="of-osoba" className={pole} required minLength={3} value={pola.osoba}
-                      onChange={(e) => ustaw('osoba', e.target.value)} placeholder="Imię i nazwisko" />
+                      onChange={(e) => ustaw('osoba', e.target.value)} />
                   </div>
                   <div className="grid gap-3.5 sm:grid-cols-2">
                     <div>
                       <label htmlFor="of-email" className={etykieta}>E-mail</label>
                       <input id="of-email" className={pole} type="email" required value={pola.email}
-                        onChange={(e) => ustaw('email', e.target.value)} placeholder="nazwisko@rdlp.lasy.gov.pl" />
+                        onChange={(e) => ustaw('email', e.target.value)} />
                     </div>
                     <div>
                       <label htmlFor="of-tel" className={etykieta}>Telefon{opcjonalnie}</label>
                       <input id="of-tel" className={pole} type="tel" value={pola.telefon}
-                        onChange={(e) => ustaw('telefon', e.target.value)} placeholder="601 234 567" />
+                        onChange={(e) => ustaw('telefon', e.target.value)} />
                     </div>
                   </div>
                   <div>
                     <label htmlFor="of-uwagi" className={etykieta}>Uwagi do oferty{opcjonalnie}</label>
                     <textarea id="of-uwagi" className={`${pole} min-h-[64px]`} maxLength={500} value={pola.uwagi}
-                      onChange={(e) => ustaw('uwagi', e.target.value)} placeholder="np. termin dostawy, liczba leśnictw" />
+                      onChange={(e) => ustaw('uwagi', e.target.value)} />
                   </div>
 
                   {/* honeypot — poza ekranem, boty i tak wypełniają */}
