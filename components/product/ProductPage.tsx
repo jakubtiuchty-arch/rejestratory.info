@@ -122,6 +122,10 @@ export type ProductData = {
   /** przycisk „Pobierz ofertę w PDF” w bloku cennika — produkt musi być
    *  opisany w lib/oferta-pdf/produkty.ts pod tym samym slugiem */
   ofertaPdf?: boolean
+  /** chowa skrót parametrów i parę przycisków „Zapytaj o produkt / Specyfikacja”
+   *  (także mobilne CTA) — dla kart, na których pierwszy krok to pobranie oferty,
+   *  a nie zapytanie; nagłówek zostaje wtedy sam nad cennikiem */
+  hideHeaderCta?: boolean
   /** kontrakt serwisowy pokazywany w bloku serwisu, np. '3 lub 5 lat' */
   serviceContract?: string
   /** ukrywa blok serwisu kurierskiego — dla licencji i drobnych akcesoriów,
@@ -1340,7 +1344,7 @@ export default function ProductPage({ data }: { data: ProductData }) {
                 </p>
               )}
 
-              {data.highlights && data.highlights.length > 0 && (
+              {!data.hideHeaderCta && data.highlights && data.highlights.length > 0 && (
                 <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-stone-100 py-5">
                   {data.highlights.map((h) => (
                     <div key={h.label} className="flex items-start gap-3">
@@ -1383,22 +1387,24 @@ export default function ProductPage({ data }: { data: ProductData }) {
                   ))}
                 </div>
               )}
-              <div className="mt-8 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={askForProduct}
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 font-semibold text-white transition hover:bg-emerald-700"
-                >
-                  Zapytaj o produkt
-                </button>
-                <a
-                  href="#specyfikacja"
-                  className="inline-flex items-center gap-2 rounded-xl border border-stone-300 px-6 py-3.5 font-semibold text-stone-700 transition hover:border-stone-400"
-                >
-                  Specyfikacja
-                  <img src={ICON.strzalka} alt="" className="h-4 w-4 mix-blend-multiply" />
-                </a>
-              </div>
+              {!data.hideHeaderCta && (
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={askForProduct}
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 font-semibold text-white transition hover:bg-emerald-700"
+                  >
+                    Zapytaj o produkt
+                  </button>
+                  <a
+                    href="#specyfikacja"
+                    className="inline-flex items-center gap-2 rounded-xl border border-stone-300 px-6 py-3.5 font-semibold text-stone-700 transition hover:border-stone-400"
+                  >
+                    Specyfikacja
+                    <img src={ICON.strzalka} alt="" className="h-4 w-4 mix-blend-multiply" />
+                  </a>
+                </div>
+              )}
 
 
               {oferty.length > 0 && <CenaWSkrocie oferty={oferty} />}
@@ -1441,7 +1447,6 @@ export default function ProductPage({ data }: { data: ProductData }) {
                       </dl>
                     )}
 
-                    {data.ofertaPdf && <PrzyciskOferty onClick={() => setOfertaOtwarta(true)} />}
                   </div>
 
                   {data.pricing.commissions && data.pricing.commissions.length > 0 && (
@@ -1472,6 +1477,13 @@ export default function ProductPage({ data }: { data: ProductData }) {
                     <p className="border-t border-stone-200 bg-stone-50 px-5 py-3 text-xs leading-relaxed text-stone-500">
                       {data.pricing.note}
                     </p>
+                  )}
+
+                  {/* kolejność bloku: cena → opłaty → dopiero pobranie oferty */}
+                  {data.ofertaPdf && (
+                    <div className="border-t border-stone-200 px-5 pb-5 pt-1">
+                      <PrzyciskOferty onClick={() => setOfertaOtwarta(true)} />
+                    </div>
                   )}
                 </div>
               )}
@@ -1707,17 +1719,21 @@ export default function ProductPage({ data }: { data: ProductData }) {
         />
       )}
 
-      {/* Mobilne CTA przyklejone do dołu */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-stone-200 bg-white/95 p-3 backdrop-blur sm:hidden">
-        <button
-          type="button"
-          onClick={askForProduct}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 font-semibold text-white"
-        >
-          Zapytaj o {data.name}
-        </button>
-      </div>
-      <div className="h-20 sm:hidden" />
+      {/* Mobilne CTA przyklejone do dołu — znika razem z parą przycisków w nagłówku */}
+      {!data.hideHeaderCta && (
+        <>
+          <div className="fixed inset-x-0 bottom-0 z-40 border-t border-stone-200 bg-white/95 p-3 backdrop-blur sm:hidden">
+            <button
+              type="button"
+              onClick={askForProduct}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 font-semibold text-white"
+            >
+              Zapytaj o {data.name}
+            </button>
+          </div>
+          <div className="h-20 sm:hidden" />
+        </>
+      )}
     </div>
   )
 }

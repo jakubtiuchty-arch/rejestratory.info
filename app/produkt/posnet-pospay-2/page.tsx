@@ -32,12 +32,6 @@ const data: ProductData = {
   whyNavLabel: 'Dlaczego Pospay 2',
   whyHeading: 'Do czego przyda się w nadleśnictwie',
   whyLabel: 'Sprzedaż drewna i usług',
-  highlights: [
-    { icon: ICON.karta, label: 'Płatności', value: 'karta i BLIK w urządzeniu' },
-    { icon: ICON.przekatna, label: 'Ekran operatora', value: '4,5″, 1280 × 720' },
-    { icon: ICON.bateria, label: 'Akumulator', value: '6800 mAh (drukarka)' },
-    { icon: ICON.chmura, label: 'Komunikacja z CRK', value: 'modem GSM i Wi-Fi' },
-  ],
   specGroups: [
     {
       title: 'Urządzenie',
@@ -124,6 +118,9 @@ const data: ProductData = {
   },
   // klient generuje ofertę PDF sam — dane w lib/oferta-pdf/produkty.ts
   ofertaPdf: true,
+  // pierwszy krok na tej karcie to pobranie oferty, nie zapytanie —
+  // skrót parametrów i para przycisków nad cennikiem są tu zbędne
+  hideHeaderCta: true,
   timeline: {
     label: 'Od zamówienia do pierwszego paragonu',
     heading: 'Proces zakupu i wdrożenia',
