@@ -1,5 +1,17 @@
 # PROGRESS — rejestratory.info
 
+## 2026-09-09 — newsletter: smartfony Samsung Galaxy (przygotowany na 15.09)
+
+Jakub: „Lecimy z samsungami”. Sprawdzone najpierw, czy Samsung był już tematem numeru — **nie był**: sześć dotychczasowych wydań to Pospay 2, EM45, Dell Pro 16, monitory Dell, Apple i Brother; Samsung pojawiał się tylko w siatce kategorii i jako baner pod wydaniem o Brotherze. TC58e przesunięty z 14.09 na 21.09, dalsze propozycje o tydzień.
+
+Plik `public/newsletter/editions/2026-09-15-samsung-galaxy.html`, kampania `samsung-2026-09-15`, manifest wskazuje wydanie, bulk wtorek **15.09 8:30** po zatwierdzeniu poniedziałkowej testówki.
+
+**Układ kategorii** jak przy Brotherze i Apple, bez cen (decyzja z 02.09). Model wiodący: **XCover7** — jedyny wzmocniony w stawce, z wymienną baterią i normą MIL-STD-810H, więc najbliższy pracy leśniczego. Galeria: XCover7 duży, obok S25 Ultra i S25 FE. Siedem wierszy specyfikacji XCover7 wyłącznie z karty w repo. Kafle: S25 Ultra, S25 FE, A56, A36, a pod nimi zdanie o S25+ i tablecie Tab Active5, żeby nie rozdymać listy. Blok zakupu prowadzi na `zup.lodz.lasy.gov.pl/rejestratory` (tam ZUP trzyma telefony), stopki: dostawa i serwis TAKMA oraz akcesoria.
+
+**Hero** `las-samsung-anim.gif` (600 × 250, 530 kB): gpt_image_2 z trzema renderami z katalogu jako referencją (XCover7, S25 Ultra, A56), nocny las w granacie Samsunga, sześć klatek łagodnego najazdu i powrotu. Z dwóch wariantów wybrany ten z telefonami większymi w kadrze.
+
+**Pułapki wyłapane na podglądzie:** kafel S25 FE brał zdjęcie S25+ (podobne rendery, łatwo pomylić przy kopiowaniu bloku); baner na dole po skopiowaniu z wydania o Brotherze pokazywał Samsunga, czyli temat tego samego numeru — wrócił EM45; nota o znakach towarowych nadal dotyczyła Apple, teraz Samsung Electronics.
+
 ## 2026-09-09 — karta Pospay 2: klient sam generuje ofertę w PDF
 
 Jakub: „Potrzebuję wdrożyć na karcie Pospay 2 możliwość wygenerowania przez klienta oferty w PDF. Sprawdź, jak działają oferty w repo takma i ma być tak samo, ale w klimacie leśnym.”
