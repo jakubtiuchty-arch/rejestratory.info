@@ -99,3 +99,47 @@
   8%            { opacity: 1; transform: scale(1); }
   30%           { opacity: 0; transform: scale(1.35); }
 }
+
+/* Przycisk „Pobierz ofertę w PDF” — gradient przesuwa się w kółko, a nad nim
+   unoszą się drobinki. Tło jest szersze niż przycisk (200%), więc przesunięcie
+   o połowę wraca do punktu wyjścia i pętla jest niewidoczna. */
+@keyframes oferta-gradient {
+  from { background-position: 0% 50%; }
+  to   { background-position: -200% 50%; }
+}
+
+.oferta-tlo {
+  /* pierwszy i ostatni przystanek muszą być tym samym kolorem, inaczej na styku
+     powtórzenia widać pionowy szew; z tego samego powodu kąt jest prosty */
+  background-image: linear-gradient(
+    90deg,
+    #0a1b12 0%,
+    #14532d 18%,
+    #2f7d4a 33%,
+    #14532d 48%,
+    #0a1b12 62%,
+    #14532d 82%,
+    #0a1b12 100%
+  );
+  background-size: 200% 100%;
+  animation: oferta-gradient 7s linear infinite;
+}
+
+/* Każda drobinka dryfuje w górę i gaśnie; opóźnienia rozstawione w kodzie,
+   żeby ruch nie był zsynchronizowany. */
+@keyframes oferta-drobinka {
+  0%   { opacity: 0; transform: translate3d(0, 6px, 0) scale(0.6); }
+  25%  { opacity: 0.9; }
+  70%  { opacity: 0.55; }
+  100% { opacity: 0; transform: translate3d(10px, -10px, 0) scale(1.1); }
+}
+
+.oferta-drobinka {
+  animation: oferta-drobinka linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oferta-tlo,
+  .oferta-drobinka { animation: none; }
+  .oferta-drobinka { opacity: 0.5; }
+}

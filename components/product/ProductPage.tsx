@@ -531,6 +531,51 @@ const UsedBy = ({
 /* -------------------------------------------------------------------------- */
 
 /**
+ * Przycisk „Pobierz ofertę w PDF”. Gradient przesuwa się w kółko, nad nim
+ * unoszą się drobinki — przycisk ma przyciągać wzrok w cenniku, nie wyglądając
+ * jak zwykły guzik formularza.
+ * Same animacje w `globals.css`, tu zostają tylko opóźnienia i pozycje.
+ */
+const DROBINKI = [
+  { left: '12%', top: '62%', size: 3, delay: '0s', dur: '3.6s' },
+  { left: '22%', top: '34%', size: 2, delay: '0.7s', dur: '4.2s' },
+  { left: '34%', top: '70%', size: 2, delay: '1.4s', dur: '3.9s' },
+  { left: '46%', top: '40%', size: 3, delay: '0.3s', dur: '4.6s' },
+  { left: '55%', top: '66%', size: 2, delay: '2.1s', dur: '3.4s' },
+  { left: '64%', top: '30%', size: 2, delay: '1.1s', dur: '4.1s' },
+  { left: '73%', top: '58%', size: 3, delay: '2.6s', dur: '3.8s' },
+]
+
+const PrzyciskOferty = ({ onClick }: { onClick: () => void }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="group relative mt-4 flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-full px-6 py-3.5 shadow-lg shadow-emerald-900/20 transition hover:shadow-xl hover:shadow-emerald-900/25"
+  >
+    <span aria-hidden className="oferta-tlo absolute inset-0" />
+    <span aria-hidden className="absolute inset-0 overflow-hidden">
+      {DROBINKI.map((d, i) => (
+        <span
+          key={i}
+          className="oferta-drobinka absolute rounded-full bg-[#A8F000]/70"
+          style={{
+            left: d.left,
+            top: d.top,
+            width: d.size,
+            height: d.size,
+            animationDelay: d.delay,
+            animationDuration: d.dur,
+          }}
+        />
+      ))}
+    </span>
+
+    <img src={naCiemnym(ICON.pobierz)} alt="" className="relative h-4 w-4 shrink-0" />
+    <span className="relative text-sm font-semibold text-white">Pobierz ofertę w PDF</span>
+  </button>
+)
+
+/**
  * Okno „Jakie dokumenty?”. Renderowane portalem do `body` — sekcja wdrożenia ma
  * `overflow-hidden` i przycinała warstwę `fixed`. Kolorystyka leśnego panelu,
  * żeby okno czytało się jako część tej sekcji, a nie wtręt z reszty karty.
@@ -1378,16 +1423,7 @@ export default function ProductPage({ data }: { data: ProductData }) {
                       </dl>
                     )}
 
-                    {data.ofertaPdf && (
-                      <button
-                        type="button"
-                        onClick={() => setOfertaOtwarta(true)}
-                        className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#0A1B12] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#14532d]"
-                      >
-                        <img src={naCiemnym(ICON.pobierz)} alt="" className="h-4 w-4" />
-                        Pobierz ofertę w PDF
-                      </button>
-                    )}
+                    {data.ofertaPdf && <PrzyciskOferty onClick={() => setOfertaOtwarta(true)} />}
                   </div>
 
                   {data.pricing.commissions && data.pricing.commissions.length > 0 && (
