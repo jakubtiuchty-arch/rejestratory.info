@@ -549,7 +549,7 @@ const PrzyciskOferty = ({ onClick }: { onClick: () => void }) => (
     <span aria-hidden className="oferta-tlo absolute inset-0" />
     {/* poziomice jak w sekcji wdrożenia: dwie kopie w torze, tor jedzie w bok */}
     <span aria-hidden className="absolute inset-0 overflow-hidden">
-      <span className="oferta-tor oferta-oddech absolute inset-y-0 left-0 text-[#A8F000]/25">
+      <span className="oferta-tor oferta-oddech absolute left-0 text-[#A8F000]/60">
         <span><ContourTexture /></span>
         <span><ContourTexture /></span>
       </span>
