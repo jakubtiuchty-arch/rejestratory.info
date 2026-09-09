@@ -3,13 +3,15 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import ContourTexture from '@/components/ContourTexture'
-import { naCiemnym } from '@/components/product/icons'
+import { ICON, naCiemnym } from '@/components/product/icons'
 
 /**
  * Okno „Pobierz ofertę w PDF”. Klient wpisuje dane nadleśnictwa, serwer
  * generuje ofertę, plik zapisuje się od razu, a kopia idzie na e-mail.
- * Kolorystyka i mechanika (portal do body, Escape) jak w oknie „Jakie dokumenty?”.
+ *
+ * Układ: nagłówek i stopka z przyciskiem są poza obszarem przewijania
+ * (`shrink-0`), przewijają się same pola — CTA widać bez scrollowania także
+ * na niskich ekranach. Jasne tło, leśny akcent tylko w pasku nagłówka.
  */
 
 type Props = {
@@ -45,9 +47,9 @@ const PUSTE: Pola = {
 }
 
 const pole =
-  'w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-emerald-50/35 focus:border-[#A8F000] focus:bg-white/[0.06]'
-const etykieta = 'mb-1.5 block text-sm font-medium text-emerald-50/85'
-const opcjonalnie = <span className="font-normal text-emerald-50/45"> (opcjonalnie)</span>
+  'w-full rounded-lg border border-stone-300 bg-white px-3.5 py-2.5 text-sm text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20'
+const etykieta = 'mb-1 block text-sm font-medium text-stone-700'
+const opcjonalnie = <span className="font-normal text-stone-400"> (opcjonalnie)</span>
 
 export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
   const [zamontowane, setZamontowane] = useState(false)
@@ -118,7 +120,7 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-stone-900/50 p-4 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -128,72 +130,64 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="oferta-pdf-tytul"
-            className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0A1B12] shadow-2xl shadow-black/60"
-            initial={{ scale: 0.96, opacity: 0 }}
+            className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+            initial={{ scale: 0.97, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.96, opacity: 0 }}
+            exit={{ scale: 0.97, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
-            <ContourTexture className="text-[#A8F000]/[0.07]" />
-
-            <div className="relative flex shrink-0 items-start justify-between gap-4 px-6 pb-4 pt-6">
+            {/* nagłówek — poza obszarem przewijania */}
+            <div className="flex shrink-0 items-start justify-between gap-4 bg-[#14532d] px-6 py-4">
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/15 bg-white/[0.04]">
-                  <img src={naCiemnym('/icons/line/pobierz.png')} alt="" className="h-6 w-6" />
-                </div>
+                <img src={naCiemnym(ICON.pobierz)} alt="" className="h-6 w-6 shrink-0" />
                 <div>
-                  <h3 id="oferta-pdf-tytul" className="text-2xl font-bold tracking-tight text-white">
+                  <h3 id="oferta-pdf-tytul" className="text-xl font-bold tracking-tight text-white">
                     Oferta w PDF
                   </h3>
-                  <p className="mt-0.5 text-sm text-emerald-50/60">{produkt.name} dla Państwa nadleśnictwa</p>
+                  <p className="text-sm text-emerald-50/70">{produkt.name}</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={zamknij}
                 aria-label="Zamknij"
-                className="rounded-full p-2 transition hover:bg-white/10"
+                className="rounded-full p-1.5 transition hover:bg-white/10"
               >
-                <img src={naCiemnym('/icons/line/zamknij.png')} alt="" className="h-5 w-5 opacity-70" />
+                <img src={naCiemnym(ICON.zamknij)} alt="" className="h-5 w-5 opacity-80" />
               </button>
             </div>
 
             {stan === 'gotowe' ? (
-              <div className="bez-paska relative min-h-0 flex-1 overflow-y-auto px-6 pb-6">
-                <div className="rounded-2xl border border-[#A8F000]/40 bg-[#A8F000]/10 p-5">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#A8F000]">
+              <div className="px-6 py-6">
+                <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-700">
                     Oferta gotowa
                   </p>
-                  <p className="mt-2 text-lg font-semibold text-white">
+                  <p className="mt-1.5 text-lg font-semibold text-stone-900">
                     {numer ? `Oferta nr ${numer}` : 'Plik zapisany'}
                   </p>
-                  <p className="mt-2 text-sm leading-relaxed text-emerald-50/80">
-                    Plik PDF pobrał się na Państwa urządzenie, a kopię wysłaliśmy na adres{' '}
-                    <b className="text-white">{pola.email}</b>. Oferta jest ważna 30 dni. Pytania o
+                  <p className="mt-2 text-sm leading-relaxed text-stone-600">
+                    Plik pobrał się na Państwa urządzenie, a kopię wysłaliśmy na adres{' '}
+                    <b className="text-stone-900">{pola.email}</b>. Oferta jest ważna 30 dni. Pytania o
                     termin dostawy albo wdrożenie: 607 819 688.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={zamknij}
-                  className="mt-5 w-full rounded-xl bg-[#A8F000] px-6 py-3.5 font-semibold text-[#0A1B12] transition hover:brightness-110"
+                  className="mt-5 w-full rounded-xl bg-emerald-600 px-6 py-3.5 font-semibold text-white transition hover:bg-emerald-700"
                 >
                   Zamknij
                 </button>
               </div>
             ) : (
-              <form onSubmit={wyslij} className="bez-paska relative flex min-h-0 flex-1 flex-col overflow-y-auto">
-                <div className="space-y-4 px-6 pb-5">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                    <p className="text-sm leading-relaxed text-emerald-50/85">
-                      Gotowa oferta z cenami netto i brutto, warunkami zakupu oraz procesem wdrożenia.
-                      Dokument pobierze się na Państwa urządzenie, a kopia trafi na wskazany adres
-                      e-mail. Ważna 30 dni.
-                    </p>
-                    <p className="mt-2 text-xs text-emerald-50/45">
-                      Pola bez dopisku „opcjonalnie” są wymagane.
-                    </p>
-                  </div>
+              <form onSubmit={wyslij} className="flex min-h-0 flex-1 flex-col">
+                {/* jedyny obszar przewijany */}
+                <div className="bez-paska min-h-0 flex-1 space-y-3.5 overflow-y-auto px-6 py-5">
+                  <p className="text-sm leading-relaxed text-stone-600">
+                    Oferta z cenami netto i brutto, warunkami zakupu oraz procesem wdrożenia. Plik
+                    pobierze się na Państwa urządzenie, a kopia trafi na wskazany adres e-mail.
+                  </p>
 
                   <div>
                     <label htmlFor="of-nadl" className={etykieta}>Nadleśnictwo / jednostka</label>
@@ -205,7 +199,7 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
                     <input id="of-adres" className={pole} required minLength={5} value={pola.adres}
                       onChange={(e) => ustaw('adres', e.target.value)} placeholder="ul. Leśna 3, 11-010 Barczewo" />
                   </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="grid gap-3.5 sm:grid-cols-2">
                     <div>
                       <label htmlFor="of-nip" className={etykieta}>NIP{opcjonalnie}</label>
                       <input id="of-nip" className={pole} inputMode="numeric" value={pola.nip}
@@ -222,7 +216,7 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
                     <input id="of-osoba" className={pole} required minLength={3} value={pola.osoba}
                       onChange={(e) => ustaw('osoba', e.target.value)} placeholder="Imię i nazwisko" />
                   </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="grid gap-3.5 sm:grid-cols-2">
                     <div>
                       <label htmlFor="of-email" className={etykieta}>E-mail</label>
                       <input id="of-email" className={pole} type="email" required value={pola.email}
@@ -236,7 +230,7 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
                   </div>
                   <div>
                     <label htmlFor="of-uwagi" className={etykieta}>Uwagi do oferty{opcjonalnie}</label>
-                    <textarea id="of-uwagi" className={`${pole} min-h-[72px]`} maxLength={500} value={pola.uwagi}
+                    <textarea id="of-uwagi" className={`${pole} min-h-[64px]`} maxLength={500} value={pola.uwagi}
                       onChange={(e) => ustaw('uwagi', e.target.value)} placeholder="np. termin dostawy, liczba leśnictw" />
                   </div>
 
@@ -247,28 +241,29 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
                       onChange={(e) => ustaw('www', e.target.value)} />
                   </div>
 
-                  <label className="flex items-start gap-3 rounded-xl border border-white/10 px-4 py-3 text-sm text-emerald-50/75">
+                  <label className="flex items-start gap-2.5 text-xs leading-relaxed text-stone-500">
                     <input type="checkbox" required checked={pola.zgoda}
                       onChange={(e) => ustaw('zgoda', e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 accent-[#A8F000]" />
+                      className="mt-0.5 h-4 w-4 shrink-0 accent-emerald-600" />
                     <span>
                       Wyrażam zgodę na przetwarzanie podanych danych przez TAKMA w celu przygotowania i
-                      przesłania oferty.
+                      przesłania oferty. Pola bez dopisku „opcjonalnie” są wymagane.
                     </span>
                   </label>
 
                   {blad && (
-                    <p role="alert" className="rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                    <p role="alert" className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                       {blad}
                     </p>
                   )}
                 </div>
 
-                <div className="relative shrink-0 border-t border-white/10 bg-white/[0.03] px-6 py-4">
+                {/* stopka z CTA — zawsze widoczna, bez przewijania */}
+                <div className="shrink-0 border-t border-stone-200 bg-stone-50 px-6 py-4">
                   <button
                     type="submit"
                     disabled={stan === 'wysylka'}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#A8F000] px-6 py-3.5 font-semibold text-[#0A1B12] transition hover:brightness-110 disabled:cursor-wait disabled:opacity-70"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-wait disabled:opacity-70"
                   >
                     {stan === 'wysylka' ? 'Przygotowujemy ofertę…' : 'Pobierz ofertę w PDF'}
                   </button>
