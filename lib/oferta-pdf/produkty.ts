@@ -25,8 +25,7 @@ export const PRODUKTY_OFERTY: Record<string, ProduktOferty> = {
   'posnet-pospay-2': {
     slug: 'posnet-pospay-2',
     nazwa: 'Posnet Pospay 2',
-    opis:
-      'Kasa fiskalna online z drukarką i terminalem płatniczym. Ekran 4,5″, płatności kartą i BLIK, akumulator 6800 mAh, GSM i Wi-Fi, zgodna z Leśnik+.',
+    opis: 'W cenie: fiskalizacja, dostawa, szkolenie i integracja z rejestratorami.',
     cenaNetto: 179_900,
     abonament: {
       nazwa: 'Abonament za terminal płatniczy',
