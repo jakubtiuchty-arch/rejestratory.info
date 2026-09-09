@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ICON, naCiemnym } from '@/components/product/icons'
+import Drobinki from '@/components/product/Drobinki'
 
 /**
  * Okno „Pobierz ofertę w PDF”. Klient wpisuje dane nadleśnictwa, serwer
@@ -136,9 +137,11 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
             exit={{ scale: 0.97, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* nagłówek — poza obszarem przewijania */}
-            <div className="flex shrink-0 items-start justify-between gap-4 bg-[#14532d] px-6 py-4">
-              <div className="flex items-center gap-3">
+            {/* nagłówek — poza obszarem przewijania; to samo tło co przycisk w cenniku */}
+            <div className="relative flex shrink-0 items-start justify-between gap-4 overflow-hidden px-6 py-4">
+              <span aria-hidden className="oferta-tlo absolute inset-0" />
+              <Drobinki />
+              <div className="relative flex items-center gap-3">
                 <img src={naCiemnym(ICON.pobierz)} alt="" className="h-6 w-6 shrink-0" />
                 <div>
                   <h3 id="oferta-pdf-tytul" className="text-xl font-bold tracking-tight text-white">
@@ -151,7 +154,7 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
                 type="button"
                 onClick={zamknij}
                 aria-label="Zamknij"
-                className="rounded-full p-1.5 transition hover:bg-white/10"
+                className="relative rounded-full p-1.5 transition hover:bg-white/10"
               >
                 <img src={naCiemnym(ICON.zamknij)} alt="" className="h-5 w-5 opacity-80" />
               </button>
