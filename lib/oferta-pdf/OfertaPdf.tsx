@@ -51,7 +51,10 @@ const s = StyleSheet.create({
   docTitle: { fontSize: 22, fontWeight: 'bold', color: C.green, letterSpacing: 3, lineHeight: 1 },
   docNumber: { fontSize: 9.5, color: C.emerald, fontWeight: 'bold', marginTop: 6, lineHeight: 1 },
   docSub: { fontSize: 8, color: C.muted, marginTop: 4, lineHeight: 1 },
-  body: { paddingHorizontal: 44, paddingTop: 18 },
+  /* flexGrow + space-between: wolne miejsce rozkłada się między sekcje, więc
+     treść sięga linii nad stopką zamiast urywać się w połowie strony.
+     Przy pełnej stronie (długie uwagi) nie ma czego rozkładać i nic się nie zmienia. */
+  body: { flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: 44, paddingTop: 18, paddingBottom: 4 },
 
   parties: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 13 },
   party: { width: '47%' },
