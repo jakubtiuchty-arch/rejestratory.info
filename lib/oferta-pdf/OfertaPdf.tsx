@@ -46,7 +46,6 @@ const C = {
 const s = StyleSheet.create({
   page: { paddingTop: 0, paddingBottom: 42, paddingHorizontal: 0, fontFamily: 'DejaVu', fontSize: 9.5, color: C.body, lineHeight: 1.35 },
   band: { backgroundColor: '#ffffff', paddingTop: 22, paddingBottom: 12, paddingHorizontal: 44, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 2, borderBottomColor: C.green },
-  bandAccent: { height: 2, backgroundColor: C.lime },
   logo: { width: 118, height: 46, objectFit: 'contain', objectPositionX: 0 } as never,
   docTitleWrap: { alignItems: 'flex-end' },
   docTitle: { fontSize: 22, fontWeight: 'bold', color: C.green, letterSpacing: 3, lineHeight: 1 },
@@ -117,7 +116,6 @@ const s = StyleSheet.create({
   clientNotes: { backgroundColor: C.soft, borderLeftWidth: 3, borderLeftColor: C.green, borderTopRightRadius: 6, borderBottomRightRadius: 6, paddingHorizontal: 10, paddingVertical: 7, marginBottom: 8, fontSize: 9, color: '#374151' },
 
   footer: { position: 'absolute', bottom: 14, left: 44, right: 44, borderTopWidth: 1, borderTopColor: C.line, paddingTop: 6, fontSize: 7.5, color: C.muted },
-  pageNo: { position: 'absolute', right: 0, top: 7, fontSize: 7.5, color: C.muted },
 })
 
 /** Kwoty bez toLocaleString — okrojony ICU w Node dawał inne separatory niż przeglądarka. */
@@ -151,7 +149,6 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
             <Text style={s.docSub}>sprzęt IT dla nadleśnictw · rejestratory.info</Text>
           </View>
         </View>
-        <View style={s.bandAccent} fixed />
 
         <View style={s.body}>
           <View style={s.parties}>
@@ -281,7 +278,6 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
           <Text style={{ textAlign: 'center' }}>
             {SPRZEDAWCA.nazwa} · {SPRZEDAWCA.adres1}, {SPRZEDAWCA.adres2} · NIP {SPRZEDAWCA.nip} · {SPRZEDAWCA.email} · {SPRZEDAWCA.telefon} · {SPRZEDAWCA.www}
           </Text>
-          <Text style={s.pageNo} render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />
         </View>
       </Page>
     </Document>
