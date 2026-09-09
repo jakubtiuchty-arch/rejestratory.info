@@ -131,7 +131,7 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
             role="dialog"
             aria-modal="true"
             aria-labelledby="oferta-pdf-tytul"
-            className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+            className="relative flex max-h-[94vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
             initial={{ scale: 0.97, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.97, opacity: 0 }}
@@ -186,10 +186,9 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
             ) : (
               <form onSubmit={wyslij} className="flex min-h-0 flex-1 flex-col">
                 {/* jedyny obszar przewijany */}
-                <div className="bez-paska min-h-0 flex-1 space-y-3.5 overflow-y-auto px-6 py-5">
+                <div className="bez-paska min-h-0 flex-1 space-y-3 overflow-y-auto px-6 py-4">
                   <p className="text-sm leading-relaxed text-stone-600">
-                    Oferta z cenami netto i brutto, warunkami zakupu oraz procesem wdrożenia. Plik
-                    pobierze się na Państwa urządzenie, a kopia trafi na wskazany adres e-mail.
+                    Plik pobierze się na Państwa urządzenie, a kopia trafi na wskazany adres e-mail.
                   </p>
 
                   <div>
@@ -197,16 +196,11 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
                     <input id="of-nadl" className={pole} required minLength={3} value={pola.nadlesnictwo}
                       onChange={(e) => ustaw('nadlesnictwo', e.target.value)} />
                   </div>
-                  <div>
-                    <label htmlFor="of-adres" className={etykieta}>Adres</label>
-                    <input id="of-adres" className={pole} required minLength={5} value={pola.adres}
-                      onChange={(e) => ustaw('adres', e.target.value)} />
-                  </div>
-                  <div className="grid gap-3.5 sm:grid-cols-2">
-                    <div>
-                      <label htmlFor="of-nip" className={etykieta}>NIP{opcjonalnie}</label>
-                      <input id="of-nip" className={pole} inputMode="numeric" value={pola.nip}
-                        onChange={(e) => ustaw('nip', e.target.value)} />
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    <div className="sm:col-span-2">
+                      <label htmlFor="of-adres" className={etykieta}>Adres</label>
+                      <input id="of-adres" className={pole} required minLength={5} value={pola.adres}
+                        onChange={(e) => ustaw('adres', e.target.value)} />
                     </div>
                     <div>
                       <label htmlFor="of-ilosc" className={etykieta}>Ilość urządzeń</label>
@@ -214,26 +208,33 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
                         onChange={(e) => ustaw('ilosc', Number(e.target.value))} />
                     </div>
                   </div>
-                  <div>
-                    <label htmlFor="of-osoba" className={etykieta}>Osoba do kontaktu</label>
-                    <input id="of-osoba" className={pole} required minLength={3} value={pola.osoba}
-                      onChange={(e) => ustaw('osoba', e.target.value)} />
-                  </div>
-                  <div className="grid gap-3.5 sm:grid-cols-2">
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="of-osoba" className={etykieta}>Osoba do kontaktu</label>
+                      <input id="of-osoba" className={pole} required minLength={3} value={pola.osoba}
+                        onChange={(e) => ustaw('osoba', e.target.value)} />
+                    </div>
                     <div>
                       <label htmlFor="of-email" className={etykieta}>E-mail</label>
                       <input id="of-email" className={pole} type="email" required value={pola.email}
                         onChange={(e) => ustaw('email', e.target.value)} />
                     </div>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
                     <div>
                       <label htmlFor="of-tel" className={etykieta}>Telefon{opcjonalnie}</label>
                       <input id="of-tel" className={pole} type="tel" value={pola.telefon}
                         onChange={(e) => ustaw('telefon', e.target.value)} />
                     </div>
+                    <div>
+                      <label htmlFor="of-nip" className={etykieta}>NIP{opcjonalnie}</label>
+                      <input id="of-nip" className={pole} inputMode="numeric" value={pola.nip}
+                        onChange={(e) => ustaw('nip', e.target.value)} />
+                    </div>
                   </div>
                   <div>
                     <label htmlFor="of-uwagi" className={etykieta}>Uwagi do oferty{opcjonalnie}</label>
-                    <textarea id="of-uwagi" className={`${pole} min-h-[64px]`} maxLength={500} value={pola.uwagi}
+                    <textarea id="of-uwagi" className={`${pole} min-h-[46px]`} maxLength={500} value={pola.uwagi}
                       onChange={(e) => ustaw('uwagi', e.target.value)} />
                   </div>
 
@@ -248,10 +249,7 @@ export default function OfertaPdfModal({ open, onClose, produkt }: Props) {
                     <input type="checkbox" required checked={pola.zgoda}
                       onChange={(e) => ustaw('zgoda', e.target.checked)}
                       className="mt-0.5 h-4 w-4 shrink-0 accent-emerald-600" />
-                    <span>
-                      Wyrażam zgodę na przetwarzanie podanych danych przez TAKMA w celu przygotowania i
-                      przesłania oferty. Pola bez dopisku „opcjonalnie” są wymagane.
-                    </span>
+                    <span>Wyrażam zgodę na przetwarzanie danych w celu przygotowania oferty.</span>
                   </label>
 
                   {blad && (

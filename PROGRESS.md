@@ -37,6 +37,8 @@ Jakub: „Potrzebuję wdrożyć na karcie Pospay 2 możliwość wygenerowania pr
 
 **Wyłącznik maili do testów.** Każde wywołanie `/api/oferta-pdf` wysyła kopię klientowi i powiadomienie handlowe — przy iteracjach nad wyglądem PDF to zasypało skrzynkę Jakuba dwudziestoma mailami. Zmienna `OFERTA_PDF_MAILE=off` wyłącza wysyłkę (endpoint zwraca sam plik). **Dev server do prac nad ofertą uruchamiać z tą zmienną.**
 
+**Formularz mieści się bez przewijania (09.09).** Zgoda RODO ucinała się na dole okna. Zamiast dokładać scroll: pola przegrupowane z sześciu rzędów na pięć — „Adres” i „Ilość urządzeń” w proporcji 2:1, „Osoba” obok „E-mail”, „Telefon” obok „NIP”. Do tego krótszy wstęp (jedno zdanie), krótsza zgoda (bez zdania o polach wymaganych), ciaśniejsze odstępy i `max-h-[94vh]`. Zmierzone Playwrightem przy czterech wysokościach okna (1000, 900, 800, 740 px): treść formularza ma 502 px i mieści się w każdej z nich bez przewijania. Pełne przejście po przegrupowaniu sprawdzone — plik się pobiera.
+
 **Sprawdzone lokalnie (:3006)**: `tsc` czysty; API zwraca 200 z PDF (46 kB, 1 strona, polskie znaki OK), 400 z listą błędów przy złych danych; Playwright: przycisk na karcie → modal → wypełnienie → pobranie pliku → ekran „Oferta gotowa”, także na 390 px; dwa maile z załącznikiem dostarczone przez Resend na jakub.tiuchty@takma.com.pl. Uwaga: `handlowy@takma.com.pl` bywa odrzucany przez HostKarma (pamięć `takma-mail-hostkarma`), więc powiadomienie może czasem nie dojść — kopia u klienta i rejestr w Supabase są niezależne.
 
 ## 2026-09-02 — newsletter: urządzenia wielofunkcyjne Brother (przygotowane na 08.09)
