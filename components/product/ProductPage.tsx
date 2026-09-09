@@ -536,9 +536,35 @@ const UsedBy = ({
 
 /**
  * Przycisk „Pobierz ofertę w PDF”. Gradient przesuwa się w kółko, a nad nim
- * płyną poziomice — ten sam wzór, co na leśnym panelu „Proces zakupu
- * i wdrożenia”. Animacje siedzą w `globals.css`.
+ * ledwo widocznie migoczą drobinki. Animacje siedzą w `globals.css`, tu
+ * zostają pozycje i opóźnienia — wypisane na stałe, bo losowanie przy renderze
+ * rozjeżdża hydratację.
  */
+
+const DROBINKI = [
+  { left: '1.4%', top: '22.9%', size: 3.5, delay: '0.19s', dur: '4.24s', jasna: true },
+  { left: '6.6%', top: '77.5%', size: 2, delay: '0.15s', dur: '3.47s', jasna: true },
+  { left: '9.4%', top: '42.6%', size: 3, delay: '0.5s', dur: '3.05s', jasna: false },
+  { left: '16.5%', top: '53.6%', size: 2.5, delay: '0.2s', dur: '3.04s', jasna: false },
+  { left: '18.3%', top: '42.2%', size: 3, delay: '0.47s', dur: '3.22s', jasna: false },
+  { left: '22.8%', top: '53.9%', size: 3.5, delay: '0.75s', dur: '2.79s', jasna: false },
+  { left: '28.4%', top: '56.6%', size: 2.5, delay: '2.72s', dur: '3.46s', jasna: true },
+  { left: '32.8%', top: '44.6%', size: 2, delay: '0.99s', dur: '2.96s', jasna: false },
+  { left: '35.6%', top: '33.6%', size: 2.5, delay: '3.5s', dur: '4.06s', jasna: true },
+  { left: '42.8%', top: '20.5%', size: 2.5, delay: '0.66s', dur: '3.28s', jasna: false },
+  { left: '45.4%', top: '81.3%', size: 1.5, delay: '3.06s', dur: '3.75s', jasna: false },
+  { left: '49.4%', top: '62.1%', size: 3, delay: '1.99s', dur: '4.19s', jasna: true },
+  { left: '53.1%', top: '31.4%', size: 3.5, delay: '2.66s', dur: '2.72s', jasna: false },
+  { left: '59.2%', top: '83.5%', size: 2.5, delay: '1.14s', dur: '3.37s', jasna: false },
+  { left: '61.6%', top: '45.2%', size: 2, delay: '2.44s', dur: '3.59s', jasna: true },
+  { left: '66.8%', top: '65.2%', size: 2.5, delay: '1.56s', dur: '4.34s', jasna: true },
+  { left: '71.7%', top: '51.6%', size: 2, delay: '3.28s', dur: '4.33s', jasna: true },
+  { left: '75.9%', top: '37.8%', size: 2.5, delay: '3.83s', dur: '2.9s', jasna: true },
+  { left: '79.7%', top: '28.8%', size: 2.5, delay: '3.32s', dur: '2.96s', jasna: true },
+  { left: '83.8%', top: '50.5%', size: 3, delay: '2.27s', dur: '4.51s', jasna: false },
+  { left: '89.3%', top: '56.5%', size: 3.5, delay: '2.96s', dur: '3.51s', jasna: false },
+  { left: '95.1%', top: '61.0%', size: 3, delay: '1.57s', dur: '3.4s', jasna: true },
+]
 
 const PrzyciskOferty = ({ onClick }: { onClick: () => void }) => (
   <button
@@ -547,12 +573,24 @@ const PrzyciskOferty = ({ onClick }: { onClick: () => void }) => (
     className="group relative mt-4 flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-full px-6 py-3.5 shadow-lg shadow-emerald-900/20 transition hover:shadow-xl hover:shadow-emerald-900/25"
   >
     <span aria-hidden className="oferta-tlo absolute inset-0" />
-    {/* poziomice jak w sekcji wdrożenia: dwie kopie w torze, tor jedzie w bok */}
-    <span aria-hidden className="absolute inset-0 overflow-hidden">
-      <span className="oferta-tor oferta-oddech absolute left-0 text-[#A8F000]/60">
-        <span><ContourTexture /></span>
-        <span><ContourTexture /></span>
-      </span>
+    {/* drobinki ledwo widoczne — mają dawać życie, nie migać w oczy */}
+    <span aria-hidden className="absolute inset-0 overflow-hidden opacity-40">
+      {DROBINKI.map((d, i) => (
+        <span
+          key={i}
+          className="oferta-drobinka absolute rounded-full"
+          style={{
+            left: d.left,
+            top: d.top,
+            width: d.size,
+            height: d.size,
+            backgroundColor: d.jasna ? '#ffffff' : '#A8F000',
+            boxShadow: d.jasna ? '0 0 4px 0 rgba(255,255,255,0.4)' : '0 0 4px 0 rgba(168,240,0,0.35)',
+            animationDelay: d.delay,
+            animationDuration: d.dur,
+          }}
+        />
+      ))}
     </span>
 
     <img src={naCiemnym(ICON.pobierz)} alt="" className="relative h-4 w-4 shrink-0" />

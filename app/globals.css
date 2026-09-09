@@ -125,49 +125,21 @@
   animation: oferta-gradient 7s linear infinite;
 }
 
-/* Poziomice z sekcji wdrożenia, wprawione w powolny ruch: dwie kopie obok
-   siebie przesuwają się o połowę szerokości toru, więc pętla jest niewidoczna
-   (ten sam chwyt co w karuzeli logotypów). Drugi plan oddycha skalą, żeby
-   linie nie wyglądały jak sztywna tapeta. */
-@keyframes oferta-poziomice {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
+/* Drobinki nad gradientem: zapalają się, dryfują w górę i gasną. Celowo
+   przygaszone — mają dawać życie, nie ciągnąć wzroku na siebie. */
+@keyframes oferta-drobinka {
+  0%   { opacity: 0; transform: translate3d(0, 5px, 0) scale(0.4); }
+  25%  { opacity: 0.75; transform: translate3d(2px, 1px, 0) scale(1); }
+  60%  { opacity: 0.5; }
+  100% { opacity: 0; transform: translate3d(9px, -8px, 0) scale(0.5); }
 }
 
-@keyframes oferta-oddech {
-  0%, 100% { transform: scale(1); opacity: 0.85; }
-  50%      { transform: scale(1.08); opacity: 1; }
-}
-
-.oferta-tor {
-  display: flex;
-  width: 200%;
-  /* tor jest wyższy niż przycisk i wysunięty w górę — widać środkowy pas łuków
-     w większej skali, zamiast całej tekstury spłaszczonej do 50 px wysokości */
-  height: 260%;
-  top: -80%;
-  animation: oferta-poziomice 22s linear infinite;
-}
-
-/* atrybut strokeWidth z komponentu jest za cienki na tak małej powierzchni;
-   CSS wygrywa nad atrybutem prezentacyjnym SVG */
-.oferta-tor svg {
-  stroke-width: 2.6;
-}
-
-.oferta-tor > * {
-  position: relative;
-  width: 50%;
-  height: 100%;
-  flex: none;
-}
-
-.oferta-oddech {
-  animation: oferta-oddech 9s ease-in-out infinite;
+.oferta-drobinka {
+  animation: oferta-drobinka linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .oferta-tlo,
-  .oferta-tor,
-  .oferta-oddech { animation: none; }
+  .oferta-drobinka { animation: none; }
+  .oferta-drobinka { opacity: 0.35; }
 }
