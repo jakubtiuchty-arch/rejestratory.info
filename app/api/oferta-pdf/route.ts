@@ -66,6 +66,16 @@ function dopelniacz(nazwa: string): string {
   return odmieniony ? [odmieniony, ...reszta].join(' ') : nazwa
 }
 
+/**
+ * Klient wpisuje zwykle samo „Wipsowo”, a na ofercie ma stać „Nadleśnictwo
+ * Wipsowo”. Prefiks dokładamy tylko wtedy, gdy nazwa nie zaczyna się już od
+ * określenia jednostki — RDLP, zakład czy dyrekcja zostają bez zmian.
+ */
+const JEDNOSTKI = /^(nadle[śs]nictwo|le[śs]nictwo|rdlp|regionalna|dyrekcja|zak[łl]ad|zsl|zpuh|zup|lasy|dgl|okr[ę|e]g)/i
+function zNazwaJednostki(nazwa: string): string {
+  return JEDNOSTKI.test(nazwa) ? nazwa : `Nadleśnictwo ${nazwa}`
+}
+
 const tekst = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
 const esc = (t: string) =>
   t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
@@ -131,7 +141,7 @@ export async function POST(req: NextRequest) {
   }
 
   const produkt = PRODUKTY_OFERTY[tekst(b.slug, 80)]
-  const nadlesnictwo = tekst(b.nadlesnictwo, 120)
+  const nadlesnictwo = zNazwaJednostki(tekst(b.nadlesnictwo, 120))
   const adres = tekst(b.adres, 200)
   const nipSurowy = tekst(b.nip, 20).replace(/[\s-]/g, '')
   const osoba = tekst(b.osoba, 80)
@@ -207,8 +217,13 @@ export async function POST(req: NextRequest) {
     ['Telefon', telefon || '—'],
   ]
 
+  // Wyłącznik na czas pracy nad wyglądem oferty: przy `OFERTA_PDF_MAILE=off`
+  // endpoint zwraca sam PDF i nie zasypuje skrzynek kopiami z każdego testu.
+  const maileWlaczone = process.env.OFERTA_PDF_MAILE !== 'off'
+
   // maile w tle względem odpowiedzi: błąd wysyłki nie odbiera klientowi pliku
   try {
+    if (!maileWlaczone) throw new Error('wysyłka wyłączona (OFERTA_PDF_MAILE=off)')
     const resend = new Resend(process.env.RESEND_API_KEY)
     const zalaczniki = [{ filename: plik, content: pdf }]
     await Promise.all([
@@ -240,7 +255,8 @@ export async function POST(req: NextRequest) {
       }),
     ])
   } catch (e) {
-    console.error('[oferta-pdf] mail:', e)
+    if (maileWlaczone) console.error('[oferta-pdf] mail:', e)
+    else console.warn('[oferta-pdf] maile wyłączone — PDF bez wysyłki')
   }
 
   return new NextResponse(new Uint8Array(pdf), {

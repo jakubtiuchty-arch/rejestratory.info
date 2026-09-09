@@ -44,29 +44,29 @@ const C = {
 }
 
 const s = StyleSheet.create({
-  page: { paddingTop: 0, paddingBottom: 42, paddingHorizontal: 0, fontFamily: 'DejaVu', fontSize: 9.5, color: C.body, lineHeight: 1.35 },
-  band: { backgroundColor: '#ffffff', paddingTop: 22, paddingBottom: 12, paddingHorizontal: 44, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 2, borderBottomColor: C.green },
+  page: { paddingTop: 0, paddingBottom: 34, paddingHorizontal: 0, fontFamily: 'DejaVu', fontSize: 9.5, color: C.body, lineHeight: 1.35 },
+  band: { backgroundColor: '#ffffff', paddingTop: 22, paddingBottom: 14, paddingHorizontal: 44, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 2, borderBottomColor: C.green },
   logo: { width: 118, height: 46, objectFit: 'contain', objectPositionX: 0 } as never,
   docTitleWrap: { alignItems: 'flex-end' },
   docTitle: { fontSize: 22, fontWeight: 'bold', color: C.green, letterSpacing: 3, lineHeight: 1 },
   docNumber: { fontSize: 9.5, color: C.emerald, fontWeight: 'bold', marginTop: 6, lineHeight: 1 },
   docSub: { fontSize: 8, color: C.muted, marginTop: 4, lineHeight: 1 },
-  body: { paddingHorizontal: 44, paddingTop: 14 },
+  body: { paddingHorizontal: 44, paddingTop: 18 },
 
-  parties: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
+  parties: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 13 },
   party: { width: '47%' },
   partyTitle: { fontSize: 7.5, fontWeight: 'bold', color: C.emerald, letterSpacing: 1.5, textTransform: 'uppercase', borderBottomWidth: 1, borderBottomColor: C.line, paddingBottom: 3, marginBottom: 5 },
   partyName: { fontSize: 11, fontWeight: 'bold', color: C.ink, marginBottom: 2 },
-  partyText: { fontSize: 9, color: '#374151' },
+  partyText: { fontSize: 9.5, color: '#374151' },
 
-  dates: { flexDirection: 'row', backgroundColor: C.soft, borderRadius: 6, paddingVertical: 6, paddingHorizontal: 10, marginBottom: 10 },
+  dates: { flexDirection: 'row', backgroundColor: C.soft, borderRadius: 6, paddingVertical: 9, paddingHorizontal: 10, marginBottom: 13 },
   dateItem: { flex: 1, alignItems: 'center' },
   dateLabel: { fontSize: 7, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.8 },
   dateValue: { fontSize: 11, fontWeight: 'bold', color: C.ink, marginTop: 2 },
 
-  th: { flexDirection: 'row', backgroundColor: C.green, paddingVertical: 6, paddingHorizontal: 8, borderTopLeftRadius: 4, borderTopRightRadius: 4 },
+  th: { flexDirection: 'row', backgroundColor: C.green, paddingVertical: 8, paddingHorizontal: 8, borderTopLeftRadius: 4, borderTopRightRadius: 4 },
   thText: { color: '#ffffff', fontSize: 8, fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 0.6 },
-  tr: { flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: C.line, paddingVertical: 6, paddingHorizontal: 8 },
+  tr: { flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: C.line, paddingVertical: 8, paddingHorizontal: 8 },
   trAlt: { backgroundColor: C.row },
   colLp: { width: 26 },
   colName: { flex: 1, paddingRight: 8 },
@@ -78,44 +78,43 @@ const s = StyleSheet.create({
   desc: { fontSize: 8, color: C.muted, marginTop: 2 },
   bold: { fontWeight: 'bold' },
 
-  summaryWrap: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end', gap: 10, marginTop: 8, marginBottom: 8 },
+  summaryWrap: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'flex-end', gap: 10, marginTop: 12, marginBottom: 10 },
   box: { flex: 1, backgroundColor: C.soft, borderWidth: 1, borderColor: C.line, borderRadius: 6, padding: 10 },
   boxTitle: { fontSize: 7.5, fontWeight: 'bold', color: C.emerald, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 },
   condRow: { flexDirection: 'row', marginBottom: 3 },
   condLabel: { width: 58, color: C.muted, fontSize: 9 },
   condValue: { flex: 1, fontWeight: 'bold', color: C.ink, fontSize: 9 },
   summary: { width: 236, backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, overflow: 'hidden' },
-  sumBody: { paddingHorizontal: 12, paddingTop: 10, paddingBottom: 8 },
-  sumNota: { paddingHorizontal: 12, paddingTop: 5, paddingBottom: 7, fontSize: 7.5, color: C.muted },
+  sumBody: { paddingHorizontal: 13, paddingTop: 14, paddingBottom: 12 },
   sumRow: { flexDirection: 'row', marginBottom: 4 },
   sumLabel: { flex: 1, color: C.muted },
   sumValue: { width: 100, textAlign: 'right', color: C.ink },
-  sumTotal: { flexDirection: 'row', alignItems: 'center', backgroundColor: C.green, paddingHorizontal: 12, paddingVertical: 9 },
+  sumTotal: { flexDirection: 'row', alignItems: 'center', backgroundColor: C.green, paddingHorizontal: 13, paddingVertical: 12 },
   sumTotalLabel: { flex: 1, fontSize: 12, fontWeight: 'bold', color: C.white },
   sumTotalValue: { fontSize: 13, fontWeight: 'bold', color: C.lime, textAlign: 'right' },
 
   feesWrap: { flexDirection: 'row', gap: 10, marginBottom: 8 },
-  feeBox: { flex: 1, backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 10 },
+  feeBox: { flex: 1, backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 13 },
   feeBig: { fontSize: 14, fontWeight: 'bold', color: C.ink, marginTop: 2 },
   feeUnit: { fontSize: 8, color: C.muted },
   feeText: { fontSize: 8, color: '#374151', marginTop: 4 },
-  prowizjeBox: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 10, marginBottom: 8 },
+  prowizjeBox: { flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 12, marginBottom: 10 },
   prowizjeLewa: { flex: 1 },
-  commissions: { flexDirection: 'row', gap: 6, width: 250 },
-  commission: { flex: 1, backgroundColor: C.soft, borderRadius: 4, paddingVertical: 7, alignItems: 'center' },
-  commissionLabel: { fontSize: 7, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.6 },
-  commissionValue: { fontSize: 11, fontWeight: 'bold', color: C.emerald, marginTop: 1 },
+  commissions: { flexDirection: 'row', gap: 8, width: 288 },
+  commission: { flex: 1, backgroundColor: C.soft, borderRadius: 5, paddingVertical: 11, alignItems: 'center' },
+  commissionLabel: { fontSize: 7.5, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.6 },
+  commissionValue: { fontSize: 14, fontWeight: 'bold', color: C.emerald, marginTop: 3 },
 
-  steps: { flexDirection: 'row', backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 9, marginBottom: 8 },
+  steps: { flexDirection: 'row', backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 11, marginBottom: 9 },
   step: { flex: 1, alignItems: 'center', paddingHorizontal: 2 },
   stepNo: { width: 17, height: 17, borderRadius: 8.5, backgroundColor: C.green, alignItems: 'center', justifyContent: 'center', marginBottom: 4 },
   stepNoText: { color: C.white, fontSize: 8, fontWeight: 'bold', lineHeight: 1 },
   stepTitle: { fontSize: 8, fontWeight: 'bold', color: C.ink, textAlign: 'center' },
   stepNote: { fontSize: 7, color: C.muted, textAlign: 'center', marginTop: 1 },
-  stepsTitle: { fontSize: 7.5, fontWeight: 'bold', color: C.emerald, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 6 },
+  stepsTitle: { fontSize: 7.5, fontWeight: 'bold', color: C.emerald, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 8 },
 
-  notes: { borderTopWidth: 1, borderTopColor: C.line, paddingTop: 7, marginTop: 2, color: C.muted, fontSize: 7.5 },
-  clientNotes: { backgroundColor: C.soft, borderLeftWidth: 3, borderLeftColor: C.green, borderTopRightRadius: 6, borderBottomRightRadius: 6, paddingHorizontal: 10, paddingVertical: 7, marginBottom: 8, fontSize: 9, color: '#374151' },
+  notes: { borderTopWidth: 1, borderTopColor: C.line, paddingTop: 9, marginTop: 3, color: C.muted, fontSize: 8 },
+  clientNotes: { backgroundColor: C.soft, borderLeftWidth: 3, borderLeftColor: C.green, borderTopRightRadius: 6, borderBottomRightRadius: 6, paddingHorizontal: 12, paddingVertical: 9, marginBottom: 10, fontSize: 9, color: '#374151' },
 
   footer: { position: 'absolute', bottom: 14, left: 44, right: 44, borderTopWidth: 1, borderTopColor: C.line, paddingTop: 6, fontSize: 7.5, color: C.muted },
 })
@@ -205,12 +204,11 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
               <View style={s.feeBox}>
                 <Text style={s.boxTitle}>Opłata miesięczna</Text>
                 <Text style={s.feeBig}>
-                  {zl(p.abonament.cenaNetto * o.ilosc)}{' '}
-                  <Text style={s.feeUnit}>netto {p.abonament.okres}</Text>
+                  {zl(p.abonament.cenaNetto)}{' '}
+                  <Text style={s.feeUnit}>netto {p.abonament.okres} za urządzenie</Text>
                 </Text>
                 <Text style={[s.feeUnit, { marginTop: 3 }]}>
-                  {zl(abonamentBrutto * o.ilosc)} brutto {p.abonament.okres}
-                  {o.ilosc > 1 ? ` · ${zl(p.abonament.cenaNetto)} netto za urządzenie × ${o.ilosc} szt.` : ''}
+                  {zl(abonamentBrutto)} brutto {p.abonament.okres} za urządzenie
                 </Text>
                 <Text style={s.feeText}>{p.abonament.opis}</Text>
               </View>
@@ -224,7 +222,6 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
                 <Text style={s.sumTotalLabel}>Razem brutto</Text>
                 <Text style={s.sumTotalValue}>{zl(brutto)}</Text>
               </View>
-              <Text style={s.sumNota}>Bez opłat miesięcznych wymienionych obok.</Text>
             </View>
           </View>
 
@@ -269,10 +266,9 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
           ) : null}
 
           <View style={s.notes} wrap={false}>
-            {p.uwagi.map((u) => (
-              <Text key={u}>• {u}</Text>
-            ))}
-            <Text>• Ceny netto; do cen doliczany jest podatek VAT 23%. Oferta wygenerowana na rejestratory.info na podstawie danych podanych przez zamawiającego.</Text>
+            <Text>
+              {p.uwagi.join(' ')} Ceny netto; do cen doliczany jest podatek VAT 23%.
+            </Text>
           </View>
         </View>
 
