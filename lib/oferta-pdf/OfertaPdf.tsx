@@ -87,6 +87,8 @@ const s = StyleSheet.create({
   summary: { width: 236, flexDirection: 'column', backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, overflow: 'hidden' },
   /** flex:1 dopycha ciemny pas z kwotą do dołu, gdy boks obok jest wyższy */
   sumBody: { flex: 1, justifyContent: 'center', paddingHorizontal: 12, paddingTop: 10, paddingBottom: 8 },
+  sumNota: { paddingHorizontal: 12, paddingTop: 5, paddingBottom: 7, fontSize: 7.5, color: C.muted },
+  sumTitle: { fontSize: 7.5, fontWeight: 'bold', color: C.emerald, letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: 6 },
   sumRow: { flexDirection: 'row', marginBottom: 4 },
   sumLabel: { flex: 1, color: C.muted },
   sumValue: { width: 100, textAlign: 'right', color: C.ink },
@@ -99,7 +101,7 @@ const s = StyleSheet.create({
   feeBig: { fontSize: 14, fontWeight: 'bold', color: C.ink, marginTop: 2 },
   feeUnit: { fontSize: 8, color: C.muted },
   feeText: { fontSize: 8, color: '#374151', marginTop: 4 },
-  commissions: { flexDirection: 'row', gap: 6, marginTop: 4 },
+  commissions: { flexDirection: 'row', gap: 6, marginTop: 4, marginBottom: 2 },
   commission: { flex: 1, backgroundColor: C.soft, borderRadius: 4, paddingVertical: 6, alignItems: 'center' },
   commissionLabel: { fontSize: 7, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.6 },
   commissionValue: { fontSize: 11, fontWeight: 'bold', color: C.emerald, marginTop: 1 },
@@ -197,46 +199,42 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
             <Text style={s.colVat}>23%</Text>
             <Text style={[s.colTotal, s.bold]}>{zl(netto)}</Text>
           </View>
-          {p.abonament ? (
-            <View style={[s.tr, s.trAlt]} wrap={false}>
-              <Text style={s.colLp}>2</Text>
-              <View style={s.colName}>
-                <Text style={s.name}>{p.abonament.nazwa}</Text>
-                <Text style={s.desc}>{p.abonament.opis}</Text>
-              </View>
-              <Text style={s.colQty}>{o.ilosc} szt.</Text>
-              <View style={s.colPrice}>
-                <Text style={[s.bold, { textAlign: 'right' }]}>{zl(p.abonament.cenaNetto)}</Text>
-                <Text style={[s.desc, { textAlign: 'right', marginTop: 0 }]}>{p.abonament.okres}</Text>
-              </View>
-              <Text style={s.colVat}>23%</Text>
-              <View style={s.colTotal}>
-                <Text style={[s.bold, { textAlign: 'right' }]}>{zl(p.abonament.cenaNetto * o.ilosc)}</Text>
-                <Text style={[s.desc, { textAlign: 'right', marginTop: 0 }]}>{p.abonament.okres}</Text>
-              </View>
-            </View>
-          ) : null}
 
           <View style={s.summaryWrap} wrap={false}>
-            {p.prowizje ? (
+            {p.abonament ? (
               <View style={s.feeBox}>
-                <Text style={s.boxTitle}>Prowizja od transakcji</Text>
-                <View style={s.commissions}>
-                  {p.prowizje.map((c) => (
-                    <View key={c.label} style={s.commission}>
-                      <Text style={s.commissionLabel}>{c.label}</Text>
-                      <Text style={s.commissionValue}>{c.value}</Text>
-                    </View>
-                  ))}
-                </View>
-                <Text style={s.feeText}>
-                  Prowizję nalicza operator płatności eService od wartości każdej transakcji. Stawki
-                  VISA i MasterCard dotyczą kart wydanych w Polsce.
+                <Text style={s.boxTitle}>Opłata miesięczna</Text>
+                <Text style={s.feeBig}>
+                  {zl(p.abonament.cenaNetto * o.ilosc)}{' '}
+                  <Text style={s.feeUnit}>netto {p.abonament.okres}</Text>
                 </Text>
+                <Text style={[s.feeUnit, { marginTop: 3 }]}>
+                  {zl(abonamentBrutto * o.ilosc)} brutto {p.abonament.okres}
+                  {o.ilosc > 1 ? ` · ${zl(p.abonament.cenaNetto)} netto za urządzenie × ${o.ilosc} szt.` : ''}
+                </Text>
+                <Text style={s.feeText}>{p.abonament.opis}</Text>
+                {p.prowizje ? (
+                  <>
+                    <Text style={[s.boxTitle, { marginTop: 8 }]}>Prowizja od transakcji</Text>
+                    <View style={s.commissions}>
+                      {p.prowizje.map((c) => (
+                        <View key={c.label} style={s.commission}>
+                          <Text style={s.commissionLabel}>{c.label}</Text>
+                          <Text style={s.commissionValue}>{c.value}</Text>
+                        </View>
+                      ))}
+                    </View>
+                    <Text style={s.feeText}>
+                      Nalicza ją operator płatności eService od wartości każdej transakcji; stawki
+                      VISA i MasterCard dotyczą kart wydanych w Polsce.
+                    </Text>
+                  </>
+                ) : null}
               </View>
             ) : null}
             <View style={s.summary}>
               <View style={s.sumBody}>
+                <Text style={s.sumTitle}>Zakup urządzeń — jednorazowo</Text>
                 <View style={s.sumRow}><Text style={s.sumLabel}>Wartość netto</Text><Text style={s.sumValue}>{zl(netto)}</Text></View>
                 <View style={s.sumRow}><Text style={s.sumLabel}>VAT 23%</Text><Text style={s.sumValue}>{zl(vat)}</Text></View>
               </View>
@@ -244,8 +242,10 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
                 <Text style={s.sumTotalLabel}>Razem brutto</Text>
                 <Text style={s.sumTotalValue}>{zl(brutto)}</Text>
               </View>
+              <Text style={s.sumNota}>Bez opłat miesięcznych wymienionych obok.</Text>
             </View>
           </View>
+
 
           <View wrap={false}>
             <Text style={s.stepsTitle}>Proces zakupu i wdrożenia</Text>
@@ -270,7 +270,7 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
             {p.uwagi.map((u) => (
               <Text key={u}>• {u}</Text>
             ))}
-            <Text>• Ceny netto; do cen doliczany jest podatek VAT 23%. Podsumowanie obejmuje zakup urządzeń; abonament za terminal jest rozliczany miesięcznie. Oferta wygenerowana na rejestratory.info na podstawie danych podanych przez zamawiającego.</Text>
+            <Text>• Ceny netto; do cen doliczany jest podatek VAT 23%. Oferta wygenerowana na rejestratory.info na podstawie danych podanych przez zamawiającego.</Text>
           </View>
         </View>
 
