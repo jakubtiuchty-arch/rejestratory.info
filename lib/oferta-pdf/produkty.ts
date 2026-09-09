@@ -17,15 +17,14 @@ export type ProduktOferty = {
   prowizje?: { label: string; value: string }[]
   /** kroki wdrożenia — powtarzają oś z karty produktu */
   wdrozenie: { title: string; note: string }[]
-  /** zdania drobnym drukiem pod warunkami */
-  uwagi: string[]
 }
 
 export const PRODUKTY_OFERTY: Record<string, ProduktOferty> = {
   'posnet-pospay-2': {
     slug: 'posnet-pospay-2',
     nazwa: 'Posnet Pospay 2',
-    opis: 'W cenie: fiskalizacja, dostawa, szkolenie i integracja z rejestratorami.',
+    opis:
+      'W cenie: fiskalizacja, dostawa, szkolenie i integracja z rejestratorami. Przeglądy ustawowe co 2 lata rozliczane są osobno.',
     cenaNetto: 179_900,
     abonament: {
       nazwa: 'Abonament za terminal płatniczy',
@@ -50,7 +49,6 @@ export const PRODUKTY_OFERTY: Record<string, ProduktOferty> = {
       { title: 'Integracja', note: 'z rejestratorami' },
       { title: 'Przeglądy', note: 'co 2 lata' },
     ],
-    uwagi: ['Przeglądy ustawowe co 2 lata rozliczane są osobno.'],
   },
 }
 

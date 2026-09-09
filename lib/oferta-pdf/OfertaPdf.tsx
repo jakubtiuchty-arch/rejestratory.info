@@ -44,7 +44,7 @@ const C = {
 }
 
 const s = StyleSheet.create({
-  page: { paddingTop: 0, paddingBottom: 44, paddingHorizontal: 0, fontFamily: 'DejaVu', fontSize: 9.5, color: C.body, lineHeight: 1.35 },
+  page: { paddingTop: 0, paddingBottom: 36, paddingHorizontal: 0, fontFamily: 'DejaVu', fontSize: 9.5, color: C.body, lineHeight: 1.35 },
   band: { backgroundColor: '#ffffff', paddingTop: 22, paddingBottom: 14, paddingHorizontal: 44, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 2, borderBottomColor: C.green },
   logo: { width: 118, height: 46, objectFit: 'contain', objectPositionX: 0 } as never,
   docTitleWrap: { alignItems: 'flex-end' },
@@ -119,8 +119,7 @@ const s = StyleSheet.create({
   kontaktText: { fontSize: 7.5, lineHeight: 1.4, color: '#374151' },
   clientNotes: { backgroundColor: C.soft, borderLeftWidth: 3, borderLeftColor: C.green, borderTopRightRadius: 6, borderBottomRightRadius: 6, paddingHorizontal: 12, paddingVertical: 8, marginBottom: 8, fontSize: 9, color: '#374151' },
 
-  footer: { position: 'absolute', bottom: 12, left: 44, right: 44, borderTopWidth: 1, borderTopColor: C.line, paddingTop: 6, fontSize: 7.5, color: C.muted },
-  footerDrobne: { textAlign: 'center', marginBottom: 4, fontSize: 7 },
+  footer: { position: 'absolute', bottom: 14, left: 44, right: 44, borderTopWidth: 1, borderTopColor: C.line, paddingTop: 6, fontSize: 7.5, color: C.muted },
 })
 
 /** Kwoty bez toLocaleString — okrojony ICU w Node dawał inne separatory niż przeglądarka. */
@@ -286,9 +285,6 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
         </View>
 
         <View fixed style={s.footer}>
-          <Text style={s.footerDrobne}>
-            {p.uwagi.join(' ')} Ceny netto; do cen doliczany jest podatek VAT 23%.
-          </Text>
           <Text style={{ textAlign: 'center' }}>
             {SPRZEDAWCA.nazwa} · {SPRZEDAWCA.adres1}, {SPRZEDAWCA.adres2} · NIP {SPRZEDAWCA.nip} · {SPRZEDAWCA.email} · {SPRZEDAWCA.telefon} · {SPRZEDAWCA.www}
           </Text>
