@@ -128,10 +128,10 @@
 /* Każda drobinka dryfuje w górę i gaśnie; opóźnienia rozstawione w kodzie,
    żeby ruch nie był zsynchronizowany. */
 @keyframes oferta-drobinka {
-  0%   { opacity: 0; transform: translate3d(0, 6px, 0) scale(0.6); }
-  25%  { opacity: 0.9; }
-  70%  { opacity: 0.55; }
-  100% { opacity: 0; transform: translate3d(10px, -10px, 0) scale(1.1); }
+  0%   { opacity: 0; transform: translate3d(0, 5px, 0) scale(0.4); }
+  20%  { opacity: 1; transform: translate3d(2px, 1px, 0) scale(1); }
+  55%  { opacity: 0.85; }
+  100% { opacity: 0; transform: translate3d(9px, -8px, 0) scale(0.5); }
 }
 
 .oferta-drobinka {
