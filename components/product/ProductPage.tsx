@@ -572,7 +572,8 @@ const PrzyciskOferty = ({ onClick }: { onClick: () => void }) => (
     className="group relative mt-4 flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-full px-6 py-3.5 shadow-lg shadow-emerald-900/20 transition hover:shadow-xl hover:shadow-emerald-900/25"
   >
     <span aria-hidden className="oferta-tlo absolute inset-0" />
-    <span aria-hidden className="absolute inset-0 overflow-hidden">
+    {/* opacity na warstwie drobinek — wygaszone o 20% względem animacji w globals.css */}
+    <span aria-hidden className="absolute inset-0 overflow-hidden opacity-80">
       {DROBINKI.map((d, i) => (
         <span
           key={i}
