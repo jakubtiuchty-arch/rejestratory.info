@@ -48,6 +48,12 @@ Finalnie `kancelaria-hp-anim.gif`: 600 × 338, maskedmerge (ruch tylko w lewej c
 
 **Na przyszłe wydania:** `palettegen` domyślnie zostawiać w trybie `full`; `stats_mode=diff` ma sens tylko przy scenach, gdzie ruch zajmuje większość kadru.
 
+**Trzy uwagi Jakuba do treści (13.09 wieczorem):**
+
+- **lead bez justowania** — przy szerokości 536 px i twardych spacjach po jednoliterowych spójnikach justowanie robiło dziury między słowami („kto wozi laptopa w terenie" rozjechane na całą szerokość). Teraz `text-align` domyślny, `line-height` 1,7.
+- **TAKMA nie prowadzi serwisu gwarancyjnego** — mimo że druki ZUP piszą „Dostawa, serwis gwarancyjny i pogwarancyjny firma TAKMA". Poprawione w mailu (lead + blok zakupu: „dostawa i serwis pogwarancyjny"), na karcie EliteBooka 14" i **w szablonie `components/product/ProductPage.tsx`**, który sklejał to zdanie dla każdej karty z ceną ze składnicy — czyli szło na cały katalog. Danych w `data/oferty-skladnicy.ts` nie ruszam, bo to odwzorowanie druku.
+- **kafel pod siatką kategorii: iPhone zamiast Samsunga** — „iPhone i iPad do fotooptycznego pomiaru drewna", zdjęcie `apple-iphone17pro_tile.png`, link do karty iPhone 17 Pro.
+
 **Na poniedziałek 21.09 zostaje:** przełączyć `manifest.json` na to wydanie i `bulkAt` na `2026-09-22T08:30:00+02:00`, commit + push (obrazki muszą być na prodzie przed testówką), potem testówka i zatwierdzenie.
 
 ## 2026-09-09 — newsletter: smartfony Samsung Galaxy (przygotowany na 15.09)
