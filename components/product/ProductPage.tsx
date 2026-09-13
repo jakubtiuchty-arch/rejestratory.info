@@ -955,7 +955,7 @@ const CenySkladnic = ({ oferty: wejscie, nazwa }: { oferty: OfertaZUP[]; nazwa: 
             <p className="mt-3 leading-relaxed text-stone-600">
               Kwoty netto dla Lasów Państwowych. Zamówienie składa nadleśnictwo w składnicy
               {dostawca
-                ? `; dostawę oraz serwis gwarancyjny i pogwarancyjny prowadzi ${dostawca}.`
+                ? `; dostawę i serwis pogwarancyjny prowadzi ${dostawca}.`
                 : '.'}
             </p>
           </div>

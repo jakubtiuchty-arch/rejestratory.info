@@ -107,7 +107,7 @@ const data: ProductData = {
       icon: ICON.wsparcie5,
       title: 'Trzy lata gwarancji w cenie',
       body:
-        'Oferta ZUP Łódź obejmuje 36 miesięcy gwarancji. Dostawę oraz serwis gwarancyjny i pogwarancyjny prowadzi TAKMA.',
+        'Oferta ZUP Łódź obejmuje 36 miesięcy gwarancji producenta. Dostawę i serwis pogwarancyjny prowadzi TAKMA.',
       tone: 'akcent',
     },
   ],
