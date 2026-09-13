@@ -27,9 +27,11 @@
   Silnik Worda przy `width:auto` w stylu potrafi policzyć szerokość 0 i pokazać pustą ramkę
   z ikoną — tak zniknęło logo ze stopki w wydaniu HP (13.09.2026). Logotypy na ciemnym tle
   trzymać jako PNG z **wypalonym tłem** w kolorze sekcji, nie z kanałem alfa.
-- **Hero**: animowany GIF tylko dla scen ciemnych i fakturowanych (las, mgła). Jasne wnętrze
-  z gładkimi gradientami plamami się w palecie 256 kolorów — tam statyczny JPG w 2×
-  (1200 px przy 600 css), quality ~90, lekki unsharp.
+- **Hero**: ZAWSZE animowany (tak jest w każdym wydaniu). Przepis: maskedmerge (statyczne tło,
+  ruch w jednym obszarze) → `palettegen=max_colors=256:stats_mode=full` →
+  `paletteuse=dither=bayer:bayer_scale=4`. **Nie używać `stats_mode=diff`** przy scenach prawie
+  nieruchomych — paleta idzie wtedy na obszar ruchu, a duże gradienty (klapa laptopa, ściana)
+  wychodzą w plamach; to był błąd w pierwszej wersji hero HP (13.09.2026).
 - **Zasady treści**: poprawna polszczyzna, zero AI-slopu (bez kolorowych border-left,
   bez pigułek-badge), konkrety i liczby zamiast ogólników, fakty tylko z karty produktu w repo.
 
