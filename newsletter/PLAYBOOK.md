@@ -34,6 +34,16 @@
   wychodzą w plamach; to był błąd w pierwszej wersji hero HP (13.09.2026).
 - **Zasady treści**: poprawna polszczyzna, zero AI-slopu (bez kolorowych border-left,
   bez pigułek-badge), konkrety i liczby zamiast ogólników, fakty tylko z karty produktu w repo.
+- **Rejestr urzędowy** — to pismo do przedsiębiorstwa państwowego, nie mail do kolegi:
+  „Posiadamy w ofercie" (nie „Mamy"), „Prosimy o odpowiedź na niniejszą wiadomość"
+  (nie „odpowiedzieć na tego maila"), „dla pracowników realizujących zadania w terenie"
+  (nie „dla kogoś, kto wozi laptopa"), skróty rozwinięte („Zakład Usługowo-Produkcyjny
+  Lasów Państwowych"). Dotyczy całego wydania: leadu, kafli, banerów i stopki.
+- **Lead justowany**: `align="justify"` + `text-align:justify` w samej deklaracji. Nie wrzucać
+  do niej `hyphens` z prefiksami — sanitizer klienta poczty potrafi wtedy wyciąć całą regułę
+  razem z wyrównaniem.
+- **Liczby z jednostkami**: znak U+00A0 zamiast encji `&nbsp;` (Gmail zamienia encję na zwykłą
+  spację) plus `<span style="white-space:nowrap;">` na frazach typu „16 cali", „512 GB".
 
 ## Awaryjnie / ręcznie
 - Test od ręki: `curl -H "Authorization: Bearer $CRON_SECRET" https://www.rejestratory.info/api/cron/newsletter-test`
