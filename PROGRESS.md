@@ -54,6 +54,8 @@ Finalnie `kancelaria-hp-anim.gif`: 600 × 338, maskedmerge (ruch tylko w lewej c
 - **TAKMA nie prowadzi serwisu gwarancyjnego** — mimo że druki ZUP piszą „Dostawa, serwis gwarancyjny i pogwarancyjny firma TAKMA". Poprawione w mailu (lead + blok zakupu: „dostawa i serwis pogwarancyjny"), na karcie EliteBooka 14" i **w szablonie `components/product/ProductPage.tsx`**, który sklejał to zdanie dla każdej karty z ceną ze składnicy — czyli szło na cały katalog. Danych w `data/oferty-skladnicy.ts` nie ruszam, bo to odwzorowanie druku.
 - **kafel pod siatką kategorii: iPhone zamiast Samsunga** — „iPhone i iPad do fotooptycznego pomiaru drewna", zdjęcie `apple-iphone17pro_tile.png`, link do karty iPhone 17 Pro.
 
+**Samsung wstrzymany** (13.09, decyzja Jakuba). Wydanie z 15.09 nie miało wpisu w `newsletter_sends` ani nic w Resend — czekało wyłącznie na kliknięcie w poniedziałkowej testówce. `manifest.json` przełączony z Samsunga na wydanie HP, więc jutrzejsza testówka pokaże HP, a przycisk odpowie „Już zatwierdzone". Plik wydania Samsunga zostaje w repo do przełożenia.
+
 **WYSYŁKA ZAPLANOWANA 13.09**: `--send --send-at "2026-09-22T08:30:00+02:00"` — **611 maili na wtorek 22.09 8:30**, ID w `scheduled-2026-09-22.json` (gitignored). Wydanie zarezerwowane w `newsletter_sends` przez `scripts/zarezerwuj-wydanie.mjs`, więc poniedziałkowy przycisk odpowie „Już zatwierdzone" i nie zaplanuje maili drugi raz. **Nie zatwierdzać testówki z 21.09.** Anulowanie do godziny wysyłki: `resend.emails.cancel(id)`.
 
 ## 2026-09-09 — newsletter: smartfony Samsung Galaxy (przygotowany na 15.09)
