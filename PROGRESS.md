@@ -18,7 +18,18 @@ W mailu stoi ostrożne „AMD Ryzen 5 (6 rdzeni, 12 wątków)” — prawdziwe d
 
 **Hero `kancelaria-hp-anim.gif`** (600 × 250, 600 kB): obraz z `gpt_image_2_5` z renderem `hp_elite_16_1.png` jako referencją — leśniczy przy biurku w kancelarii, mapa, segregatory, światło z okna, mundur bez naszywek. Ruch dogrywa **seedance_2_5**, ale rola `omni_reference` nie przechodzi już jako media — API wymaga `mode: "omni_reference"` w parametrach, a klatka wchodzi rolą `start_image` (samo `start_image` bez tego trybu leci 422). Preset „IN THE DARK” podpowiadany przy tym promptcie odrzucony przez `declined_preset_id`.
 
-Z 5-sekundowego klipu 1280 × 720 wycięty pas 2,4:1 (`crop=1280:533:0:158`), z niego 5 klatek w pętli tam i z powrotem, paleta 128, `dither=none`. **Najazd kamery trzeba było skrócić**: pełne 5 s dawało 1,1 MB i skok kadru; wersja z klatek 1–25 (≈1 s najazdu) waży 600 kB i wygląda jak oddech kadru, czyli tyle, ile ma być.
+Z 5-sekundowego klipu 1280 × 720 wycięty pas 2,4:1 (`crop=1280:533:0:158`), z niego 5 klatek w pętli tam i z powrotem, paleta 128, `dither=none`. **Najazd kamery trzeba było skrócić**: pełne 5 s dawało 1,1 MB i skok kadru; wersja z klatek 1–25 (≈1 s najazdu) waży 600 kB.
+
+**Hero v2 po uwagach Jakuba** („nie widać człowieka, za szybko chodzi ten loop, na laptopie ma być logo HP"):
+
+- **pas 2,4:1 ucinał głowę** — hero ma teraz proporcje 16:9, czyli **600 × 338** (tak jak `biuro-nadlesnictwa-anim.gif`), i bierze cały kadr z generacji bez wycinania. Twarz mieści się z zapasem.
+- **logo hp na klapie** — model sam z siebie zostawia gładką pokrywę. Weszło dopiero przy trzech referencjach naraz (`hp_elite_16_4.png` z klapą, plik logo od Jakuba, render frontu) i promptcie wprost opisującym cztery skośne kreski wyśrodkowane na klapie.
+- **wolniejszy loop** — poprzedni szedł 200 ms na klatkę przy sporym najeździe. Teraz kamera stoi (prompt: „completely static tripod shot"), rusza się tylko kurz, para i liście za oknem: 10 klatek po **450 ms**, pętla 4,5 s, 531 kB. Zmierzona różnica klatek w pierwszych 2,5 s to 1,7–2,5 (wcześniej 26–34).
+- Plik podmieniony pod tym samym URL, więc w mailu doszło `?v=2` (cache proxy Gmaila).
+
+**Hero v3 — koniec z GIF-em w tym wydaniu.** Jakub: „bardzo słaba jakość". GIF ma najwyżej 256 kolorów, a ta scena to same gładkie gradienty (srebrna klapa laptopa, ciemnozielona ściana), więc plamy wychodzą w każdym wariancie: 112 kolorów bez ditheringu, 256 z `sierra2_4a` (kropkowanie na klapie, 1,15 MB), 256 z `bayer_scale=5`, 256 bez ditheringu. Nawet maskedmerge (statyczne tło, ruch tylko w lewej części z oknem — 536 kB przy 256 kolorach z ditheringiem, czyli waga jak przy 112) nie ratuje **palety**, bo problem jest w niej, nie w liczbie zmienianych pikseli.
+
+Hero jest teraz **statycznym JPG-iem `kancelaria-hp.jpg` 1200 × 676 (2× względem 600 css), quality 90, unsharp 1,2/60/3 — 156 kB**. Pełny kolor, ostry na ekranach o podwójnej gęstości. Wniosek na przyszłe wydania: animowany GIF broni się na scenach ciemnych i fakturowanych (las, noc), a nie na jasnym wnętrzu z dużymi gładkimi płaszczyznami.
 
 **Na poniedziałek 21.09 zostaje:** przełączyć `manifest.json` na to wydanie i `bulkAt` na `2026-09-22T08:30:00+02:00`, commit + push (obrazki muszą być na prodzie przed testówką), potem testówka i zatwierdzenie.
 
