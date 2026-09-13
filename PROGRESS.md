@@ -29,7 +29,24 @@ Z 5-sekundowego klipu 1280 × 720 wycięty pas 2,4:1 (`crop=1280:533:0:158`), z 
 
 **Hero v3 — koniec z GIF-em w tym wydaniu.** Jakub: „bardzo słaba jakość". GIF ma najwyżej 256 kolorów, a ta scena to same gładkie gradienty (srebrna klapa laptopa, ciemnozielona ściana), więc plamy wychodzą w każdym wariancie: 112 kolorów bez ditheringu, 256 z `sierra2_4a` (kropkowanie na klapie, 1,15 MB), 256 z `bayer_scale=5`, 256 bez ditheringu. Nawet maskedmerge (statyczne tło, ruch tylko w lewej części z oknem — 536 kB przy 256 kolorach z ditheringiem, czyli waga jak przy 112) nie ratuje **palety**, bo problem jest w niej, nie w liczbie zmienianych pikseli.
 
-Hero jest teraz **statycznym JPG-iem `kancelaria-hp.jpg` 1200 × 676 (2× względem 600 css), quality 90, unsharp 1,2/60/3 — 156 kB**. Pełny kolor, ostry na ekranach o podwójnej gęstości. Wniosek na przyszłe wydania: animowany GIF broni się na scenach ciemnych i fakturowanych (las, noc), a nie na jasnym wnętrzu z dużymi gładkimi płaszczyznami.
+**Hero v4 — animacja wraca, bo w każdym wydaniu było wideo** (Jakub). Statyczny JPG odpadł, a jakość udało się naprawić u źródła: **palette liczona była trybem `stats_mode=diff`**, który dobiera kolory pod obszary zmieniające się między klatkami. Przy scenie prawie statycznej cała paleta szła na okno, a gradient klapy laptopa dostawał kilka odcieni — stąd plamy. Po przejściu na `stats_mode=full` PSNR skoczył z **32,15 dB na 35,80 dB**, a plik schudł.
+
+Przetestowane na klapie laptopa (największy gradient w kadrze), przy palecie z całego obrazu:
+
+| wariant | waga | uwagi |
+|---|---|---|
+| bez ditheringu | 372 kB | łagodne pasy na klapie |
+| **bayer, `bayer_scale=4`** | **387 kB** | **wybrany — gradient gładki, wzoru nie widać** |
+| bayer, `bayer_scale=2` | 419 kB | widoczna siatka |
+| floyd_steinberg | 531 kB | kropkowanie na klapie |
+| sierra2_4a | 655 kB | jw., najcięższy |
+| statyczne ziarno przed kwantyzacją | 409 kB | klapa jak oszroniona, odpada |
+| ziarno per klatka (`noise` w ffmpeg) | 1,2–1,5 MB | każdy piksel się zmienia, waga nie do przyjęcia |
+| 1200 × 676 skalowane przez klienta do 600 | 1,26 MB | PSNR 35,30, czyli gorzej niż 1× przy 3,4× wadze |
+
+Finalnie `kancelaria-hp-anim.gif`: 600 × 338, maskedmerge (ruch tylko w lewej części z oknem), 10 klatek po 450 ms, paleta 256 z całego obrazu, `dither=bayer:bayer_scale=4` — **387 kB**, czyli lżej niż pierwsza wersja przy wyraźnie lepszym obrazie. W mailu `?v=3`.
+
+**Na przyszłe wydania:** `palettegen` domyślnie zostawiać w trybie `full`; `stats_mode=diff` ma sens tylko przy scenach, gdzie ruch zajmuje większość kadru.
 
 **Na poniedziałek 21.09 zostaje:** przełączyć `manifest.json` na to wydanie i `bulkAt` na `2026-09-22T08:30:00+02:00`, commit + push (obrazki muszą być na prodzie przed testówką), potem testówka i zatwierdzenie.
 
