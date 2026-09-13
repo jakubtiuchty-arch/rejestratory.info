@@ -1,5 +1,27 @@
 # PROGRESS — rejestratory.info
 
+## 2026-09-13 — newsletter: laptopy HP EliteBook (przygotowywany na 22.09)
+
+Jakub: „Jednak w przyszłym tygodniu musimy zrobić laptopy HP”. W kolejce na 21.09 stał TC58e — zamiana: **21.09 laptopy HP**, TC58e schodzi na 28.09 (drugie przesunięcie, wcześniej z 14.09).
+
+Plik `public/newsletter/editions/2026-09-22-laptopy-hp.html`, kampania `laptopy-hp-2026-09-22`. Manifest **celowo nietknięty** — do wtorku wskazuje wydanie Samsunga, przełączenie dopiero 21.09.
+
+Układ kategoryjny bez cen, jak przy Brotherze, Apple i Samsungu. Model wiodący: **EliteBook 6 G1ah 16”** (galeria: front, skos, złącza, obudowa z logo), pod spodem kafel wersji 14” ze Smart Card i zdanie o stacji HP Dock G6. Blok zakupu prowadzi na `zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one`. Zdjęcia produktowe przeskalowane do 800 px i przepuszczone przez pngquant (48–92 kB, tak jak assety Della).
+
+**Rozjazd w danych EliteBooka 16” — trzy różne wersje w trzech miejscach:**
+
+- kategoria `app/kategoria/laptopy/page.tsx`: „AMD Ryzen 7 PRO, 16GB RAM, 1TB SSD” — **błąd, poprawiony** na Ryzen 5 / 16 GB DDR5 (do 64 GB) / 512 GB SSD,
+- karta produktu: „AMD Ryzen 5 220, do 4,9 GHz, Radeon 740M, 2 × Thunderbolt 4”,
+- druk ZUP `oferty-zrodla/Oferta Laptopy_06.2026.docx`: „AMD Ryzen5 7535U (lub Ryzen 5 Pro)”, 2 × USB4.
+
+W mailu stoi ostrożne „AMD Ryzen 5 (6 rdzeni, 12 wątków)” — prawdziwe dla obu wariantów. **Do rozstrzygnięcia u dystrybutora, zanim karta pójdzie dalej**: który procesor faktycznie jedzie w tej konfiguracji i czy porty to USB4, czy Thunderbolt 4.
+
+**Hero `kancelaria-hp-anim.gif`** (600 × 250, 600 kB): obraz z `gpt_image_2_5` z renderem `hp_elite_16_1.png` jako referencją — leśniczy przy biurku w kancelarii, mapa, segregatory, światło z okna, mundur bez naszywek. Ruch dogrywa **seedance_2_5**, ale rola `omni_reference` nie przechodzi już jako media — API wymaga `mode: "omni_reference"` w parametrach, a klatka wchodzi rolą `start_image` (samo `start_image` bez tego trybu leci 422). Preset „IN THE DARK” podpowiadany przy tym promptcie odrzucony przez `declined_preset_id`.
+
+Z 5-sekundowego klipu 1280 × 720 wycięty pas 2,4:1 (`crop=1280:533:0:158`), z niego 5 klatek w pętli tam i z powrotem, paleta 128, `dither=none`. **Najazd kamery trzeba było skrócić**: pełne 5 s dawało 1,1 MB i skok kadru; wersja z klatek 1–25 (≈1 s najazdu) waży 600 kB i wygląda jak oddech kadru, czyli tyle, ile ma być.
+
+**Na poniedziałek 21.09 zostaje:** przełączyć `manifest.json` na to wydanie i `bulkAt` na `2026-09-22T08:30:00+02:00`, commit + push (obrazki muszą być na prodzie przed testówką), potem testówka i zatwierdzenie.
+
 ## 2026-09-09 — newsletter: smartfony Samsung Galaxy (przygotowany na 15.09)
 
 Jakub: „Lecimy z samsungami”. Sprawdzone najpierw, czy Samsung był już tematem numeru — **nie był**: sześć dotychczasowych wydań to Pospay 2, EM45, Dell Pro 16, monitory Dell, Apple i Brother; Samsung pojawiał się tylko w siatce kategorii i jako baner pod wydaniem o Brotherze. TC58e przesunięty z 14.09 na 21.09, dalsze propozycje o tydzień.

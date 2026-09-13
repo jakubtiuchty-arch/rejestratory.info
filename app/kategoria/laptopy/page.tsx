@@ -27,7 +27,7 @@ const products: Product[] = [
     name: "HP EliteBook 6 G1ah 16\"",
     category: "Laptopy", 
     description: "Wydajny laptop z dużym ekranem 16 cali do pracy biurowej",
-    specifications: "AMD Ryzen 7 PRO, 16GB RAM, 1TB SSD, 16\" WUXGA IPS",
+    specifications: "AMD Ryzen 5, 16GB DDR5 (do 64GB), 512GB SSD, 16\" WUXGA IPS, Smart Card, Windows 11 Pro",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/hp_elite_16_1.png",
