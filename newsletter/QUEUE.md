@@ -19,3 +19,15 @@ a `public/newsletter/manifest.json` wskazuje bieżące wydanie.
 | 2026-10-12 | Samsung Galaxy Tab Active5 (tablet terenowy) | /produkt/samsung-galaxy-tab-active5 | propozycja — do akceptacji |
 
 Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie zapasu.
+
+## Problemy
+
+- **2026-09-14** — wiersz na ten poniedziałek to Samsung Galaxy, ale urządzenie jest
+  **WSTRZYMANE** decyzją Jakuba z 13.09 („Samsung nie idzie na razie"). Wydanie
+  (`editions/2026-09-15-samsung-galaxy.html`) już istnieje, ale `manifest.json` świadomie
+  wskazuje wydanie HP (`2026-09-22-laptopy-hp.html`, `bulkAt` 2026-09-22 8:30) — ono jest już
+  zaplanowane w Resend (ID w `scheduled-2026-09-22.json`) na własny termin, a manifest ma w ten
+  sposób chronić przed przypadkowym zatwierdzeniem testówki, które wypuściłoby Samsunga. W tym
+  przebiegu nic nie budowałem i nie zmieniałem manifestu — przestawienie go z powrotem na
+  Samsunga odwróciłoby tę zabezpieczającą decyzję. Kolejka ma 4 przyszłe pozycje po tym
+  tygodniu (21.09, 28.09, 05.10, 12.10), zapas ≥3 tygodnie zachowany.
