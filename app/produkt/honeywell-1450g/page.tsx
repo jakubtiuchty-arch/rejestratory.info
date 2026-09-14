@@ -73,9 +73,9 @@ const data: ProductData = {
     },
     {
       icon: ICON.skaner,
-      title: 'Nie trzeba celować',
+      title: 'Odczyt bez precyzyjnego ustawiania dokumentu',
       body:
-        'Kod odczytuje się pod kątem do 45° i z odległości od 2,5 do 26 cm, więc pismo wystarczy podsunąć pod czytnik.',
+        'Kod jest odczytywany pod kątem do 45° oraz z odległości od 2,5 do 26 cm, dzięki czemu pismo wystarczy podsunąć pod czytnik.',
     },
     {
       icon: ICON.upadek,

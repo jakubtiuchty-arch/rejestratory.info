@@ -89,9 +89,9 @@ const data: ProductData = {
   signature: [
     {
       icon: ICON.bluetooth,
-      title: 'Ta sama obsługa co DS2208, tylko bez kabla',
+      title: 'Obsługa identyczna z modelem DS2208, w wersji bezprzewodowej',
       body:
-        'Bezprzewodowa odmiana czytnika, który już pracuje w kancelariach. Podstawka służy jednocześnie za ładowarkę i za łącze do komputera, więc na biurku nie przybywa osprzętu.',
+        'Bezprzewodowa odmiana czytnika stosowanego już w kancelariach. Podstawka pełni jednocześnie funkcję ładowarki oraz łącza do komputera, co ogranicza liczbę urządzeń na stanowisku.',
       tone: 'akcent',
     },
   ],

@@ -6,7 +6,7 @@ import { ICON } from '@/components/product/icons'
 const WDROZENIE_DOKUMENTY = {
   heading: 'Dokumenty do fiskalizacji',
   intro:
-    'Po otrzymaniu zamówienia odsyłamy szczegółową listę dokumentów potrzebnych do zgłoszenia urządzenia do eService oraz do Urzędu Skarbowego. Poniżej to, co warto przygotować wcześniej.',
+    'Po otrzymaniu zamówienia przesyłamy szczegółowy wykaz dokumentów wymaganych do zgłoszenia urządzenia do eService oraz do urzędu skarbowego. Poniżej wykaz pozycji, które warto przygotować z wyprzedzeniem.',
   items: [
     'Dane nadleśnictwa — NIP, REGON, pełna nazwa',
     'Adres miejsca instalacji urządzenia',
@@ -15,7 +15,7 @@ const WDROZENIE_DOKUMENTY = {
     'Numer telefonu kontaktowego',
   ],
   footer:
-    'Wypełnienie dokumentów i zgłoszenie do eService prowadzimy razem z Państwem — nie zostawiamy nadleśnictwa z formularzami samego.',
+    'Wypełnienie dokumentów oraz zgłoszenie do eService realizujemy wspólnie z Państwem, na każdym etapie postępowania.',
 }
 
 const data: ProductData = {

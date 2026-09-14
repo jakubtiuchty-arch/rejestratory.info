@@ -73,7 +73,7 @@ const data: ProductData = {
     },
     {
       icon: ICON.rolka,
-      title: 'Bierze nośniki, jakie są pod ręką',
+      title: 'Obsługa wszystkich stosowanych nośników',
       body:
         'Opaski, przywieszki, papier paragonowy oraz etykiety z podkładem i bez — czujnik rozpoznaje przerwę, nacięcie i czarny znacznik.',
     },

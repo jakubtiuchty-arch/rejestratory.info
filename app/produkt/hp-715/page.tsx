@@ -67,13 +67,13 @@ const data: ProductData = {
       icon: ICON.precyzja,
       title: 'Działa na blacie ze szkłem',
       body:
-        'Czujnik radzi sobie z powierzchniami, na których zwykła mysz gubi ruch — także ze szklanym blatem, gdzie podkładka nie zawsze jest pod ręką.',
+        'Czujnik obsługuje powierzchnie, na których standardowa mysz traci precyzję, w tym blaty szklane — również bez podkładki.',
     },
     {
       icon: ICON.czaspracy,
       title: 'Trzy miesiące na jednym ładowaniu',
       body:
-        'Wbudowany akumulator wystarcza na 90 dni pracy i uzupełnia się kablem USB-C — bez wymiany paluszków i bez martwej myszy w środku dnia.',
+        'Wbudowany akumulator zapewnia 90 dni pracy i jest ładowany przewodem USB-C. Nie jest wymagana wymiana baterii jednorazowych ani przerwa w pracy na ich uzupełnienie.',
     },
     {
       icon: ICON.klawiszskrotu,

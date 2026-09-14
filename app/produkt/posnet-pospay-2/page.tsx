@@ -6,7 +6,7 @@ import { ICON } from '@/components/product/icons'
 const WDROZENIE_DOKUMENTY = {
   heading: 'Dokumenty do fiskalizacji',
   intro:
-    'Po otrzymaniu zamówienia odsyłamy szczegółową listę dokumentów potrzebnych do zgłoszenia urządzenia do eService oraz do Urzędu Skarbowego. Poniżej to, co warto przygotować wcześniej.',
+    'Po otrzymaniu zamówienia przesyłamy szczegółowy wykaz dokumentów wymaganych do zgłoszenia urządzenia do eService oraz do urzędu skarbowego. Poniżej wykaz pozycji, które warto przygotować z wyprzedzeniem.',
   items: [
     'Dane nadleśnictwa — NIP, REGON, pełna nazwa',
     'Adres miejsca instalacji urządzenia',
@@ -15,7 +15,7 @@ const WDROZENIE_DOKUMENTY = {
     'Numer telefonu kontaktowego',
   ],
   footer:
-    'Wypełnienie dokumentów i zgłoszenie do eService prowadzimy razem z Państwem — nie zostawiamy nadleśnictwa z formularzami samego.',
+    'Wypełnienie dokumentów oraz zgłoszenie do eService realizujemy wspólnie z Państwem, na każdym etapie postępowania.',
 }
 
 const data: ProductData = {
@@ -30,7 +30,7 @@ const data: ProductData = {
       'Ekran 4,5″ · terminal płatniczy (karta, BLIK) · akumulator 6800 mAh · GSM i Wi-Fi · zgodny z Leśnik+',
   },
   whyNavLabel: 'Dlaczego Pospay 2',
-  whyHeading: 'Do czego przyda się w nadleśnictwie',
+  whyHeading: 'Zastosowanie w nadleśnictwie',
   whyLabel: 'Sprzedaż drewna i usług',
   specGroups: [
     {
@@ -84,25 +84,25 @@ const data: ProductData = {
       icon: ICON.karta,
       title: 'Kasa, drukarka i terminal w jednej obudowie',
       body:
-        'Leśniczy wystawia paragon, drukuje go i przyjmuje płatność kartą lub BLIK-iem na jednym urządzeniu — bez osobnej drukarki, osobnego terminala, drugiego zasilacza i drugiego zestawu kabli.',
+        'Leśniczy wystawia paragon, drukuje go i przyjmuje płatność kartą lub BLIK-iem na jednym urządzeniu. Nie jest wymagana odrębna drukarka ani osobny terminal płatniczy wraz z dodatkowym zasilaniem i okablowaniem.',
     },
     {
       icon: ICON.integracja,
-      title: 'Współpracuje z Leśnik+',
+      title: 'Współpraca z systemem Leśnik+',
       body:
-        'Urządzenie jest zgodne z systemem używanym w nadleśnictwach, więc sprzedaż z rejestratora trafia na paragon bez ręcznego przepisywania pozycji.',
+        'Urządzenie jest zgodne z systemem stosowanym w nadleśnictwach, dzięki czemu dane sprzedaży z rejestratora są przenoszone na paragon bez ręcznego wprowadzania pozycji.',
     },
     {
       icon: ICON.chmura,
-      title: 'Raportuje do CRK bez pilnowania',
+      title: 'Automatyczna transmisja danych do CRK',
       body:
-        'Modem GSM i Wi-Fi same wysyłają dane o transakcjach do Centralnego Repozytorium Kas — obowiązek raportowy realizuje się w tle.',
+        'Modem GSM oraz łączność Wi-Fi przekazują dane o transakcjach do Centralnego Repozytorium Kas automatycznie. Obowiązek raportowy realizowany jest bez udziału obsługi.',
     },
     {
       icon: ICON.paragon,
-      title: 'Papier wrzuca się bez wprawy',
+      title: 'Wymiana rolki bez przewlekania papieru',
       body:
-        'Mechanizm „drop in” przyjmuje rolkę 57 mm bez przewlekania — wymianę zrobi każdy, także w kancelarii leśnictwa w środku dnia sprzedaży.',
+        'Mechanizm typu „drop in” przyjmuje rolkę o szerokości 57 mm bez przewlekania. Wymiana nie wymaga przeszkolenia i możliwa jest w trakcie sprzedaży, również w kancelarii leśnictwa.',
     },
   ],
   pricing: {
@@ -126,7 +126,7 @@ const data: ProductData = {
     heading: 'Proces zakupu i wdrożenia',
     navLabel: 'Wdrożenie',
     lead:
-      'Siedem kroków od złożenia zamówienia do przeglądów ustawowych — całość prowadzimy z nadleśnictwem.',
+      'Siedem etapów od złożenia zamówienia do przeglądów ustawowych. Całość realizujemy wspólnie z nadleśnictwem.',
     documents: WDROZENIE_DOKUMENTY,
     steps: [
       { icon: ICON.zamowienie, title: 'Zamówienie', note: 'Posnet Pospay 2 w TAKMA' },
@@ -144,7 +144,7 @@ const data: ProductData = {
     {
       name: 'Posnet Temo Online',
       href: '/produkt/posnet-temo-online',
-      note: 'Sama drukarka fiskalna, bez terminala — 315 g',
+      note: 'Drukarka fiskalna bez terminala płatniczego — 315 g',
     },
   ],
 }

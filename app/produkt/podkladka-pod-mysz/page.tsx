@@ -41,9 +41,9 @@ const data: ProductData = {
     },
     {
       icon: ICON.podkladka,
-      title: 'Jedna rzecz, nie dwie',
+      title: 'Podkładka i podpórka w jednym elemencie',
       body:
-        'Podkładka i podpórka w jednym elemencie, bez osobnej poduszki, która i tak ucieka spod ręki.',
+        'Podkładka wraz z podpórką pod nadgarstek stanowią jedną całość, bez osobnej poduszki zmieniającej położenie podczas pracy.',
     },
     {
       icon: ICON.antyposlizg,

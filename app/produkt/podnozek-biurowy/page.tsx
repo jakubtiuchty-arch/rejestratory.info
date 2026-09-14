@@ -47,15 +47,15 @@ const data: ProductData = {
     },
     {
       icon: ICON.antyposlizg,
-      title: 'Nie ucieka spod nóg',
+      title: 'Powierzchnia antypoślizgowa',
       body:
-        'Antypoślizgowa powierzchnia trzyma stopy na miejscu przy zmianie pozycji.',
+        'Antypoślizgowa powierzchnia utrzymuje stopy w stabilnej pozycji również przy zmianie ułożenia nóg.',
     },
     {
       icon: ICON.biurko,
       title: 'Bez montażu',
       body:
-        'Stawia się pod biurkiem i gotowe — nie trzeba wiercić ani wymieniać mebla.',
+        'Podnóżek ustawia się pod biurkiem. Montaż nie wymaga wiercenia ani wymiany mebla.',
     },
   ],
   hideService: true,
