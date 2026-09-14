@@ -27,7 +27,7 @@ const data: ProductData = {
   inquiry: {
     description: 'Kasa fiskalna online z drukarką i terminalem płatniczym',
     specifications:
-      'Ekran 4,5″ · terminal płatniczy (karta, BLIK) · akumulator 6800 mAh · GSM i Wi-Fi · zgodny z Leśnik+',
+      'Ekran 4,5″ · terminal płatniczy (karta, BLIK) · akumulator 6800 mAh · GSM i Wi-Fi · zgodny z Leśnik+ · gwarancja 24 miesiące',
   },
   whyNavLabel: 'Dlaczego Pospay 2',
   whyHeading: 'Zastosowanie w nadleśnictwie',
@@ -105,6 +105,15 @@ const data: ProductData = {
         'Mechanizm typu „drop in” przyjmuje rolkę o szerokości 57 mm bez przewlekania. Wymiana nie wymaga przeszkolenia i możliwa jest w trakcie sprzedaży, również w kancelarii leśnictwa.',
     },
   ],
+  signature: [
+    {
+      icon: ICON.wsparcie5,
+      title: 'Gwarancja 24 miesiące na urządzenie',
+      body:
+        'Dla nadleśnictw obowiązuje gwarancja 24 miesięcy na kasę fiskalną, wobec 12 miesięcy w standardzie producenta. Warunki gwarancji na terminal płatniczy pozostają bez zmian — terminal objęty jest dożywotnią gwarancją w ramach abonamentu.',
+      tone: 'akcent',
+    },
+  ],
   pricing: {
     heading: 'Cennik i prowizje',
     main: { k: 'Zakup urządzenia', v: '1 799 zł', unit: 'netto' },
@@ -114,7 +123,7 @@ const data: ProductData = {
       { label: 'MasterCard', value: '0,79 %' },
       { label: 'BLIK', value: '0,39 %' },
     ],
-    note: 'W abonamencie: wynajem terminala płatniczego z dożywotnią gwarancją, aplikacja sprzedażowa POS-UP z aktualizacjami oraz karta SIM z transmisją danych do Centralnego Repozytorium Kas. Stawki VISA i MasterCard dotyczą kart wydanych w Polsce. Przeglądy ustawowe co 2 lata rozliczane osobno.',
+    note: 'Urządzenie objęte jest gwarancją 24 miesięcy dla nadleśnictw, wobec 12 miesięcy w standardzie producenta. W abonamencie: wynajem terminala płatniczego z dożywotnią gwarancją, aplikacja sprzedażowa POS-UP z aktualizacjami oraz karta SIM z transmisją danych do Centralnego Repozytorium Kas. Stawki VISA i MasterCard dotyczą kart wydanych w Polsce. Przeglądy ustawowe co 2 lata rozliczane osobno.',
   },
   // klient generuje ofertę PDF sam — dane w lib/oferta-pdf/produkty.ts
   ofertaPdf: true,

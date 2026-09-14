@@ -24,7 +24,7 @@ export const PRODUKTY_OFERTY: Record<string, ProduktOferty> = {
     slug: 'posnet-pospay-2',
     nazwa: 'Posnet Pospay 2',
     opis:
-      'W cenie: fiskalizacja, dostawa, szkolenie i integracja z rejestratorami. Przeglądy ustawowe co 2 lata rozliczane są osobno.',
+      'W cenie: 24 miesiące gwarancji na urządzenie (standard producenta to 12 miesięcy), fiskalizacja, dostawa, szkolenie i integracja z rejestratorami. Przeglądy ustawowe co 2 lata rozliczane są osobno.',
     cenaNetto: 179_900,
     abonament: {
       nazwa: 'Abonament za terminal płatniczy',

@@ -13,7 +13,7 @@ const products = [
     name: "Posnet Pospay 2",
     category: "Urządzenia fiskalne",
     description: "Fiskalny terminal płatniczy",
-    specifications: "Płatność kartą, BLIK, kompatybilny z Leśnik+",
+    specifications: "Płatność kartą, BLIK, kompatybilny z Leśnik+, gwarancja 24 miesiące",
     availability: "Dostępny",
     whereToBuy: "TAKMA",
     image: "/pospay_3.png",

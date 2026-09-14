@@ -279,8 +279,8 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
           <View style={s.kontaktBox} wrap={false}>
             <Text style={s.boxTitle}>Jak zamówić</Text>
             <Text style={s.kontaktText}>
-              Wystarczy odpowiedzieć na tę ofertę albo zadzwonić: {SPRZEDAWCA.telefon}. Potwierdzimy
-              termin dostawy i prześlemy dokumenty do fiskalizacji.
+              Prosimy o odpowiedź na niniejszą ofertę lub kontakt telefoniczny: {SPRZEDAWCA.telefon}.
+              Potwierdzimy termin dostawy i prześlemy dokumenty do fiskalizacji.
             </Text>
           </View>
           ) : null}
