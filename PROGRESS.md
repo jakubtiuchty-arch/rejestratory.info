@@ -1,5 +1,21 @@
 # PROGRESS — rejestratory.info
 
+## 2026-09-14 — rejestr urzędowy na kartach produktów
+
+Jakub o karcie Posnet Pospay 2: „język podwórkowy, a ma być oficjalny bo to Lasy Państwowe”. Wskazał dwa wyróżniki — „Raportuje do CRK bez pilnowania” i „Papier wrzuca się bez wprawy” — ale problem był szerszy, więc karta poszła w całości: wyróżniki, opis wdrożenia, wykaz dokumentów, nagłówek sekcji („Zastosowanie w nadleśnictwie” zamiast „Do czego przyda się w nadleśnictwie”), notka o modelu pokrewnym.
+
+Przegląd pozostałych 79 kart pod kątem tych samych zwrotów: 16 miało trafienia, z czego realnie potocznych było siedem (reszta to rzeczowe zdania w rodzaju „Trzysta pięćdziesiąt arkuszy zapasu”). Poprawione:
+
+- `honeywell-1450g` — „Nie trzeba celować” → „Odczyt bez precyzyjnego ustawiania dokumentu”
+- `honeywell-pc45t` — „Bierze nośniki, jakie są pod ręką” → „Obsługa wszystkich stosowanych nośników”
+- `podnozek-biurowy` — „Nie ucieka spod nóg”, „Stawia się pod biurkiem i gotowe”
+- `hp-715` — „bez wymiany paluszków i bez martwej myszy w środku dnia”
+- `podkladka-pod-mysz` — „poduszki, która i tak ucieka spod ręki”
+- `posnet-temo-online` — „nie zostawiamy nadleśnictwa z formularzami samego” (ten sam blok wdrożenia co w Pospayu)
+- `zebra-ds2278` — „Ta sama obsługa co DS2208, tylko bez kabla”
+
+`tsc --noEmit` czysty. **Zasada na przyszłość:** nowe karty pisać od razu w rejestrze urzędowym — poprawianie po fakcie to przejście przez kilkanaście plików.
+
 ## 2026-09-13 — newsletter: laptopy HP EliteBook (przygotowywany na 22.09)
 
 Jakub: „Jednak w przyszłym tygodniu musimy zrobić laptopy HP”. W kolejce na 21.09 stał TC58e — zamiana: **21.09 laptopy HP**, TC58e schodzi na 28.09 (drugie przesunięcie, wcześniej z 14.09).
