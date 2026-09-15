@@ -1,5 +1,15 @@
 # PROGRESS — rejestratory.info
 
+## 2026-09-15 — wydanie HP przeniesione na środę 16.09
+
+Jakub rano: „dlaczego maile nie poszły do nadleśnictw?”. Nic nie miało pójść — na 15.09 stał Samsung, wstrzymany 13.09, a laptopy HP były zaplanowane na 22.09, bo tak nazywał się plik wydania i tak stała kolejka. Okazało się, że „wtorek 8:30” z niedzieli znaczyło **ten tydzień**, nie przyszły.
+
+Przeniesienie: `scripts/cancel-scheduled.mjs scheduled-2026-09-22.json` → **598 anulowanych, 13 błędów „Email is not scheduled”**. Sprawdzone przez `resend.emails.get` — wszystkie 13 ma status **`suppressed`**, czyli adresy są na liście blokad Resenda po wcześniejszych odbiciach i tak czy inaczej nic do nich nie pójdzie. Kolejka na 22.09 jest więc pusta.
+
+Wydanie przemianowane na `2026-09-16-laptopy-hp.html` (razem z kampanią UTM w 23 linkach), manifest przestawiony na nowy plik i `bulkAt` 16.09 8:30, stara rezerwacja w `newsletter_sends` usunięta, nowa dopisana. Bulk: **611 maili na środę 16.09 8:30**, ID w `scheduled-2026-09-16.json`, status trzech losowych sprawdzony jako `scheduled`.
+
+**Do rozważenia:** 13 adresów `suppressed` oznacza, że newsletter realnie dociera do 598 z 611 skrzynek. Warto wyciągnąć z Resenda powody blokad — część może dać się odblokować.
+
 ## 2026-09-14 — rejestr urzędowy na kartach produktów
 
 Jakub o karcie Posnet Pospay 2: „język podwórkowy, a ma być oficjalny bo to Lasy Państwowe”. Wskazał dwa wyróżniki — „Raportuje do CRK bez pilnowania” i „Papier wrzuca się bez wprawy” — ale problem był szerszy, więc karta poszła w całości: wyróżniki, opis wdrożenia, wykaz dokumentów, nagłówek sekcji („Zastosowanie w nadleśnictwie” zamiast „Do czego przyda się w nadleśnictwie”), notka o modelu pokrewnym.
