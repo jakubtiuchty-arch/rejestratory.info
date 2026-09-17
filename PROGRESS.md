@@ -1,5 +1,21 @@
 # PROGRESS — rejestratory.info
 
+## 2026-09-17 — Lidzbark: brakująca drukarka w protokole przeglądu
+
+Protokół przeglądu z 11.09 dla Nadleśnictwa Lidzbark miał **18 pozycji, a w systemie było 17** — wypadła ostatnia: **BFL 13730566 (Szkółka Leśna)**. Numeru nie było ani w `devices`, ani w `registrators`, więc nie chodziło o przypisanie do złego klienta, tylko o urwanie ostatniego wiersza przy wprowadzaniu listy.
+
+Naprawione w trzech miejscach:
+
+1. `devices` — dopisany rekord (`Posnet Temo`, `client_name` i `location` = `"Lidzbark "` ze spacją, tak jak reszta grupy), `last_inspection_id` wskazuje protokół, daty 11.09.2026 → 11.09.2028.
+2. `inspections.device_count` — 17 → 18.
+3. **PDF protokołu w storage** — to on jest dokumentem dla klienta, więc sama baza nie wystarczyła.
+
+**PDF trzeba było edytować, bo generatora nie ma w żadnym repo** — plik robi jsPDF 3.0.3 z aplikacji spoza tego projektu (sprawdzone: katalog-it-lasy, serwiszebra, takma, kopia z Desktopu). Zamiast odtwarzać layout, doklejony został jeden wiersz do istniejącego strumienia strony 2: skopiowany blok wiersza 17, podmieniony kolor tła na biały (naprzemienność), przesunięte `y` o wysokość wiersza (28,5079 pt), podmienione glify tekstu — numery są zapisane jako kody CID osadzonego Roboto, więc „17" → `<0015001c>`, a numer seryjny jako ciąg glifów cyfr. Blok podpisów (nazwisko, uprawnienia, obrazek podpisu i obie linie) przesunięty o ten sam skok w dół. Zapis przez `pypdf`, obrazek podpisu i fonty zachowane bez zmian.
+
+Oryginał z 17 pozycjami leży w `inspection-pdfs/archiwum/Lidzbark__1789128287223_17-pozycji.pdf`. Publiczny adres protokołu się nie zmienił.
+
+**Przy okazji, do sprawdzenia kiedyś:** przeglądy **Pieńsk (28.11.2025, 11 szt.)** i **Mrągowo (12.11.2025, 14 szt.)** nie mają podpiętego ani jednego urządzenia przez `last_inspection_id` — protokoły są widoczne, ale na liście sprzętu nie widać, że przegląd się odbył.
+
 ## 2026-09-15 — wydanie HP przeniesione na środę 16.09
 
 Jakub rano: „dlaczego maile nie poszły do nadleśnictw?”. Nic nie miało pójść — na 15.09 stał Samsung, wstrzymany 13.09, a laptopy HP były zaplanowane na 22.09, bo tak nazywał się plik wydania i tak stała kolejka. Okazało się, że „wtorek 8:30” z niedzieli znaczyło **ten tydzień**, nie przyszły.
