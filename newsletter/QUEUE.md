@@ -31,3 +31,14 @@ Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie za
   przebiegu nic nie budowałem i nie zmieniałem manifestu — przestawienie go z powrotem na
   Samsunga odwróciłoby tę zabezpieczającą decyzję. Kolejka ma 4 przyszłe pozycje po tym
   tygodniu (21.09, 28.09, 05.10, 12.10), zapas ≥3 tygodnie zachowany.
+
+- **2026-09-21** — w tabeli nie ma wiersza z dzisiejszą datą (poniedziałek). Wiersz HP
+  EliteBook jest datowany na 2026-09-16 (środa, wyjątkowo — zastąpił wstrzymanego Samsunga
+  i poszedł ręcznie na 16.09), a kolejny wiersz to dopiero 2026-09-28 (Zebra TC58e), którego
+  własna notatka mówi wprost: „przesunięty z 14.09, potem z 21.09" — czyli slot na dzisiejszy
+  poniedziałek był już świadomie opróżniony przez wcześniejsze przesunięcie. Nie ma więc
+  urządzenia przypisanego na 21.09 ani gotowego pliku wydania w `public/newsletter/editions/`.
+  Zgodnie z zasadą „nie budować na ślepo" nic nie tworzę w tym przebiegu — `manifest.json`
+  zostaje bez zmian (nadal wskazuje `2026-09-16-laptopy-hp.html`). Jakub: proszę o decyzję —
+  albo przywrócić Zebrę TC58e na 21.09 (i przesunąć kolejne wiersze o tydzień), albo
+  potwierdzić, że tydzień 21.09 celowo zostaje bez wydania.
