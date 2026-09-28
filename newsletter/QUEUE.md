@@ -14,9 +14,10 @@ a `public/newsletter/manifest.json` wskazuje bieżące wydanie.
 | 2026-09-07 | Urządzenia wielofunkcyjne Brother (wiodący MFC-L8900CDW) | /kategoria/urzadzenia-wielofunkcyjne | ZAPLANOWANE ręcznie 04.09 (po akceptacji wersji bez cen) — 607 maili na **wtorek 08.09 8:30**, ID w `scheduled-2026-09-08.json`; pierwsza próba z 02.09 anulowana (`scheduled-2026-09-08.cancelled.json`). Rezerwacja w `newsletter_sends` blokuje poniedziałkowy przycisk — **nie zatwierdzać testówki**. |
 | 2026-09-23 | **Smartfony Samsung Galaxy** (wiodący S25 FE) | /kategoria/telefony | ZAPLANOWANE ręcznie 21.09 — **614 maili na środę 23.09 8:30**, ID w `scheduled-2026-09-23.json`. Wydanie wstrzymane 13.09 wróciło po przebudowie: model tygodnia zmieniony z XCover7 na S25 FE, nowe hero (nocny las, animowane tylko świetliki), zdjęcie modelu z key visuala producenta. Rezerwacja w `newsletter_sends` blokuje przycisk — **nie zatwierdzać testówki**. |
 | 2026-09-16 | **Laptopy HP EliteBook** (wiodący 6 G1ah 16", obok 14" ze Smart Card i stacja HP Dock G6) | /kategoria/laptopy | ZAPLANOWANE ręcznie 15.09 — **611 maili na środę 16.09 8:30**, ID w `scheduled-2026-09-16.json`. Pierwotny termin 22.09 anulowany na prośbę Jakuba (`scheduled-2026-09-22-cancel-errors.json` = 13 adresów `suppressed`, nie do anulowania i tak niewysyłanych). Rezerwacja w `newsletter_sends` blokuje przycisk — **nie zatwierdzać testówki**. |
-| 2026-09-28 | Zebra TC58e | /produkt/zebra-tc58e | do przygotowania (przesunięty z 14.09, potem z 21.09) |
+| 2026-09-28 | Zebra TC58e | /produkt/zebra-tc58e | wydanie gotowe (2026-09-28-zebra-tc58e.html) |
 | 2026-10-05 | Zebra ZD421c (drukarka etykiet) | /produkt/zebra-zd421c | propozycja — do akceptacji |
 | 2026-10-12 | Samsung Galaxy Tab Active5 (tablet terenowy) | /produkt/samsung-galaxy-tab-active5 | propozycja — do akceptacji |
+| 2026-10-19 | Honeywell CT47 (terminal terenowy, alternatywa dla Zebry) | /produkt/honeywell-ct47 | propozycja — do akceptacji |
 
 Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie zapasu.
 
@@ -34,3 +35,13 @@ Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie za
   zostaje bez zmian (nadal wskazuje `2026-09-16-laptopy-hp.html`). Jakub: proszę o decyzję —
   albo przywrócić Zebrę TC58e na 21.09 (i przesunąć kolejne wiersze o tydzień), albo
   potwierdzić, że tydzień 21.09 celowo zostaje bez wydania.
+- **2026-09-28** — wydanie Zebra TC58e zbudowane, ale ze dwoma odstępstwami od standardu,
+  wynikającymi z ograniczonych materiałów w repo (nie zmyślałem, tylko pracowałem z tym, co jest):
+  w `public/` i w źródłowej ofercie (`oferty-zrodla/...TC58E_03.2026.docx`) istnieje tylko
+  **jedno** zdjęcie produktu (`tc58_1.png`) — galeria w wydaniu pokazuje więc jedno zdjęcie
+  zamiast czterech. Hero zostawiłem jako istniejący, pasujący tematycznie plik
+  `las-em45-anim.gif` (leśniczy z rejestratorem w terenie) zamiast tworzyć nową animację —
+  zgodnie z poleceniem z tego przebiegu, żeby hero GIF zostawić bez zmian; podmieniłem tylko
+  alt-text, żeby nie sugerował błędnie modelu EM45. Cena: w repo jest realna oferta ZUP Łódź
+  (`data/oferty-skladnicy.ts`, 3691 zł netto za urządzenie + akcesoria) — nie użyłem wariantu
+  „wycena indywidualna", bo dane były dostępne.
