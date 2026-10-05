@@ -10,6 +10,7 @@ export interface Device {
   id: string;
   created_at: string;
   client_name: string;
+  client_nip?: string | null;
   device_name: string;
   serial_number: string;
   last_inspection_date: string | null; // NULL dla nowych urządzeń
@@ -17,7 +18,7 @@ export interface Device {
   location: string;
   last_inspection_id: string | null;
   forestry_unit?: string;
-  fiscalization_date?: string; // Data fiskalizacji dla nowych urządzeń
+  fiscalization_date?: string | null; // Data fiskalizacji dla nowych urządzeń
 }
 
 export interface Inspection {

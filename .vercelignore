@@ -1,0 +1,10 @@
+.vercel
+.git
+.env*
+node_modules
+.next
+tests
+*.sql
+*.patch
+*.tar.gz
+WDROZENIE_*.md

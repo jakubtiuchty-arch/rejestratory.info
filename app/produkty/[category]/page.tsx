@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -32,7 +32,8 @@ interface CategoryPageProps {
   }>;
 }
 
-const CategoryPage = ({ params }: CategoryPageProps) => {
+const CategoryPage = (props: CategoryPageProps) => {
+  const params = use(props.params);
   const [viewMode, setViewMode] = React.useState<'grid' | 'list'>('grid');
   const [filteredProducts, setFilteredProducts] = React.useState<Product[]>([]);
   const [categoryParam, setCategoryParam] = React.useState<string>('');
@@ -81,7 +82,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
       </div>
     );
   }
-  
+
   return (
     <>
       {/* Header */}

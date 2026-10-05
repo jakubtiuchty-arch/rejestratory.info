@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
+  outputFileTracingRoot: __dirname,
     // /api/oferta-pdf czyta fonty DejaVu i logo z public/ przez system plików —
     // bez tego wpisu funkcja na Vercelu nie ma ich w bundlu i musi sięgać po URL.
     // pdfkit ładuje standardowe fonty (Helvetica.cjs i spółka) dynamicznie w runtime,
@@ -8,6 +8,11 @@ const nextConfig = {
     // „Cannot find module … /pdfkit/js/standard-fonts/Helvetica.cjs”. Kopii pdfkit
     // jest kilka (@react-pdf/renderer, @react-pdf/font, top-level), stąd glob.
     outputFileTracingIncludes: {
+      '/api/pospay-studio/contracts{,/**}': [
+        './tools/contracts-scanner/pdf-worker.cjs',
+        './node_modules/pdf-lib/**', './node_modules/@pdf-lib/**',
+        './node_modules/pako/**', './node_modules/tslib/**',
+      ],
       '/api/oferta-pdf': [
         './public/fonts/DejaVuSans.ttf',
         './public/fonts/DejaVuSans-Bold.ttf',
@@ -17,7 +22,6 @@ const nextConfig = {
         './node_modules/**/fontkit/**',
       ],
     },
-  },
   async headers() {
     return [
       {

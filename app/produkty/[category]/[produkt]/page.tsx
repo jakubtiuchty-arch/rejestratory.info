@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -34,7 +34,8 @@ interface ProductPageProps {
   }>;
 }
 
-const ProductPage = ({ params }: ProductPageProps) => {
+const ProductPage = (props: ProductPageProps) => {
+  const params = use(props.params);
   const [selectedImage, setSelectedImage] = React.useState(0);
   const [categoryParam, setCategoryParam] = React.useState<string>('');
   const [productSlug, setProductSlug] = React.useState<string>('');
@@ -63,10 +64,10 @@ const ProductPage = ({ params }: ProductPageProps) => {
   ];
 
   // Grupowanie specyfikacji w kategorie
- const specificationsList = React.useMemo(() => {
-  if (!product?.specification) return [];
-  return product.specification.split(',').map(s => s.trim());
-}, [product]);
+  const specificationsList = React.useMemo(() => {
+   if (!product?.specification) return [];
+   return product.specification.split(',').map(s => s.trim());
+ }, [product]);
 
   // Loading state
   if (!categoryParam || !productSlug) {

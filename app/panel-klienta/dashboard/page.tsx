@@ -3,11 +3,12 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ContractsSection from '@/components/ContractsSection';
 import { ICON, naCiemnym } from '@/components/product/icons';
 import { Laptop, Monitor, Package, Printer, Server, Smartphone, User } from "lucide-react";
 import { supabase, Device, Inspection, ClientDocument, Registrator } from '@/lib/supabase';
 
-type DeviceStatus = "new" | "ok" | "warning" | "overdue";
+import { fiscalDeviceStatus, FiscalDeviceStatus as DeviceStatus } from "@/lib/fiscal-device-status";
 
 interface DeviceWithStatus extends Device {
   status: DeviceStatus;
@@ -20,7 +21,7 @@ const getStatusConfig = (status: string) => {
         icon: ICON.drukarka,
         color: "text-emerald-700",
         bgColor: "bg-emerald-50/60",
-        label: "NOWE",
+        label: "Fiskalizacja",
         borderColor: "border-emerald-200"
       };
     case "ok":
@@ -234,26 +235,6 @@ export default function Dashboard() {
   });
   const [activeContract, setActiveContract] = React.useState<{years: number, endDate: string} | null>(null);
 
-  // Funkcja obliczająca status urządzenia na podstawie daty następnego przeglądu i czy był przegląd
-  const calculateDeviceStatus = (nextInspectionDate: string, lastInspectionDate: string | null): DeviceStatus => {
-    const today = new Date();
-    const nextDate = new Date(nextInspectionDate);
-    const daysUntilInspection = Math.floor((nextDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-
-    // Jeśli nie było przeglądu - urządzenie jest NOWE
-    const isNewDevice = !lastInspectionDate;
-
-    if (daysUntilInspection < 0) {
-      return "overdue"; // Przeterminowany
-    } else if (daysUntilInspection <= 90) {
-      return "warning"; // Zbliża się termin (3 miesiące)
-    } else if (isNewDevice) {
-      return "new"; // Nowe urządzenie bez przeglądu
-    } else {
-      return "ok"; // Po przeglądzie
-    }
-  };
-
   // Pobierz unikalne leśnictwa do filtrowania
   const uniqueForestryUnits = React.useMemo(() => {
     const units = devices
@@ -407,7 +388,7 @@ export default function Dashboard() {
         // Dodaj status do każdego urządzenia
         const devicesWithStatus: DeviceWithStatus[] = (devicesData || []).map(device => ({
           ...device,
-          status: calculateDeviceStatus(device.next_inspection_date, device.last_inspection_date)
+          status: fiscalDeviceStatus(device.next_inspection_date, device.last_inspection_date)
         }));
 
         setDevices(devicesWithStatus);
@@ -428,6 +409,7 @@ export default function Dashboard() {
         const { data: documentsData, error: documentsError } = await supabase
           .from('client_documents')
           .select('*')
+          .neq('document_type', 'contract')
           .eq('client_name', storedClientName)
           .order('created_at', { ascending: false });
 
@@ -658,6 +640,7 @@ export default function Dashboard() {
             </div>
             <button
               onClick={() => {
+                void fetch('/api/contracts/logout', { method: 'POST', cache: 'no-store', keepalive: true });
                 localStorage.removeItem('client_name');
                 localStorage.removeItem('serial_number');
                 window.location.href = '/panel-klienta';
@@ -875,7 +858,7 @@ export default function Dashboard() {
 
                         {/* Daty przeglądów */}
                         <div className="hidden md:flex items-center gap-4 text-xs flex-shrink-0">
-                          {device.status === 'new' ? (
+                          {!device.last_inspection_date ? (
                             <>
                               <div>
                                 <p className="text-stone-400 text-xs">Fiskalizacja</p>
@@ -1041,7 +1024,7 @@ export default function Dashboard() {
 
                               {/* Daty przeglądów */}
                               <div className="hidden md:flex items-center gap-4 text-xs flex-shrink-0">
-                                {device.status === 'new' ? (
+                                {!device.last_inspection_date ? (
                                   <>
                                     <div>
                                       <p className="text-stone-400 text-xs">Fiskalizacja</p>
@@ -1352,7 +1335,7 @@ export default function Dashboard() {
 
         {/* Dokumenty - Umowy i inne (bez protokołów) */}
         {(() => {
-          const nonProtocolDocuments = clientDocuments.filter(doc => doc.document_type !== 'protocol');
+          const nonProtocolDocuments = clientDocuments.filter(doc => doc.document_type === 'other');
           if (nonProtocolDocuments.length === 0) return null;
           
           return (
@@ -1668,6 +1651,8 @@ export default function Dashboard() {
           </div>
         </motion.div>
         )}
+
+        <ContractsSection clientName={clientName} />
 
         {/* Pomoc */}
         <motion.div
