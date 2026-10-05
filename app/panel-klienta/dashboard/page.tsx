@@ -14,6 +14,9 @@ interface DeviceWithStatus extends Device {
   status: DeviceStatus;
 }
 
+const forestryLabel = (name: string) =>
+  /^leśnictwo\s/i.test(name.trim()) ? name.trim() : `Leśnictwo ${name.trim()}`;
+
 const getStatusConfig = (status: string) => {
   switch (status) {
     case "new":
@@ -838,7 +841,7 @@ export default function Dashboard() {
                               <img src={ICON.lokalizacja} alt="" className="h-3 w-3 flex-shrink-0 mix-blend-multiply" />
                               {device.forestry_unit && device.forestry_unit.trim() ? (
                                 <span className="text-xs text-emerald-700 font-medium group-hover:text-emerald-800 truncate">
-                                  {device.forestry_unit}
+                                  {forestryLabel(device.forestry_unit)}
                                 </span>
                               ) : (
                                 <span className="text-xs text-stone-400 italic group-hover:text-emerald-600">
@@ -1004,7 +1007,7 @@ export default function Dashboard() {
                                     <img src={ICON.lokalizacja} alt="" className="h-3 w-3 flex-shrink-0 mix-blend-multiply" />
                                     {device.forestry_unit && device.forestry_unit.trim() ? (
                                       <span className="text-xs text-emerald-700 font-medium group-hover:text-emerald-800 truncate">
-                                        {device.forestry_unit}
+                                        {forestryLabel(device.forestry_unit)}
                                       </span>
                                     ) : (
                                       <span className="text-xs text-stone-400 italic group-hover:text-emerald-600">
@@ -1221,7 +1224,7 @@ export default function Dashboard() {
                               <img src={ICON.lokalizacja} alt="" className="h-3 w-3 flex-shrink-0 mix-blend-multiply" />
                               {reg.forestry_unit && reg.forestry_unit.trim() ? (
                                 <span className="text-xs text-emerald-800 font-medium group-hover:text-emerald-800 truncate">
-                                  {reg.forestry_unit}
+                                  {forestryLabel(reg.forestry_unit)}
                                 </span>
                               ) : (
                                 <span className="text-xs text-stone-400 italic group-hover:text-emerald-700">
