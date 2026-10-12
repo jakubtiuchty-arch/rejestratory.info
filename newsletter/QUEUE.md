@@ -16,7 +16,7 @@ a `public/newsletter/manifest.json` wskazuje bieżące wydanie.
 | 2026-09-16 | **Laptopy HP EliteBook** (wiodący 6 G1ah 16", obok 14" ze Smart Card i stacja HP Dock G6) | /kategoria/laptopy | ZAPLANOWANE ręcznie 15.09 — **611 maili na środę 16.09 8:30**, ID w `scheduled-2026-09-16.json`. Pierwotny termin 22.09 anulowany na prośbę Jakuba (`scheduled-2026-09-22-cancel-errors.json` = 13 adresów `suppressed`, nie do anulowania i tak niewysyłanych). Rezerwacja w `newsletter_sends` blokuje przycisk — **nie zatwierdzać testówki**. |
 | 2026-09-28 | Zebra TC58e | /produkt/zebra-tc58e | wydanie gotowe (2026-09-28-zebra-tc58e.html) |
 | 2026-10-05 | Zebra ZD421c (drukarka etykiet) | /produkt/zebra-zd421c | wydanie gotowe (2026-10-05-zebra-zd421c.html) |
-| 2026-10-12 | Samsung Galaxy Tab Active5 (tablet terenowy) | /produkt/samsung-galaxy-tab-active5 | propozycja — do akceptacji |
+| 2026-10-12 | Samsung Galaxy Tab Active5 (tablet terenowy) | /produkt/samsung-galaxy-tab-active5 | wydanie gotowe (2026-10-12-samsung-tab-active5.html) |
 | 2026-10-19 | Honeywell CT47 (terminal terenowy, alternatywa dla Zebry) | /produkt/honeywell-ct47 | propozycja — do akceptacji |
 | 2026-10-26 | Epson DS-730n (skaner dokumentowy sieciowy, do EZD) | /produkt/epson-ds730n | propozycja — do akceptacji |
 | 2026-11-02 | Vertiv Liebert itON 1000 VA (UPS do serwerowni/kancelarii) | /produkt/vertin-1000 | propozycja — do akceptacji |
@@ -58,3 +58,17 @@ Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie za
   modułów dodatkowych) — użyta wprost, bez wariantu „wycena indywidualna". Do tile „z poprzedniego
   wydania" dorobiłem miniaturę `tc58e_small.png` (zmiana rozmiaru istniejącego zdjęcia produktu,
   nie nowa grafika).
+- **2026-10-12** — wydanie Samsung Galaxy Tab Active5 zbudowane na bazie ZD421c, z jednym
+  odstępstwem od standardu: w `public/products/` istnieją tylko **trzy** zdjęcia produktu
+  (`tab-active5-1/2/3.webp`, 900×900, wszystkie w formacie przód+tył pod różnym kątem) — galeria
+  pokazuje trzy zdjęcia zamiast czterech. Przekonwertowałem je do PNG 800×800 (`convert`/ImageMagick,
+  PIL niedostępny w środowisku) do `public/newsletter/tab-active5_1/2/3.png`. Hero zostawiłem jako
+  istniejący plik `las-em45-anim.gif` (leśniczy z urządzeniem w terenie — tematycznie pasuje do
+  tabletu terenowego), podmieniłem tylko alt-text, zgodnie z precedensem z 28.09 i 05.10. Cena:
+  w repo jest realna oferta ZUP Łódź (`data/oferty-skladnicy.ts`, 2119 zł netto z ładowarką
+  sieciową w zestawie) — użyta wprost. Do tile „z poprzedniego wydania" (Zebra ZD421c) dorobiłem
+  miniaturę `zd421c_small.png` (zmiana rozmiaru istniejącego zdjęcia produktu, nie nowa grafika).
+  Uwaga: wiersz na 12.10 w tabeli miał status „propozycja — do akceptacji" (dopisany przy
+  poprzednim przebiegu jako zapas kolejki) — zbudowałem wydanie zgodnie z poleceniem z tego
+  przebiegu („znajdź wiersz z dzisiejszą datą — to urządzenie tygodnia"); gdyby Jakub chciał
+  inne urządzenie na ten tydzień, proszę o korektę przed akceptacją testówki w poniedziałek.
