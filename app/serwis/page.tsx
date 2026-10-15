@@ -9,7 +9,7 @@
  * co na kartach produktu.
  */
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { createPortal } from 'react-dom'
 import Header from '@/components/Header'
@@ -89,12 +89,19 @@ export default function ServicePage() {
     hasContract: '',
     courierPickup: '',
     problemDescription: '',
+    website: '', // honeypot — ukryte przed ludźmi, boty je wypełniają
   })
   const [showLightbox, setShowLightbox] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [zamontowane, setZamontowane] = useState(false)
 
-  React.useEffect(() => setZamontowane(true), [])
+  // czas otwarcia strony — zgłoszenie wysłane po mniej niż 3 s to bot
+  const startedAt = useRef<number>(0)
+
+  React.useEffect(() => {
+    setZamontowane(true)
+    startedAt.current = Date.now()
+  }, [])
 
   const zmien = (pole: string, wartosc: string) =>
     setFormData((d) => ({ ...d, [pole]: wartosc }))
@@ -106,7 +113,7 @@ export default function ServicePage() {
       const response = await fetch('/api/service', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, startedAt: startedAt.current }),
       })
       if (!response.ok) throw new Error('Błąd wysyłania formularza')
       setIsSubmitting(false)
@@ -125,6 +132,7 @@ export default function ServicePage() {
         hasContract: '',
         courierPickup: wybor,
         problemDescription: '',
+        website: '',
       })
     } catch (error) {
       console.error('Error:', error)
@@ -275,6 +283,29 @@ export default function ServicePage() {
               podpowiada długość odpowiedzi (GOV.UK: text input). */}
           <div className="mx-auto mt-10 max-w-3xl">
             <form onSubmit={handleSubmit}>
+              {/* honeypot */}
+              <div
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  left: '-9999px',
+                  opacity: 0,
+                  height: 0,
+                  overflow: 'hidden',
+                }}
+              >
+                <label htmlFor="website">Website (nie wypełniaj tego pola)</label>
+                <input
+                  type="text"
+                  id="website"
+                  name="website"
+                  value={formData.website}
+                  onChange={(e) => zmien('website', e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
               <div className="space-y-7 rounded-2xl border border-stone-200 bg-white p-6 sm:p-8">
                 <Sekcja tytul="Zgłaszający">
                   <div className="flex flex-wrap gap-6">

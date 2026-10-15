@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { esc, limitOk, losowyCiag } from '@/lib/antyspam'
 
 // ✅ WYMUSZENIE RUNTIME RENDERING (FIX DLA VERCEL)
 export const dynamic = 'force-dynamic'
@@ -23,8 +24,37 @@ export async function POST(request: NextRequest) {
       serialNumber,
       hasContract,
       courierPickup,
-      problemDescription
+      problemDescription,
+      website, // honeypot — ukryte pole, wypełniają je tylko boty
+      startedAt
     } = body
+
+    // Bot dostaje udawany sukces, żeby nie próbował dalej innymi danymi
+    const udawanySukces = (powod: string) => {
+      console.log(`[service] spam zablokowany: ${powod}`)
+      return NextResponse.json({ success: true, messageId: 'blocked', courierNeeded: false })
+    }
+
+    if (website) return udawanySukces('honeypot')
+
+    // Brak startedAt nie blokuje — strony sprzed zmiany mogą jeszcze siedzieć w cache
+    if (typeof startedAt === 'number' && Date.now() - startedAt < 3000) {
+      return udawanySukces('za_szybko')
+    }
+
+    const polaLosowe = (['firstName', 'lastName', 'forestDistrict', 'address'] as const).filter(
+      (pole) => typeof body[pole] === 'string' && losowyCiag(body[pole])
+    )
+    // Tylko nazwy pól, bez wartości — dane osobowe nie trafiają do logów
+    if (polaLosowe.length >= 2) return udawanySukces(`losowe_ciagi (${polaLosowe.join(', ')})`)
+
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'local'
+    if (!limitOk(ip)) {
+      return NextResponse.json(
+        { error: 'Zbyt wiele zgłoszeń w krótkim czasie. Prosimy spróbować za kilka minut.' },
+        { status: 429 }
+      )
+    }
 
     // Walidacja
     if (!firstName || !lastName || !forestDistrict || !address || !phone || !email || !deviceType || !hasContract || !courierPickup || !problemDescription) {
@@ -79,23 +109,23 @@ export async function POST(request: NextRequest) {
       <table style="width: 100%; font-size: 14px;">
         <tr>
           <td style="padding: 8px 0; color: #6b7280; width: 140px;"><strong>Imię i nazwisko:</strong></td>
-          <td style="padding: 8px 0;">${firstName} ${lastName}</td>
+          <td style="padding: 8px 0;">${esc(firstName)} ${esc(lastName)}</td>
         </tr>
         <tr>
           <td style="padding: 8px 0; color: #6b7280;"><strong>Nadleśnictwo:</strong></td>
-          <td style="padding: 8px 0;">${forestDistrict}</td>
+          <td style="padding: 8px 0;">${esc(forestDistrict)}</td>
         </tr>
         <tr>
           <td style="padding: 8px 0; color: #6b7280;"><strong>Adres:</strong></td>
-          <td style="padding: 8px 0;">${address}</td>
+          <td style="padding: 8px 0;">${esc(address)}</td>
         </tr>
         <tr>
           <td style="padding: 8px 0; color: #6b7280;"><strong>Telefon:</strong></td>
-          <td style="padding: 8px 0;"><a href="tel:${phone}" style="color: #ea580c; text-decoration: none;">${phone}</a></td>
+          <td style="padding: 8px 0;"><a href="tel:${esc(phone)}" style="color: #ea580c; text-decoration: none;">${esc(phone)}</a></td>
         </tr>
         <tr>
           <td style="padding: 8px 0; color: #6b7280;"><strong>Email:</strong></td>
-          <td style="padding: 8px 0;"><a href="mailto:${email}" style="color: #ea580c; text-decoration: none;">${email}</a></td>
+          <td style="padding: 8px 0;"><a href="mailto:${esc(email)}" style="color: #ea580c; text-decoration: none;">${esc(email)}</a></td>
         </tr>
       </table>
     </div>
@@ -106,12 +136,12 @@ export async function POST(request: NextRequest) {
       <table style="width: 100%; font-size: 14px;">
         <tr>
           <td style="padding: 8px 0; color: #6b7280; width: 140px;"><strong>Typ urządzenia:</strong></td>
-          <td style="padding: 8px 0;">${displayDeviceType}</td>
+          <td style="padding: 8px 0;">${esc(displayDeviceType)}</td>
         </tr>
         ${serialNumber ? `
         <tr>
           <td style="padding: 8px 0; color: #6b7280;"><strong>Numer seryjny:</strong></td>
-          <td style="padding: 8px 0;">${serialNumber}</td>
+          <td style="padding: 8px 0;">${esc(serialNumber)}</td>
         </tr>
         ` : ''}
         <tr>
@@ -132,7 +162,7 @@ export async function POST(request: NextRequest) {
     <!-- Opis problemu -->
     <div style="background: #fef3c7; padding: 20px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-bottom: 20px;">
       <h3 style="color: #92400e; margin-top: 0; font-size: 16px;">⚠️ Opis usterki</h3>
-      <p style="color: #1f2937; margin: 0; white-space: pre-wrap;">${problemDescription}</p>
+      <p style="color: #1f2937; margin: 0; white-space: pre-wrap;">${esc(problemDescription)}</p>
     </div>
 
     <!-- Footer info -->
@@ -154,7 +184,7 @@ export async function POST(request: NextRequest) {
         : 'kontakt@rejestratory.info',
       to: ['serwis@takma.com.pl'],
       replyTo: email,
-      subject: `🔧 Zgłoszenie serwisowe - ${displayDeviceType} | ${firstName} ${lastName}`,
+      subject: `🔧 Zgłoszenie serwisowe - ${displayDeviceType} | ${firstName} ${lastName}`.replace(/[\r\n]+/g, ' '),
       html: emailHTML,
     })
 

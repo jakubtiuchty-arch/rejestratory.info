@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 import { PRODUKTY_OFERTY, WARUNKI_OFERTY } from '@/lib/oferta-pdf/produkty'
 import { renderujOfertePdf, nazwaPlikuOferty } from '@/lib/oferta-pdf/render'
 import { zl } from '@/lib/oferta-pdf/OfertaPdf'
+import { esc } from '@/lib/antyspam'
 
 /**
  * Klient wpisuje dane nadleśnictwa na karcie produktu → dostaje ofertę w PDF
@@ -77,8 +78,6 @@ function zNazwaJednostki(nazwa: string): string {
 }
 
 const tekst = (v: unknown, max: number) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
-const esc = (t: string) =>
-  t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 /** Data DD.MM.RRRR — jak w PDF; `toLocaleDateString` gubi zero wiodące. */
 const dataPl = (d: Date) =>
