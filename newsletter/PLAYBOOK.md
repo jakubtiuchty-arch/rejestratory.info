@@ -61,7 +61,8 @@
   (ruch widoczny w GA4 jako kampania). Dodawać przy budowie każdego wydania.
 
 ## Adresy dodatkowe (od 2026-09-02)
-- `newsletter/odbiorcy-dodatkowi.json` — dział handlowy TAKMA (handlowy@) i dwie osoby z ZUP Łódź;
+- `newsletter/odbiorcy-dodatkowi.json` — dział handlowy TAKMA (handlowy@), dwie osoby z ZUP Łódź
+  oraz (od 16.10.2026) dwie osoby z RDLP Olsztyn i jedna z RDLP Lublin;
   dostają każde wydanie razem z bazą (scalane w `getRecipients` i w `send-newsletter.mjs`).
 
 ## Wydziały informatyki RDLP (od 2026-08-05)
