@@ -37,7 +37,7 @@ const data: ProductData = {
       title: 'Drukowanie',
       rows: [
         { k: 'Prędkość', v: '34 strony/min (A4)' },
-        { k: 'Dupleks', v: 'ręczny, 16 stron/min' },
+        { k: 'Dupleks', v: 'automatyczny, 16 stron/min' },
         { k: 'Rozdzielczość', v: 'do 1200 × 1200 dpi' },
       ],
     },

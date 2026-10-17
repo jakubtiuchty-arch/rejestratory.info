@@ -408,7 +408,7 @@ export default function CategoryPage() {
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
           <p className="mt-1 text-gray-600">
-            Wszystkie drukują dwustronnie w A4 i mają Wi-Fi oraz sieć LAN. Różnią się tym, co poniżej.
+            Wszystkie modele obsługują automatyczny druk dwustronny w formacie A4 oraz łączność Wi-Fi i LAN. Poniższe zestawienie przedstawia różnice między nimi.
           </p>
 
           <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow-md">

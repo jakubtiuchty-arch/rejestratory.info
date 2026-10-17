@@ -46,6 +46,27 @@ const products = [
   }
 ];
 
+// Porównanie pod kafelkami — tylko to, czym modele się różnią. Wspólne cechy
+// (czerń, A4, automatyczny druk dwustronny, LAN) stoją raz w nagłówku. Dane z kart
+// produktu i store.brother.pl (17.10.2026). `naj` = wartość wyróżniona w kolumnie.
+type Wiersz = {
+  model: string
+  href: string
+  funkcje: string
+  druk: string
+  papier: string
+  wolumen: string
+  wifi: string
+  ekran: string
+  naj?: Array<'funkcje' | 'druk' | 'papier' | 'wolumen' | 'ekran'>
+}
+
+const porownanie: Wiersz[] = [
+  { model: 'DCP-B7620DW', href: '/produkt/brother-dcp-b7620dw', funkcje: 'druk, skan, kopia', druk: '34 str./min', papier: '250 ark.', wolumen: 'do 2 500 str.', wifi: 'tak', ekran: 'LCD 2-wierszowy', naj: ['funkcje'] },
+  { model: 'HL-L6210DW', href: '/produkt/brother-hl-l6210dw', funkcje: 'tylko druk', druk: '50 str./min', papier: '520 + 100 ark.', wolumen: 'do 8 000 str.', wifi: 'tak', ekran: 'LCD 1-wierszowy', naj: ['druk', 'papier'] },
+  { model: 'HL-L6410', href: '/produkt/brother-hl-l6410', funkcje: 'tylko druk', druk: '50 str./min', papier: '520 + 100 ark.', wolumen: 'do 16 000 str.', wifi: 'opcja', ekran: 'dotykowy 8,9 cm', naj: ['druk', 'papier', 'wolumen', 'ekran'] },
+]
+
 // Opcje filtrowania i sortowania
 const sortOptions = [
   { value: "name", label: "Nazwa A-Z" },
@@ -288,6 +309,55 @@ export default function CategoryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Porównanie — tylko różnice */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Wszystkie modele to monochromatyczne drukarki laserowe formatu A4 z automatycznym drukiem dwustronnym i interfejsem sieciowym LAN. Poniższe zestawienie przedstawia różnice między nimi.
+          </p>
+
+          <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow-md">
+            <table className="w-full min-w-[680px] whitespace-nowrap text-left text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 text-gray-500">
+                  <th className="sticky left-0 bg-white px-4 py-3 font-medium">Model</th>
+                  <th className="px-4 py-3 font-medium">Funkcje</th>
+                  <th className="px-4 py-3 font-medium">Druk</th>
+                  <th className="px-4 py-3 font-medium">Podajnik papieru</th>
+                  <th className="px-4 py-3 font-medium">Zalecane miesięcznie</th>
+                  <th className="px-4 py-3 font-medium">Wi-Fi</th>
+                  <th className="px-4 py-3 font-medium">Ekran</th>
+                </tr>
+              </thead>
+              <tbody>
+                {porownanie.map((w) => {
+                  const kom = (k: 'funkcje' | 'druk' | 'papier' | 'wolumen' | 'ekran') =>
+                    w.naj?.includes(k) ? 'font-semibold text-emerald-700' : 'text-gray-700'
+                  return (
+                    <tr key={w.model} className="border-t border-gray-100 first:border-t-0">
+                      <td className="sticky left-0 bg-white px-4 py-3 font-medium">
+                        <a href={w.href} className="text-gray-900 hover:text-emerald-700">
+                          {w.model}
+                        </a>
+                      </td>
+                      <td className={`px-4 py-3 ${kom('funkcje')}`}>{w.funkcje}</td>
+                      <td className={`px-4 py-3 ${kom('druk')}`}>{w.druk}</td>
+                      <td className={`px-4 py-3 ${kom('papier')}`}>{w.papier}</td>
+                      <td className={`px-4 py-3 ${kom('wolumen')}`}>{w.wolumen}</td>
+                      <td className="px-4 py-3 text-gray-700">
+                        {w.wifi === 'tak' ? 'tak' : <span className="text-gray-400">{w.wifi}</span>}
+                      </td>
+                      <td className={`px-4 py-3 ${kom('ekran')}`}>{w.ekran}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
