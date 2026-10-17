@@ -14,7 +14,7 @@ const products = [
     name: "Samsung Galaxy A36",
     category: "Telefony",
     description: "Wszechstronny smartfon z wydajnym procesorem i długą żywotnością baterii",
-    specifications: "Android 14, 6,6\" FHD+, Exynos 1380, 6GB RAM, 128GB",
+    specifications: "Android 15, 6,7\" FHD+, Snapdragon 6 Gen 3, 6GB RAM, 128GB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "a36_1.png",
@@ -27,7 +27,7 @@ const products = [
     name: "Samsung Galaxy A56",
     category: "Telefony", 
     description: "Zaawansowany smartfon z profesjonalnym aparatem i szybkim ładowaniem",
-    specifications: "Android 14, 6,7\" FHD+, Exynos 1480, 8GB RAM, 256GB",
+    specifications: "Android 15, 6,7\" FHD+, Exynos 1580, 8GB RAM, 256GB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "a56_1.png",
@@ -53,7 +53,7 @@ const products = [
     name: "Samsung Galaxy S25 Ultra",
     category: "Telefony",
     description: "Topowy smartfon z S Pen i aparatem 200MP do profesjonalnej dokumentacji",
-    specifications: "Android 15, 6,8\" QHD+, Snapdragon 8 Elite, 12GB RAM, 512GB",
+    specifications: "Android 15, 6,9\" QHD+, Snapdragon 8 Elite, 12GB RAM, 512GB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "s25ultra_1.png", 
@@ -76,13 +76,13 @@ const products = [
   },
   {
     id: 6,
-    name: "Samsung Galaxy XCover Pro 7",
+    name: "Samsung Galaxy XCover6 Pro",
     category: "Telefony",
     description: "Wytrzymały smartfon przemysłowy z certyfikatem IP68 i wymienną baterią",
-    specifications: "Android 14, 6,3\" FHD+, Exynos 1380, 6GB RAM, 128GB",
+    specifications: "Android 12, 6,6\" FHD+ 120 Hz, Snapdragon 778G, 6GB RAM, 128GB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
-    image: "xcover7_1.png",
+    image: "xcover6pro_1.png",
     badge: null,
     featured: true,
     customUrl: "/produkt/samsung-xcover7"
@@ -114,6 +114,43 @@ const products = [
     customUrl: "/produkt/iphone-17-pro-max"
   }
 ];
+
+// Porównanie pod kafelkami — tylko to, czym telefony się różnią. Dane od producentów
+// (samsung.com/pl, news.samsung.com, support.apple.com/pl-pl, karty informacyjne UE Apple),
+// sprawdzone 17.10.2026. Akumulator iPhone'ów: karta informacyjna produktu UE (modele A3523/A3526).
+type Kol = 'ekran' | 'zabezp' | 'aku' | 'odpornosc' | 'aparat'
+type Wiersz = {
+  model: string
+  href: string
+  ekran: string
+  zabezp: string
+  aku: string
+  odpornosc: string
+  aparat: string
+  naj?: Kol[]
+  slabe?: Kol[]
+}
+
+const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
+  {
+    grupa: 'Samsung',
+    wiersze: [
+      { model: 'Galaxy A36', href: '/produkt/samsung-a36', ekran: '6,7″ AMOLED', zabezp: 'do 03.2031', aku: '5000 mAh', odpornosc: 'IP67', aparat: '50 Mpx' },
+      { model: 'Galaxy A56', href: '/produkt/samsung-a56', ekran: '6,7″ AMOLED', zabezp: 'do 03.2032', aku: '5000 mAh', odpornosc: 'IP67', aparat: '50 Mpx' },
+      { model: 'Galaxy S25 FE', href: '/produkt/samsung-s25-fe', ekran: '6,7″ AMOLED', zabezp: 'do 09.2032', aku: '4900 mAh', odpornosc: 'IP68', aparat: '50 Mpx · zoom 3x', naj: ['zabezp'] },
+      { model: 'Galaxy S25+', href: '/produkt/samsung-s25-plus', ekran: '6,7″ AMOLED QHD+', zabezp: 'do 01.2032', aku: '4900 mAh', odpornosc: 'IP68', aparat: '50 Mpx · zoom 3x' },
+      { model: 'Galaxy S25 Ultra', href: '/produkt/samsung-s25-ultra', ekran: '6,9″ AMOLED QHD+', zabezp: 'do 01.2032', aku: '5000 mAh', odpornosc: 'IP68', aparat: '200 Mpx · zoom 5x', naj: ['aparat'] },
+      { model: 'Galaxy XCover6 Pro', href: '/produkt/samsung-xcover7', ekran: '6,6″ LCD', zabezp: 'do ok. 06.2027', aku: '4050 mAh, wymienny', odpornosc: 'IP68, MIL-STD-810H', aparat: '50 Mpx', naj: ['odpornosc'], slabe: ['zabezp'] },
+    ],
+  },
+  {
+    grupa: 'Apple',
+    wiersze: [
+      { model: 'iPhone 17 Pro', href: '/produkt/iphone-17-pro', ekran: '6,3″ OLED', zabezp: 'min. 5 lat', aku: '3988 mAh', odpornosc: 'IP68', aparat: '48 Mpx · zoom 4x' },
+      { model: 'iPhone 17 Pro Max', href: '/produkt/iphone-17-pro-max', ekran: '6,9″ OLED', zabezp: 'min. 5 lat', aku: '4823 mAh', odpornosc: 'IP68', aparat: '48 Mpx · zoom 4x' },
+    ],
+  },
+]
 
 // Opcje filtrowania i sortowania
 const sortOptions = [
@@ -360,6 +397,66 @@ export default function CategoryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Porównanie — tylko różnice */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Wszystkie modele obsługują sieć 5G, NFC i ładowanie przez USB-C. Poniższe zestawienie przedstawia różnice między nimi według danych producentów.
+          </p>
+
+          <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow-md">
+            {/* szerokości kolumn: treść + równy odstęp, żeby wolne miejsce rozkładało się równo */}
+            <table className="w-full whitespace-nowrap text-left text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 text-gray-500">
+                  <th className="sticky left-0 bg-white px-4 py-3 font-medium" style={{ width: '15.9%' }}>Model</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '15.9%' }}>Ekran</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '19.4%' }}>Aktualizacje zabezpieczeń</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '16.6%' }}>Akumulator</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '16.6%' }}>Odporność</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '15.6%' }}>Aparat główny</th>
+                </tr>
+              </thead>
+              {porownanie.map((g) => (
+                <tbody key={g.grupa}>
+                  <tr className="bg-gray-50">
+                    <th colSpan={6} className="py-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                      <span className="sticky left-0 inline-block px-4">{g.grupa}</span>
+                    </th>
+                  </tr>
+                  {g.wiersze.map((w) => {
+                    const kom = (k: Kol) =>
+                      w.naj?.includes(k)
+                        ? 'font-semibold text-emerald-700'
+                        : w.slabe?.includes(k)
+                          ? 'text-gray-400'
+                          : 'text-gray-700'
+                    return (
+                      <tr key={w.model} className="border-t border-gray-100">
+                        <td className="sticky left-0 bg-white px-4 py-3 font-medium">
+                          <a href={w.href} className="text-gray-900 hover:text-emerald-700">
+                            {w.model}
+                          </a>
+                        </td>
+                        <td className={`px-4 py-3 ${kom('ekran')}`}>{w.ekran}</td>
+                        <td className={`px-4 py-3 ${kom('zabezp')}`}>{w.zabezp}</td>
+                        <td className={`px-4 py-3 ${kom('aku')}`}>{w.aku}</td>
+                        <td className={`px-4 py-3 ${kom('odpornosc')}`}>{w.odpornosc}</td>
+                        <td className={`px-4 py-3 ${kom('aparat')}`}>{w.aparat}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              ))}
+            </table>
+          </div>
+          <p className="mt-3 text-xs text-gray-500">
+            Aktualizacje zabezpieczeń: daty według Samsung Polska; XCover6 Pro — 5 lat od premiery (06.2022). iPhone: Apple gwarantuje co najmniej 5 lat od zakończenia sprzedaży modelu.
+          </p>
         </div>
       </section>
 
