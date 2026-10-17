@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import TabelaPorownania from '@/components/TabelaPorownania'
 import { ICON, naCiemnym } from '@/components/product/icons'
 import { porownajCeny } from '@/data/oferty'
 
@@ -13,7 +14,7 @@ const products = [
     name: "HP Pro S5 QHD USB-C 527pu",
     category: "Monitory",
     description: "Profesjonalny monitor QHD 27 cali do pracy biurowej",
-    specifications: "27\" QHD 2560x1440, IPS, 75Hz, HDMI, DisplayPort, USB-A",
+    specifications: "27\" QHD 2560x1440, IPS, 100Hz, USB-C 100W, RJ-45, HDMI, DisplayPort",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/527pu_1.png",
@@ -26,7 +27,7 @@ const products = [
     name: "HP Pro S5 QHD 527pq",
     category: "Monitory", 
     description: "Monitor QHD 27 cali z zaawansowanymi funkcjami zarządzania",
-    specifications: "27\" QHD 2560x1440, IPS, 75Hz, HDMI, DisplayPort, USB-C, pivot",
+    specifications: "27\" QHD 2560x1440, IPS, 100Hz, HDMI, DisplayPort, hub USB, pivot",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/527pq_1.png",
@@ -39,7 +40,7 @@ const products = [
     name: "Dell Pro 24 Plus P2425HE z USBC",
     category: "Monitory",
     description: "Monitor biznesowy 24 cale z ładowaniem USB-C do laptopów",
-    specifications: "24\" FHD 1920x1080, IPS, 60Hz, HDMI, DisplayPort, USB-C 90W",
+    specifications: "23,8\" FHD 1920x1080, IPS, 100Hz, USB-C 90W, RJ-45, HDMI, DisplayPort",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
     image: "/P2425HE_1.png",
@@ -53,7 +54,7 @@ const products = [
     name: "Dell Pro 24 Plus P2425H",
     category: "Monitory",
     description: "Kompaktowy monitor biznesowy 24 cale do codziennej pracy",
-    specifications: "24\" FHD 1920x1080, IPS, 60Hz, HDMI, DisplayPort, USB-A",
+    specifications: "23,8\" FHD 1920x1080, IPS, 100Hz, HDMI, DisplayPort, hub USB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/P2425HE_1.png",
@@ -66,8 +67,8 @@ const products = [
     id: 5,
     name: "Dell Pro 27 P2726HE z USB-C",
     category: "Monitory",
-    description: "Duży monitor 27 cali z ładowaniem USB-C i wysoką rozdzielczością",
-    specifications: "27\" QHD 2560x1440, IPS, 60Hz, HDMI, DisplayPort, USB-C 90W",
+    description: "Duży monitor 27 cali z ładowaniem USB-C i odświeżaniem 120 Hz",
+    specifications: "27\" FHD 1920x1080, IPS, 120Hz, USB-C 100W, RJ-45, HDMI, DisplayPort",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/P2425HE_1.png",
@@ -80,8 +81,8 @@ const products = [
     id: 6,
     name: "Dell Pro 27 P2726H",
     category: "Monitory",
-    description: "Profesjonalny monitor 27 cali QHD do zastosowań biurowych",
-    specifications: "27\" QHD 2560x1440, IPS, 60Hz, HDMI, DisplayPort, USB-A",
+    description: "Monitor 27 cali Full HD z odświeżaniem 120 Hz do zastosowań biurowych",
+    specifications: "27\" FHD 1920x1080, IPS, 120Hz, HDMI, DisplayPort, hub USB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/P2425HE_1.png",
@@ -94,8 +95,8 @@ const products = [
     id: 7,
     name: "Dell Pro 24 P2424HEB",
     category: "Monitory",
-    description: "Ergonomiczny monitor 24 cale z regulacją wysokości",
-    specifications: "24\" FHD 1920x1080, IPS, 60Hz, HDMI, DisplayPort, regulowana podstawa",
+    description: "Monitor 24 cale do wideokonferencji z kamerą 4 Mpx i głośnikami",
+    specifications: "23,8\" FHD 1920x1080, IPS, 60Hz, kamera 4 Mpx + IR, USB-C 90W, RJ-45",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/P2424HEB_1.png",
@@ -108,8 +109,8 @@ const products = [
     id: 8,
     name: "Dell Pro 27 P2724DEB",
     category: "Monitory",
-    description: "Ergonomiczny monitor 27 cali z pełną regulacją i pivot",
-    specifications: "27\" FHD 1920x1080, IPS, 75Hz, HDMI, DisplayPort, regulowana podstawa",
+    description: "Monitor 27 cali QHD do wideokonferencji z kamerą 4 Mpx i głośnikami",
+    specifications: "27\" QHD 2560x1440, IPS, 60Hz, kamera 4 Mpx + IR, USB-C 90W, RJ-45",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/P2424HEB_1.png",
@@ -120,10 +121,10 @@ const products = [
   },
   {
     id: 9,
-    name: "HP S3 Pro 324pv",
+    name: "HP S3 Pro 324pf",
     category: "Monitory",
-    description: "Monitor biznesowy 24 cale z funkcją pivot i regulacją wysokości",
-    specifications: "24\" FHD 1920x1080, IPS, 75Hz, HDMI, DisplayPort, VGA, pivot",
+    description: "Podstawowy monitor biznesowy 24 cale z matrycą IPS",
+    specifications: "23,8\" FHD 1920x1080, IPS, 100Hz, HDMI, DisplayPort, VGA",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/hp_series_1.png",
@@ -185,6 +186,50 @@ const availabilityOptions = [
   { value: "all", label: "Wszystkie" },
   { value: "available", label: "Dostępne" }
 ];
+
+// Porównanie pod kafelkami — tylko to, czym monitory się różnią. Dane z dell.com i QuickSpecs HP,
+// sprawdzone 17.10.2026. HP 324pf zamiast 324pv (oferta ZUP Łódź, decyzja Jakuba 17.10).
+const porownanieKolumny = [
+  { klucz: 'ekran', naglowek: 'Ekran' },
+  { klucz: 'hz', naglowek: 'Odświeżanie' },
+  { klucz: 'dok', naglowek: 'Dok USB-C' },
+  { klucz: 'kamera', naglowek: 'Kamera · głośniki' },
+  { klucz: 'regulacja', naglowek: 'Regulacja' },
+  { klucz: 'oczy', naglowek: 'Komfort oczu' },
+]
+
+const bezDoku = { dok: '—', kamera: '—' }
+const pelnaRegulacja = 'wysokość, pivot'
+
+const porownanieGrupy = [
+  {
+    grupa: 'Podstawowe',
+    wiersze: [
+      { model: 'Dell P2425H', href: '/produkt/dell-pro-24-plus-p2425he', wartosci: { ekran: '23,8″ FHD', hz: '100 Hz', ...bezDoku, regulacja: pelnaRegulacja, oczy: 'TÜV 4★' } },
+      { model: 'Dell P2726H', href: '/produkt/dell-pro-27-p2726h', wartosci: { ekran: '27″ FHD', hz: '120 Hz', ...bezDoku, regulacja: pelnaRegulacja, oczy: 'TÜV 4★' }, naj: ['hz'] },
+      { model: 'HP 324pf', href: '/produkt/hp-seria-3-pro-324pv', wartosci: { ekran: '23,8″ FHD', hz: '100 Hz', ...bezDoku, regulacja: 'tylko pochylenie', oczy: 'TÜV Low Blue Light' }, slabe: ['regulacja'] },
+      { model: 'HP 527pq', href: '/produkt/hp-seria-5-pro-527pq', wartosci: { ekran: '27″ QHD', hz: '100 Hz', ...bezDoku, regulacja: pelnaRegulacja, oczy: 'TÜV Low Blue Light' } },
+    ],
+  },
+  {
+    grupa: 'Ze stacją dokującą USB-C',
+    wiersze: [
+      { model: 'Dell P2425HE', href: '/produkt/dell-pro-24-plus-p2425he-usbc', wartosci: { ekran: '23,8″ FHD', hz: '100 Hz', dok: '90 W · RJ-45', kamera: '—', regulacja: pelnaRegulacja, oczy: 'TÜV 4★' } },
+      { model: 'Dell P2726HE', href: '/produkt/dell-pro-27-p2726he', wartosci: { ekran: '27″ FHD', hz: '120 Hz', dok: '100 W · RJ-45', kamera: '—', regulacja: pelnaRegulacja, oczy: 'TÜV 4★' }, naj: ['hz'] },
+      { model: 'HP 524pu', href: '/produkt/hp-seria-5-pro-524pu', wartosci: { ekran: '23,8″ FHD', hz: '100 Hz', dok: '100 W · RJ-45', kamera: '—', regulacja: pelnaRegulacja, oczy: 'TÜV Low Blue Light' } },
+      { model: 'HP 527pu', href: '/produkt/hp-seria-5-pro-527pu', wartosci: { ekran: '27″ QHD', hz: '100 Hz', dok: '100 W · RJ-45', kamera: '—', regulacja: pelnaRegulacja, oczy: 'TÜV Low Blue Light' } },
+    ],
+  },
+  {
+    grupa: 'Do wideokonferencji',
+    wiersze: [
+      { model: 'Dell P2424HEB', href: '/produkt/dell-pro-24-plus-p2424heb', wartosci: { ekran: '23,8″ FHD', hz: '60 Hz', dok: '90 W · RJ-45', kamera: '4 Mpx + IR · 2 × 5 W', regulacja: pelnaRegulacja, oczy: 'TÜV ComfortView Plus' } },
+      { model: 'Dell P2724DEB', href: '/produkt/dell-pro-27-plus-p2724deb', wartosci: { ekran: '27″ QHD', hz: '60 Hz', dok: '90 W · RJ-45', kamera: '4 Mpx + IR · 2 × 5 W', regulacja: pelnaRegulacja, oczy: 'TÜV ComfortView Plus' } },
+      { model: 'HP 524pm', href: '/produkt/hp-seria-5-pro-524pm', wartosci: { ekran: '23,8″ FHD', hz: '100 Hz', dok: '100 W · RJ-45', kamera: '5 Mpx + IR · 4 × 3 W', regulacja: pelnaRegulacja, oczy: 'TÜV Low Blue Light' }, naj: ['kamera'] },
+      { model: 'HP 527pm', href: '/produkt/hp-seria-5-pro-527pm', wartosci: { ekran: '27″ QHD', hz: '100 Hz', dok: '100 W · RJ-45', kamera: '5 Mpx + IR · 4 × 3 W', regulacja: pelnaRegulacja, oczy: 'TÜV Low Blue Light' }, naj: ['kamera'] },
+    ],
+  },
+]
 
 export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -429,6 +474,17 @@ export default function CategoryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Porównanie — tylko różnice */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Wszystkie modele mają matrycę IPS i 3 lata gwarancji producenta. Poniższe zestawienie przedstawia różnice między nimi według danych producentów.
+          </p>
+          <TabelaPorownania kolumny={porownanieKolumny} grupy={porownanieGrupy} przypis="Dok USB-C: moc ładowania laptopa przez jeden kabel i gniazdo sieciowe RJ-45 w monitorze. Gwarancja Dell obejmuje wymianę z wyprzedzeniem (Advanced Exchange) i Premium Panel; HP — 3 lata na części i robociznę." />
         </div>
       </section>
 

@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import TabelaPorownania from '@/components/TabelaPorownania'
 import { ICON, naCiemnym } from '@/components/product/icons'
 import { porownajCeny } from '@/data/oferty'
 
@@ -12,7 +13,7 @@ const products = [
     id: 1,
     name: "Posnet Pospay 2",
     category: "Urządzenia fiskalne",
-    description: "Fiskalny terminal płatniczy",
+    description: "Kasa fiskalna online z terminalem płatniczym",
     specifications: "Płatność kartą, BLIK, kompatybilny z Leśnik+, gwarancja 24 miesiące",
     availability: "Dostępny",
     whereToBuy: "TAKMA",
@@ -25,8 +26,8 @@ const products = [
     id: 2,
     name: "Posnet Temo Online",
     category: "Urządzenia fiskalne",
-    description: "Mobilna kasa fiskalna online do rozliczeń w terenie",
-    specifications: "Online, 315 g, akumulator na 50 000 wierszy, USB i Wi-Fi, papier 57 mm",
+    description: "Mobilna drukarka fiskalna online do rozliczeń w terenie",
+    specifications: "Online, 315 g, akumulator na 50 000 wierszy, USB (Wi-Fi z modułem), papier 57 mm",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/temo_online_1.png",
@@ -63,6 +64,26 @@ const availabilityOptions = [
   { value: "all", label: "Wszystkie" },
   { value: "available", label: "Dostępne" }
 ];
+
+// Porównanie pod kafelkami — tylko to, czym urządzenia się różnią. Dane z posnet.com.pl
+// i saio.posnet.com.pl, sprawdzone 17.10.2026.
+const porownanieKolumny = [
+  { klucz: 'rodzaj', naglowek: 'Rodzaj' },
+  { klucz: 'karta', naglowek: 'Płatność kartą' },
+  { klucz: 'ekran', naglowek: 'Ekran' },
+  { klucz: 'lacznosc', naglowek: 'Łączność z CRK' },
+  { klucz: 'aku', naglowek: 'Akumulator' },
+  { klucz: 'waga', naglowek: 'Waga' },
+]
+
+const porownanieGrupy = [
+  {
+    wiersze: [
+      { model: 'Posnet Pospay 2', href: '/produkt/posnet-pospay-2', wartosci: { rodzaj: 'kasa + terminal płatniczy', karta: 'tak (karta, BLIK)', ekran: '4,5″ dotykowy', lacznosc: 'LTE lub Wi-Fi', aku: '6800 + 2500 mAh', waga: '0,6 kg' }, naj: ['karta', 'ekran', 'lacznosc'] },
+      { model: 'Posnet Temo Online', href: '/produkt/posnet-temo-online', wartosci: { rodzaj: 'drukarka fiskalna', karta: 'nie', ekran: 'LCD 2 × 16', lacznosc: 'USB; Wi-Fi z modułem', aku: '2150 mAh', waga: '0,32 kg' }, naj: ['waga'], slabe: ['karta'] },
+    ],
+  },
+]
 
 export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -361,6 +382,17 @@ export default function CategoryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Porównanie — tylko różnice */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Oba urządzenia pracują w trybie online (Centralne Repozytorium Kas), drukują na papierze 57 mm i spełniają wymagania techniczne e-paragonów. Poniższe zestawienie przedstawia różnice między nimi według danych producenta.
+          </p>
+          <TabelaPorownania kolumny={porownanieKolumny} grupy={porownanieGrupy} przypis="Temo Online łączy się z CRK przez komputer podłączony kablem USB albo przez dokupiony moduł Wi-Fi/Bluetooth. Pospay 2 ma dwa akumulatory (w drukarce i w terminalu) i osobny wyświetlacz dla klienta." />
         </div>
       </section>
 

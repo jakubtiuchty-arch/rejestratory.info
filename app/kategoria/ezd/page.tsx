@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import TabelaPorownania from '@/components/TabelaPorownania'
 import { ICON, naCiemnym } from '@/components/product/icons'
 import { porownajCeny } from '@/data/oferty'
 
@@ -13,8 +14,8 @@ const products = [
     name: "Zebra ZD421c",
     slug: "zebra-zd421c",
     category: "Elektroniczne Zarządzanie Dokumentacją",
-    description: "Kompaktowa drukarka etykiet kolorowych do oznaczania dokumentów",
-    specifications: "Druk termiczny, 203 dpi, USB, Ethernet, Wi-Fi, kolorowe etykiety",
+    description: "Kompaktowa drukarka etykiet z taśmą w kasecie do oznaczania dokumentów",
+    specifications: "Termotransfer z kasetą 74 m, 203 dpi, USB, Ethernet lub Wi-Fi jako moduł",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/zd421c_1.png",
@@ -25,8 +26,8 @@ const products = [
     name: "Honeywell PC45t",
     slug: "honeywell-pc45t",
     category: "Elektroniczne Zarządzanie Dokumentacją", 
-    description: "Przemysłowa drukarka kodów kreskowych do dokumentacji leśnej",
-    specifications: "Druk termotransferowy, 203 dpi, USB, RS-232, Ethernet",
+    description: "Biurkowa drukarka etykiet z kolorowym wyświetlaczem do dokumentacji leśnej",
+    specifications: "Termotransfer i termika, 203 dpi, do 8 ips, USB, Ethernet",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/pc45t_1.png",
@@ -34,11 +35,11 @@ const products = [
   },
   {
     id: 3,
-    name: "Epson DS730n",
+    name: "Epson WorkForce DS-730N",
     slug: "epson-ds730n",
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Sieciowy skaner dokumentów do digitalizacji archiwów leśnych",
-    specifications: "A4, 600 dpi, 40 str/min, duplex, USB 3.0, Ethernet, Wi-Fi",
+    specifications: "A4, 600 dpi, 40 str/min, duplex, ADF 100 arkuszy, USB 2.0, Ethernet",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ds730_1.png",
@@ -50,7 +51,7 @@ const products = [
     slug: "zebra-ds2208",
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Uniwersalny skaner kodów kreskowych 1D/2D do biura",
-    specifications: "Imager 2D, USB, czytanie z ekranu, zasięg do 61cm",
+    specifications: "Imager 2D, USB, czytanie z ekranu, zasięg do 37 cm",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/zebra-ds2208.png",
@@ -58,11 +59,11 @@ const products = [
   },
   {
     id: 5,
-    name: "Honeywell 1450g",
+    name: "Honeywell Voyager XP 1470g",
     slug: "honeywell-1450g",
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Ręczny skaner kodów kreskowych 2D do szybkiego skanowania",
-    specifications: "Imager 2D, USB, dekodowanie omnidyrektional, zasięg do 90cm",
+    specifications: "Imager 2D, USB, czytanie z ekranu, IP52, upadki z 1,8 m",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/1450g_1.png",
@@ -74,7 +75,7 @@ const products = [
     slug: "honeywell-pc42e-t",
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Biurkowa drukarka etykiet z Ethernetem, z opcjonalną gilotyną i dyspenserem",
-    specifications: "Termotransfer, 203 lub 300 dpi, do 6 ips, Ethernet i USB, 128 MB RAM",
+    specifications: "Termotransfer, 203 lub 300 dpi, do 6 ips, Ethernet i USB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/pc42e_t_1.png",
@@ -98,7 +99,7 @@ const products = [
     slug: "honeywell-1250g",
     category: "Elektroniczne Zarządzanie Dokumentacją",
     description: "Laserowy czytnik kodów kreskowych 1D z trybem prezentacyjnym na podstawce",
-    specifications: "Laser jednoliniowy, 100 odczytów/s, zasięg do 58 cm, USB",
+    specifications: "Laser jednoliniowy, kody 1D, zasięg do 45 cm, USB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/honeywell-1250g.png",
@@ -119,6 +120,47 @@ const availabilityOptions = [
   { value: "all", label: "Wszystkie" },
   { value: "available", label: "Dostępne" }
 ];
+
+// Porównanie pod kafelkami — osobno drukarki etykiet i czytniki kodów (skaner dokumentów jest jeden).
+// Dane z zebra.com i honeywell, sprawdzone 17.10.2026. Honeywell 1470g zamiast wycofanego 1450g
+// (oferta ZUP Łódź, decyzja Jakuba 17.10).
+const drukarkiKolumny = [
+  { klucz: 'tasma', naglowek: 'Taśma' },
+  { klucz: 'druk', naglowek: 'Rozdzielczość · prędkość' },
+  { klucz: 'siec', naglowek: 'Sieć Ethernet' },
+  { klucz: 'panel', naglowek: 'Panel' },
+  { klucz: 'gwarancja', naglowek: 'Gwarancja producenta' },
+]
+
+const drukarkiGrupy = [
+  {
+    wiersze: [
+      { model: 'Zebra ZD421c', href: '/produkt/zebra-zd421c', wartosci: { tasma: 'kaseta 74 m', druk: '203 dpi · 152 mm/s', siec: 'moduł za dopłatą', panel: 'ikony stanu', gwarancja: '2 lata' }, slabe: ['siec'] },
+      { model: 'Honeywell PC45t', href: '/produkt/honeywell-pc45t', wartosci: { tasma: 'rolka', druk: '203 dpi · 203 mm/s', siec: 'w standardzie', panel: 'kolorowy LCD 3,5″', gwarancja: '2 lata' }, naj: ['druk', 'panel'] },
+      { model: 'Honeywell PC42E-T', href: '/produkt/honeywell-pc42e-t', wartosci: { tasma: 'rolka do 300 m', druk: '203 dpi · 152 mm/s', siec: 'w standardzie', panel: 'dioda LED', gwarancja: '1 rok' }, slabe: ['gwarancja'] },
+    ],
+  },
+]
+
+const czytnikiKolumny = [
+  { klucz: 'polaczenie', naglowek: 'Połączenie' },
+  { klucz: 'kody', naglowek: 'Kody' },
+  { klucz: 'ekran', naglowek: 'Kod z ekranu telefonu' },
+  { klucz: 'zasieg', naglowek: 'Zasięg' },
+  { klucz: 'odpornosc', naglowek: 'Odporność' },
+  { klucz: 'gwarancja', naglowek: 'Gwarancja producenta' },
+]
+
+const czytnikiGrupy = [
+  {
+    wiersze: [
+      { model: 'Honeywell Voyager 1250g', href: '/produkt/honeywell-1250g', wartosci: { polaczenie: 'kabel USB', kody: '1D (laser)', ekran: 'nie', zasieg: 'do 45 cm', odpornosc: 'IP41 · 1,5 m', gwarancja: '5 lat' }, slabe: ['kody', 'ekran'] },
+      { model: 'Honeywell Voyager XP 1470g', href: '/produkt/honeywell-1450g', wartosci: { polaczenie: 'kabel USB', kody: '1D i 2D', ekran: 'tak', zasieg: 'do 40 cm', odpornosc: 'IP52 · 1,8 m', gwarancja: '5 lat' }, naj: ['odpornosc'] },
+      { model: 'Zebra DS2208', href: '/produkt/zebra-ds2208', wartosci: { polaczenie: 'kabel USB', kody: '1D i 2D', ekran: 'tak', zasieg: 'do 37 cm', odpornosc: 'IP52 · 1,5 m', gwarancja: '5 lat' } },
+      { model: 'Zebra DS2278', href: '/produkt/zebra-ds2278', wartosci: { polaczenie: 'Bluetooth, podstawka', kody: '1D i 2D', ekran: 'tak', zasieg: 'do 37 cm', odpornosc: 'IP52 · 1,5 m', gwarancja: '3 lata' }, naj: ['polaczenie'] },
+    ],
+  },
+]
 
 export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -352,6 +394,28 @@ export default function CategoryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Porównanie — tylko różnice, osobno dla drukarek etykiet i czytników kodów */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Poniższe zestawienia przedstawiają różnice między drukarkami etykiet i czytnikami kodów według danych producentów. Skaner dokumentów Epson DS-730N jest jedynym urządzeniem w swojej grupie.
+          </p>
+          <TabelaPorownania
+            tytul="Drukarki etykiet"
+            kolumny={drukarkiKolumny}
+            grupy={drukarkiGrupy}
+            przypis="Wszystkie trzy drukują termotransferowo i termicznie, mają szerokość druku ok. 104–108 mm i obsługują język ZPL. Rozdzielczość 300 dpi jest dostępna jako opcja."
+          />
+          <TabelaPorownania
+            tytul="Czytniki kodów kreskowych"
+            kolumny={czytnikiKolumny}
+            grupy={czytnikiGrupy}
+            przypis="Zasięg dla typowego kodu kreskowego (13 mil). Odporność: klasa szczelności i wysokość upadku na beton."
+          />
         </div>
       </section>
 

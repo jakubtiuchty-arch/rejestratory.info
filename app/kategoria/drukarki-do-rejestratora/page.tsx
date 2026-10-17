@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import TabelaPorownania from '@/components/TabelaPorownania'
 import { ICON, naCiemnym } from '@/components/product/icons'
 import { porownajCeny } from '@/data/oferty'
 
@@ -13,7 +14,7 @@ const products = [
     id: 1,
     name: "Zebra ZQ521",
     category: "Drukarki do rejestratora",
-    description: "Mobilna drukarka termiczna o szerokości druku 112 mm, idealna do pracy terenowej w lesie.",
+    description: "Mobilna drukarka termiczna z szerokością druku 104 mm, idealna do pracy terenowej w lesie.",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, ZPUH Olsztyn, ZSLP Stargard, TAKMA",
     image: "zq521_1.png",
@@ -23,9 +24,9 @@ const products = [
   },
   {
     id: 2,
-    name: "Sewoo LK-P43",
+    name: "Sewoo LK-P43II",
     category: "Drukarki do rejestratora", 
-    description: "Kompaktowa drukarka mobilna 4-calowa z długą żywotnością baterii i łączą Bluetooth.",
+    description: "Drukarka mobilna 4-calowa z Bluetooth, portem RS-232 i kolorowym wyświetlaczem.",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "lkp43_1.png",
@@ -49,7 +50,7 @@ const products = [
     id: 4,
     name: "Seiko MP-A40",
     category: "Drukarki do rejestratora",
-    description: "Lekka i kompaktowa drukarka mobilna z obsługą WiFi i Bluetooth oraz długim czasem pracy.",
+    description: "Lekka i kompaktowa drukarka mobilna 4-calowa z Bluetooth.",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "mpa40_1.png", 
@@ -73,7 +74,7 @@ const products = [
     id: 6,
     name: "Bixolon SPP-R410",
     category: "Drukarki do rejestratora",
-    description: "Profesjonalna drukarka mobilna z obsługą NFC, Bluetooth 5.0 i długim czasem pracy na baterii.",
+    description: "Najlżejsza w zestawieniu drukarka mobilna 4-calowa z Bluetooth i parowaniem przez NFC.",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "sppr410_1.png",
@@ -96,6 +97,30 @@ const availabilityOptions = [
   { value: "all", label: "Wszystkie" },
   { value: "available", label: "Dostępne" }
 ];
+
+// Porównanie pod kafelkami — tylko to, czym drukarki się różnią. Dane od producentów
+// (zebra.com, honeywell, miniprinter.com, sii.co.jp, bixolon.com), sprawdzone 17.10.2026.
+const porownanieKolumny = [
+  { klucz: 'waga', naglowek: 'Waga' },
+  { klucz: 'predkosc', naglowek: 'Prędkość druku' },
+  { klucz: 'aku', naglowek: 'Akumulator' },
+  { klucz: 'teren', naglowek: 'Praca od · upadek' },
+  { klucz: 'lacznosc', naglowek: 'Łączność' },
+  { klucz: 'jezyki', naglowek: 'Języki drukarki' },
+]
+
+const porownanieGrupy = [
+  {
+    wiersze: [
+      { model: 'Zebra ZQ521', href: '/produkt/zebra-zq521', wartosci: { waga: '0,79 kg', predkosc: '127 mm/s', aku: '3250 mAh (opcja 6500)', teren: '−20 °C · 2 m', lacznosc: 'Bluetooth 4.1 · NFC', jezyki: 'CPCL, ZPL' } },
+      { model: 'Honeywell RP4', href: '/produkt/honeywell-rp4', wartosci: { waga: '1,02 kg', predkosc: '127 mm/s', aku: '4900 mAh', teren: '−20 °C · 2 m', lacznosc: 'Bluetooth 5.0 · NFC', jezyki: 'CPCL, ZPL (emulacja)' }, naj: ['aku'] },
+      { model: 'Sewoo LK-P43II', href: '/produkt/sewoo-lkp43', wartosci: { waga: '1,0 kg', predkosc: '100 mm/s', aku: '3350 mAh (opcja 6700)', teren: '−21 °C · 1,8 m', lacznosc: 'Bluetooth 4.2', jezyki: 'ESC/POS, CPCL, ZPL' } },
+      { model: 'Seiko MP-A40', href: '/produkt/seiko-mpa40', wartosci: { waga: '0,76 kg', predkosc: '105 mm/s', aku: '1950 mAh', teren: '−20 °C · 2 m', lacznosc: 'Bluetooth 4.1', jezyki: 'ESC/POS, CPCL' }, slabe: ['aku'] },
+      { model: 'Sewoo LK-P400', href: '/produkt/sewoo-lkp400', wartosci: { waga: '0,84 kg', predkosc: '127 mm/s', aku: '2500 mAh (opcja 5000)', teren: '−20 °C · 2 m', lacznosc: 'Bluetooth 4.2 · Wi-Fi · NFC', jezyki: 'ESC/POS, CPCL, ZPL' }, naj: ['lacznosc'] },
+      { model: 'Bixolon SPP-R410', href: '/produkt/bixolon-sppr410', wartosci: { waga: '0,53 kg', predkosc: '90 mm/s', aku: '3200 mAh', teren: '−15 °C · 1,8 m', lacznosc: 'Bluetooth 4.1 · NFC', jezyki: 'ESC/POS' }, naj: ['waga'], slabe: ['teren'] },
+    ],
+  },
+]
 
 export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -336,6 +361,17 @@ export default function CategoryPage() {
           )}
         </div>
       </section>
+      {/* Porównanie — tylko różnice */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Wszystkie modele drukują na papierze do 112 mm (szerokość druku 104 mm) w rozdzielczości 203 dpi, mają klasę szczelności IP54 i wymienny akumulator. Poniższe zestawienie przedstawia różnice między nimi według danych producentów.
+          </p>
+          <TabelaPorownania kolumny={porownanieKolumny} grupy={porownanieGrupy} przypis="Waga z akumulatorem standardowym. Praca od: dolna granica temperatury pracy; upadek na beton. Prędkość maksymalna według producenta." />
+        </div>
+      </section>
+
       {/* Footer */}
 <Footer />
 </div>

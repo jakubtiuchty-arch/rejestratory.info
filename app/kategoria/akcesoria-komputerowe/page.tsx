@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import TabelaPorownania from '@/components/TabelaPorownania'
 import { ICON, naCiemnym } from '@/components/product/icons'
 import { porownajCeny } from '@/data/oferty'
 
@@ -14,7 +15,7 @@ const products = [
     name: "Torba na laptopa 15,6\u2033",
     category: "Akcesoria komputerowe",
     description: "Wytrzymała torba na laptopa z miejscem na dokumenty i akcesoria",
-    specifications: "Laptopy do 15,6\u2033, materiał wodoodporny, wyściełana komora",
+    specifications: "Laptopy 14–15,6\u2033, odporna na wilgoć, pasek na ramię, otwór na rączkę walizki",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "torba_na_laptopa_15.png",
@@ -24,10 +25,10 @@ const products = [
   },
   {
     id: 2,
-    name: "Podkładka pod mysz z podpórką",
+    name: "Podkładka pod mysz",
     category: "Akcesoria komputerowe", 
-    description: "Ergonomiczna podkładka pod mysz z podpórką nadgarstka",
-    specifications: "Powierzchnia antypoślizgowa, wymiary 25x20cm",
+    description: "Płaska podkładka pod mysz do pracy biurowej",
+    specifications: "Powierzchnia antypoślizgowa, ok. 20 × 20–22 × 22 cm",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "podkladka_pod_myszke_1.png",
@@ -63,10 +64,10 @@ const products = [
   },
   {
     id: 5,
-    name: "Samsung SSD T7",
+    name: "Samsung SSD T7 Shield 2 TB",
     category: "Akcesoria komputerowe",
-    description: "Pojemny zewnętrzny dysk SSD z zabezpieczeniem hasłem",
-    specifications: "500 GB / 1 TB / 2 TB, USB-C, odczyt do 1050 MB/s",
+    description: "Wytrzymały zewnętrzny dysk SSD w gumowej obudowie IP65",
+    specifications: "2 TB, USB-C, odczyt do 1050 MB/s, IP65, upadek z 3 m",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "ssd_t9_1.png",
@@ -133,7 +134,7 @@ const products = [
     description: "Niezawodny zasilacz UPS typu line-interactive do ochrony komputerów i sprzętu IT",
     specifications: "600 VA / 360 W, 230V, 2 gniazda Schuko, bateria VRLA 7Ah 12V",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "TAKMA",
     image: "vertin_600_1.png",
     badge: null,
     featured: false,
@@ -144,9 +145,9 @@ const products = [
     name: "Zasilacz UPS Vertiv Liebert itON 1000 VA",
     category: "Akcesoria komputerowe",
     description: "Niezawodny zasilacz UPS line-interactive z AVR do ochrony sprzętu IT w nadleśnictwach",
-    specifications: "1000 VA / 600 W, 230V, bateria VRLA 2x7Ah 12V, 3x Schuko + 3x C13",
+    specifications: "1000 VA / 600 W, 230V, bateria VRLA 2x7Ah 12V, 2x Schuko + 2x C13, USB",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "TAKMA",
     image: "vertin_1000_1.png",
     badge: null,
     featured: false,
@@ -156,8 +157,8 @@ const products = [
     id: 12,
     name: "HP 460 Multi-device Keyboard",
     category: "Akcesoria komputerowe",
-    description: "Bezprzewodowa klawiatura obsługująca trzy urządzenia, ładowana przez USB-C",
-    specifications: "Bluetooth 5.3 + 2,4 GHz, do 3 urządzeń, blok numeryczny, bateria do 24 miesięcy",
+    description: "Bezprzewodowa klawiatura Bluetooth obsługująca trzy urządzenia",
+    specifications: "Bluetooth 5.3, do 3 urządzeń, blok numeryczny, 2 × AAA do 24 miesięcy",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "hp460_1.png",
@@ -170,7 +171,7 @@ const products = [
     name: "HP 715 Rechargeable Mouse",
     category: "Akcesoria komputerowe",
     description: "Bezprzewodowa mysz dla osób oburęcznych, pracuje także na szkle",
-    specifications: "Bluetooth 5.3 + 2,4 GHz, do 3 urządzeń, 1200-3000 dpi, akumulator do 90 dni",
+    specifications: "Bluetooth 5.3 + 2,4 GHz, do 3 urządzeń, do 3000 dpi, akumulator do 90 dni",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "hp715_1.png",
@@ -205,6 +206,75 @@ const availabilityOptions = [
   { value: "all", label: "Wszystkie" },
   { value: "available", label: "Dostępne" }
 ];
+
+// Porównanie pod kafelkami — osobne tabele tam, gdzie jest z czego wybierać (podkładka, podnóżek
+// i Microsoft 365 są pojedyncze). Dane z dell.com, hp.com, samsung semiconductor i vertiv.com,
+// sprawdzone 17.10.2026. Decyzje Jakuba 17.10: T7 Shield 2 TB (oferta ZUP), HP 460 wg HP, UPS tylko TAKMA.
+const klawiaturyKolumny = [
+  { klucz: 'zestaw', naglowek: 'Zestaw' },
+  { klucz: 'lacznosc', naglowek: 'Łączność' },
+  { klucz: 'zasilanie', naglowek: 'Zasilanie' },
+  { klucz: 'klawiatura', naglowek: 'Klawiatura' },
+]
+
+const klawiaturyGrupy = [
+  {
+    wiersze: [
+      { model: 'Dell Pro KM5221W', href: '/produkt/dell-km5221', wartosci: { zestaw: 'klawiatura + mysz', lacznosc: '2,4 GHz (odbiornik USB)', zasilanie: 'baterie AA/AAA, do 36 mies.', klawiatura: 'pełnowymiarowa, cicha' } },
+      { model: 'Dell Pro Plus KM7321W', href: '/produkt/dell-km7321', wartosci: { zestaw: 'klawiatura + mysz', lacznosc: '2,4 GHz i Bluetooth, 3 urządzenia', zasilanie: 'baterie AA/AAA, do 36 mies.', klawiatura: 'kompaktowa z blokiem numerycznym' }, naj: ['lacznosc'] },
+      { model: 'HP 655', href: '/produkt/hp-655', wartosci: { zestaw: 'klawiatura + mysz', lacznosc: '2,4 GHz (odbiornik USB)', zasilanie: 'baterie AAA, do 20 mies.', klawiatura: 'pełnowymiarowa, odporna na zachlapanie' } },
+      { model: 'HP 460', href: '/produkt/hp-460', wartosci: { zestaw: 'sama klawiatura', lacznosc: 'Bluetooth, 3 urządzenia', zasilanie: '2 × AAA, do 24 mies.', klawiatura: 'kompaktowa z blokiem numerycznym, cicha' } },
+      { model: 'HP 715', href: '/produkt/hp-715', wartosci: { zestaw: 'sama mysz', lacznosc: '2,4 GHz i Bluetooth, 3 urządzenia', zasilanie: 'akumulator USB-C, do 3 mies.', klawiatura: '—' }, naj: ['lacznosc'] },
+    ],
+  },
+]
+
+const dyskiKolumny = [
+  { klucz: 'pojemnosc', naglowek: 'Pojemność' },
+  { klucz: 'predkosc', naglowek: 'Odczyt / zapis' },
+  { klucz: 'zlacze', naglowek: 'Złącze' },
+  { klucz: 'odpornosc', naglowek: 'Odporność' },
+]
+
+const dyskiGrupy = [
+  {
+    wiersze: [
+      { model: 'Samsung SSD T9', href: '/produkt/samsung-ssd-t9', wartosci: { pojemnosc: '1 TB', predkosc: '2000 / 1950 MB/s', zlacze: 'USB 3.2 Gen 2x2 (20 Gb/s)', odpornosc: 'upadek z 3 m' }, naj: ['predkosc'] },
+      { model: 'Samsung SSD T7 Shield', href: '/produkt/samsung-ssd-t7', wartosci: { pojemnosc: '2 TB', predkosc: '1050 / 1000 MB/s', zlacze: 'USB 3.2 Gen 2 (10 Gb/s)', odpornosc: 'IP65 · upadek z 3 m' }, naj: ['pojemnosc', 'odpornosc'] },
+    ],
+  },
+]
+
+const upsKolumny = [
+  { klucz: 'moc', naglowek: 'Moc' },
+  { klucz: 'gniazda', naglowek: 'Gniazda' },
+  { klucz: 'akumulator', naglowek: 'Akumulator' },
+  { klucz: 'usb', naglowek: 'Port USB' },
+]
+
+const upsGrupy = [
+  {
+    wiersze: [
+      { model: 'Vertiv Liebert itON 600 VA', href: '/produkt/vertin-600', wartosci: { moc: '600 VA / 360 W', gniazda: '2 × Schuko', akumulator: '1 × 12 V 7 Ah', usb: 'nie' }, slabe: ['usb'] },
+      { model: 'Vertiv Liebert itON 1000 VA', href: '/produkt/vertin-1000', wartosci: { moc: '1000 VA / 600 W', gniazda: '2 × Schuko + 2 × IEC C13', akumulator: '2 × 12 V 7 Ah', usb: 'tak, zamykanie systemu' }, naj: ['moc', 'usb'] },
+    ],
+  },
+]
+
+const torbyKolumny = [
+  { klucz: 'laptop', naglowek: 'Laptop' },
+  { klucz: 'komory', naglowek: 'Komory' },
+  { klucz: 'noszenie', naglowek: 'Noszenie' },
+]
+
+const torbyGrupy = [
+  {
+    wiersze: [
+      { model: 'Torba HP 15,6″', href: '/produkt/torba-hp-15', wartosci: { laptop: 'do 15,6″', komory: '2, z przegrodami na akcesoria', noszenie: 'uchwyt, otwór na rączkę walizki' } },
+      { model: 'Torba na laptopa 15,6″', href: '/produkt/torba-na-laptopa-15', wartosci: { laptop: '14–15,6″', komory: '2: laptop oraz dokumenty i akcesoria', noszenie: 'pasek na ramię, otwór na rączkę walizki' }, naj: ['noszenie'] },
+    ],
+  },
+]
 
 export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -438,6 +508,35 @@ export default function CategoryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Porównanie — osobne tabele dla grup, w których jest z czego wybierać */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Poniższe zestawienia przedstawiają różnice między akcesoriami tego samego rodzaju według danych producentów.
+          </p>
+          <TabelaPorownania tytul="Klawiatury i myszy" kolumny={klawiaturyKolumny} grupy={klawiaturyGrupy} />
+          <TabelaPorownania
+            tytul="Dyski zewnętrzne SSD"
+            kolumny={dyskiKolumny}
+            grupy={dyskiGrupy}
+            przypis="Oba dyski mają złącze USB-C i sprzętowe szyfrowanie AES 256. Pełną prędkość T9 daje tylko port USB 3.2 Gen 2x2."
+          />
+          <TabelaPorownania
+            tytul="Zasilacze awaryjne UPS"
+            kolumny={upsKolumny}
+            grupy={upsGrupy}
+            przypis="Oba to zasilacze line-interactive z automatyczną regulacją napięcia (AVR) i 2 latami gwarancji producenta."
+          />
+          <TabelaPorownania
+            tytul="Torby na laptopa"
+            kolumny={torbyKolumny}
+            grupy={torbyGrupy}
+            przypis="Obie torby są odporne na wilgoć."
+          />
         </div>
       </section>
 

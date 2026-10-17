@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import TabelaPorownania from '@/components/TabelaPorownania'
 import { ICON, naCiemnym } from '@/components/product/icons'
 import { porownajCeny } from '@/data/oferty'
 
@@ -13,7 +14,7 @@ const products = [
     id: 2,
     name: "AIO Dell Pro 24 All in One",
     category: "All In One", 
-    description: "Komputer All-in-One z ekranem 23,8'' i regulowaną podstawą, z Windows 11 Pro i pięcioletnią gwarancją ProSupport.",
+    description: "Komputer All-in-One z ekranem 23,8'', z Windows 11 Pro i 60-miesięczną gwarancją.",
     specifications: "23,8\" FHD 100 Hz, Core Ultra 5 235, 16GB DDR5, 512GB SSD, Windows 11 Pro",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź",
@@ -49,6 +50,23 @@ const availabilityOptions = [
   { value: "all", label: "Wszystkie" },
   { value: "available", label: "Dostępne" }
 ];
+
+// Porównanie pod kafelkami — obie konfiguracje Dell Pro 24 AIO (QC24250) z oferty ZUP Łódź
+// (04.2026); parametry z instrukcji Della, sprawdzone 17.10.2026.
+const porownanieKolumny = [
+  { klucz: 'system', naglowek: 'System' },
+  { klucz: 'ram', naglowek: 'RAM' },
+  { klucz: 'ssd', naglowek: 'Dysk SSD' },
+]
+
+const porownanieGrupy = [
+  {
+    wiersze: [
+      { model: 'Dell Pro 24 AIO', href: '/produkt/aio-dell-pro-24', wartosci: { system: 'Windows 11 Pro', ram: '16 GB DDR5', ssd: '512 GB' }, naj: ['ram', 'ssd'] },
+      { model: 'Dell Pro 24 AIO bez systemu', href: '/produkt/aio-dell-pro-24-bez-systemu', wartosci: { system: 'bez systemu', ram: '8 GB DDR5 (1 moduł)', ssd: '256 GB' } },
+    ],
+  },
+]
 
 export default function CategoryPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -277,6 +295,17 @@ export default function CategoryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Porównanie — tylko różnice */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Obie konfiguracje mają procesor Intel Core Ultra 5 235, ekran 23,8″ Full HD 100 Hz bez dotyku, Wi-Fi 6E, klawiaturę i mysz w zestawie oraz 60 miesięcy gwarancji. Poniższe zestawienie przedstawia różnice między nimi.
+          </p>
+          <TabelaPorownania kolumny={porownanieKolumny} grupy={porownanieGrupy} przypis="Obie wersje mają 2 gniazda pamięci (do 64 GB) i 2 gniazda M.2 na dyski — pamięć i dysk można rozbudować." />
         </div>
       </section>
 
