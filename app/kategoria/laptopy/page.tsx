@@ -74,10 +74,10 @@ const products: Product[] = [
   },
   {
     id: 6,
-    name: "HP EliteBook 645 G11 14\"",
+    name: "HP EliteBook 6 G1a 14\"",
     category: "Laptopy",
     description: "Kompaktowy laptop 14 cali z czytnikiem kart kryptograficznych, do pracy w kancelarii i w terenie",
-    specifications: "AMD Ryzen, 16GB RAM (do 64GB), 512GB SSD, 14\" FHD, Smart Card, Windows 11 Pro",
+    specifications: "AMD Ryzen 5 220, 16GB RAM (do 64GB), 512GB SSD, 14\" WUXGA, Smart Card, Windows 11 Pro",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/hp_elite_14_1.png",
@@ -109,7 +109,7 @@ const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
     grupa: '14 cali',
     wiersze: [
       { model: 'Dell Pro 14 Plus', href: '/produkt/dell-pro-14-plus', ekran: '14″ FHD+', cpu: 'Core Ultra 5 235U', pamiec: '16 GB · 512 GB', system: 'Windows 11 Pro', smartcard: 'tak', waga: '1,53 kg', gwarancja: '60 mies.' },
-      { model: 'HP EliteBook 645 G11', href: '/produkt/hp-elitebook-6-g1ah-14', ekran: '14″ FHD', cpu: 'AMD Ryzen', pamiec: '16 GB · 512 GB', system: 'Windows 11 Pro', smartcard: 'tak', waga: '1,4 kg', gwarancja: '36 mies.', naj: ['waga'] },
+      { model: 'HP EliteBook 6 G1a 14', href: '/produkt/hp-elitebook-6-g1ah-14', ekran: '14″ WUXGA', cpu: 'Ryzen 5 220', pamiec: '16 GB · 512 GB', system: 'Windows 11 Pro', smartcard: 'tak', waga: '1,4 kg', gwarancja: '36 mies.', naj: ['waga'] },
     ],
   },
   {
@@ -438,7 +438,7 @@ export default function CategoryPage() {
             </table>
           </div>
           <p className="mt-3 text-xs text-gray-500">
-            Konfiguracje i gwarancja według oferty ZUP Łódź; waga według producenta (od). HP EliteBook 645 G11: procesor AMD Ryzen serii 7035 zależnie od konfiguracji.
+            Konfiguracje i gwarancja według oferty ZUP Łódź; waga według producenta (od).
           </p>
         </div>
       </section>

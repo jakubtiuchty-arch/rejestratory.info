@@ -5,7 +5,7 @@ import { ICON } from '@/components/product/icons'
 
 const data: ProductData = {
   slug: 'hp-elitebook-6-g1ah-14',
-  name: 'HP EliteBook 6 G1ah 14',
+  name: 'HP EliteBook 6 G1a 14',
   category: 'Laptopy',
   categoryHref: '/kategoria/laptopy',
   images: ['/hp_elite_14_1.png'],
@@ -15,7 +15,7 @@ const data: ProductData = {
     specifications:
       'Windows 11 Pro · 14″ WUXGA · Ryzen 5 220 · 16 GB · SSD 512 GB · Smart Card · gwarancja 36 miesięcy',
   },
-  whyNavLabel: 'Dlaczego EliteBook 6 G1ah',
+  whyNavLabel: 'Dlaczego EliteBook 6 G1a',
   whyHeading: 'Do czego przyda się w nadleśnictwie',
   whyLabel: 'W biurze nadleśnictwa',
   highlights: [

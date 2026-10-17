@@ -74,7 +74,7 @@ const data: ProductData = {
       note: 'Wersja z wyściełaną komorą i paskiem na ramię',
     },
     {
-      name: 'HP EliteBook 6 G1ah 14',
+      name: 'HP EliteBook 6 G1a 14',
       href: '/produkt/hp-elitebook-6-g1ah-14',
       note: 'Laptop, który się w niej mieści',
     },

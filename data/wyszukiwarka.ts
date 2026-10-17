@@ -628,14 +628,15 @@ export const INDEKS_PRODUKTOW: PozycjaIndeksu[] = [
     ]
   },
   {
-    "name": "HP EliteBook 6 G1ah 14",
+    "name": "HP EliteBook 6 G1a 14",
     "category": "Laptop",
     "url": "/produkt/hp-elitebook-6-g1ah-14",
     "keywords": [
       "hp",
       "elitebook",
-      "g1ah",
+      "g1a",
       "14",
+      "g1ah",
       "laptop",
       "notebook",
       "komputer przenośny"
