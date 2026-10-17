@@ -327,8 +327,11 @@ export default function CategoryPage() {
                   style={
                     product.id === 2 || product.id === 4 
                       ? { transform: 'scale(0.8)' }
-                      : product.id === 3 
+                      : product.id === 3
                       ? { transform: 'scale(1.03) translateY(3%)' }
+                      // L8730CDW i L8970CDW (460 mm) są niższe od L8690CDW i L8900CDW, a zdjęcia mają ten sam kadr
+                      : product.id === 7 || product.id === 8
+                      ? { transform: 'translateY(5%) scale(0.85)' }
                       : {}
                   }
                 />

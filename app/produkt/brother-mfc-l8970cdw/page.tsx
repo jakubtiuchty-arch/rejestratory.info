@@ -8,7 +8,7 @@ const data: ProductData = {
   name: 'Brother MFC-L8970CDW',
   category: 'Urządzenia wielofunkcyjne',
   categoryHref: '/kategoria/urzadzenia-wielofunkcyjne',
-  images: ['/MFCL8970CDW_1.png'],
+  images: ['/MFCL8970CDW_1.png', '/MFCL8970CDW_2.png', '/MFCL8970CDW_3.png', '/MFCL8970CDW_4.png'],
   inquiry: {
     description: 'Kolorowe urządzenie 4 w 1 z ekranem 7″ i szybkim skanerem',
     specifications: 'Kolor laser · druk 31 str./min · skan dwustronny 100 ipm · ekran 17,6 cm · NFC',

@@ -8,7 +8,7 @@ const data: ProductData = {
   name: 'Brother MFC-L8730CDW',
   category: 'Urządzenia wielofunkcyjne',
   categoryHref: '/kategoria/urzadzenia-wielofunkcyjne',
-  images: ['/MFCL8730CDW_1.png'],
+  images: ['/MFCL8730CDW_1.png', '/MFCL8730CDW_2.png', '/MFCL8730CDW_3.png', '/MFCL8730CDW_4.png'],
   inquiry: {
     description: 'Kolorowe urządzenie 4 w 1 z podajnikiem ADF na 80 arkuszy',
     specifications: 'Kolor laser · druk 31 str./min · skan dwustronny 56 ipm · faks · NFC',
