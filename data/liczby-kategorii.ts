@@ -14,7 +14,7 @@ export const LICZBY_KATEGORII: Record<string, number> = {
   "tablety": 3,
   "telefony": 8,
   "urzadzenia-fiskalne": 2,
-  "urzadzenia-wielofunkcyjne": 6
+  "urzadzenia-wielofunkcyjne": 8
 }
 
 /** Ile kart ma kategoria spod danego adresu, np. `/kategoria/laptopy`. */

@@ -201,6 +201,21 @@ export const INDEKS_PRODUKTOW: PozycjaIndeksu[] = [
     ]
   },
   {
+    "name": "Brother MFC-L8730CDW",
+    "category": "Urządzenie wielofunkcyjne",
+    "url": "/produkt/brother-mfc-l8730cdw",
+    "keywords": [
+      "brother",
+      "mfc",
+      "l8730cdw",
+      "drukarka",
+      "skaner",
+      "kopiarka",
+      "ksero",
+      "wielofunkcyjne"
+    ]
+  },
+  {
     "name": "Brother MFC-L8900CDW",
     "category": "Urządzenie wielofunkcyjne",
     "url": "/produkt/brother-mfc-l8900cdw",
@@ -208,6 +223,21 @@ export const INDEKS_PRODUKTOW: PozycjaIndeksu[] = [
       "brother",
       "mfc",
       "l8900cdw",
+      "drukarka",
+      "skaner",
+      "kopiarka",
+      "ksero",
+      "wielofunkcyjne"
+    ]
+  },
+  {
+    "name": "Brother MFC-L8970CDW",
+    "category": "Urządzenie wielofunkcyjne",
+    "url": "/produkt/brother-mfc-l8970cdw",
+    "keywords": [
+      "brother",
+      "mfc",
+      "l8970cdw",
       "drukarka",
       "skaner",
       "kopiarka",

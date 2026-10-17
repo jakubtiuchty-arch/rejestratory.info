@@ -79,6 +79,30 @@ const products = [
     image: "/MFCL8390CDW_1.png",
     badge: null,
     featured: true
+  },
+  {
+    id: 7,
+    name: "Brother MFC-L8730CDW",
+    category: "Urządzenia wielofunkcyjne",
+    description: "Kolorowe urządzenie wielofunkcyjne z podajnikiem ADF na 80 arkuszy",
+    specifications: "Drukarka kolorowa, skaner dwustronny, kopiarka, fax, A4, 31 ppm, NFC",
+    availability: "Dostępność wkrótce",
+    whereToBuy: "",
+    image: "/MFCL8730CDW_1.png",
+    badge: null,
+    featured: false
+  },
+  {
+    id: 8,
+    name: "Brother MFC-L8970CDW",
+    category: "Urządzenia wielofunkcyjne",
+    description: "Kolorowe urządzenie wielofunkcyjne z ekranem 7″ i skanerem do 100 obrazów/min",
+    specifications: "Drukarka kolorowa, skaner dwustronny, kopiarka, fax, A4, 31 ppm, NFC",
+    availability: "Dostępność wkrótce",
+    whereToBuy: "",
+    image: "/MFCL8970CDW_1.png",
+    badge: null,
+    featured: false
   }
 ];
 
@@ -319,7 +343,7 @@ export default function CategoryPage() {
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <div className="text-sm text-gray-500">
-                      {product.availability} • {product.whereToBuy}
+                      {product.availability}{product.whereToBuy ? ` • ${product.whereToBuy}` : ''}
                     </div>
                   </div>
                 </div>
