@@ -37,7 +37,7 @@ const products = [
     name: "Brother MFC-L8900CDW",
     category: "Urządzenia wielofunkcyjne",
     description: "Profesjonalne kolorowe urządzenie wielofunkcyjne A4 z NFC",
-    specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 33 ppm, NFC",
+    specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 31 ppm, NFC",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
     image: "/MFCL8900CDW_1.png",
@@ -105,6 +105,42 @@ const products = [
     featured: false
   }
 ];
+
+// Porównanie pod kafelkami — tylko to, czym modele się różnią. Wspólne cechy
+// (druk dwustronny A4, Wi-Fi, LAN) stoją raz w nagłówku. Dane z kart produktu
+// i store.brother.pl (17.10.2026). `naj` = wartość wyróżniona w kolumnie.
+type Wiersz = {
+  model: string
+  druk: string
+  faks: boolean
+  skan: string
+  adf: string
+  ekran: string
+  naj?: Array<'druk' | 'skan' | 'adf' | 'ekran'>
+}
+
+const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
+  {
+    grupa: 'Czarno-białe',
+    wiersze: [
+      { model: 'DCP-L5510DW', druk: '48 str./min', faks: false, skan: 'tylko jednostronnie', adf: '50 ark.', ekran: '8,9 cm' },
+      { model: 'MFC-L5710DW', druk: '48 str./min', faks: true, skan: '56 obr./min', adf: '50 ark.', ekran: '8,9 cm' },
+      { model: 'MFC-L6710DW', druk: '50 str./min', faks: true, skan: '56 obr./min', adf: '70 ark.', ekran: '12,7 cm', naj: ['druk'] },
+    ],
+  },
+  {
+    grupa: 'Kolorowe',
+    wiersze: [
+      { model: 'MFC-L8390CDW', druk: '30 str./min', faks: true, skan: '56 obr./min', adf: '50 ark.', ekran: '8,8 cm' },
+      { model: 'MFC-L8690CDW', druk: '31 str./min', faks: true, skan: '56 obr./min', adf: '50 ark.', ekran: '9,3 cm' },
+      { model: 'MFC-L8730CDW', druk: '31 str./min', faks: true, skan: '56 obr./min', adf: '80 ark.', ekran: '8,8 cm', naj: ['adf'] },
+      { model: 'MFC-L8900CDW', druk: '31 str./min', faks: true, skan: '56 obr./min', adf: '50 ark.', ekran: '12,6 cm' },
+      { model: 'MFC-L8970CDW', druk: '31 str./min', faks: true, skan: '100 obr./min', adf: '80 ark.', ekran: '17,6 cm', naj: ['skan', 'adf', 'ekran'] },
+    ],
+  },
+]
+
+const hrefModelu = (model: string) => `/produkt/brother-${model.toLowerCase()}`
 
 // Opcje filtrowania i sortowania
 const sortOptions = [
@@ -366,6 +402,70 @@ export default function CategoryPage() {
     )}
   </div>
 </section>
+
+      {/* Porównanie — tylko różnice */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Wszystkie drukują dwustronnie w A4 i mają Wi-Fi oraz sieć LAN. Różnią się tym, co poniżej.
+          </p>
+
+          <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow-md">
+            <table className="w-full min-w-[680px] whitespace-nowrap text-left text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 text-gray-500">
+                  <th className="sticky left-0 bg-white px-4 py-3 font-medium">Model</th>
+                  <th className="px-4 py-3 font-medium">Druk</th>
+                  <th className="px-4 py-3 font-medium">Faks</th>
+                  <th className="px-4 py-3 font-medium">Skan dwustronny</th>
+                  <th className="px-4 py-3 font-medium">Podajnik dokumentów</th>
+                  <th className="px-4 py-3 font-medium">Ekran dotykowy</th>
+                </tr>
+              </thead>
+              {porownanie.map((g) => (
+                <tbody key={g.grupa}>
+                  <tr className="bg-gray-50">
+                    <th colSpan={6} className="py-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                      <span className="sticky left-0 inline-block px-4">
+                        {g.grupa === 'Kolorowe' ? (
+                          <span className="bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-amber-500 bg-clip-text text-transparent">
+                            {g.grupa}
+                          </span>
+                        ) : (
+                          g.grupa
+                        )}
+                      </span>
+                    </th>
+                  </tr>
+                  {g.wiersze.map((w) => {
+                    const kom = (k: 'druk' | 'skan' | 'adf' | 'ekran') =>
+                      w.naj?.includes(k) ? 'font-semibold text-emerald-700' : 'text-gray-700'
+                    return (
+                      <tr key={w.model} className="border-t border-gray-100">
+                        <td className="sticky left-0 bg-white px-4 py-3 font-medium">
+                          <a href={hrefModelu(w.model)} className="text-gray-900 hover:text-emerald-700">
+                            {w.model}
+                          </a>
+                        </td>
+                        <td className={`px-4 py-3 ${kom('druk')}`}>{w.druk}</td>
+                        <td className="px-4 py-3 text-gray-700">
+                          {w.faks ? 'tak' : <span className="text-gray-400">nie</span>}
+                        </td>
+                        <td className={`px-4 py-3 ${w.skan.startsWith('tylko') ? 'text-gray-400' : kom('skan')}`}>
+                          {w.skan}
+                        </td>
+                        <td className={`px-4 py-3 ${kom('adf')}`}>{w.adf}</td>
+                        <td className={`px-4 py-3 ${kom('ekran')}`}>{w.ekran}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              ))}
+            </table>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
 <Footer />
