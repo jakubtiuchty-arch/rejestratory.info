@@ -13,7 +13,7 @@ const products = [
     id: 1,
     name: "Samsung Galaxy Tab Active5",
     category: "Tablety",
-    description: "Wzmocniony tablet do pracy w terenie — IP68, upadki z 1,8 m i wymienna bateria",
+    description: "Wzmocniony tablet do pracy w terenie — IP68, upadki z 1,8 m w etui i wymienna bateria",
     specifications: "Android 14 (One UI 6), 8\" 1920 × 1200 120 Hz, Exynos 1380, 6/8 GB RAM, 128/256 GB + microSD, 5050 mAh (wymienna), IP68 i MIL-STD-810H, 5G, S Pen w zestawie",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
@@ -49,6 +49,29 @@ const products = [
     customUrl: "/produkt/ipad-pro-11-m5-a3358"
   }
 ];
+
+// Porównanie pod kafelkami — tylko to, czym tablety się różnią. Dane od producentów
+// (samsung.com/pl/business, news.samsung.com, support.apple.com/pl-pl, karty UE i deklaracje PSTI Apple),
+// sprawdzone 17.10.2026.
+type Kol = 'ekran' | 'chip' | 'zabezp' | 'praca' | 'odpornosc' | 'rysik'
+type Wiersz = {
+  model: string
+  href: string
+  ekran: string
+  chip: string
+  zabezp: string
+  praca: string
+  odpornosc: string
+  rysik: string
+  naj?: Kol[]
+  slabe?: Kol[]
+}
+
+const porownanie: Wiersz[] = [
+  { model: 'Galaxy Tab Active5', href: '/produkt/samsung-galaxy-tab-active5', ekran: '8″ TFT 120 Hz', chip: 'Exynos 1380 · 6–8 GB', zabezp: 'do ok. 01.2029', praca: 'do 16 h · wymienny', odpornosc: 'IP68 · MIL-STD-810H', rysik: 'S Pen w zestawie', naj: ['praca', 'odpornosc', 'rysik'] },
+  { model: 'iPad Pro 11″ (M4)', href: '/produkt/ipad-pro-11-m4-a2837', ekran: '11″ OLED 120 Hz', chip: 'Apple M4 · 8–16 GB', zabezp: 'min. do 05.2029', praca: 'do 10 h', odpornosc: 'IP42', rysik: 'osobno', slabe: ['odpornosc'] },
+  { model: 'iPad Pro 11″ (M5)', href: '/produkt/ipad-pro-11-m5-a3358', ekran: '11″ OLED 120 Hz', chip: 'Apple M5 · 12–16 GB', zabezp: 'min. do 10.2030', praca: 'do 10 h', odpornosc: 'IP42', rysik: 'osobno', naj: ['zabezp'], slabe: ['odpornosc'] },
+]
 
 // Opcje filtrowania i sortowania
 const sortOptions = [
@@ -295,6 +318,61 @@ export default function CategoryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Porównanie — tylko różnice */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Wszystkie modele obsługują sieć 5G i Wi-Fi oraz współpracują z rysikiem. Poniższe zestawienie przedstawia różnice między nimi według danych producentów.
+          </p>
+
+          <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow-md">
+            {/* szerokości kolumn: treść + równy odstęp, żeby wolne miejsce rozkładało się równo */}
+            <table className="w-full whitespace-nowrap text-left text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 text-gray-500">
+                  <th className="sticky left-0 bg-white px-4 py-3 font-medium" style={{ width: '13.2%' }}>Model</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '11.8%' }}>Ekran</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '14.6%' }}>Procesor · RAM</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '17.2%' }}>Aktualizacje zabezpieczeń</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '16%' }}>Czas pracy · akumulator</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '14.7%' }}>Odporność</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '12.5%' }}>Rysik</th>
+                </tr>
+              </thead>
+              <tbody>
+                {porownanie.map((w) => {
+                  const kom = (k: Kol) =>
+                    w.naj?.includes(k)
+                      ? 'font-semibold text-emerald-700'
+                      : w.slabe?.includes(k)
+                        ? 'text-gray-400'
+                        : 'text-gray-700'
+                  return (
+                    <tr key={w.model} className="border-t border-gray-100 first:border-t-0">
+                      <td className="sticky left-0 bg-white px-4 py-3 font-medium">
+                        <a href={w.href} className="text-gray-900 hover:text-emerald-700">
+                          {w.model}
+                        </a>
+                      </td>
+                      <td className={`px-4 py-3 ${kom('ekran')}`}>{w.ekran}</td>
+                      <td className={`px-4 py-3 ${kom('chip')}`}>{w.chip}</td>
+                      <td className={`px-4 py-3 ${kom('zabezp')}`}>{w.zabezp}</td>
+                      <td className={`px-4 py-3 ${kom('praca')}`}>{w.praca}</td>
+                      <td className={`px-4 py-3 ${kom('odpornosc')}`}>{w.odpornosc}</td>
+                      <td className={`px-4 py-3 ${kom('rysik')}`}>{w.rysik}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-xs text-gray-500">
+            Aktualizacje zabezpieczeń: Samsung — 5 lat od premiery (01.2024) i do 4 nowych wersji Androida; Apple — co najmniej 5 lat od pierwszej dostawy (deklaracja PSTI). Czas pracy: odtwarzanie wideo według producenta. Tab Active5 wytrzymuje upadek z 1,5 m, w etui z zestawu z 1,8 m.
+          </p>
         </div>
       </section>
 
