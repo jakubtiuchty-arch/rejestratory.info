@@ -39,7 +39,7 @@ const products: Product[] = [
     name: "Dell Pro 14\" Plus",
     category: "Laptopy",
     description: "Profesjonalny laptop Dell z ekranem 14 cali i długą żywotnością baterii",
-    specifications: "Intel Core Ultra 5, 16GB RAM, 512GB SSD, 14\" FHD+ IPS",
+    specifications: "Intel Core Ultra 5 235U, 16GB RAM, 512GB SSD, 14\" FHD+ IPS, Smart Card, Windows 11 Pro",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
     image: "/dell_14_1.png",
@@ -52,7 +52,7 @@ const products: Product[] = [
     name: "Dell Pro 16\" Plus",
     category: "Laptopy",
     description: "Zaawansowany laptop z dużym ekranem do profesjonalnych zastosowań",
-    specifications: "Intel Core Ultra 5, 16GB RAM, 1TB SSD, 16\" FHD+ IPS",
+    specifications: "Intel Core Ultra 5 235U, 16GB RAM, 512GB SSD, 16\" FHD+ IPS, Smart Card, Windows 11 Pro",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/dell_16_1.png", 
@@ -63,8 +63,8 @@ const products: Product[] = [
     id: 5,
     name: "Dell Pro 16\"",
     category: "Laptopy",
-    description: "Ekonomiczny laptop z Ubuntu Linux, bez Windows - idealny dla stanowiska leśniczego",
-    specifications: "Intel Core 3 100U (6 rdzeni), 8GB RAM, 256GB SSD, 16\" FHD+ IPS, Ubuntu Linux 24.04 LTS",
+    description: "Ekonomiczny laptop 16 cali dostarczany bez systemu operacyjnego",
+    specifications: "Intel Core 3 100U (6 rdzeni), 8GB RAM, 256GB SSD, 16\" FHD+ IPS, bez systemu operacyjnego",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/dell_16_bs_1.png",
@@ -74,10 +74,10 @@ const products: Product[] = [
   },
   {
     id: 6,
-    name: "HP EliteBook 6 G1ah 14\"",
+    name: "HP EliteBook 645 G11 14\"",
     category: "Laptopy",
     description: "Kompaktowy laptop 14 cali z czytnikiem kart kryptograficznych, do pracy w kancelarii i w terenie",
-    specifications: "AMD Ryzen 5 220, 16GB DDR5, 512GB SSD, 14\" WUXGA, Smart Card, Windows 11 Pro",
+    specifications: "AMD Ryzen, 16GB RAM (do 64GB), 512GB SSD, 14\" FHD, Smart Card, Windows 11 Pro",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/hp_elite_14_1.png",
@@ -86,6 +86,41 @@ const products: Product[] = [
     slug: "hp-elitebook-6-g1ah-14"
   }
 ];
+
+// Porównanie pod kafelkami — tylko to, czym laptopy się różnią. Konfiguracje i gwarancja
+// z oferty ZUP Łódź (06.2026), parametry modeli z dell.com i QuickSpecs HP, sprawdzone 17.10.2026.
+type Kol = 'ekran' | 'cpu' | 'pamiec' | 'system' | 'smartcard' | 'waga' | 'gwarancja'
+type Wiersz = {
+  model: string
+  href: string
+  ekran: string
+  cpu: string
+  pamiec: string
+  system: string
+  smartcard: string
+  waga: string
+  gwarancja: string
+  naj?: Kol[]
+  slabe?: Kol[]
+}
+
+const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
+  {
+    grupa: '14 cali',
+    wiersze: [
+      { model: 'Dell Pro 14 Plus', href: '/produkt/dell-pro-14-plus', ekran: '14″ FHD+', cpu: 'Core Ultra 5 235U', pamiec: '16 GB · 512 GB', system: 'Windows 11 Pro', smartcard: 'tak', waga: '1,53 kg', gwarancja: '60 mies.' },
+      { model: 'HP EliteBook 645 G11', href: '/produkt/hp-elitebook-6-g1ah-14', ekran: '14″ FHD', cpu: 'AMD Ryzen', pamiec: '16 GB · 512 GB', system: 'Windows 11 Pro', smartcard: 'tak', waga: '1,4 kg', gwarancja: '36 mies.', naj: ['waga'] },
+    ],
+  },
+  {
+    grupa: '16 cali',
+    wiersze: [
+      { model: 'Dell Pro 16 Plus', href: '/produkt/dell-pro-16-plus', ekran: '16″ FHD+', cpu: 'Core Ultra 5 235U', pamiec: '16 GB · 512 GB', system: 'Windows 11 Pro', smartcard: 'tak', waga: '1,84 kg', gwarancja: '60 mies.' },
+      { model: 'HP EliteBook 6 G1ah 16', href: '/produkt/hp-elitebook-6-g1ah-16', ekran: '16″ WUXGA', cpu: 'Ryzen 5 220', pamiec: '16 GB · 512 GB', system: 'Windows 11 Pro', smartcard: 'tak', waga: '1,75 kg', gwarancja: '36 mies.' },
+      { model: 'Dell Pro 16', href: '/produkt/dell-pro-16', ekran: '16″ FHD+', cpu: 'Core 3 100U', pamiec: '8 GB · 256 GB', system: 'bez systemu', smartcard: 'nie', waga: '1,92 kg', gwarancja: '60 mies.', slabe: ['smartcard'] },
+    ],
+  },
+]
 
 // Opcje filtrowania i sortowania
 const sortOptions = [
@@ -341,6 +376,70 @@ export default function CategoryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Porównanie — tylko różnice */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Wszystkie modele mają ekran o rozdzielczości Full HD lub wyższej, Wi-Fi 6E oraz złącza USB-C i HDMI. Poniższe zestawienie przedstawia różnice między konfiguracjami oferowanymi przez ZUP Łódź.
+          </p>
+
+          <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow-md">
+            {/* szerokości kolumn: treść + równy odstęp, żeby wolne miejsce rozkładało się równo */}
+            <table className="w-full whitespace-nowrap text-left text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 text-gray-500">
+                  <th className="sticky left-0 bg-white px-4 py-3 font-medium" style={{ width: '17%' }}>Model</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '10.8%' }}>Ekran</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '14.1%' }}>Procesor</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '12.4%' }}>RAM · SSD</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '12.7%' }}>System</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '14.4%' }}>Czytnik kart smart</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '8.4%' }}>Waga</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '10.2%' }}>Gwarancja</th>
+                </tr>
+              </thead>
+              {porownanie.map((g) => (
+                <tbody key={g.grupa}>
+                  <tr className="bg-gray-50">
+                    <th colSpan={8} className="py-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                      <span className="sticky left-0 inline-block px-4">{g.grupa}</span>
+                    </th>
+                  </tr>
+                  {g.wiersze.map((w) => {
+                    const kom = (k: Kol) =>
+                      w.naj?.includes(k)
+                        ? 'font-semibold text-emerald-700'
+                        : w.slabe?.includes(k)
+                          ? 'text-gray-400'
+                          : 'text-gray-700'
+                    return (
+                      <tr key={w.model} className="border-t border-gray-100">
+                        <td className="sticky left-0 bg-white px-4 py-3 font-medium">
+                          <a href={w.href} className="text-gray-900 hover:text-emerald-700">
+                            {w.model}
+                          </a>
+                        </td>
+                        <td className={`px-4 py-3 ${kom('ekran')}`}>{w.ekran}</td>
+                        <td className={`px-4 py-3 ${kom('cpu')}`}>{w.cpu}</td>
+                        <td className={`px-4 py-3 ${kom('pamiec')}`}>{w.pamiec}</td>
+                        <td className={`px-4 py-3 ${kom('system')}`}>{w.system}</td>
+                        <td className={`px-4 py-3 ${kom('smartcard')}`}>{w.smartcard}</td>
+                        <td className={`px-4 py-3 ${kom('waga')}`}>{w.waga}</td>
+                        <td className={`px-4 py-3 ${kom('gwarancja')}`}>{w.gwarancja}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              ))}
+            </table>
+          </div>
+          <p className="mt-3 text-xs text-gray-500">
+            Konfiguracje i gwarancja według oferty ZUP Łódź; waga według producenta (od). HP EliteBook 645 G11: procesor AMD Ryzen serii 7035 zależnie od konfiguracji.
+          </p>
         </div>
       </section>
 
