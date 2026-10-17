@@ -13,7 +13,7 @@ const products = [
     name: "Zebra EM45",
     category: "Rejestratory",
     description: "To nie tylko zwykły smartfon!",
-    specifications: "Android 14, 6,7'' FHD+, 8GB RAM, Snapdragon 2,2 GHz",
+    specifications: "6,7″ FHD+, 8 GB RAM / 128 GB, IP68, 4750 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/em45_1.webp",
@@ -25,7 +25,7 @@ const products = [
     name: "Zebra TC27",
     category: "Rejestratory", 
     description: "Wytrzymały terminal mobilny do pracy w trudnych warunkach",
-    specifications: "Android 14, 6\" FHD, Qualcomm 2,2 GHz, 4GB RAM",
+    specifications: "6″ FHD+, 6 GB RAM / 64 GB, IP68, 3800 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/tc27_1.png",
@@ -37,7 +37,7 @@ const products = [
     name: "Zebra TC58e",
     category: "Rejestratory",
     description: "Zaawansowany terminal do najtrudniejszych warunków terenowych",
-    specifications: "Android 14, 6\" FHD+, Snapdragon 6490, 8GB RAM",
+    specifications: "6″ FHD+, 6 GB RAM / 64 GB, IP68, 4680 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/tc58_1.png", 
@@ -49,7 +49,7 @@ const products = [
     name: "Honeywell CT47",
     category: "Rejestratory",
     description: "Mobilny komputer 5G z najwyższej półki do zastosowań terenowych",
-    specifications: "Android 13, 5,5\" FHD, Snapdragon 6490, 6GB RAM",
+    specifications: "5,5″ FHD, 6 GB RAM / 128 GB, IP68, 4775 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ct47_1.png",
@@ -61,7 +61,7 @@ const products = [
     name: "Unitech EA660",
     category: "Rejestratory",
     description: "Wszechstronny komputer mobilny z wydajnymi podzespołami",
-    specifications: "Android 12, 6\" FHD+, Snapdragon 662, 6GB RAM",
+    specifications: "6″ FHD+, 6 GB RAM / 128 GB, IP68, 5000 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ea660_1.png",
@@ -73,7 +73,7 @@ const products = [
     name: "Unitech PA768",
     category: "Rejestratory",
     description: "Profesjonalny terminal przemysłowy z zaawansowanymi funkcjami",
-    specifications: "Android 12, 6,45\" FHD+, Snapdragon 660, 4GB RAM",
+    specifications: "6,3″ FHD+, 6 GB RAM / 64 GB, IP68, 5100 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/pa768_1.png",
@@ -85,7 +85,7 @@ const products = [
     name: "Honeywell EDA52",
     category: "Rejestratory",
     description: "Kompaktowy komputer mobilny idealny dla leśników",
-    specifications: "Android 13, 5,5\" HD+, Snapdragon 2,0 GHz, 4GB RAM",
+    specifications: "5,5″ HD+, 4 GB RAM / 64 GB, IP67, 4500 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA, ZPUH Olsztyn", 
     image: "/eda52_1.png",
@@ -97,7 +97,7 @@ const products = [
     name: "Honeywell CT40XP",
     category: "Rejestratory",
     description: "Ekstremalnie wytrzymały terminal do najtrudniejszych zadań",
-    specifications: "Android 12, 5\" HD, Snapdragon 662, 4GB RAM",
+    specifications: "5″ FHD, 4 GB RAM / 32 GB, IP67, 4020 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ct40xp_1.png",
@@ -106,10 +106,10 @@ const products = [
   },
   {
     id: 9,
-    name: "Honeywell CT30P",
+    name: "Honeywell CT30 XP",
     category: "Rejestratory",
     description: "Lekki i wytrzymały terminal z długą żywotnością baterii",
-    specifications: "Android 13, 5,5\" FHD, Snapdragon 662, 4GB RAM",
+    specifications: "5,5″ FHD, 4 GB RAM / 64 GB, IP67, 3400 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/ct30p_1.png",
@@ -122,7 +122,7 @@ const products = [
     name: "M3 SL20+",
     category: "Rejestratory",
     description: "Ekonomiczne rozwiązanie dla mniej wymagających",
-    specifications: "Android 12, 8\" WXGA, MSM8953 2,2 GHz, 4GB RAM",
+    specifications: "5,5″ HD+, 4 GB RAM / 64 GB, IP67, 5000 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/sl20_1.png",
@@ -134,16 +134,68 @@ const products = [
     id: 11,
     name: "Honeywell CT32",
     category: "Rejestratory",
-    description: "Rejestrator ze skanerem 1D i 2D oraz dwiema kartami SIM",
-    specifications: "Android 13 z aktualizacją do 16, 5,5\", 6GB RAM, 128GB",
+    description: "Rejestrator ze skanerem 1D i 2D oraz modemem 5G",
+    specifications: "6″ FHD+, 6 GB RAM / 128 GB, IP68, 4500 mAh",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
-    image: "/placeholder-produkt.png",
+    image: "/ct32_2.png",
     badges: [],
     featured: false,
     customUrl: "/produkt/honeywell-ct32"
   }
 ];
+
+// Porównanie pod kafelkami — tylko to, czym rejestratory się różnią. Dane od producentów
+// (zebra.com, honeywell.com, ute.com, m3mobile.net), sprawdzone 17.10.2026.
+// Upadek: na beton bez etui, najwyższa wartość podana przez producenta.
+// Android: najwyższa wersja, którą producent zapowiada (Zebra: „Final Supported Android OS”).
+type Kol = 'ekran' | 'android' | 'aku' | 'odpornosc' | 'temp' | 'skaner'
+type Wiersz = {
+  model: string
+  href: string
+  ekran: string
+  android: string
+  aku: string
+  odpornosc: string
+  temp: string
+  skaner: string
+  naj?: Kol[]
+  slabe?: Kol[]
+}
+
+const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
+  {
+    grupa: 'Zebra',
+    wiersze: [
+      { model: 'EM45', href: '/produkt/zebra-em45', ekran: '6,7″ FHD+', android: 'do 16', aku: '4750 mAh', odpornosc: 'IP68 · 1,2 m', temp: '0 °C', skaner: 'tylko aparat', slabe: ['temp', 'skaner'] },
+      { model: 'TC27', href: '/produkt/zebra-tc27', ekran: '6,0″ FHD+', android: 'do 16', aku: '3800 mAh', odpornosc: 'IP68 · 1,3 m', temp: '−10 °C', skaner: 'tak' },
+      { model: 'TC58e', href: '/produkt/zebra-tc58e', ekran: '6,0″ FHD+', android: 'do 18', aku: '4680 mAh', odpornosc: 'IP68 · 1,8 m', temp: '−20 °C', skaner: 'tak', naj: ['android'] },
+    ],
+  },
+  {
+    grupa: 'Honeywell',
+    wiersze: [
+      { model: 'CT32', href: '/produkt/honeywell-ct32', ekran: '6,0″ FHD+', android: 'do 18', aku: '4500 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tak', naj: ['android'] },
+      { model: 'CT47', href: '/produkt/honeywell-ct47', ekran: '5,5″ FHD', android: 'do 16', aku: '4775 mAh', odpornosc: 'IP68 · 2,4 m', temp: '−20 °C', skaner: 'tak', naj: ['odpornosc'] },
+      { model: 'CT30 XP', href: '/produkt/honeywell-ct30', ekran: '5,5″ FHD', android: 'do 15', aku: '3400 mAh', odpornosc: 'IP67 · 1,5 m', temp: '−10 °C', skaner: 'tak' },
+      { model: 'CT40 XP', href: '/produkt/honeywell-ct40xp', ekran: '5,0″ FHD', android: 'do 13', aku: '4020 mAh', odpornosc: 'IP67 · 1,2 m', temp: '−20 °C', skaner: 'tak' },
+      { model: 'EDA52', href: '/produkt/honeywell-eda52', ekran: '5,5″ HD+', android: 'do 13', aku: '4500 mAh', odpornosc: 'IP67 · 1,3 m', temp: '−20 °C', skaner: 'tak' },
+    ],
+  },
+  {
+    grupa: 'Unitech',
+    wiersze: [
+      { model: 'EA660', href: '/produkt/unitech-ea660', ekran: '6,0″ FHD+', android: 'do 17', aku: '5000 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tak' },
+      { model: 'PA768', href: '/produkt/unitech-pa768', ekran: '6,3″ FHD+', android: 'do 16', aku: '5100 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tak', naj: ['aku'] },
+    ],
+  },
+  {
+    grupa: 'M3 Mobile',
+    wiersze: [
+      { model: 'SL20+', href: '/produkt/m3-sl20', ekran: '5,5″ HD+', android: 'do 15', aku: '5000 mAh', odpornosc: 'IP67 · 1,5 m', temp: '−20 °C', skaner: 'tak' },
+    ],
+  },
+]
 
 // Opcje filtrowania i sortowania
 const sortOptions = [
@@ -432,6 +484,68 @@ export default function CategoryPage() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Porównanie — tylko różnice */}
+      <section className="pb-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Który wybrać?</h2>
+          <p className="mt-1 text-gray-600">
+            Wszystkie modele pracują pod kontrolą systemu Android i są przeznaczone do pracy w terenie. Poniższe zestawienie przedstawia różnice między nimi według danych producentów.
+          </p>
+
+          <div className="mt-6 overflow-x-auto rounded-lg bg-white shadow-md">
+            {/* szerokości kolumn: treść + równy odstęp, żeby wolne miejsce rozkładało się równo */}
+            <table className="w-full whitespace-nowrap text-left text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 text-gray-500">
+                  <th className="sticky left-0 bg-white px-4 py-3 font-medium" style={{ width: '13%' }}>Model</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '13.5%' }}>Ekran</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '12%' }}>Android</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '14%' }}>Akumulator</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '19%' }}>Szczelność · upadek</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '13%' }}>Praca od</th>
+                  <th className="px-4 py-3 font-medium" style={{ width: '15.5%' }}>Skaner kodów</th>
+                </tr>
+              </thead>
+              {porownanie.map((g) => (
+                <tbody key={g.grupa}>
+                  <tr className="bg-gray-50">
+                    <th colSpan={7} className="py-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                      <span className="sticky left-0 inline-block px-4">{g.grupa}</span>
+                    </th>
+                  </tr>
+                  {g.wiersze.map((w) => {
+                    const kom = (k: Kol) =>
+                      w.naj?.includes(k)
+                        ? 'font-semibold text-emerald-700'
+                        : w.slabe?.includes(k)
+                          ? 'text-gray-400'
+                          : 'text-gray-700'
+                    return (
+                      <tr key={w.model} className="border-t border-gray-100">
+                        <td className="sticky left-0 bg-white px-4 py-3 font-medium">
+                          <a href={w.href} className="text-gray-900 hover:text-emerald-700">
+                            {w.model}
+                          </a>
+                        </td>
+                        <td className={`px-4 py-3 ${kom('ekran')}`}>{w.ekran}</td>
+                        <td className={`px-4 py-3 ${kom('android')}`}>{w.android}</td>
+                        <td className={`px-4 py-3 ${kom('aku')}`}>{w.aku}</td>
+                        <td className={`px-4 py-3 ${kom('odpornosc')}`}>{w.odpornosc}</td>
+                        <td className={`px-4 py-3 ${kom('temp')}`}>{w.temp}</td>
+                        <td className={`px-4 py-3 ${kom('skaner')}`}>{w.skaner}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              ))}
+            </table>
+          </div>
+          <p className="mt-3 text-xs text-gray-500">
+            Android: najwyższa wersja, do której producent zapowiada aktualizacje. Upadek: na beton, bez etui ochronnego.
+          </p>
         </div>
       </section>
 

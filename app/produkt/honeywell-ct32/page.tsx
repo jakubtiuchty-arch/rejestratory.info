@@ -10,7 +10,7 @@ const data: ProductData = {
   name: 'Honeywell CT32',
   category: 'Rejestratory',
   categoryHref: '/kategoria/rejestratory',
-  images: ['/placeholder-produkt.png'],
+  images: ['/ct32_2.png', '/ct32_1.png', '/ct32_3.png'],
   inquiry: {
     description: 'Rejestrator leśniczego ze skanerem 1D i 2D',
     specifications: 'Android 13 z aktualizacją do 16 · 5,5″ · 6/128 GB · Dual SIM · 4500 mAh',
