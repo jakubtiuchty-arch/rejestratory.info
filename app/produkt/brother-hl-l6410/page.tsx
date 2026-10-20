@@ -17,6 +17,7 @@ const data: ProductData = {
   whyHeading: 'Do czego przyda się w nadleśnictwie',
   whyLabel: 'W kancelarii nadleśnictwa',
   highlights: [
+    { icon: ICON.integracja, label: 'Języki druku', value: 'PCL6, BR-Script3, PDF 1.7', wide: true },
     { icon: ICON.szybkosc, label: 'Prędkość druku', value: '50 stron/min (A4)' },
     { icon: ICON.papier, label: 'Podajniki', value: '520 + 100 arkuszy' },
     { icon: ICON.wsparcie, label: 'Cykl pracy', value: 'do 16 000 stron miesięcznie' },

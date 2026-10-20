@@ -36,7 +36,8 @@ export type Accessory = {
   /** wyróżniona wartość, np. wydajność w stronach */
   meta?: string
 }
-export type Highlight = { icon: string; label: string; value: string }
+/** `wide` — kafelek na całą szerokość siatki (cecha, którą klient ma zobaczyć od razu). */
+export type Highlight = { icon: string; label: string; value: string; wide?: boolean }
 export type VariantGroup = { id: string; label: string; options: string[] }
 export type RelatedProduct = { name: string; href: string; note: string }
 /** Wyróżnik decyzyjny — cecha, która sama w sobie przesądza o wyborze modelu. */
@@ -1314,7 +1315,7 @@ export default function ProductPage({ data }: { data: ProductData }) {
               {!data.hideHeaderCta && data.highlights && data.highlights.length > 0 && (
                 <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-stone-100 py-5">
                   {data.highlights.map((h) => (
-                    <div key={h.label} className="flex items-start gap-3">
+                    <div key={h.label} className={`flex items-start gap-3${h.wide ? ' col-span-2' : ''}`}>
                       <img src={h.icon} alt="" className="mt-0.5 h-5 w-5 shrink-0 mix-blend-multiply" />
                       <div className="min-w-0">
                         <dt className="text-xs uppercase tracking-wide text-stone-400">{h.label}</dt>

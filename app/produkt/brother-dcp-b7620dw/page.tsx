@@ -17,6 +17,7 @@ const data: ProductData = {
   whyHeading: 'Do czego przyda się w nadleśnictwie',
   whyLabel: 'W kancelarii nadleśnictwa',
   highlights: [
+    { icon: ICON.integracja, label: 'Języki druku', value: 'PCL6, BR-Script3, PDF 1.7', wide: true },
     { icon: ICON.szybkosc, label: 'Prędkość druku', value: '34 strony/min (A4)' },
     { icon: ICON.skandok, label: 'Skanowanie', value: '22,5 ipm mono' },
     { icon: ICON.kompakt, label: 'Format', value: 'urządzenie 3 w 1' },
@@ -39,6 +40,7 @@ const data: ProductData = {
         { k: 'Prędkość', v: '34 strony/min (A4)' },
         { k: 'Dupleks', v: 'automatyczny, 16 stron/min' },
         { k: 'Rozdzielczość', v: 'do 1200 × 1200 dpi' },
+        { k: 'Języki druku', v: 'PCL6, PDF 1.7, BR-Script3' },
       ],
     },
     {

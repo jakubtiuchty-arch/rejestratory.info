@@ -13,7 +13,7 @@ const products = [
     name: "Brother HL-L6410",
     category: "Drukarki laserowe",
     description: "Wydajna drukarka laserowa monochromatyczna dla biur średniej wielkości",
-    specifications: "Drukarka laserowa, A4, 50 ppm, duplex, USB, Ethernet",
+    specifications: "Drukarka laserowa, A4, 50 ppm, duplex, USB, Ethernet, PCL6",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/hll6410ph.png",
@@ -25,7 +25,7 @@ const products = [
     name: "Brother DCP-B7620DW",
     category: "Drukarki laserowe", 
     description: "Kompaktowa drukarka 3w1 z funkcją skanowania i kopiowania - idealna do stanowiska leśniczego",
-    specifications: "Drukarka laserowa, skaner, kopiarka, A4, 34 ppm, Wi-Fi, duplex",
+    specifications: "Drukarka laserowa, skaner, kopiarka, A4, 34 ppm, Wi-Fi, duplex, PCL6",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "/dcpb75620dwph.png",
@@ -37,7 +37,7 @@ const products = [
     name: "Brother HL-L6210DW",
     category: "Drukarki laserowe",
     description: "Profesjonalna drukarka laserowa z bezprzewodowym połączeniem Wi-Fi",
-    specifications: "Drukarka laserowa, A4, 48 ppm, Wi-Fi, duplex, USB, Ethernet",
+    specifications: "Drukarka laserowa, A4, 48 ppm, Wi-Fi, duplex, USB, Ethernet, PCL6",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
     image: "/hll6210dwph.png",
@@ -158,6 +158,9 @@ export default function CategoryPage() {
           <p className="text-gray-700 max-w-3xl">
             Profesjonalne drukarki laserowe dostosowane do potrzeb pracowników leśnictwa. 
             Szybkie i wydajne urządzenia do druku dokumentów z niskimi kosztami eksploatacji i wysoką jakością wydruku.
+          </p>
+          <p className="mt-3 max-w-3xl text-gray-900">
+            Wszystkie modele obsługują języki druku <strong>PCL6</strong>, BR-Script3 i&nbsp;PDF&nbsp;1.7.
           </p>
         </div>
       </section>
