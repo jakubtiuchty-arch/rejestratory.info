@@ -21,6 +21,7 @@ a `public/newsletter/manifest.json` wskazuje bieżące wydanie.
 | 2026-10-26 | Honeywell CT47 (terminal terenowy, alternatywa dla Zebry) | /produkt/honeywell-ct47 | propozycja — do akceptacji (przesunięty z 19.10) |
 | 2026-11-02 | Epson DS-730n (skaner dokumentowy sieciowy, do EZD) | /produkt/epson-ds730n | propozycja — do akceptacji |
 | 2026-11-09 | Vertiv Liebert itON 1000 VA (UPS do serwerowni/kancelarii) | /produkt/vertin-1000 | propozycja — do akceptacji |
+| termin do ustalenia | **Uchwyty samochodowe RAM Mounts** (zestawy do Zebra EM45, Zebra TC27, Galaxy Tab Active5, Galaxy XCover6 Pro oraz X-Grip do smartfonów) | /kategoria/uchwyty-samochodowe | PRZYGOTOWANE 21.10 — plik `2026-10-27-uchwyty-ram-mounts.html` (data w nazwie robocza), testówka wysłana Jakubowi. Strona kategorii i 5 kart produktów czekają na akceptację. Termin wysyłki ustala Jakub; `manifest.json` NIE wskazuje tego wydania. |
 
 Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie zapasu.
 
