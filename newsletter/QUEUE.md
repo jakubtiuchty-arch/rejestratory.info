@@ -18,10 +18,13 @@ a `public/newsletter/manifest.json` wskazuje bieżące wydanie.
 | 2026-10-05 | Zebra ZD421c (drukarka etykiet) | /produkt/zebra-zd421c | wydanie gotowe (2026-10-05-zebra-zd421c.html) |
 | 2026-10-12 | Samsung Galaxy Tab Active5 (tablet terenowy) | /produkt/samsung-galaxy-tab-active5 | wydanie gotowe (2026-10-12-samsung-tab-active5.html) |
 | 2026-10-19 | **Rejestratory — zakupy przed końcem roku** (bez urządzenia tygodnia; marki Zebra, Honeywell, Samsung, Unitech, M3 Mobile; dostępność w ZUP Łódź i ZPUH Olsztyn) | /kategoria/rejestratory | ZAPLANOWANE ręcznie 16.10 — **627 maili na poniedziałek 19.10 9:00** (624 + 3 adresy dopisane 16.10), ID w `scheduled-2026-10-19.json`, plik `2026-10-20-rejestratory.html`. Rezerwacja w `newsletter_sends` blokuje przycisk — **nie zatwierdzać testówki**. **Nie budować w tym tygodniu nowego wydania** (CT47 przesunięty na 26.10). |
-| 2026-10-26 | Honeywell CT47 (terminal terenowy, alternatywa dla Zebry) | /produkt/honeywell-ct47 | propozycja — do akceptacji (przesunięty z 19.10) |
+| 2026-10-26 | Honeywell CT47 (terminal terenowy, alternatywa dla Zebry) | /produkt/honeywell-ct47 | wydanie gotowe (2026-10-26-honeywell-ct47.html) |
 | 2026-11-02 | Epson DS-730n (skaner dokumentowy sieciowy, do EZD) | /produkt/epson-ds730n | propozycja — do akceptacji |
 | 2026-11-09 | Vertiv Liebert itON 1000 VA (UPS do serwerowni/kancelarii) | /produkt/vertin-1000 | propozycja — do akceptacji |
 | termin do ustalenia | **Uchwyty samochodowe RAM Mounts** (zestawy do Zebra EM45, Zebra TC27, Galaxy Tab Active5, Galaxy XCover6 Pro oraz X-Grip do smartfonów) | /kategoria/uchwyty-samochodowe | PRZYGOTOWANE 21.10 — plik `2026-10-27-uchwyty-ram-mounts.html` (data w nazwie robocza), testówka wysłana Jakubowi. Strona kategorii i 5 kart produktów czekają na akceptację. Termin wysyłki ustala Jakub; `manifest.json` NIE wskazuje tego wydania. |
+| 2026-11-16 | Zebra TC27 (kompaktowy rejestrator z klawiaturą numeryczną) | /produkt/zebra-tc27 | propozycja — do akceptacji |
+| 2026-11-23 | Unitech PA768 (rejestrator — alternatywa dla Zebry i Honeywella) | /produkt/unitech-pa768 | propozycja — do akceptacji |
+| 2026-11-30 | M3 Mobile SL20+ (rejestrator z wbudowaną drukarką, alternatywna marka) | /produkt/m3-sl20 | propozycja — do akceptacji |
 
 Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie zapasu.
 
@@ -74,3 +77,24 @@ Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie za
   poprzednim przebiegu jako zapas kolejki) — zbudowałem wydanie zgodnie z poleceniem z tego
   przebiegu („znajdź wiersz z dzisiejszą datą — to urządzenie tygodnia"); gdyby Jakub chciał
   inne urządzenie na ten tydzień, proszę o korektę przed akceptacją testówki w poniedziałek.
+- **2026-10-26** — wydanie Honeywell CT47 zbudowane na bazie Samsung Galaxy Tab Active5
+  (ostatnie wydanie w standardowym formacie „urządzenie tygodnia"; nowszy plik w `editions/`,
+  `2026-10-27-uchwyty-ram-mounts.html`, ma inny układ — bez galerii/specyfikacji/ceny — bo to
+  wydanie bez jednego urządzenia, więc nie nadawał się na bazę layoutu), z jednym odstępstwem
+  od standardu: w `public/` istnieje tylko **jedno** zdjęcie produktu (`ct47_1.png`, 800×1200) —
+  galeria pokazuje jedno zdjęcie zamiast czterech, tak jak w wydaniach TC58e, ZD421c i Tab
+  Active5. Przeskalowałem je (`convert`/ImageMagick, maks. 800 px) do
+  `public/newsletter/honeywell-ct47_1.png` (533×800). Hero zostawiłem jako istniejący plik
+  `las-em45-anim.gif` (leśniczy z urządzeniem terenowym — tematycznie pasuje do terminala),
+  podmieniłem tylko alt-text, zgodnie z precedensem z 28.09, 05.10 i 12.10. Specyfikacja (7 wierszy)
+  i cena wzięte wprost z karty produktu (`app/produkt/honeywell-ct47/page.tsx`) i z realnej oferty
+  ZUP Łódź (`data/oferty-skladnicy.ts`, 5232 zł netto z dodatkową kartą micro SD 64 GB oraz
+  ładowarką sieciową i samochodową w zestawie) — nie użyłem wariantu „wycena indywidualna".
+  Do tile „z poprzedniego wydania" (Samsung Galaxy Tab Active5) dorobiłem miniaturę
+  `tab-active5_small.png` (zmiana rozmiaru istniejącego zdjęcia produktu, nie nowa grafika).
+  Wiersz na 26.10 miał status „propozycja — do akceptacji (przesunięty z 19.10)" — zbudowałem
+  zgodnie z poleceniem z tego przebiegu; gdyby Jakub chciał inne urządzenie na ten tydzień,
+  proszę o korektę przed akceptacją testówki. W kolejce zostały tylko 2 przyszłe pozycje z datą
+  (Epson DS730n 02.11, Vertiv UPS 09.11), więc dopisałem trzy kolejne propozycje z zapasu
+  3 tygodni: Zebra TC27 (16.11), Unitech PA768 (23.11), M3 Mobile SL20+ (30.11) — wszystkie mają
+  karty produktu w repo, dane do wydań jeszcze nie zweryfikowane szczegółowo.
