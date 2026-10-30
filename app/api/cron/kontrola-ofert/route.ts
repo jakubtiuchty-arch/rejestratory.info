@@ -5,7 +5,8 @@ import { WSZYSTKIE_OFERTY } from '@/data/oferty'
 import { SKLADNICE } from '@/data/skladnice'
 
 /**
- * Cron: codziennie 6:00 UTC.
+ * Cron wyłączony 30.10.2026 na prośbę Jakuba (codzienne maile) — wpis usunięty
+ * z vercel.json. Trasa została do ręcznego podglądu (?dry=1).
  *
  * Karty produktu nie pokazują terminów ważności ofert — leśnika interesuje
  * kwota, nie data ważności dokumentu. Za aktualność odpowiada ten cron: w dniu,
