@@ -19,7 +19,7 @@ a `public/newsletter/manifest.json` wskazuje bieżące wydanie.
 | 2026-10-12 | Samsung Galaxy Tab Active5 (tablet terenowy) | /produkt/samsung-galaxy-tab-active5 | wydanie gotowe (2026-10-12-samsung-tab-active5.html) |
 | 2026-10-19 | **Rejestratory — zakupy przed końcem roku** (bez urządzenia tygodnia; marki Zebra, Honeywell, Samsung, Unitech, M3 Mobile; dostępność w ZUP Łódź i ZPUH Olsztyn) | /kategoria/rejestratory | ZAPLANOWANE ręcznie 16.10 — **627 maili na poniedziałek 19.10 9:00** (624 + 3 adresy dopisane 16.10), ID w `scheduled-2026-10-19.json`, plik `2026-10-20-rejestratory.html`. Rezerwacja w `newsletter_sends` blokuje przycisk — **nie zatwierdzać testówki**. **Nie budować w tym tygodniu nowego wydania** (CT47 przesunięty na 26.10). |
 | 2026-10-26 | Honeywell CT47 (terminal terenowy, alternatywa dla Zebry) | /produkt/honeywell-ct47 | wydanie gotowe (2026-10-26-honeywell-ct47.html) |
-| 2026-11-02 | Epson DS-730n (skaner dokumentowy sieciowy, do EZD) | /produkt/epson-ds730n | propozycja — do akceptacji |
+| 2026-11-02 | Epson DS-730n (skaner dokumentowy sieciowy, do EZD) | /produkt/epson-ds730n | wydanie gotowe (2026-11-02-epson-ds730n.html) |
 | 2026-11-09 | Vertiv Liebert itON 1000 VA (UPS do serwerowni/kancelarii) | /produkt/vertin-1000 | propozycja — do akceptacji |
 | termin do ustalenia | **Uchwyty samochodowe RAM Mounts** (zestawy do Zebra EM45, Zebra TC27, Galaxy Tab Active5, Galaxy XCover6 Pro oraz X-Grip do smartfonów) | /kategoria/uchwyty-samochodowe | PRZYGOTOWANE 21.10 — plik `2026-10-27-uchwyty-ram-mounts.html` (data w nazwie robocza), testówka wysłana Jakubowi. Strona kategorii i 5 kart produktów czekają na akceptację. Termin wysyłki ustala Jakub; `manifest.json` NIE wskazuje tego wydania. |
 | 2026-11-16 | Zebra TC27 (kompaktowy rejestrator z klawiaturą numeryczną) | /produkt/zebra-tc27 | propozycja — do akceptacji |
@@ -98,3 +98,19 @@ Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie za
   (Epson DS730n 02.11, Vertiv UPS 09.11), więc dopisałem trzy kolejne propozycje z zapasu
   3 tygodni: Zebra TC27 (16.11), Unitech PA768 (23.11), M3 Mobile SL20+ (30.11) — wszystkie mają
   karty produktu w repo, dane do wydań jeszcze nie zweryfikowane szczegółowo.
+- **2026-11-02** — wydanie Epson DS-730n zbudowane na bazie Honeywell CT47 (ostatnie wydanie w
+  standardowym formacie „urządzenie tygodnia"), z jednym odstępstwem od standardu: w `public/`
+  istnieje tylko **jedno** zdjęcie produktu (`ds730_1.png`, 800×800) — galeria pokazuje jedno
+  zdjęcie zamiast czterech, tak jak w poprzednich wydaniach z ograniczonym materiałem (TC58e,
+  ZD421c, Tab Active5, CT47). Zdjęcie już miało ≤800 px, skopiowane bez przeskalowania do
+  `public/newsletter/epson-ds730n_1.png`. Hero zmieniony na istniejący plik
+  `kancelaria-brother-anim.gif` (scena biurowa/kancelaryjna — tematycznie bliższa sieciowemu
+  skanerowi dokumentów do EZD niż leśne hero użyte w CT47), podmieniony tylko alt-text, bez
+  bump'owania wersji (ten sam plik już był używany w wydaniu ZD421c z 05.10). Specyfikacja
+  (7 wierszy) wzięta wprost z karty produktu (`app/produkt/epson-ds730n/page.tsx`). Cena: w repo
+  jest realna oferta ZUP Łódź (`data/oferty-skladnicy.ts`, slug `epson-ds730n`, 2247 zł netto za
+  „skaner biurowy z podajnikiem arkuszy", bez dodatków) — użyta wprost, nie wariant „wycena
+  indywidualna". Do tile „z poprzedniego wydania" (Honeywell CT47) dorobiłem miniaturę
+  `honeywell-ct47_small.png` (zmiana rozmiaru istniejącego zdjęcia produktu, nie nowa grafika).
+  W kolejce zostały 4 przyszłe pozycje z datą (Vertiv UPS 09.11, Zebra TC27 16.11, Unitech PA768
+  23.11, M3 Mobile SL20+ 30.11) — zapas 3+ tygodni zachowany, nie dopisywałem nowych propozycji.
