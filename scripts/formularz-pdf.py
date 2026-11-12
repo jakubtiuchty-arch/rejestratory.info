@@ -133,7 +133,8 @@ def pogrub(doc, annot, p, rozmiar):
         return
     ap = int(ap.split()[0])
     szer, wys = annot.rect.width, annot.rect.height
-    dlugosc = fitz.get_text_length(tekst, "hebo", rozmiar)
+    # twarda spacja ma w Helvetice szerokość zwykłej, ale PyMuPDF liczy ją jako zero
+    dlugosc = fitz.get_text_length(tekst.replace("\u00a0", " "), "hebo", rozmiar)
     x = {0: 2, 1: (szer - dlugosc) / 2, 2: szer - 2 - dlugosc}[p["wyrownanie"]]
     y = (wys - rozmiar) / 2 + rozmiar * 0.22
     znaki = tekst.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")

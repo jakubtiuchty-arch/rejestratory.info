@@ -435,10 +435,12 @@ function szablon(d) {
   let nrIlosci = 0
   const ilosc = (czego) =>
     `<span class="il"><span class="linia" data-pole="ilosc_${++nrIlosci}" data-opis="Ilość zamówiona — ${esc(czego)} (szt.)" data-wyrownanie="2"></span><span class="szt">szt.</span></span>`
-  // cena jest wpisana, ale zostaje polem — składnica poprawi kwotę bez przebudowy formularza
+  // cena jest wpisana, ale zostaje polem — składnica poprawi kwotę bez przebudowy formularza.
+  // Twarda spacja w kwocie i zapas szerokości są konieczne: Podgląd macOS i przeglądarki
+  // rysują pole po swojemu i kwotę „1 700,00” w ciasnym polu łamały na spacji, pokazując samo „1”.
   let nrCeny = 0
   const cena = (kwota, czego, rozmiar) =>
-    `<span class="linia" data-pole="cena_${++nrCeny}" data-opis="Cena netto — ${esc(czego)} (zł)" data-wyrownanie="2" data-rozmiar="${rozmiar}" data-pogrubienie data-wartosc="${zl(kwota).replace(/\u00a0/g, ' ')}"></span>`
+    `<span class="linia" data-pole="cena_${++nrCeny}" data-opis="Cena netto — ${esc(czego)} (zł)" data-wyrownanie="2" data-rozmiar="${rozmiar}" data-pogrubienie data-wartosc="${zl(kwota)}"></span>`
   const pole = (nazwa, etykieta) =>
     `<label class="pole"><span>${esc(etykieta)}</span><span class="linia" data-pole="${nazwa}" data-opis="${esc(etykieta)}"></span></label>`
 
@@ -513,7 +515,7 @@ h1 { margin-top: 10pt; font-size: 21pt; line-height: 1.25; font-weight: 700; let
   background: #f5f8f5; border-bottom: .75pt solid #d9e0da }
 .karta-glowa h2 { font-size: 11pt; line-height: 1.35; font-weight: 700 }
 .karta-glowa .kapitaliki { white-space: nowrap }
-.karta-tresc { display: grid; grid-template-columns: ${szerFoto ? `${szerFoto}pt ` : ''}1fr 85pt; column-gap: 10pt;
+.karta-tresc { display: grid; grid-template-columns: ${szerFoto ? `${szerFoto}pt ` : ''}1fr 100pt; column-gap: 10pt;
   padding: 8.5pt 9.5pt 8pt }
 .foto img { display: block; width: 100%; margin-top: 2pt }
 .opis ul { padding-left: 20pt }
@@ -531,7 +533,7 @@ h1 { margin-top: 10pt; font-size: 21pt; line-height: 1.25; font-weight: 700; let
 .promo { display: inline-block; padding: 1.6pt 6pt 1.4pt; border-radius: 2pt; background: #a3e635; color: #14532d;
   font-size: 6.6pt; font-style: normal; font-weight: 700; letter-spacing: .12em; line-height: 1.2 }
 .kwota { display: flex; align-items: flex-end; margin-top: 3pt; white-space: nowrap }
-.kwota .linia { width: 68pt; height: 24pt; border: 0 }
+.kwota .linia { width: 80pt; height: 24pt; border: 0 }
 .kwota small { margin: 0 0 4.6pt 3pt; font-size: 9pt; line-height: 1; color: #6b7280 }
 .cena .ile { margin-top: 7pt; font-size: 7.6pt; color: #4b5563 }
 .il { display: flex; align-items: flex-end; justify-content: flex-end; gap: 3pt }
@@ -547,7 +549,7 @@ h1 { margin-top: 10pt; font-size: 21pt; line-height: 1.25; font-weight: 700; let
 .wiersz .nazwa small { display: block; font-size: 7.6pt; line-height: 1.35; color: #4b5563 }
 .wiersz .kw { text-align: right; padding-right: 12pt; white-space: nowrap; line-height: 1.25 }
 .wiersz .kw-pole { display: flex; align-items: flex-end; justify-content: flex-end; gap: 2.6pt }
-.wiersz .kw-pole .linia { width: 56pt; height: 13.5pt; border: 0 }
+.wiersz .kw-pole .linia { width: 64pt; height: 13.5pt; border: 0 }
 .wiersz .kw b { font-size: 9.6pt; line-height: 1; padding-bottom: 2.6pt }
 .wiersz .il { padding-right: 16pt }
 .nota { padding: 5.5pt 7pt; border: .75pt solid #e2eadf; border-radius: 3pt; background: #f7faf6; font-size: 8.2pt;
