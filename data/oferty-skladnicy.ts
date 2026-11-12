@@ -1842,55 +1842,6 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   },
   {
     "slug": "sewoo-lkp43",
-    "skladnica": "zpuh-olsztyn",
-    "plik": "Druk zamówienia na dostawę drukarek termicznych i akcesoriów 16.10.2024.docx",
-    "formularz": null,
-    "strona": "https://zpuh.olsztyn.lasy.gov.pl/drukarki",
-    "okres": {
-      "od": "2024-10-16",
-      "do": null
-    },
-    "dostawca": null,
-    "urzadzenie": {
-      "nazwa": "Drukarka termiczna SEWOO LK-P43",
-      "cenaNetto": 2744.5,
-      "promocja": false,
-      "wZestawie": [
-        "Akumulator",
-        "Ładowarka sieciowa i samochodowa",
-        "Torba",
-        "Gwarancja 24 miesiące"
-      ]
-    },
-    "dodatki": [
-      {
-        "nazwa": "Ładowarka sieciowa",
-        "cenaNetto": 231,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka samochodowa",
-        "cenaNetto": 231,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Akumulator",
-        "cenaNetto": 434.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Papier termiczny 110/30 (karton 60 szt.)",
-        "cenaNetto": 7.54,
-        "promocja": false,
-        "wZestawie": []
-      }
-    ]
-  },
-  {
-    "slug": "sewoo-lkp43",
     "skladnica": "zup-lodz",
     "plik": "Oferta na drukarki termiczne_01.10.2026.pdf",
     "formularz": "/formularze/zup-lodz/drukarki-mobilne/zup-lodz-sewoo-lkp43.pdf",
@@ -2428,49 +2379,6 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       {
         "nazwa": "Kasety z woskowo/żywiczną taśmą barwiącą",
         "cenaNetto": 58.3,
-        "promocja": false,
-        "wZestawie": []
-      }
-    ]
-  },
-  {
-    "slug": "zebra-zq521",
-    "skladnica": "zpuh-olsztyn",
-    "plik": "Druk zamówienia na dostawę drukarek termicznych i akcesoriów 16.10.2024.docx",
-    "formularz": null,
-    "strona": "https://zpuh.olsztyn.lasy.gov.pl/drukarki",
-    "okres": {
-      "od": "2024-10-16",
-      "do": null
-    },
-    "dostawca": null,
-    "urzadzenie": {
-      "nazwa": "Drukarka termiczna ZEBRA ZQ521",
-      "cenaNetto": 2596,
-      "promocja": false,
-      "wZestawie": [
-        "Akumulator",
-        "Ładowarka sieciowa i samochodowa",
-        "Torba",
-        "Gwarancja 24 miesiące"
-      ]
-    },
-    "dodatki": [
-      {
-        "nazwa": "Ładowarka sieciowa",
-        "cenaNetto": 181.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka samochodowa",
-        "cenaNetto": 143,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Akumulator",
-        "cenaNetto": 466.4,
         "promocja": false,
         "wZestawie": []
       }

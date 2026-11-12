@@ -48,12 +48,20 @@ const WYCOFANE = [
  */
 const NIE_NASZE = ['Oferta na urządzenie Point Mobile_03.2026.docx']
 
+/**
+ * Druk ZPUH Olsztyn z 16.10.2024 (LK-P43, ZQ521) zastąpiły formularze z 6.11.2026 —
+ * te czyta scripts/oferty-zpuh-olsztyn.py do data/oferty-zpuh-olsztyn.ts.
+ */
+const ZASTAPIONE = ['Druk zamówienia na dostawę drukarek termicznych i akcesoriów 16.10.2024.docx']
+
 const pomijanyDruk = (plik) =>
   WYCOFANE.includes(plik)
     ? 'model wycofany z produkcji — druk celowo pomijany'
     : NIE_NASZE.includes(plik)
       ? 'pozycja innego dostawcy — nie nasza oferta'
-      : null
+      : ZASTAPIONE.includes(plik)
+        ? 'zastąpiony nowszą ofertą tej składnicy'
+        : null
 
 /** Fragment nazwy z druku → slug karty produktu. Kolejność: od najdłuższego. */
 const MODELE = [

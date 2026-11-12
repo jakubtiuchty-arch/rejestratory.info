@@ -5,6 +5,7 @@
 
 import { OFERTY_SKLADNICY, type OfertaSkladnicy } from './oferty-skladnicy'
 import { OFERTY_RECZNE } from './oferty-reczne'
+import { OFERTY_ZPUH_OLSZTYN } from './oferty-zpuh-olsztyn'
 
 export type { OfertaSkladnicy, PozycjaOferty } from './oferty-skladnicy'
 
@@ -20,6 +21,8 @@ const reczne = new Set(OFERTY_RECZNE.map(klucz))
 
 export const WSZYSTKIE_OFERTY: OfertaSkladnicy[] = [
   ...OFERTY_RECZNE,
+  // ZPUH Olsztyn — z formularzy, na których składnica zamawia (scripts/oferty-zpuh-olsztyn.py)
+  ...OFERTY_ZPUH_OLSZTYN.filter((o) => !reczne.has(klucz(o))),
   ...OFERTY_SKLADNICY.filter((o) => !reczne.has(klucz(o))),
 ]
 
