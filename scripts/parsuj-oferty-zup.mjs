@@ -862,6 +862,8 @@ const ZMIANY_ZE_STRONY_ZUP = {
   'samsung-a57': { plik: 'Oferta na rejestrator typu Smartfon SAMSUNG GALAXY A57_09.2026.pdf', okres: od('2026-09-23') },
   'dell-pro-p-24-p2426h': { plik: MONITORY_PDF, okres: od('2026-09-23') },
   'dell-pro-p-24-p2426he': { plik: MONITORY_PDF, okres: od('2026-09-23') },
+  // dokument ZUP podaje akumulator standardowy 3100 mAh — Zebra i OPZ: 3800 mAh
+  'zebra-tc27': { nazwy: { 'Akumulator o standardowej pojemności 3100mAh': 'Akumulator o standardowej pojemności 3800 mAh' } },
   'bixolon-sppr410': { plik: TERMICZNE_PDF, okres: od('2026-10-01'), ceny: { urzadzenie: 2124 } },
   'zebra-zq521': { plik: TERMICZNE_PDF, okres: od('2026-10-01'), ceny: { 'Akumulator o pojemności standardowej': 466.4 } },
   'honeywell-rp4': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
@@ -980,7 +982,7 @@ const zeStronyZup = [...najnowsze.values()]
     const z = o.skladnica === 'zup-lodz' ? ZMIANY_ZE_STRONY_ZUP[o.slug] : null
     if (!z) return o
     const nowa = structuredClone(o)
-    nowa.plik = z.plik
+    if (z.plik) nowa.plik = z.plik
     if (z.okres) nowa.okres = z.okres
     if ('dostawca' in z) nowa.dostawca = z.dostawca
     if (z.model) nowa.model = z.model

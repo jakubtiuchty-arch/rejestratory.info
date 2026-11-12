@@ -1046,10 +1046,10 @@
     "nota": "Zebra EM45 można doposażyć w stację dokującą, która pozwala używać rejestratora jak komputera stacjonarnego po podłączeniu go do zewnętrznego monitora.",
     "punkty": [
       {
-        "t": "System Android 14 z możliwością upgrade'u do v. 18",
+        "t": "System Android 14 lub 15 z możliwością aktualizacji do v. 16",
         "b": true
       },
-      "Procesor 2,2 GHz ośmiordzeniowy",
+      "Procesor Qualcomm 5430, 2,2 GHz ośmiordzeniowy",
       "Pamięć RAM 8 GB, Flash 128 GB",
       "Dodatkowa karta pamięci micro SD 64 GB",
       "Bluetooth 5.3",
@@ -1060,7 +1060,7 @@
         "t": "Wyświetlacz 6,7″",
         "b": true
       },
-      "Akumulator 4900 mAh",
+      "Akumulator 4750 mAh",
       "Ładowarka sieciowa i ładowarka samochodowa"
     ]
   },
@@ -1076,21 +1076,21 @@
       "Skaner 1D i 2D",
       "Wyświetlacz 6″",
       "Ładowarka sieciowa z możliwością wykorzystania do transmisji danych i ładowarka samochodowa",
-      "Akumulator 3100 mAh"
+      "Akumulator 3800 mAh"
     ]
   },
   "zebra-tc58e": {
     "dostawca": "TAKMA",
     "punkty": [
-      "System Android 13",
-      "Procesor 2,4 GHz",
+      "System Android 13, aktualizacje do v. 18",
+      "Procesor Qualcomm 4490, do 2,4 GHz ośmiordzeniowy",
       "Pamięć RAM 8 GB, Flash 64 GB",
       "Dodatkowa karta pamięci micro SD 64 GB",
-      "Bluetooth 5.2",
+      "Bluetooth 5.3",
       "Moduł GSM/GPRS, moduł GPS, moduł Wi-Fi",
       "Skaner 1D i 2D",
       "Wyświetlacz 6,0″",
-      "Akumulator 4400 mAh",
+      "Akumulator 4680 mAh",
       "Ładowarka sieciowa i ładowarka samochodowa"
     ]
   },

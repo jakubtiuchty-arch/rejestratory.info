@@ -2263,7 +2263,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "wZestawie": []
       },
       {
-        "nazwa": "Akumulator o standardowej pojemności 3100mAh",
+        "nazwa": "Akumulator o standardowej pojemności 3800 mAh",
         "cenaNetto": 231,
         "promocja": false,
         "wZestawie": []
