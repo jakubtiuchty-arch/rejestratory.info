@@ -423,6 +423,8 @@ const DZIALY_ZUP = {
     'brother-mfc-l8390cdw',
     'brother-mfc-l8690cdw',
     'brother-mfc-l8900cdw',
+    'brother-mfc-l8970cdw',
+    'brother-mfc-l8730cdw',
   ],
 }
 
@@ -473,19 +475,24 @@ const pojedynczaPozycja = (tekst) => {
 }
 
 /**
- * Formularze zamówienia w `public/formularze/`. EM45 ma własny, ze stacją
- * dokującą; pozostałe oferty ZUP Łódź buduje scripts/formularze-zup-lodz.mjs
- * jako `zup-lodz-<slug>.pdf` — podpinamy każdy, który leży na dysku.
+ * Formularze zamówienia ZUP Łódź leżą w `public/formularze/zup-lodz/<kategoria>/`
+ * jako `zup-lodz-<slug>.pdf` (buduje je scripts/formularze-zup-lodz.mjs). Podpinamy każdy, który leży na dysku — folder
+ * kategorii odczytujemy z dysku, żeby podział żył w jednym miejscu.
  */
-const FORMULARZE_PDF = {
-  'zebra-em45': '/formularze/zup-lodz-zebra-em45-2026-07.pdf',
+const KATALOG_FORMULARZY_ZUP = 'public/formularze/zup-lodz'
+const formularzeZup = new Map()
+if (existsSync(KATALOG_FORMULARZY_ZUP)) {
+  for (const folder of readdirSync(KATALOG_FORMULARZY_ZUP, { withFileTypes: true })) {
+    if (!folder.isDirectory()) continue
+    for (const plik of readdirSync(join(KATALOG_FORMULARZY_ZUP, folder.name))) {
+      if (plik.endsWith('.pdf')) formularzeZup.set(plik, `/formularze/zup-lodz/${folder.name}/${plik}`)
+    }
+  }
 }
-const formularzOferty = (slug, skladnica) => {
-  if (skladnica !== 'zup-lodz') return null
-  if (FORMULARZE_PDF[slug]) return FORMULARZE_PDF[slug]
-  const sciezka = `/formularze/zup-lodz-${slug}.pdf`
-  return existsSync(join('public', sciezka)) ? sciezka : null
-}
+const formularzOferty = (slug, skladnica) =>
+  skladnica === 'zup-lodz'
+    ? (formularzeZup.get(`zup-lodz-${slug}.pdf`) ?? null)
+    : null
 
 const oferty = []
 const pominiete = []
@@ -764,7 +771,9 @@ if (existsSync(WYJSCIE)) {
   if (start > 0 && koniec > start) {
     for (const o of JSON.parse(stary.slice(start, koniec))) {
       const plik = o.plik.normalize('NFC')
-      if (!dokumenty.has(plik) && !pomijanyDruk(plik)) zachowane.push(o)
+      // wpisy oparte na PDF-ach ze strony ZUP odtwarza sekcja „stan ze strony ZUP” — nie przenosimy ich,
+      // bo wróciłyby jako duplikaty albo z cenami sprzed zmiany
+      if (!dokumenty.has(plik) && !pomijanyDruk(plik) && !plik.endsWith('.pdf')) zachowane.push(o)
     }
   }
 }
@@ -779,7 +788,214 @@ for (const o of oferty) {
   if (!poprzednia || data(o) > data(poprzednia)) najnowsze.set(klucz, o)
 }
 
-const wynik = [...najnowsze.values()].sort(
+/* ───────── stan ze strony ZUP Łódź z 12.11.2026 ─────────
+ *
+ * Od jesieni 2026 składnica publikuje oferty jako PDF (kopie leżą w
+ * `oferty-zrodla/ze-strony-2026-11-12/`), a ten parser czyta tylko Worda.
+ * Różnice między ostatnimi plikami .docx a PDF-ami ze strony są więc wpisane
+ * poniżej jawnie — każda z nazwą dokumentu, z którego pochodzi. Gdy ZUP
+ * przyśle nowe .docx, wpisy dla danego modelu trzeba stąd zdjąć.
+ */
+const TERMICZNE_PDF = 'Oferta na drukarki termiczne_01.10.2026.pdf'
+const WIELOFUNKCYJNE_PDF = 'Oferta na urządzenia wielofunkcyjne_09.2026.pdf'
+const AKCESORIA_PDF = 'Oferta na akcesoria komputerow_09.2026r.pdf'
+const MONITORY_PDF = 'Oferta na monitory.HP.Dell 09.2026.pdf'
+const LAPTOPY_PDF = 'Oferta Laptopy 11_2026.pdf'
+
+/** Modele, których na stronie ZUP już nie ma — zniknęły albo zastąpił je następca bez karty w katalogu. */
+const POZA_OFERTA_ZUP = [
+  'honeywell-ct30',
+  'honeywell-ct40xp',
+  'honeywell-ct47',
+  'honeywell-eda52',
+  'unitech-pa768',
+  'dell-pro-16',
+  'hp-elitebook-6-g1ah-16',
+  'samsung-ssd-t7',
+  'samsung-ssd-t9',
+  // następcy w tej samej cenie, ale to inne modele niż na naszych kartach
+  'samsung-a36', // → Galaxy A37 5G
+  'samsung-a56', // → Galaxy A57 5G
+  'dell-pro-24-plus-p2425he', // → Dell P2426H
+  'dell-pro-24-plus-p2425he-usbc', // → Dell P2426HE
+  'brother-mfc-l8900cdw', // → MFC-L8970CDW, dopisany niżej
+]
+
+/**
+ * Zmiany w ofertach, które zostają: nowy dokument, termin, ceny.
+ * `ceny` — klucz „urzadzenie” albo dokładna nazwa pozycji dodatkowej;
+ * `dostawca: null` oznacza „TAKMA / SCANTER” (dwóch dostawców w dokumencie).
+ */
+const od = (data, koniec = null) => ({ od: data, do: koniec })
+const ZMIANY_ZE_STRONY_ZUP = {
+  'zebra-em45': {
+    plik: 'Oferta na Rejestratotor Zebra EM45 + STACJA_09.2026.pdf',
+    okres: od('2026-09-01'),
+    ceny: { urzadzenie: 2728.5, 'Kontrakt serwisowy producenta (3 letni) do ZEBRA EM45': 482.9 },
+  },
+  'm3-sl20': {
+    plik: 'Oferta na Rejestrator M3 Mobile SL20+_01.09.2026.pdf',
+    okres: od('2026-09-01'),
+    ceny: { 'Kontrakt serwisowy producenta (3 letni) do M3.Mobile SL20+': 764.5 },
+  },
+  'samsung-s25-fe': {
+    plik: 'Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY S25 FE_09.2026.pdf',
+    okres: od('2026-09-01'),
+    ceny: { urzadzenie: 2396 },
+  },
+  // dokument nazywa ten model „XCOVER 7 PRO”; karta ma w nazwie XCover6 Pro
+  'samsung-xcover7': {
+    plik: 'Oferta na rejestrator typu Smartfon SAMSUNG GALAXY XCOVER 7 PRO_09.2026.pdf',
+    okres: od('2026-09-23'),
+  },
+  'bixolon-sppr410': { plik: TERMICZNE_PDF, okres: od('2026-10-01'), ceny: { urzadzenie: 2124 } },
+  'zebra-zq521': { plik: TERMICZNE_PDF, okres: od('2026-10-01'), ceny: { 'Akumulator o pojemności standardowej': 466.4 } },
+  'honeywell-rp4': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
+  'seiko-mpa40': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
+  'sewoo-lkp400': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
+  'sewoo-lkp43': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
+  'brother-hl-l6410': {
+    plik: WIELOFUNKCYJNE_PDF,
+    okres: od('2026-07-09', '2026-12-31'),
+    ceny: { 'Toner standardowy – 3000 stron': 311.41 },
+    promocje: ['Toner standardowy – 3000 stron'],
+  },
+  'brother-dcp-b7620dw': { plik: WIELOFUNKCYJNE_PDF, okres: od('2026-07-09', '2026-12-31') },
+  'brother-mfc-l5710dw': { plik: WIELOFUNKCYJNE_PDF, okres: od('2026-07-09', '2026-12-31') },
+  'brother-hl-l6210dw': { plik: WIELOFUNKCYJNE_PDF },
+  'brother-mfc-l6710dw': { plik: WIELOFUNKCYJNE_PDF },
+  'torba-na-laptopa-15': { plik: AKCESORIA_PDF, okres: od('2026-09-23') },
+  'podkladka-pod-mysz': { plik: AKCESORIA_PDF, okres: od('2026-09-23') },
+  'podnozek-biurowy': { plik: AKCESORIA_PDF, okres: od('2026-09-23') },
+  'ms-365': { plik: AKCESORIA_PDF, okres: od('2026-09-23') },
+  'dell-km5221': { plik: AKCESORIA_PDF },
+  'dell-km7321': { plik: AKCESORIA_PDF },
+  'hp-460': { plik: AKCESORIA_PDF },
+  'hp-655': { plik: AKCESORIA_PDF },
+  'hp-715': { plik: AKCESORIA_PDF },
+  'torba-hp-15': { plik: AKCESORIA_PDF },
+  'dell-pro-14-plus': { plik: LAPTOPY_PDF, okres: od('2026-11-05') },
+  // dokument nazywa ten laptop „DELL PRO 5 16” — parametry i cena jak Dell Pro 16 Plus
+  'dell-pro-16-plus': { plik: LAPTOPY_PDF, okres: od('2026-11-05'), dostawca: null },
+  'hp-elitebook-6-g1ah-14': { plik: LAPTOPY_PDF },
+  ...Object.fromEntries(
+    [
+      'dell-pro-24-plus-p2424heb',
+      'dell-pro-27-p2726h',
+      'dell-pro-27-p2726he',
+      'dell-pro-27-plus-p2724deb',
+      'hp-seria-3-pro-324pv',
+      'hp-seria-5-pro-524pm',
+      'hp-seria-5-pro-524pu',
+      'hp-seria-5-pro-527pm',
+      'hp-seria-5-pro-527pq',
+      'hp-seria-5-pro-527pu',
+    ].map((slug) => [slug, { plik: MONITORY_PDF }])
+  ),
+  'samsung-galaxy-tab-active5': { plik: 'Oferta na tablety 09.2026.pdf' },
+}
+
+/** Pozycje, które są na stronie ZUP i mają u nas kartę, a nie było ich w plikach .docx. */
+const poz = (nazwa, cenaNetto) => ({ nazwa, cenaNetto, promocja: false, wZestawie: [] })
+const OFERTY_Z_PDF = [
+  {
+    slug: 'brother-mfc-l8970cdw',
+    plik: WIELOFUNKCYJNE_PDF,
+    okres: od('2026-08-21'),
+    dostawca: 'TAKMA',
+    urzadzenie: poz('BROTHER MFCL-8970CDW', 3103),
+    dodatki: [
+      poz('Toner o standardowej wydajności czarny - 3000 stron', 446.6),
+      poz('Toner o standardowej wydajności cyjan – 1800 stron', 392.7),
+      poz('Toner o standardowej wydajności magenta – 1800 stron', 392.7),
+      poz('Toner o standardowej wydajności żółty – 1800 stron', 392.7),
+      poz('Toner o zwiększonej wydajności czarny – 9000 stron', 511.5),
+      poz('Toner o zwiększonej wydajności cyjan – 5000 stron', 693),
+      poz('Toner o zwiększonej wydajności magenta – 5000 stron', 693),
+      poz('Toner o zwiększonej wydajności żółty – 5000 stron', 693),
+      poz('Toner ultrawydajny czarny – 9000 stron', 544.5),
+      poz('Toner ultrawydajny cyjan – 6500 stron', 1023),
+      poz('Toner ultrawydajny magenta – 6500 stron', 1023),
+      poz('Toner ultrawydajny żółty – 6500 stron', 1023),
+    ],
+  },
+  {
+    slug: 'brother-mfc-l8730cdw',
+    plik: WIELOFUNKCYJNE_PDF,
+    okres: od('2026-07-09', '2026-12-31'),
+    dostawca: 'TAKMA',
+    urzadzenie: {
+      ...poz('BROTHER - MFCL-8730CDW', 2086),
+      wZestawie: ['Akcesoria: Kabel zasilający, toner startowy czarny, cyjan, magenta, żółty'],
+    },
+    dodatki: [
+      poz('Toner standardowy czarny – 3000 stron', 390.5),
+      poz('Toner standardowy cyjan – 1800 stron', 346.5),
+      poz('Toner standardowy magenta – 1800 stron', 341),
+      poz('Toner standardowy żółty – 1800 stron', 371.8),
+      poz('Toner wysokowydajny czarny – 6500 stron', 415.8),
+      poz('Toner wysokowydajny cyjan – 4000 stron', 635.8),
+      poz('Toner wysokowydajny magenta – 4000 stron', 616),
+      poz('Toner wysokowydajny żółty – 4000 stron', 635.8),
+      poz('Bęben', 528),
+      poz('Kabel interfejsu do PC', 44),
+    ],
+  },
+  {
+    slug: 'posnet-temo-online',
+    plik: 'Oferta na drukarkę fiskalną 03.2026.pdf',
+    okres: od('2026-03-10'),
+    dostawca: 'TAKMA',
+    urzadzenie: {
+      ...poz('Drukarka fiskalna, termiczna POSNET TEMO wersja ONLINE', 2301),
+      wZestawie: ['Akumulator', 'Moduł Bluetooth', 'Ładowarka sieciowa i samochodowa'],
+    },
+    dodatki: [
+      poz('Ładowarka sieciowa', 63.8),
+      poz('Ładowarka samochodowa', 63.8),
+      poz('Akumulator', 203.5),
+      poz('Pokrowiec na drukarkę', 82.5),
+      poz('Papier termiczny', 3.98),
+    ],
+  },
+]
+
+const zeStronyZup = [...najnowsze.values()]
+  .filter((o) => !(o.skladnica === 'zup-lodz' && POZA_OFERTA_ZUP.includes(o.slug)))
+  .map((o) => {
+    const z = o.skladnica === 'zup-lodz' ? ZMIANY_ZE_STRONY_ZUP[o.slug] : null
+    if (!z) return o
+    const nowa = structuredClone(o)
+    nowa.plik = z.plik
+    if (z.okres) nowa.okres = z.okres
+    if ('dostawca' in z) nowa.dostawca = z.dostawca
+    for (const [nazwa, kwota] of Object.entries(z.ceny ?? {})) {
+      const pozycja = nazwa === 'urzadzenie' ? nowa.urzadzenie : nowa.dodatki.find((d) => d.nazwa === nazwa)
+      if (!pozycja) {
+        console.error(`PRZERWANO — ${o.slug}: w ofercie nie ma pozycji „${nazwa}”, a ma dostać cenę ze strony ZUP`)
+        process.exit(1)
+      }
+      pozycja.cenaNetto = kwota
+      // nowa cena znosi dotychczasowy znacznik promocji, chyba że PDF oznacza ją na nowo
+      pozycja.promocja = (z.promocje ?? []).includes(nazwa)
+    }
+    return nowa
+  })
+for (const o of OFERTY_Z_PDF) {
+  zeStronyZup.push({
+    slug: o.slug,
+    skladnica: 'zup-lodz',
+    plik: o.plik,
+    formularz: formularzOferty(o.slug, 'zup-lodz'),
+    strona: stronaSkladnicy(o.slug, 'zup-lodz'),
+    okres: o.okres,
+    dostawca: o.dostawca,
+    urzadzenie: o.urzadzenie,
+    dodatki: o.dodatki,
+  })
+}
+
+const wynik = zeStronyZup.sort(
   (a, b) => a.slug.localeCompare(b.slug) || a.skladnica.localeCompare(b.skladnica)
 )
 

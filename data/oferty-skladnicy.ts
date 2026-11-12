@@ -36,7 +36,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "aio-dell-pro-24",
     "skladnica": "zup-lodz",
     "plik": "Oferta na komputery ALL IN ONE HP 17.04.2026.docx",
-    "formularz": "/formularze/zup-lodz-aio-dell-pro-24.pdf",
+    "formularz": "/formularze/zup-lodz/laptopy-i-komputery/zup-lodz-aio-dell-pro-24.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
       "od": "2026-03-10",
@@ -55,7 +55,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "aio-dell-pro-24-bez-systemu",
     "skladnica": "zup-lodz",
     "plik": "Oferta na komputery ALL IN ONE HP 17.04.2026.docx",
-    "formularz": "/formularze/zup-lodz-aio-dell-pro-24-bez-systemu.pdf",
+    "formularz": "/formularze/zup-lodz/laptopy-i-komputery/zup-lodz-aio-dell-pro-24-bez-systemu.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
       "od": "2026-03-10",
@@ -73,18 +73,18 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "bixolon-sppr410",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": "/formularze/zup-lodz-bixolon-sppr410.pdf",
+    "plik": "Oferta na drukarki termiczne_01.10.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-mobilne/zup-lodz-bixolon-sppr410.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-07-01",
-      "do": "2026-08-31"
+      "od": "2026-10-01",
+      "do": null
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
       "nazwa": "Drukarka BIOXOLON SPP-R410 - w zestawie:",
-      "cenaNetto": 1921,
-      "promocja": true,
+      "cenaNetto": 2124,
+      "promocja": false,
       "wZestawie": [
         "Moduł Bluetooth",
         "Akumulator, ładowarka sieciowa i samochodowa",
@@ -121,12 +121,12 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "brother-dcp-b7620dw",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": "/formularze/zup-lodz-brother-dcp-b7620dw.pdf",
+    "plik": "Oferta na urządzenia wielofunkcyjne_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-i-urzadzenia-wielofunkcyjne/zup-lodz-brother-dcp-b7620dw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
-      "od": "2026-03-10",
-      "do": null
+      "od": "2026-07-09",
+      "do": "2026-12-31"
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
@@ -156,7 +156,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "brother-dcp-l5510dw",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenie wielofunkcyjne Brother_03.2026.docx",
-    "formularz": "/formularze/zup-lodz-brother-dcp-l5510dw.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-i-urzadzenia-wielofunkcyjne/zup-lodz-brother-dcp-l5510dw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -193,8 +193,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "brother-hl-l6210dw",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": "/formularze/zup-lodz-brother-hl-l6210dw.pdf",
+    "plik": "Oferta na urządzenia wielofunkcyjne_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-i-urzadzenia-wielofunkcyjne/zup-lodz-brother-hl-l6210dw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -237,12 +237,12 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "brother-hl-l6410",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": "/formularze/zup-lodz-brother-hl-l6410.pdf",
+    "plik": "Oferta na urządzenia wielofunkcyjne_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-i-urzadzenia-wielofunkcyjne/zup-lodz-brother-hl-l6410.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
-      "od": "2026-03-10",
-      "do": null
+      "od": "2026-07-09",
+      "do": "2026-12-31"
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
@@ -256,8 +256,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "dodatki": [
       {
         "nazwa": "Toner standardowy – 3000 stron",
-        "cenaNetto": 327.8,
-        "promocja": false,
+        "cenaNetto": 311.41,
+        "promocja": true,
         "wZestawie": []
       },
       {
@@ -289,12 +289,12 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "brother-mfc-l5710dw",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": "/formularze/zup-lodz-brother-mfc-l5710dw.pdf",
+    "plik": "Oferta na urządzenia wielofunkcyjne_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-i-urzadzenia-wielofunkcyjne/zup-lodz-brother-mfc-l5710dw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
-      "od": "2026-03-10",
-      "do": null
+      "od": "2026-07-09",
+      "do": "2026-12-31"
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
@@ -329,8 +329,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "brother-mfc-l6710dw",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": "/formularze/zup-lodz-brother-mfc-l6710dw.pdf",
+    "plik": "Oferta na urządzenia wielofunkcyjne_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-i-urzadzenia-wielofunkcyjne/zup-lodz-brother-mfc-l6710dw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -368,7 +368,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "brother-mfc-l8390cdw",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenie wielofunkcyjne Brother_03.2026.docx",
-    "formularz": "/formularze/zup-lodz-brother-mfc-l8390cdw.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-i-urzadzenia-wielofunkcyjne/zup-lodz-brother-mfc-l8390cdw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -403,18 +403,100 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
-    "slug": "brother-mfc-l8900cdw",
+    "slug": "brother-mfc-l8730cdw",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": "/formularze/zup-lodz-brother-mfc-l8900cdw.pdf",
+    "plik": "Oferta na urządzenia wielofunkcyjne_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-i-urzadzenia-wielofunkcyjne/zup-lodz-brother-mfc-l8730cdw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
-      "od": "2026-03-10",
+      "od": "2026-07-09",
+      "do": "2026-12-31"
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "BROTHER - MFCL-8730CDW",
+      "cenaNetto": 2086,
+      "promocja": false,
+      "wZestawie": [
+        "Akcesoria: Kabel zasilający, toner startowy czarny, cyjan, magenta, żółty"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Toner standardowy czarny – 3000 stron",
+        "cenaNetto": 390.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Toner standardowy cyjan – 1800 stron",
+        "cenaNetto": 346.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Toner standardowy magenta – 1800 stron",
+        "cenaNetto": 341,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Toner standardowy żółty – 1800 stron",
+        "cenaNetto": 371.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Toner wysokowydajny czarny – 6500 stron",
+        "cenaNetto": 415.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Toner wysokowydajny cyjan – 4000 stron",
+        "cenaNetto": 635.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Toner wysokowydajny magenta – 4000 stron",
+        "cenaNetto": 616,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Toner wysokowydajny żółty – 4000 stron",
+        "cenaNetto": 635.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Bęben",
+        "cenaNetto": 528,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Kabel interfejsu do PC",
+        "cenaNetto": 44,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
+    "slug": "brother-mfc-l8970cdw",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na urządzenia wielofunkcyjne_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-i-urzadzenia-wielofunkcyjne/zup-lodz-brother-mfc-l8970cdw.pdf",
+    "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
+    "okres": {
+      "od": "2026-08-21",
       "do": null
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
-      "nazwa": "BROTHER MFCL-8900CDW",
+      "nazwa": "BROTHER MFCL-8970CDW",
       "cenaNetto": 3103,
       "promocja": false,
       "wZestawie": []
@@ -427,19 +509,19 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "wZestawie": []
       },
       {
-        "nazwa": "Toner o standardowej wydajności cyjan, – 1800 st",
+        "nazwa": "Toner o standardowej wydajności cyjan – 1800 stron",
         "cenaNetto": 392.7,
         "promocja": false,
         "wZestawie": []
       },
       {
-        "nazwa": "Toner o standardowej wydajności magenta – 1800 st",
+        "nazwa": "Toner o standardowej wydajności magenta – 1800 stron",
         "cenaNetto": 392.7,
         "promocja": false,
         "wZestawie": []
       },
       {
-        "nazwa": "Toner o standardowej wydajności żółty – 1800 st",
+        "nazwa": "Toner o standardowej wydajności żółty – 1800 stron",
         "cenaNetto": 392.7,
         "promocja": false,
         "wZestawie": []
@@ -451,7 +533,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "wZestawie": []
       },
       {
-        "nazwa": "Toner o zwiększonej wydajności cyjan– 5000 stron",
+        "nazwa": "Toner o zwiększonej wydajności cyjan – 5000 stron",
         "cenaNetto": 693,
         "promocja": false,
         "wZestawie": []
@@ -469,25 +551,25 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "wZestawie": []
       },
       {
-        "nazwa": "Toner ultrawydajny czarny-9000 stron",
+        "nazwa": "Toner ultrawydajny czarny – 9000 stron",
         "cenaNetto": 544.5,
         "promocja": false,
         "wZestawie": []
       },
       {
-        "nazwa": "Toner ultrawydajny cyjan-6500 stron",
+        "nazwa": "Toner ultrawydajny cyjan – 6500 stron",
         "cenaNetto": 1023,
         "promocja": false,
         "wZestawie": []
       },
       {
-        "nazwa": "Toner ultrawydajny magenta-6500 stron",
+        "nazwa": "Toner ultrawydajny magenta – 6500 stron",
         "cenaNetto": 1023,
         "promocja": false,
         "wZestawie": []
       },
       {
-        "nazwa": "Toner ultrawydajny żółty-6500 stron",
+        "nazwa": "Toner ultrawydajny żółty – 6500 stron",
         "cenaNetto": 1023,
         "promocja": false,
         "wZestawie": []
@@ -497,8 +579,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "dell-km5221",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-dell-km5221.pdf",
+    "plik": "Oferta na akcesoria komputerow_09.2026r.pdf",
+    "formularz": "/formularze/zup-lodz/akcesoria-komputerowe/zup-lodz-dell-km5221.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -516,8 +598,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "dell-km7321",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-dell-km7321.pdf",
+    "plik": "Oferta na akcesoria komputerow_09.2026r.pdf",
+    "formularz": "/formularze/zup-lodz/akcesoria-komputerowe/zup-lodz-dell-km7321.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -535,11 +617,11 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "dell-pro-14-plus",
     "skladnica": "zup-lodz",
-    "plik": "Oferta Laptopy_06.2026.docx",
-    "formularz": "/formularze/zup-lodz-dell-pro-14-plus.pdf",
+    "plik": "Oferta Laptopy 11_2026.pdf",
+    "formularz": "/formularze/zup-lodz/laptopy-i-komputery/zup-lodz-dell-pro-14-plus.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
-      "od": "2026-03-10",
+      "od": "2026-11-05",
       "do": null
     },
     "dostawca": "TAKMA",
@@ -559,42 +641,16 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
-    "slug": "dell-pro-16",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta Laptopy_06.2026.docx",
-    "formularz": "/formularze/zup-lodz-dell-pro-16.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
-    "okres": {
-      "od": "2026-03-10",
-      "do": null
-    },
-    "dostawca": "SCANTER",
-    "urzadzenie": {
-      "nazwa": "Komputer przenośny typu LAPTOP",
-      "cenaNetto": 4259,
-      "promocja": false,
-      "wZestawie": []
-    },
-    "dodatki": [
-      {
-        "nazwa": "Stacja dokująca do laptopa – Dell PRO SMART DOCK SD25",
-        "cenaNetto": 859.1,
-        "promocja": false,
-        "wZestawie": []
-      }
-    ]
-  },
-  {
     "slug": "dell-pro-16-plus",
     "skladnica": "zup-lodz",
-    "plik": "Oferta Laptopy_06.2026.docx",
-    "formularz": "/formularze/zup-lodz-dell-pro-16-plus.pdf",
+    "plik": "Oferta Laptopy 11_2026.pdf",
+    "formularz": "/formularze/zup-lodz/laptopy-i-komputery/zup-lodz-dell-pro-16-plus.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
-      "od": "2026-03-10",
+      "od": "2026-11-05",
       "do": null
     },
-    "dostawca": "SCANTER",
+    "dostawca": null,
     "urzadzenie": {
       "nazwa": "Komputer przenośny typu LAPTOP",
       "cenaNetto": 5939,
@@ -613,8 +669,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "dell-pro-24-plus-p2424heb",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-dell-pro-24-plus-p2424heb.pdf",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-dell-pro-24-plus-p2424heb.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -630,48 +686,10 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "dodatki": []
   },
   {
-    "slug": "dell-pro-24-plus-p2425he",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-dell-pro-24-plus-p2425he.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/monitory",
-    "okres": {
-      "od": "2026-03-10",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Monitor komputerowy DELL P2425H wyróżniony 4-gwiazdkowym certyfikatem TÜV w zakresie komfortu oczu",
-      "cenaNetto": 673,
-      "promocja": false,
-      "wZestawie": []
-    },
-    "dodatki": []
-  },
-  {
-    "slug": "dell-pro-24-plus-p2425he-usbc",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-dell-pro-24-plus-p2425he-usbc.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/monitory",
-    "okres": {
-      "od": "2026-03-10",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Monitor komputerowy DELL P2425HE z koncentratorem USB-C",
-      "cenaNetto": 953,
-      "promocja": false,
-      "wZestawie": []
-    },
-    "dodatki": []
-  },
-  {
     "slug": "dell-pro-27-p2726h",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-dell-pro-27-p2726h.pdf",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-dell-pro-27-p2726h.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -689,8 +707,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "dell-pro-27-p2726he",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-dell-pro-27-p2726he.pdf",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-dell-pro-27-p2726he.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -708,8 +726,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "dell-pro-27-plus-p2724deb",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-dell-pro-27-plus-p2724deb.pdf",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-dell-pro-27-plus-p2724deb.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -728,7 +746,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "epson-ds730n",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": "/formularze/zup-lodz-epson-ds730n.pdf",
+    "formularz": "/formularze/zup-lodz/sprzet-do-ezd/zup-lodz-epson-ds730n.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -747,7 +765,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-1250g",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": "/formularze/zup-lodz-honeywell-1250g.pdf",
+    "formularz": "/formularze/zup-lodz/sprzet-do-ezd/zup-lodz-honeywell-1250g.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -779,7 +797,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-1450g",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": "/formularze/zup-lodz-honeywell-1450g.pdf",
+    "formularz": "/formularze/zup-lodz/sprzet-do-ezd/zup-lodz-honeywell-1450g.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -808,81 +826,10 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
-    "slug": "honeywell-ct30",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na Rejestrator Honeywell CT30P_23.03.2026.docx",
-    "formularz": "/formularze/zup-lodz-honeywell-ct30.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
-    "okres": {
-      "od": "2026-03-21",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Mobilny komputer dotykowy HONEYWELL CT30P - rejestrator leśniczego",
-      "cenaNetto": 3906,
-      "promocja": false,
-      "wZestawie": [
-        "Dodatkowa karta pamięci micro SD 64 GB",
-        "Ładowarka sieciowa i ładowarka samochodowa"
-      ]
-    },
-    "dodatki": [
-      {
-        "nazwa": "Kontrakt serwisowy producenta (3 letni) do HONEYWELL CT30P",
-        "cenaNetto": 792,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Nakładka na obudowę zabezpieczająca przed uszkodzeniami",
-        "cenaNetto": 97.9,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Rysik do ekranu",
-        "cenaNetto": 71.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Szkło lub folia ochronna na ekran",
-        "cenaNetto": 71.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka sieciowa",
-        "cenaNetto": 115.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka samochodowa",
-        "cenaNetto": 121,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Stacja dokująca służąca z osłoną gumową i portami USB + zasilacz + kabel USB",
-        "cenaNetto": 781,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Akumulator 3400mAh",
-        "cenaNetto": 308,
-        "promocja": false,
-        "wZestawie": []
-      }
-    ]
-  },
-  {
     "slug": "honeywell-ct32",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Honeywell CT32 23.03.2026.docx",
-    "formularz": "/formularze/zup-lodz-honeywell-ct32.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-honeywell-ct32.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-21",
@@ -968,236 +915,10 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
-    "slug": "honeywell-ct40xp",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na Rejestrator Honeywell CT40XP_23.03.2026.docx",
-    "formularz": "/formularze/zup-lodz-honeywell-ct40xp.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
-    "okres": {
-      "od": "2026-03-21",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Mobilny komputer dotykowy HONEYWELL CT40XP - rejestrator leśniczego",
-      "cenaNetto": 5575,
-      "promocja": false,
-      "wZestawie": [
-        "Dodatkowa karta pamięci micro SD 64 GB",
-        "Ładowarka sieciowa i ładowarka samochodowa"
-      ]
-    },
-    "dodatki": [
-      {
-        "nazwa": "Kontrakt serwisowy producenta (3 letni) do HONEYWELL CT40XP",
-        "cenaNetto": 759,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Nakładka na obudowę zabezpieczająca przed uszkodzeniami",
-        "cenaNetto": 49.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Rysik do ekranu",
-        "cenaNetto": 71.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Szkło lub folia ochronna na ekran",
-        "cenaNetto": 71.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka sieciowa",
-        "cenaNetto": 167.2,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka samochodowa",
-        "cenaNetto": 117.7,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Stacja dokująca do ładowania urządzenia z portami USB + zasilacz + kabel USB",
-        "cenaNetto": 1094.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Stacja dokująca do ładowania urządzenia z portami USB + Ethernet + zasilacz + kabel USB",
-        "cenaNetto": 1320,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Pasek na rękę",
-        "cenaNetto": 173.8,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Akumulator 4020mAh",
-        "cenaNetto": 363,
-        "promocja": false,
-        "wZestawie": []
-      }
-    ]
-  },
-  {
-    "slug": "honeywell-ct47",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na Rejestrator Honeywell CT47_23.03.2026.docx",
-    "formularz": "/formularze/zup-lodz-honeywell-ct47.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
-    "okres": {
-      "od": "2026-03-21",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Mobilny komputer dotykowy HONEYWELL CT47 - rejestrator leśniczego",
-      "cenaNetto": 5232,
-      "promocja": false,
-      "wZestawie": [
-        "Dodatkowa karta pamięci micro SD 64 GB",
-        "Ładowarka sieciowa i ładowarka samochodowa"
-      ]
-    },
-    "dodatki": [
-      {
-        "nazwa": "Kontrakt serwisowy producenta (3 letni) do HONEYWELL CT47",
-        "cenaNetto": 935,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Nakładka na obudowę zabezpieczająca przed uszkodzeniami",
-        "cenaNetto": 97.9,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Rysik do ekranu",
-        "cenaNetto": 71.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Szkło lub folia ochronna na ekran",
-        "cenaNetto": 70.4,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka sieciowa",
-        "cenaNetto": 118.8,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka samochodowa",
-        "cenaNetto": 178.2,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Stacja dokująca z portami USB + zasilacz + kabel USB",
-        "cenaNetto": 869,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Akumulator 4750mAh",
-        "cenaNetto": 379.5,
-        "promocja": false,
-        "wZestawie": []
-      }
-    ]
-  },
-  {
-    "slug": "honeywell-eda52",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na Rejestrator Honeywell EDA52_03.2026.docx",
-    "formularz": "/formularze/zup-lodz-honeywell-eda52.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
-    "okres": {
-      "od": "2026-03-10",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Mobilny komputer dotykowy HONEYWELL EDA52 - rejestrator leśniczego",
-      "cenaNetto": 2761,
-      "promocja": false,
-      "wZestawie": [
-        "Dodatkowa karta pamięci micro SD 64 GB",
-        "Pasek na rękę",
-        "Ładowarka sieciowa z możliwością wykorzystania do transmisji danych i ładowarka samochodowa"
-      ]
-    },
-    "dodatki": [
-      {
-        "nazwa": "Kontrakt serwisowy producenta (3 letni) do HONEYWELL EDA52",
-        "cenaNetto": 649,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Nakładka na obudowę zabezpieczająca przed uszkodzeniami",
-        "cenaNetto": 82.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Pasek na rękę",
-        "cenaNetto": 44,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Szkło lub folia ochronna na ekran",
-        "cenaNetto": 64.9,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka sieciowa",
-        "cenaNetto": 97.9,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka samochodowa",
-        "cenaNetto": 97.9,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Stacja dokująca służąca jedynie od ładowania urządzenia + zasilacz",
-        "cenaNetto": 715,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Akumulator 4500mAh",
-        "cenaNetto": 275,
-        "promocja": false,
-        "wZestawie": []
-      }
-    ]
-  },
-  {
     "slug": "honeywell-pc42e-t",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": "/formularze/zup-lodz-honeywell-pc42e-t.pdf",
+    "formularz": "/formularze/zup-lodz/sprzet-do-ezd/zup-lodz-honeywell-pc42e-t.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -1253,7 +974,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-pc45t",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": "/formularze/zup-lodz-honeywell-pc45t.pdf",
+    "formularz": "/formularze/zup-lodz/sprzet-do-ezd/zup-lodz-honeywell-pc45t.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -1284,12 +1005,12 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "honeywell-rp4",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": "/formularze/zup-lodz-honeywell-rp4.pdf",
+    "plik": "Oferta na drukarki termiczne_01.10.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-mobilne/zup-lodz-honeywell-rp4.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-07-01",
-      "do": "2026-08-31"
+      "od": "2026-10-01",
+      "do": null
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
@@ -1332,8 +1053,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "hp-460",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-hp-460.pdf",
+    "plik": "Oferta na akcesoria komputerow_09.2026r.pdf",
+    "formularz": "/formularze/zup-lodz/akcesoria-komputerowe/zup-lodz-hp-460.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1351,8 +1072,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "hp-655",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-hp-655.pdf",
+    "plik": "Oferta na akcesoria komputerow_09.2026r.pdf",
+    "formularz": "/formularze/zup-lodz/akcesoria-komputerowe/zup-lodz-hp-655.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1370,8 +1091,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "hp-715",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-hp-715.pdf",
+    "plik": "Oferta na akcesoria komputerow_09.2026r.pdf",
+    "formularz": "/formularze/zup-lodz/akcesoria-komputerowe/zup-lodz-hp-715.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1389,8 +1110,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "hp-elitebook-6-g1ah-14",
     "skladnica": "zup-lodz",
-    "plik": "Oferta Laptopy_06.2026.docx",
-    "formularz": "/formularze/zup-lodz-hp-elitebook-6-g1ah-14.pdf",
+    "plik": "Oferta Laptopy 11_2026.pdf",
+    "formularz": "/formularze/zup-lodz/laptopy-i-komputery/zup-lodz-hp-elitebook-6-g1ah-14.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
       "od": "2026-05-30",
@@ -1417,29 +1138,10 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
-    "slug": "hp-elitebook-6-g1ah-16",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta Laptopy_06.2026.docx",
-    "formularz": "/formularze/zup-lodz-hp-elitebook-6-g1ah-16.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
-    "okres": {
-      "od": "2026-03-10",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Komputer przenośny typu LAPTOP",
-      "cenaNetto": 4646,
-      "promocja": false,
-      "wZestawie": []
-    },
-    "dodatki": []
-  },
-  {
     "slug": "hp-seria-3-pro-324pv",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-hp-seria-3-pro-324pv.pdf",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-hp-seria-3-pro-324pv.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-05-30",
@@ -1457,8 +1159,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "hp-seria-5-pro-524pm",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-hp-seria-5-pro-524pm.pdf",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-hp-seria-5-pro-524pm.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-05-30",
@@ -1479,8 +1181,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "hp-seria-5-pro-524pu",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-hp-seria-5-pro-524pu.pdf",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-hp-seria-5-pro-524pu.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-05-30",
@@ -1500,8 +1202,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "hp-seria-5-pro-527pm",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-hp-seria-5-pro-527pm.pdf",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-hp-seria-5-pro-527pm.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-05-30",
@@ -1522,8 +1224,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "hp-seria-5-pro-527pq",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-hp-seria-5-pro-527pq.pdf",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-hp-seria-5-pro-527pq.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-05-30",
@@ -1541,8 +1243,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "hp-seria-5-pro-527pu",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-hp-seria-5-pro-527pu.pdf",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-hp-seria-5-pro-527pu.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -1560,12 +1262,12 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "m3-sl20",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na Rejestrator M3 Mobile SL20+_01.07.2026.docx",
-    "formularz": "/formularze/zup-lodz-m3-sl20.pdf",
+    "plik": "Oferta na Rejestrator M3 Mobile SL20+_01.09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-m3-sl20.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-07-01",
-      "do": "2026-08-31"
+      "od": "2026-09-01",
+      "do": null
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
@@ -1580,8 +1282,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "dodatki": [
       {
         "nazwa": "Kontrakt serwisowy producenta (3 letni) do M3.Mobile SL20+",
-        "cenaNetto": 384.45,
-        "promocja": true,
+        "cenaNetto": 764.5,
+        "promocja": false,
         "wZestawie": []
       },
       {
@@ -1637,11 +1339,11 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "ms-365",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-ms-365.pdf",
+    "plik": "Oferta na akcesoria komputerow_09.2026r.pdf",
+    "formularz": "/formularze/zup-lodz/akcesoria-komputerowe/zup-lodz-ms-365.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
-      "od": "2026-03-10",
+      "od": "2026-09-23",
       "do": null
     },
     "dostawca": "TAKMA",
@@ -1656,11 +1358,11 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "podkladka-pod-mysz",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-podkladka-pod-mysz.pdf",
+    "plik": "Oferta na akcesoria komputerow_09.2026r.pdf",
+    "formularz": "/formularze/zup-lodz/akcesoria-komputerowe/zup-lodz-podkladka-pod-mysz.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
-      "od": "2026-03-10",
+      "od": "2026-09-23",
       "do": null
     },
     "dostawca": "TAKMA",
@@ -1675,11 +1377,11 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "podnozek-biurowy",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-podnozek-biurowy.pdf",
+    "plik": "Oferta na akcesoria komputerow_09.2026r.pdf",
+    "formularz": "/formularze/zup-lodz/akcesoria-komputerowe/zup-lodz-podnozek-biurowy.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
-      "od": "2026-03-10",
+      "od": "2026-09-23",
       "do": null
     },
     "dostawca": "TAKMA",
@@ -1692,98 +1394,54 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "dodatki": []
   },
   {
-    "slug": "samsung-a36",
+    "slug": "posnet-temo-online",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY A36_03.2026.docx",
-    "formularz": "/formularze/zup-lodz-samsung-a36.pdf",
+    "plik": "Oferta na drukarkę fiskalną 03.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-mobilne/zup-lodz-posnet-temo-online.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-10",
       "do": null
     },
-    "dostawca": "SCANTER",
-    "urzadzenie": {
-      "nazwa": "Mobilny komputer dotykowy SAMSUNG GALAXY A36 - rejestrator leśniczego",
-      "cenaNetto": 1451,
-      "promocja": false,
-      "wZestawie": [
-        "Ładowarka sieciowa z kablem USB i ładowarka samochodowa"
-      ]
-    },
-    "dodatki": [
-      {
-        "nazwa": "Ładowarka sieciowa",
-        "cenaNetto": 129.8,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka samochodowa",
-        "cenaNetto": 97.9,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Nakładka na obudowę zabezpieczająca przed uszkodzeniami",
-        "cenaNetto": 63.8,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Folia lub szkoło ochronne na ekran",
-        "cenaNetto": 64.9,
-        "promocja": false,
-        "wZestawie": []
-      }
-    ]
-  },
-  {
-    "slug": "samsung-a56",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na rejestrator typu Smartfon SAMSUNG GALAXY A56_01.06.2026.docx",
-    "formularz": "/formularze/zup-lodz-samsung-a56.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
-    "okres": {
-      "od": "2026-05-30",
-      "do": null
-    },
     "dostawca": "TAKMA",
     "urzadzenie": {
-      "nazwa": "Mobilny komputer dotykowy SAMSUNG GALAXY A56- rejestrator leśniczego",
-      "cenaNetto": 1980,
+      "nazwa": "Drukarka fiskalna, termiczna POSNET TEMO wersja ONLINE",
+      "cenaNetto": 2301,
       "promocja": false,
       "wZestawie": [
-        "Ładowarka sieciowa z kablem USB i ładowarka samochodowa"
+        "Akumulator",
+        "Moduł Bluetooth",
+        "Ładowarka sieciowa i samochodowa"
       ]
     },
     "dodatki": [
       {
         "nazwa": "Ładowarka sieciowa",
-        "cenaNetto": 129.8,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka samochodowa",
-        "cenaNetto": 97.9,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Akumulator 5000mAh",
-        "cenaNetto": 214.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Nakładka na obudowę zabezpieczająca przed uszkodzeniami",
         "cenaNetto": 63.8,
         "promocja": false,
         "wZestawie": []
       },
       {
-        "nazwa": "Folia lub szkoło ochronne na ekran",
-        "cenaNetto": 64.9,
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 63.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator",
+        "cenaNetto": 203.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Pokrowiec na drukarkę",
+        "cenaNetto": 82.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Papier termiczny",
+        "cenaNetto": 3.98,
         "promocja": false,
         "wZestawie": []
       }
@@ -1792,8 +1450,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "samsung-galaxy-tab-active5",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na tablety 03.2026.docx",
-    "formularz": "/formularze/zup-lodz-samsung-galaxy-tab-active5.pdf",
+    "plik": "Oferta na tablety 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/tablety/zup-lodz-samsung-galaxy-tab-active5.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/tablety",
     "okres": {
       "od": "2026-03-10",
@@ -1813,18 +1471,18 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "samsung-s25-fe",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY S25 FE_06.2026.docx",
-    "formularz": "/formularze/zup-lodz-samsung-s25-fe.pdf",
+    "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY S25 FE_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-samsung-s25-fe.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-07-01",
-      "do": "2026-08-31"
+      "od": "2026-09-01",
+      "do": null
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
       "nazwa": "Mobilny komputer dotykowy SAMSUNG Galaxy S25 FE 5G 8/128GB 6.7\" 120Hz SM-S731- rejestrator leśniczego",
-      "cenaNetto": 2386,
-      "promocja": true,
+      "cenaNetto": 2396,
+      "promocja": false,
       "wZestawie": [
         "Ładowarka sieciowa z kablem USB i ładowarka samochodowa"
       ]
@@ -1860,7 +1518,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "samsung-s25-ultra",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG Galaxy S25 Ultra_03.2026.docx",
-    "formularz": "/formularze/zup-lodz-samsung-s25-ultra.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-samsung-s25-ultra.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-10",
@@ -1897,51 +1555,13 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
-    "slug": "samsung-ssd-t7",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-samsung-ssd-t7.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
-    "okres": {
-      "od": "2026-03-10",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Mobilny dysk twardy zewnętrzny Samsung model SSD T7 Shield USB 3.2 2TB",
-      "cenaNetto": 858,
-      "promocja": false,
-      "wZestawie": []
-    },
-    "dodatki": []
-  },
-  {
-    "slug": "samsung-ssd-t9",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-samsung-ssd-t9.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
-    "okres": {
-      "od": "2026-03-10",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Mobilny dysk twardy zewnętrzny Samsung model SSD T9 USB 3.2 Gen 2x2 1 TB",
-      "cenaNetto": 605,
-      "promocja": false,
-      "wZestawie": []
-    },
-    "dodatki": []
-  },
-  {
     "slug": "samsung-xcover7",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na rejestrator typu Smartfon SAMSUNG GALAXY XCOVER PRO6_03.2026.docx",
-    "formularz": "/formularze/zup-lodz-samsung-xcover7.pdf",
+    "plik": "Oferta na rejestrator typu Smartfon SAMSUNG GALAXY XCOVER 7 PRO_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-samsung-xcover7.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-03-10",
+      "od": "2026-09-23",
       "do": null
     },
     "dostawca": "TAKMA",
@@ -1989,12 +1609,12 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "seiko-mpa40",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": "/formularze/zup-lodz-seiko-mpa40.pdf",
+    "plik": "Oferta na drukarki termiczne_01.10.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-mobilne/zup-lodz-seiko-mpa40.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-07-01",
-      "do": "2026-08-31"
+      "od": "2026-10-01",
+      "do": null
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
@@ -2037,12 +1657,12 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "sewoo-lkp400",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": "/formularze/zup-lodz-sewoo-lkp400.pdf",
+    "plik": "Oferta na drukarki termiczne_01.10.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-mobilne/zup-lodz-sewoo-lkp400.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-07-01",
-      "do": "2026-08-31"
+      "od": "2026-10-01",
+      "do": null
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
@@ -2134,12 +1754,12 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "sewoo-lkp43",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": "/formularze/zup-lodz-sewoo-lkp43.pdf",
+    "plik": "Oferta na drukarki termiczne_01.10.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-mobilne/zup-lodz-sewoo-lkp43.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-07-01",
-      "do": "2026-08-31"
+      "od": "2026-10-01",
+      "do": null
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
@@ -2188,8 +1808,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "torba-hp-15",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-torba-hp-15.pdf",
+    "plik": "Oferta na akcesoria komputerow_09.2026r.pdf",
+    "formularz": "/formularze/zup-lodz/akcesoria-komputerowe/zup-lodz-torba-hp-15.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -2209,11 +1829,11 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "torba-na-laptopa-15",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": "/formularze/zup-lodz-torba-na-laptopa-15.pdf",
+    "plik": "Oferta na akcesoria komputerow_09.2026r.pdf",
+    "formularz": "/formularze/zup-lodz/akcesoria-komputerowe/zup-lodz-torba-na-laptopa-15.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
-      "od": "2026-03-10",
+      "od": "2026-09-23",
       "do": null
     },
     "dostawca": "TAKMA",
@@ -2232,7 +1852,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "unitech-ea660",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Unitech EA660_06.2026.docx",
-    "formularz": "/formularze/zup-lodz-unitech-ea660.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-unitech-ea660.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-05-30",
@@ -2312,99 +1932,10 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
-    "slug": "unitech-pa768",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na Rejestrator UnitechPA768_03.2026.docx",
-    "formularz": "/formularze/zup-lodz-unitech-pa768.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
-    "okres": {
-      "od": "2026-03-10",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Mobilny komputer dotykowy UNITECH PA768 - rejestrator leśniczego",
-      "cenaNetto": 3103,
-      "promocja": false,
-      "wZestawie": [
-        "Dodatkowa karta pamięci micro SD 64 GB",
-        "Ładowarka sieciowa i ładowarka samochodowa"
-      ]
-    },
-    "dodatki": [
-      {
-        "nazwa": "Kontrakt serwisowy producenta (3 letni) do UNITECH PA768",
-        "cenaNetto": 984.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Futerał",
-        "cenaNetto": 231,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Rysik do ekranu",
-        "cenaNetto": 93.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Folia lub szkło ochronne na ekran",
-        "cenaNetto": 82.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka sieciowa",
-        "cenaNetto": 71.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Ładowarka samochodowa",
-        "cenaNetto": 71.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Stacja dokująca z możliwością ładowania samego akumulatora + zasilacz",
-        "cenaNetto": 407,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Stacja dokująca + port USB Host i Ethernet + zasilacz + kabel USB + możliwość ładowania samego akumulatora",
-        "cenaNetto": 544.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Pasek na rękę",
-        "cenaNetto": 104.5,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Akumulator standardowy 5100mAh",
-        "cenaNetto": 297,
-        "promocja": false,
-        "wZestawie": []
-      },
-      {
-        "nazwa": "Akumulator powiększony 7700mAh",
-        "cenaNetto": 429,
-        "promocja": false,
-        "wZestawie": []
-      }
-    ]
-  },
-  {
     "slug": "zebra-ds2208",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": "/formularze/zup-lodz-zebra-ds2208.pdf",
+    "formularz": "/formularze/zup-lodz/sprzet-do-ezd/zup-lodz-zebra-ds2208.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -2423,7 +1954,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "zebra-ds2278",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": "/formularze/zup-lodz-zebra-ds2278.pdf",
+    "formularz": "/formularze/zup-lodz/sprzet-do-ezd/zup-lodz-zebra-ds2278.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -2460,18 +1991,18 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "zebra-em45",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na Rejestratotor Zebra EM45 + STACJA_06.2026.docx",
-    "formularz": "/formularze/zup-lodz-zebra-em45-2026-07.pdf",
+    "plik": "Oferta na Rejestratotor Zebra EM45 + STACJA_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-zebra-em45.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-07-01",
-      "do": "2026-08-31"
+      "od": "2026-09-01",
+      "do": null
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
       "nazwa": "Mobilny komputer dotykowy ZEBRA EM45 rejestrator leśniczego",
-      "cenaNetto": 2563,
-      "promocja": true,
+      "cenaNetto": 2728.5,
+      "promocja": false,
       "wZestawie": [
         "Dodatkowa karta pamięci micro SD 64 GB",
         "Ładowarka sieciowa i ładowarka samochodowa"
@@ -2480,8 +2011,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "dodatki": [
       {
         "nazwa": "Kontrakt serwisowy producenta (3 letni) do ZEBRA EM45",
-        "cenaNetto": 318.45,
-        "promocja": true,
+        "cenaNetto": 482.9,
+        "promocja": false,
         "wZestawie": []
       },
       {
@@ -2528,7 +2059,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "zebra-tc27",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Zebra TC27_01.07.2026.docx",
-    "formularz": "/formularze/zup-lodz-zebra-tc27.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-zebra-tc27.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-07-01",
@@ -2617,7 +2148,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "zebra-tc58e",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestratotor Zebra TC58E_03.2026.docx",
-    "formularz": "/formularze/zup-lodz-zebra-tc58e.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-zebra-tc58e.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-10",
@@ -2712,7 +2243,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "zebra-zd421c",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": "/formularze/zup-lodz-zebra-zd421c.pdf",
+    "formularz": "/formularze/zup-lodz/sprzet-do-ezd/zup-lodz-zebra-zd421c.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -2810,12 +2341,12 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "zebra-zq521",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": "/formularze/zup-lodz-zebra-zq521.pdf",
+    "plik": "Oferta na drukarki termiczne_01.10.2026.pdf",
+    "formularz": "/formularze/zup-lodz/drukarki-mobilne/zup-lodz-zebra-zq521.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-07-01",
-      "do": "2026-08-31"
+      "od": "2026-10-01",
+      "do": null
     },
     "dostawca": "TAKMA",
     "urzadzenie": {
@@ -2843,7 +2374,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       },
       {
         "nazwa": "Akumulator o pojemności standardowej",
-        "cenaNetto": 467.5,
+        "cenaNetto": 466.4,
         "promocja": false,
         "wZestawie": []
       },

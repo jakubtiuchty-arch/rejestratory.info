@@ -1,4 +1,599 @@
 {
+  "aio-dell-pro-24": {
+    "dostawca": "SCANTER",
+    "punkty": [
+      "Procesor: Intel® Core™ Ultra 5 235 (NPU z 13 TOPS, 14 rdzeni, do 5,0 GHz)",
+      "Pamięć RAM: 16 GB DDR5, 5600 MT/s",
+      "Dysk twardy: 512 GB SSD z możliwością rozbudowy",
+      "Ekran: 23,8″, FHD, 100 Hz",
+      "Sieć bezprzewodowa: Intel Wi-Fi 6E, AX211, 802.11ax z BT",
+      "System: Windows 11 Pro",
+      "W zestawie: mysz, klawiatura",
+      "Gwarancja: 60 miesięcy"
+    ]
+  },
+  "aio-dell-pro-24-bez-systemu": {
+    "dostawca": "SCANTER",
+    "punkty": [
+      "Procesor: Intel® Core™ Ultra 5 235 (NPU z 13 TOPS, 14 rdzeni, do 5,0 GHz)",
+      "Pamięć RAM: 8 GB DDR5, 5600 MT/s",
+      "Dysk twardy: 256 GB SSD",
+      "Ekran: 23,8″, FHD, 100 Hz",
+      "Sieć bezprzewodowa: Intel Wi-Fi 6E, AX211, 802.11ax z BT",
+      "System: bez systemu operacyjnego",
+      "W zestawie: mysz, klawiatura",
+      "Gwarancja: 60 miesięcy"
+    ]
+  },
+  "bixolon-sppr410": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "203 dpi",
+      "Do 90 mm/s",
+      "530 g",
+      "Bluetooth 4.1",
+      "NFC",
+      "IP54",
+      "Upadek 1,8 m",
+      {
+        "t": "W zestawie:",
+        "b": true,
+        "pod": [
+          "Moduł Bluetooth",
+          "Akumulator, ładowarka sieciowa i samochodowa",
+          "Torba na zestaw z rejestratorem"
+        ]
+      }
+    ]
+  },
+  "brother-dcp-b7620dw": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Technologia druku: Laserowa, monochromatyczna",
+      "Funkcje: Drukowanie, kopiowanie, skanowanie",
+      "Połączenie: Wbudowany interfejs sieci przewodowej i bezprzewodowej",
+      "Złącza: LAN (Ethernet), USB",
+      "Wyświetlacz: LCD",
+      "Maksymalny rozmiar papieru: A4",
+      "Szybkość druku w mono: do 34 str./min",
+      "Podajnik papieru: na min. 250 arkuszy",
+      "Akcesoria: Kabel zasilający, toner startowy na min. 2000 stron"
+    ]
+  },
+  "brother-dcp-l5510dw": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Technologia druku: Laserowa, monochromatyczna",
+      "Funkcje: Drukowanie, kopiowanie, skanowanie",
+      "Druk dwustronny do 24 stron na minutę",
+      "Gigabit Ethernet, Wi-Fi 5 GHz, USB",
+      "Wyświetlacz: LCD, kolorowy, 3,8″",
+      "Maksymalny rozmiar papieru: A4",
+      "Szybkość jednostronnego drukowania A4 mono – 48 stron/minuta, dwustronnego – 24 stron/minuta",
+      "Rozdzielczość drukowania – 1200 × 1200 dpi",
+      "Rozdzielczość skanowania – 600 × 600 dpi",
+      "Rozdzielczość kopiowania – 1200 × 600 dpi",
+      "Interfejsy – USB, Ethernet, Wi-Fi, AirPrint"
+    ]
+  },
+  "brother-hl-l6210dw": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Technologia druku: Laserowa, elektrofotograficzna, monochromatyczna",
+      "Funkcje: Drukowanie, kopiowanie",
+      "Połączenie: Wbudowany interfejs sieci przewodowej i bezprzewodowej",
+      "Złącza: LAN (Ethernet), USB",
+      "Drukowanie N stron, znaków wodnych, ID, broszur, plakatów, dwustronny, odwrócony",
+      "Wyświetlacz: jednowierszowy z przyciskami",
+      "Szybkość druku 31 str./min, duplex 14 str./min.",
+      "Podajnik papieru: na min. 520 arkuszy"
+    ]
+  },
+  "brother-hl-l6410": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Technologia druku: monochromatyczna, laserowa, elektrofotograficzna",
+      "Funkcje: Drukowanie",
+      "Połączenie: Wbudowany interfejs sieci przewodowej i bezprzewodowej",
+      "Złącza: LAN (Ethernet), USB",
+      "Wyświetlacz: kolorowy, dotykowy",
+      "Standardowy podajnik papieru – A4, A5, A6",
+      "Szybkość druku A4 – 50 str./min, duplex 24 str./min.",
+      "Skanowanie i druk – mono",
+      "Podajnik papieru: na min. 520 arkuszy – opcjonalnie drugi podajnik na 2600",
+      "Akcesoria: Kabel zasilający, toner startowy na min. 12000 stron"
+    ]
+  },
+  "brother-mfc-l5710dw": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Technologia druku: monochromatyczna, laserowa, elektrofotograficzna",
+      "Funkcje: Drukowanie, kopiowanie, skanowanie, fax",
+      "Połączenie: Wbudowany interfejs sieci przewodowej i bezprzewodowej",
+      "Złącza: LAN (Ethernet), USB",
+      "Wyświetlacz: kolorowy, dotykowy",
+      "Standardowy podajnik papieru – A4, A5, A6",
+      "Szybkość druku 40 str./min, duplex 20 str./min.",
+      "Skanowanie i druk – mono",
+      "Podajnik papieru: na min. 250 arkuszy – opcjonalnie drugi podajnik",
+      "Akcesoria: Kabel zasilający, toner startowy na min. 2000 stron"
+    ]
+  },
+  "brother-mfc-l6710dw": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Technologia druku: Laserowa, elektrofotograficzna, monochromatyczna",
+      "Funkcje: Drukowanie, kopiowanie, skanowanie",
+      "Połączenie: Wbudowany interfejs sieci przewodowej i bezprzewodowej",
+      "Złącza: LAN (Ethernet), USB",
+      "Drukowanie N stron, znaków wodnych, ID, broszur, plakatów, dwustronny, odwrócony",
+      "Wyświetlacz: jednowierszowy z przyciskami",
+      "Szybkość druku 50 str./min, duplex 24 str./min.",
+      "Podajnik papieru: na min. 520 arkuszy"
+    ]
+  },
+  "brother-mfc-l8390cdw": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Technologia druku: Laserowa, elektrofotograficzna",
+      "Funkcje: Drukowanie, kopiowanie, skanowanie, fax",
+      "Druk dwustronny do 12 stron na minutę",
+      "Skanowanie dwustronne",
+      "Gigabit Ethernet, Wi-Fi 5 GHz, USB",
+      "Wyświetlacz: LCD, kolorowy, 8,8″",
+      "Maksymalny rozmiar papieru: A4",
+      "Szybkość druku w mono i kolor dwustronnie 12 str./min, jednostronne do 30 stron na minutę w mono i kolorze",
+      "Rozdzielczość 600 × 600 dpi"
+    ]
+  },
+  "brother-mfc-l8730cdw": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Technologia druku: Laserowa, elektrofotograficzna, kolor",
+      "Funkcje: Drukowanie, kopiowanie, skanowanie, fax",
+      "Połączenie: Wbudowany interfejs sieci przewodowej i bezprzewodowej",
+      "Złącza: LAN (Ethernet), USB",
+      "Wyświetlacz: kolorowy, dotykowy",
+      "Standardowy podajnik papieru – A4, A5, A6",
+      "Szybkość druku: 28 obrazów/min kolor i mono; dwustronne 56 obrazów/min kolor i mono",
+      "Skaner – w trybie kolor i mono",
+      "Podajnik papieru: na min. 250 arkuszy",
+      "Akcesoria: Kabel zasilający, toner startowy czarny, cyjan, magenta, żółty"
+    ]
+  },
+  "brother-mfc-l8970cdw": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Technologia druku: Laserowa, elektrofotograficzna",
+      "Funkcje: Drukowanie, kopiowanie, skanowanie, fax",
+      "Połączenie: Wbudowany interfejs sieci przewodowej i bezprzewodowej",
+      "Złącza: LAN (Ethernet), USB",
+      "Wyświetlacz: LCD",
+      "Maksymalny rozmiar papieru: A4",
+      "Pojemność ADF – 80 arkuszy",
+      "Pamięć 1 GB, procesor 1200 MHz, Wi-Fi 2,4 GHz + 5 GHz",
+      "Szybkość druku w mono i kolor jednostronnie 31 str./min, dwustronne 20 str./min",
+      "Drukowanie N stron, znaków wodnych, ID, broszur, kopert",
+      "Powiększanie do A4, druk dwustronny ręczny i automatyczny",
+      "Podajnik papieru: na min. 250 arkuszy"
+    ]
+  },
+  "dell-km5221": {
+    "dostawca": "SCANTER",
+    "punkty": [
+      {
+        "t": "Klawiatura",
+        "b": true,
+        "pod": [
+          "Jeden wspólny odbiornik dla klawiatury i myszy",
+          "Podłączenie do komputera poprzez złącze USB 2.0 lub USB 3.0",
+          "Odbiornik o małych gabarytach typu Nano",
+          "Klawiatura Qwerty sześciorzędowa",
+          "Ze współdzielonymi klawiszami głośności",
+          "Z wydzieloną częścią numeryczną, z wydzielonymi klawiszami kursora",
+          "Z dodatkowymi klawiszami funkcyjnymi",
+          "Z mechanicznym wyłącznikiem zasilania",
+          "Odporna na zachlapania, ciemna kolorystyka z białymi symbolami",
+          "Zasilanie bateryjne, baterie w komplecie",
+          "Czas pracy na jednym zestawie baterii ok. 15 miesięcy"
+        ]
+      },
+      {
+        "t": "Mysz",
+        "b": true,
+        "pod": [
+          "Mysz matrycy dwuprzyciskowa z rolką przewijającą",
+          "Optyczny czujnik przesunięcia, mechaniczny wyłącznik zasilania",
+          "Zasilanie bateryjne, baterie w komplecie",
+          "Czas pracy na jednym zestawie baterii ok. 12 miesięcy"
+        ]
+      }
+    ]
+  },
+  "dell-km7321": {
+    "dostawca": "SCANTER",
+    "punkty": [
+      {
+        "t": "Klawiatura",
+        "b": true,
+        "pod": [
+          "Jeden wspólny odbiornik dla klawiatury i myszy",
+          "Podłączenie do komputera poprzez złącze USB 2.0 lub USB 3.0",
+          "Odbiornik o małych gabarytach typu Nano",
+          "Szyfrowanie połączenia między klawiaturą a myszą",
+          "Klawiatura Qwerty sześciorzędowa",
+          "Ze współdzielonymi klawiszami głośności",
+          "Z wydzieloną częścią numeryczną, z wydzielonymi klawiszami kursora",
+          "Z dodatkowymi klawiszami funkcyjnymi",
+          "Z mechanicznym wyłącznikiem zasilania",
+          "Odporna na zachlapania, ciemna kolorystyka z białymi symbolami",
+          "Zasilanie bateryjne, baterie w komplecie",
+          "Czas pracy na jednym zestawie baterii ok. 24 miesiące"
+        ]
+      },
+      {
+        "t": "Mysz",
+        "b": true,
+        "pod": [
+          "Trzyprzyciskowa z rolką przewijającą",
+          "Optyczny czujnik przesunięcia, mechaniczny wyłącznik zasilania",
+          "Zasilanie bateryjne, baterie w komplecie",
+          "Czas pracy na jednym zestawie baterii ok. 15 miesięcy"
+        ]
+      }
+    ]
+  },
+  "dell-pro-14-plus": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Procesor: Intel® Core™ Ultra 5 235U vPro® (NPU z 12 TOPS, 12 rdzeni, do 4,9 GHz)",
+      "Pamięć RAM: 16 GB DDR5, 5600 MT/s",
+      "Dysk twardy: 512 GB SSD",
+      "Ekran: 14″ FHD+, 300 nitów, kamera FHD",
+      "Sieć bezprzewodowa: Intel Wi-Fi 6E, AX211, 802.11ax z BT",
+      "Akumulator: 55 Wh, ExpressCharge",
+      "Czytnik SmartCard: tak",
+      "System: Windows 11 Pro",
+      "Gwarancja: 60 miesięcy"
+    ]
+  },
+  "dell-pro-16-plus": {
+    "dostawca": "TAKMA / SCANTER",
+    "punkty": [
+      "Procesor: Intel® Core™ Ultra 5 235U vPro® (NPU z 12 TOPS, 12 rdzeni, do 4,9 GHz)",
+      "Pamięć RAM: 16 GB DDR5, 5600 MT/s",
+      "Dysk twardy: 512 GB SSD",
+      "Ekran: 16″ FHD+, 300 nitów, kamera FHD",
+      "Sieć bezprzewodowa: Intel Wi-Fi 6E, AX211, 802.11ax z BT",
+      "Akumulator: 55 Wh, ExpressCharge",
+      "Czytnik SmartCard: tak",
+      "System: Windows 11 Pro",
+      "Gwarancja: 60 miesięcy"
+    ]
+  },
+  "dell-pro-24-plus-p2424heb": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran z aktywną matrycą IPS 23,8″ z powłoką antyodblaskową oraz dodatkową powłoką zapobiegającą odbijaniu się promieni słonecznych od matrycy",
+      "Rozdzielczość max. 1920 × 1080 przy 60 Hz",
+      "Pochylenie w zakresie 26 stopni",
+      "Obrót lewo/prawo -45/+45 stopni",
+      "Podświetlenie LED",
+      {
+        "t": "Złącza:",
+        "pod": [
+          "1 × HDMI 1.4 (HDCP 1.4)",
+          "1 × Display Port 1.2 (HDCP 1.4)",
+          "1 × USB 3.2 Gen 1 Typ-B upstream",
+          "1 × Display Port (out) z MST (HDCP 1.4)",
+          "1 × USB-C (z obsługą Display Port 1.2, USB 3.2 Gen 1 upstream port z ładowaniem o mocy do 90 W)",
+          "1 × USB-C downstream (15 W), USB 3.2 Gen 1",
+          "1 × 3,5 mm port audio",
+          "3 × USB 3.2 Gen 1 typ A",
+          "1 × RJ45"
+        ]
+      },
+      "Wbudowana kamera oraz podwójny mikrofon i dwa głośniki",
+      "Dołączone oprogramowanie producenta monitora z bezterminową licencją na użytkowanie",
+      "W zestawie – przewód zasilający, przewód DP, przewód USB-C, przewód USB 3.2 Gen 1 typ A do typ B upstream"
+    ]
+  },
+  "dell-pro-27-p2726h": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran z aktywną matrycą IPS 27,0″ z powłoką antyodblaskową",
+      "Rozdzielczość max. 1920 × 1080 przy 60 Hz",
+      "Pochylenie w zakresie 26 stopni",
+      "Obrót lewo/prawo -45/+45 stopni",
+      "Podświetlenie LED",
+      {
+        "t": "Złącza:",
+        "pod": [
+          "1 × HDMI 1.4 (HDCP 1.4)",
+          "1 × Display Port 1.2 (HDCP 1.4)",
+          "1 × VGA",
+          "1 × USB-C 3.2 Type-B pierwszej generacji typu upstream",
+          "3 × porty USB 3.2 Type-A pierwszej generacji typu downstream",
+          "1 × port USB 3.2 Type-C pierwszej generacji downstream z funkcją PD"
+        ]
+      },
+      "Dołączone oprogramowanie producenta monitora z bezterminową licencją na użytkowanie",
+      "W zestawie – przewód zasilający, przewód DP, przewód USB-C"
+    ]
+  },
+  "dell-pro-27-p2726he": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran z aktywną matrycą IPS 26,5″ z powłoką antyodblaskową",
+      "Rozdzielczość max. 1920 × 1080 przy 60 Hz",
+      "Pochylenie w zakresie 26 stopni",
+      "Obrót lewo/prawo -45/+45 stopni",
+      "Podświetlenie LED",
+      {
+        "t": "Złącza:",
+        "pod": [
+          "1 × HDMI 1.4 (HDCP 1.4)",
+          "1 × Display Port 1.2 (HDCP 1.4)",
+          "1 × Display Port (Out) z MST (HDCP 1.4)",
+          "1 × USB-C z obsługą Display Port 1.2, USB 3.2 Gen 1 upstream port z ładowaniem o mocy do 65 W",
+          "4 × USB 5 Gbps (USB 3.2 Gen 1)",
+          "1 × RJ45"
+        ]
+      },
+      "Dołączone oprogramowanie producenta monitora z bezterminową licencją na użytkowanie",
+      "W zestawie – przewód zasilający, przewód DP, przewód USB-C"
+    ]
+  },
+  "dell-pro-27-plus-p2724deb": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran z aktywną matrycą IPS 26,5″ z powłoką antyodblaskową oraz dodatkową powłoką zapobiegającą odbijaniu się promieni słonecznych od matrycy",
+      "Rozdzielczość max. 2560 × 1440 przy 60 Hz",
+      "Pochylenie w zakresie 26 stopni",
+      "Obrót lewo/prawo -45/+45 stopni",
+      "Podświetlenie LED",
+      {
+        "t": "Złącza:",
+        "pod": [
+          "1 × HDMI 1.4 (HDCP 1.4)",
+          "1 × Display Port 1.2 (HDCP 1.4)",
+          "1 × USB 3.2 Gen 1 Typ-B upstream",
+          "1 × Display Port (out) z MST (HDCP 1.4)",
+          "1 × USB-C (z obsługą Display Port 1.2, USB 3.2 Gen 1 upstream port z ładowaniem o mocy do 90 W)",
+          "1 × USB-C downstream (15 W), USB 3.2 Gen 1",
+          "1 × 3,5 mm port audio",
+          "3 × USB 3.2 Gen 1 typ A",
+          "1 × RJ45"
+        ]
+      },
+      "Wbudowana kamera oraz podwójny mikrofon i dwa głośniki",
+      "Dołączone oprogramowanie producenta monitora z bezterminową licencją na użytkowanie",
+      "W zestawie – przewód zasilający, przewód DP, przewód USB-C, przewód USB 3.2 Gen 1 typ A do typ B upstream"
+    ]
+  },
+  "epson-ds730n": {
+    "dostawca": "TAKMA / SCANTER",
+    "punkty": [
+      "40 str./min",
+      "Dupleks jednoprzebiegowy",
+      "ADF 100 ark.",
+      "6500 stron dziennie",
+      "Ethernet"
+    ]
+  },
+  "honeywell-1250g": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Kody 1D",
+      "Laser jednoliniowy",
+      "Zasięg do 44,6 cm (13 mil)",
+      "IP41",
+      "Upadki z 1,5 m",
+      "USB",
+      "W zestawie kabel USB i podstawka"
+    ]
+  },
+  "honeywell-1450g": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Kody 1D i 2D",
+      "Kod z ekranu telefonu",
+      "Zasięg do 40 cm (13 mil)",
+      "IP52",
+      "30 upadków z 1,8 m",
+      "USB",
+      "W zestawie kabel USB i podstawka"
+    ]
+  },
+  "honeywell-ct32": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "System Android v. 13 – upgrade do v. 16",
+      "Pamięć RAM 6 GB, Flash 128 GB",
+      "Procesor 2,4 GHz ośmiordzeniowy",
+      "Dodatkowa karta pamięci micro SD 64 GB",
+      "Bluetooth 5.0",
+      "Moduł GSM/GPRS, moduł GPS",
+      "Dual SIM",
+      "Skaner 1D i 2D",
+      "Wyświetlacz 5,5″",
+      "Ładowarka sieciowa i ładowarka samochodowa",
+      "Akumulator 3,8 V, 4500 mAh"
+    ]
+  },
+  "honeywell-pc42e-t": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "203 dpi",
+      "152 mm/s",
+      "Rolka taśmy do 300 m",
+      "Ethernet i USB",
+      "Gilotyna i dyspenser opcjonalnie"
+    ]
+  },
+  "honeywell-pc45t": {
+    "dostawca": "SCANTER",
+    "punkty": [
+      "Termotransfer i termika",
+      "203 dpi",
+      "203 mm/s",
+      "Ethernet w standardzie",
+      "Ekran 3,5″",
+      "Wi-Fi i Bluetooth opcjonalnie"
+    ]
+  },
+  "honeywell-rp4": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "203 dpi",
+      "Do 127 mm/s",
+      "IP54",
+      "Upadek 2 m",
+      "Bateria 4900 mAh",
+      "2 lata gwarancji",
+      {
+        "t": "W zestawie:",
+        "b": true,
+        "pod": [
+          "Moduł Bluetooth",
+          "Akumulator, ładowarka sieciowa i samochodowa",
+          "Torba na zestaw z rejestratorem"
+        ]
+      }
+    ]
+  },
+  "hp-460": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Waga, wymiary – 660 g / 376 × 153 × 20 mm",
+      "Wskaźniki LED – Caps lock, Num lock, baterii, kanałów",
+      "Klawisze kierunkowe z wklęsłymi nakładkami",
+      "Programowalne przyciski 12",
+      "Klawisze specjalne – wyciszanie mikrofonu, przełącznik języka",
+      "Odporność na zalanie, Swift Pair, możliwość regulacji nachylenia, automatyczne wykrywanie systemu operacyjnego",
+      "Kompaktowa z klawiaturą numeryczną – układ dwustrefowy",
+      "Akumulator ładowalny przez USB-C, czas pracy do 24 miesięcy",
+      "Łączność – Bluetooth 5.3, klucz sprzętowy 2,4 GHz, do 3 zapisanych urządzeń, zasięg sieci bezprzewodowej – 10 m na otwartej przestrzeni",
+      "Systemy operacyjne zgodne z – Windows 11, Windows 10, macOS, Chrome OS",
+      "Gwarancja 12 miesięcy"
+    ]
+  },
+  "hp-655": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      {
+        "t": "Klawiatura",
+        "b": true,
+        "pod": [
+          "Pełnowymiarowa, układ 3-strefowy",
+          "Jedno bezprzewodowe połączenie",
+          "Podświetlana z czujnikami regulującymi jasność",
+          "Programowalna do 20 klawiszy",
+          "Odporność na zalanie",
+          "Klawisze wyprofilowane",
+          "Dostosowanie skrótów klawiszowych DPI",
+          "Wyposażona w nóżki z regulacją do min. 5 st.",
+          "Czas pracy baterii 20 miesięcy",
+          "Waga – 0,45 kg",
+          "Wymiary – 429 × 115,5 × 18,10 mm"
+        ]
+      },
+      {
+        "t": "Mysz",
+        "b": true,
+        "pod": [
+          "Dwustronna wielopowierzchniowa",
+          "Sensor zapewniający skuteczne działanie na różnych powierzchniach",
+          "Możliwość dostosowania ustawień DPI dla zapewnienia kontroli nad szybkością kursora i czułością wykrywania ruchów",
+          "Czas pracy 24 miesiące",
+          "Waga – 0,10 kg",
+          "Wymiary 120,30 × 67,00 × 1,40 mm"
+        ]
+      },
+      {
+        "t": "Ogólne",
+        "b": true,
+        "pod": [
+          "Wskaźnik LED: Caps Lock, blokada funkcyjna, wskaźnik baterii, wyciszanie mikrofonu",
+          "Zasięg sieci bezprzewodowej – min 10 m w przestrzeni otwartej",
+          "Łączność bezprzewodowa 2,4 GHz"
+        ]
+      }
+    ]
+  },
+  "hp-715": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Programowalne przyciski",
+      "Dla osób oburęcznych",
+      "Wyposażona w czujniki pozwalające pracować także na szkle",
+      "6 programowalnych przycisków",
+      "Kółko uchylne, szybkie przewijanie",
+      "Wartość nominalna czujnika 1200 dpi – rozdzielczość do 3000 dpi",
+      "Akumulator ładowalny przez USB-C min 90 dni pracy przy pełnym naładowaniu",
+      "Bluetooth 5.3",
+      "Klucz sprzętowy 2,4 GHz",
+      "Do 3 zapisanych urządzeń",
+      "Obsługiwane systemy – Windows 11, Windows 10, Chrome OS, macOS 10.13 lub nowszy",
+      "Zasięg sieci bezprzewodowej do 10 metrów na otwartej przestrzeni",
+      "Waga max 85 g",
+      "Wymiary max (szer. × gł. × wys.) 102,10 × 57,10 × 36,5 mm",
+      "Wskaźniki: akumulator, kontrola kanałów",
+      "Gwarancja 12 miesięcy"
+    ]
+  },
+  "hp-elitebook-6-g1ah-14": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran 14,0″ Full HD",
+      "Pamięć 16 GB RAM z możliwością rozbudowy do 64 GB",
+      "Pamięć masowa 512 GB",
+      "Zintegrowana karta graficzna",
+      "Klawiatura z podświetleniem, 98 klawiszy; clickpad; czytnik linii papilarnych",
+      "Karta dźwiękowa, dwa głośniki i dwa mikrofony",
+      "Kamera FHD wbudowana w obudowę ekranu, z mechaniczną przesłoną",
+      "Wi-Fi 6E (160 MHz) z Bluetooth 5.3",
+      {
+        "t": "Wbudowane porty i złącza:",
+        "pod": [
+          "1 × HDMI 2.1",
+          "2 × USB 3.2 Gen 1 (5 Gbps), w tym jeden dosilony, ładujący urządzenia także przy wyłączonym notebooku",
+          "2 × USB 4 (40 Gbps) typu C z Power Delivery i DisplayPort 1.4",
+          "1 × RJ45",
+          "1 × złącze słuchawkowe/mikrofonowe (combo)",
+          "Czytnik kart kryptograficznych Smart Card"
+        ]
+      },
+      "Waga 1,4 kg, akumulator 56 Wh",
+      "Z systemem operacyjnym",
+      "Gwarancja 36 miesięcy"
+    ]
+  },
+  "hp-seria-3-pro-324pv": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran z aktywną matrycą IPS 23,8″ z powłoką antyodblaskową",
+      "Rozdzielczość max. 1920 × 1080 przy 60 Hz",
+      "Full HD – Edge LED",
+      "Pochylenie w zakresie 26 stopni",
+      "Obrót lewo/prawo -45/+45 stopni",
+      "Zakres kąta nachylenia -5° – 23°",
+      "Kąt widzenia poziomy / pionowy 178°/178°",
+      "Max. częstotliwość odświeżania 100 Hz",
+      "Podświetlenie LED",
+      {
+        "t": "Złącza:",
+        "pod": [
+          "1 × HDMI 1.4 (HDCP 1.4)",
+          "1 × Display Port 1.2 (HDCP 1.4)",
+          "1 × VGA"
+        ]
+      },
+      "Waga z opakowaniem 5,86 kg",
+      "Waga produktu 3,77 kg z podstawą",
+      "W zestawie: podstawa monitora, przewód zasilający, przewód HDMI"
+    ]
+  },
   "hp-seria-5-pro-524pm": {
     "dostawca": "TAKMA",
     "punkty": [
@@ -25,6 +620,7 @@
     ]
   },
   "hp-seria-5-pro-524pu": {
+    "dostawca": "TAKMA",
     "punkty": [
       "Ekran LCD 23,8″ panoramiczny, matryca IPS z podświetleniem WLED, matowa",
       "Redukcja migotania obrazu i niebieskiego światła, utwardzenie powierzchni ekranu min. 3H",
@@ -47,6 +643,7 @@
     ]
   },
   "hp-seria-5-pro-527pm": {
+    "dostawca": "TAKMA",
     "punkty": [
       "Ekran LCD 27″ panoramiczny, matryca IPS z podświetleniem WLED, matowa",
       "Wbudowane cztery głośniki o mocy 3 W i 5 W oraz dwa mikrofony z redukcją hałasu (DNN Noise Reduction)",
@@ -70,30 +667,388 @@
       "W zestawie przewody min. 1,8 m: USB typ-C (C-C), USB A-B, DisplayPort 1.4, HDMI, zasilający"
     ]
   },
-  "hp-elitebook-6-g1ah-14": {
+  "hp-seria-5-pro-527pq": {
+    "dostawca": "TAKMA",
     "punkty": [
-      "Ekran 14,0″ Full HD",
-      "Pamięć 16 GB RAM z możliwością rozbudowy do 64 GB",
-      "Pamięć masowa 512 GB",
-      "Zintegrowana karta graficzna",
-      "Klawiatura z podświetleniem, 98 klawiszy; clickpad; czytnik linii papilarnych",
-      "Karta dźwiękowa, dwa głośniki i dwa mikrofony",
-      "Kamera FHD wbudowana w obudowę ekranu, z mechaniczną przesłoną",
-      "Wi-Fi 6E (160 MHz) z Bluetooth 5.3",
+      "Ekran z aktywną matrycą IPS 27″ z powłoką antyodblaskową, z podświetleniem WLED, matowa",
+      "Rozdzielczość max. 2560 × 1440 przy 100 Hz – QHD",
+      "Obrót lewo/prawo -45/+45 stopni",
+      "Zakres kąta nachylenia -5° – 20°",
+      "Kąt widzenia poziomy / pionowy 178°/178°",
+      "Max. częstotliwość odświeżania 100 Hz",
+      "Podświetlenie LED, podświetlenie krawędziowe",
       {
-        "t": "Wbudowane porty i złącza:",
+        "t": "Złącza:",
         "pod": [
-          "1 × HDMI 2.1",
-          "2 × USB 3.2 Gen 1 (5 Gbps), w tym jeden dosilony, ładujący urządzenia także przy wyłączonym notebooku",
-          "2 × USB 4 (40 Gbps) typu C z Power Delivery i DisplayPort 1.4",
-          "1 × RJ45",
-          "1 × złącze słuchawkowe/mikrofonowe (combo)",
-          "Czytnik kart kryptograficznych Smart Card"
+          "4 × USB-A z funkcją ładowania",
+          "1 × USB-B",
+          "1 × HDMI 2.0",
+          "1 × DP z HDMI",
+          "1 × DP 1.2"
         ]
       },
-      "Waga 1,4 kg, akumulator 56 Wh",
-      "Z systemem operacyjnym",
-      "Gwarancja 36 miesięcy"
+      "W zestawie: przewody, DP, HDMI, USB-A, zasilający"
+    ]
+  },
+  "hp-seria-5-pro-527pu": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran z aktywną matrycą IPS 27″ z powłoką antyodblaskową",
+      "Rozdzielczość max. 2560 × 1440 przy 100 Hz – QHD",
+      "Obrót lewo/prawo -45/+45 stopni",
+      "Zakres kąta nachylenia -5° – 20°",
+      "Kąt widzenia poziomy / pionowy 178°/178°",
+      "Max. częstotliwość odświeżania 100 Hz",
+      "Podświetlenie LED, podświetlenie krawędziowe",
+      {
+        "t": "Złącza:",
+        "pod": [
+          "3 × porty USB-A",
+          "2 × port USB-C",
+          "1 × DP 1.4",
+          "1 × out DP 1.4",
+          "1 × RJ45",
+          "HDCP – DP, HDMI i USB-C",
+          "1 × HDMI 2.0"
+        ]
+      },
+      "W zestawie: przewód zasilający, przewód USB-C"
+    ]
+  },
+  "m3-sl20": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "System Android v. 13 – upgrade do v. 15",
+      "Pamięć RAM 4 GB, Flash 64 GB (opcja 8 GB RAM/128 GB ROM)",
+      "Procesor 2,0 GHz ośmiordzeniowy",
+      "Dodatkowa karta pamięci micro SD 64 GB",
+      "Bluetooth 5.0",
+      "Moduł GSM/GPRS, moduł GPS",
+      "Dual SIM",
+      "Skaner 1D i 2D",
+      "Wyświetlacz 5,5″",
+      "Ładowarka sieciowa i ładowarka samochodowa",
+      "Akumulator 5000 mAh"
+    ]
+  },
+  "ms-365": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Pakiet zaprojektowany dla potrzeb przedsiębiorstw tożsamych z jednostkami LP",
+      "Licencja subskrypcyjna zapewnia klasyczną instalacyjną wersję aplikacji pakietu biurowego, aktualizowaną na bieżąco, możliwą do zainstalowania na komputerach klasy PC i na komputerach MAC, zawierającą podstawowe aplikacje biurowe",
+      "Możliwość instalacji pakietu na 5 komputerach klasy PC lub MAC dla każdego użytkownika",
+      "Kolejne wersje aktualizowane internetowo",
+      "Możliwość jednoczesnej pracy przez wielu użytkowników na tym samym dokumencie",
+      "Poczta email klasy biznes o pojemności 50 GB"
+    ]
+  },
+  "podkladka-pod-mysz": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Guma, tkanina, tworzywo sztuczne, pianka",
+      "Materiał zapobiegający przesuwaniu się po blacie biurka",
+      "Materiał przyjazny i bezpieczny dla skóry człowieka",
+      "Pokrycie warstwy wierzchniej z materiału niepękającego pod wpływem temperatury i normalnego użytkowania",
+      "Grubość w przedziale od 2 do 5 mm",
+      "Wymiary w przedziale od 20 × 20 do 22 × 22 cm",
+      "Bez poduszki na nadgarstek"
+    ]
+  },
+  "podnozek-biurowy": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Wykonany z trwałego tworzywa",
+      "Z regulowaną wysokością w zakresie 110 – 140 – 170 mm",
+      "Z regulowanym kątem nachylenia od 0 do 30%",
+      "Dwie pozycje wysokości",
+      "Powierzchnia antypoślizgowa",
+      "Wymiary max 470 × 350 mm"
+    ]
+  },
+  "posnet-temo-online": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "315 g",
+      "Akumulator na 50 000 wierszy",
+      "Druk 22 linie/s",
+      "USB, Wi-Fi z modułem",
+      "Zgodna z Leśnik+",
+      {
+        "t": "W zestawie:",
+        "b": true,
+        "pod": [
+          "Akumulator",
+          "Moduł Bluetooth",
+          "Ładowarka sieciowa i samochodowa"
+        ]
+      },
+      "Gwarancja producenta 24 miesiące"
+    ]
+  },
+  "samsung-galaxy-tab-active5": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "System Android 12 (lub wyższy), Procesor ośmiordzeniowy 2,4 GHz",
+      "Pamięć RAM 6 GB, Flash 128 GB",
+      "Czytnik kart pamięci – microSD, microSDHC, microSDXC do 1 TB",
+      "Moduł GPS, moduł Wi-Fi, WWAN (3G), LTE (4G), 5G",
+      "Pojemnościowy, kolorowy panel dotykowy 8,0″, obsługa w rękawicach i na mokrym ekranie",
+      "Bluetooth 5.3",
+      "Akumulator 5050 mAh",
+      "Porty – USB 2.0, 1 × nanoSIM, 1 × eSIM",
+      "Czytnik linii papilarnych",
+      "IP65, MIL STD 810H, IP68",
+      "Waga 433 g",
+      "Ładowarka sieciowa"
+    ]
+  },
+  "samsung-s25-fe": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "System Android 15",
+      "Pamięć RAM 8 GB, Flash 128 GB",
+      "Bluetooth",
+      "Moduł GSM/GPRS",
+      "Moduł GPS",
+      "Wyświetlacz 6,7″",
+      "Ładowarka sieciowa z kablem USB i ładowarka samochodowa",
+      "Akumulator 4900 mAh"
+    ]
+  },
+  "samsung-s25-ultra": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "System Android 13 (lub wyższy)",
+      "Pamięć RAM 12 GB, Flash 256 GB",
+      "Bluetooth",
+      "Moduł GSM/GPRS",
+      "Moduł GPS",
+      "Wyświetlacz 6,9″",
+      "Ładowarka sieciowa i ładowarka samochodowa",
+      "Akumulator 5000 mAh"
+    ]
+  },
+  "samsung-xcover7": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "System Android 13 (lub wyższy)",
+      "Pamięć RAM 6 GB, Flash 128 GB",
+      "Bluetooth",
+      "Moduł GSM/GPRS",
+      "Moduł GPS",
+      "Wyświetlacz 6,6″",
+      "Ładowarka sieciowa z kablem USB i ładowarka samochodowa",
+      "Akumulator 4050 mAh"
+    ]
+  },
+  "seiko-mpa40": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "203 dpi",
+      "Do 105 mm/s",
+      "760 g",
+      "IP54",
+      "Upadek 2 m",
+      "Bluetooth 4.1",
+      {
+        "t": "W zestawie:",
+        "b": true,
+        "pod": [
+          "Moduł Bluetooth",
+          "Akumulator, ładowarka sieciowa i samochodowa",
+          "Torba na zestaw z rejestratorem"
+        ]
+      }
+    ]
+  },
+  "sewoo-lkp400": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "203 dpi",
+      "127 mm/s",
+      "IP54",
+      "Upadek 2 m",
+      "Wi-Fi ac",
+      "Bluetooth 4.2",
+      "NFC",
+      {
+        "t": "W zestawie:",
+        "b": true,
+        "pod": [
+          "Moduł Bluetooth",
+          "Akumulator, ładowarka sieciowa i samochodowa",
+          "Torba na zestaw z rejestratorem"
+        ]
+      }
+    ]
+  },
+  "sewoo-lkp43": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "203 dpi",
+      "100 mm/s",
+      "IP54",
+      "Upadek 1,8 m",
+      "Bluetooth 4.2",
+      "RS-232",
+      {
+        "t": "W zestawie:",
+        "b": true,
+        "pod": [
+          "Moduł Bluetooth",
+          "Akumulator, ładowarka sieciowa i samochodowa",
+          "Torba na zestaw z rejestratorem"
+        ]
+      }
+    ]
+  },
+  "torba-hp-15": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Dla wszystkich laptopów o rozmiarze 15,6",
+      "Kolor czarny lub ciemnoszary",
+      "Odporność na wilgoć",
+      "Otwór na uchwyt od walizki",
+      "Dwukomorowa z przegrodami na akcesoria",
+      "Odporna na zarysowania",
+      "Waga 600 g",
+      "Gwarancja 12 miesięcy"
+    ]
+  },
+  "torba-na-laptopa-15": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Odpowiednia do laptopów o rozmiarach od 14″ do 15,6″",
+      "Kolor czarny lub ciemnoszary",
+      "Odporność na wilgoć",
+      "Odporna na zarysowania i chroniąca laptop przed uszkodzeniami po upadku czy zawilgoceniu",
+      "Bagaż przechodzący kontrolę",
+      "Wyposażona w otwór na uchwyt walizki",
+      "Dwukomorowa – specjalne przegrody na komputer (laptop) i na dokumenty oraz na akcesoria",
+      "Posiada wykładane uchwyty do przenoszenia",
+      "Wyposażona w pasek na ramię o regulowanej długości"
+    ]
+  },
+  "unitech-ea660": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "System Android v. 13 – upgrade do v. 16",
+      "Pamięć RAM 6 GB, Flash 128 GB",
+      "Procesor 2,4 GHz ośmiordzeniowy",
+      "Dodatkowa karta pamięci micro SD 64 GB",
+      "Bluetooth 5.0",
+      "Moduł GSM/GPRS, moduł GPS",
+      "Dual SIM",
+      "Skaner 1D i 2D",
+      "Wyświetlacz 6,0″",
+      "Ładowarka sieciowa i ładowarka samochodowa",
+      "Akumulator 5000 mAh"
+    ]
+  },
+  "zebra-ds2208": {
+    "dostawca": "TAKMA / SCANTER",
+    "punkty": [
+      "Kody 1D i 2D",
+      "Zasięg do 36,8 cm",
+      "Upadki z 1,5 m",
+      "IP52",
+      "USB i RS232",
+      "W zestawie kabel USB i podstawka"
+    ]
+  },
+  "zebra-ds2278": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Bluetooth",
+      "Akumulator 2400 mAh do 84 h",
+      "Kody 1D i 2D",
+      "Zasięg do 37 cm",
+      "IP52",
+      "Upadki z 1,5 m",
+      "W zestawie kabel USB i podstawka"
+    ]
+  },
+  "zebra-em45": {
+    "dostawca": "TAKMA",
+    "nota": "Zebra EM45 można doposażyć w stację dokującą, która pozwala używać rejestratora jak komputera stacjonarnego po podłączeniu go do zewnętrznego monitora.",
+    "punkty": [
+      {
+        "t": "System Android 14 z możliwością upgrade'u do v. 18",
+        "b": true
+      },
+      "Procesor 2,2 GHz ośmiordzeniowy",
+      "Pamięć RAM 8 GB, Flash 128 GB",
+      "Dodatkowa karta pamięci micro SD 64 GB",
+      "Bluetooth 5.3",
+      "Moduł GSM/GPRS, moduł GPS, moduł Wi-Fi",
+      "WWAN 5G",
+      "Dual SIM",
+      {
+        "t": "Wyświetlacz 6,7″",
+        "b": true
+      },
+      "Akumulator 4900 mAh",
+      "Ładowarka sieciowa i ładowarka samochodowa"
+    ]
+  },
+  "zebra-tc27": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "System Android 13 (lub wyższy)",
+      "Pamięć RAM 6 GB, Flash 64 GB",
+      "Dodatkowa karta pamięci micro SD 64 GB",
+      "Bluetooth",
+      "Moduł GSM/GPRS",
+      "Moduł GPS",
+      "Skaner 1D i 2D",
+      "Wyświetlacz 6″",
+      "Ładowarka sieciowa z możliwością wykorzystania do transmisji danych i ładowarka samochodowa",
+      "Akumulator 3100 mAh"
+    ]
+  },
+  "zebra-tc58e": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "System Android 13",
+      "Procesor 2,4 GHz",
+      "Pamięć RAM 8 GB, Flash 64 GB",
+      "Dodatkowa karta pamięci micro SD 64 GB",
+      "Bluetooth 5.2",
+      "Moduł GSM/GPRS, moduł GPS, moduł Wi-Fi",
+      "Skaner 1D i 2D",
+      "Wyświetlacz 6,0″",
+      "Akumulator 4400 mAh",
+      "Ładowarka sieciowa i ładowarka samochodowa"
+    ]
+  },
+  "zebra-zd421c": {
+    "dostawca": "TAKMA / SCANTER",
+    "punkty": [
+      "Termotransfer z kasetą 74 m i termika",
+      "203 dpi",
+      "152 mm/s",
+      "Szerokość druku 104 mm",
+      "USB, Ethernet lub Wi-Fi jako moduł"
+    ]
+  },
+  "zebra-zq521": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "203 dpi",
+      "127 mm/s",
+      "IP54",
+      "Upadek 2 m",
+      "Wi-Fi ac",
+      "Link-OS",
+      {
+        "t": "W zestawie:",
+        "b": true,
+        "pod": [
+          "Moduł Bluetooth",
+          "Akumulator, ładowarka sieciowa i samochodowa",
+          "Torba na zestaw z rejestratorem"
+        ]
+      }
     ]
   }
 }

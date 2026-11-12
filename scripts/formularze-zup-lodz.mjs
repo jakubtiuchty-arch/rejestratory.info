@@ -11,12 +11,11 @@
  *
  * Skąd dane — nic nie jest wpisywane tutaj z ręki poza poprawkami literówek:
  *   ceny, okres, promocje, wyposażenie  → data/oferty-skladnicy.ts
- *   opis urządzenia i dostawca          → komórka urządzenia w .docx z oferty-zrodla/
+ *   opis urządzenia i dostawca          → formularze-zrodla/zup-lodz-opisy.json
  *   nazwa, zdjęcie, kategoria           → karta produktu app/produkt/<slug>/page.tsx
  *
- * Wynik: public/formularze/zup-lodz-<slug>.pdf. Druk do PDF i pola robi
+ * Wynik: public/formularze/zup-lodz/<kategoria>/zup-lodz-<slug>.pdf. Druk do PDF i pola robi
  * scripts/formularz-pdf.py (ten sam, co przy formularzach ZPUH Olsztyn).
- * Zebra EM45 jest pomijana — ma własny formularz ze stacją dokującą.
  */
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, mkdtempSync, existsSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
@@ -27,14 +26,7 @@ import { fileURLToPath } from 'node:url'
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const w = (...p) => path.join(ROOT, ...p)
 
-const POMIJANE = ['zebra-em45']
-
-/**
- * Oferty z cennika lipcowego mają w dokumencie termin „do 31.08.2026”. Składnica
- * sprzedaje po tych cenach dalej, więc formularz podaje „do odwołania” — decyzja
- * Jakuba z 12.11.2026. Sam cennik (data/oferty-skladnicy.ts) zostaje zgodny z dokumentem.
- */
-const TERMINY_DO_ODWOLANIA = ['2026-08-31']
+const POMIJANE = []
 
 /* ───────────────────────── dane wejściowe ───────────────────────── */
 
@@ -278,19 +270,20 @@ const JEDNA_LINIA_NAZWY = ['hp-460']
 
 /* ───────────────────────── nazewnictwo ───────────────────────── */
 
-/** kategoria karty → [etykieta w zielonym pasie, rodzaj urządzenia w tytule pozycji i podtytule] */
+/** kategoria karty → [etykieta w zielonym pasie, rodzaj urządzenia w tytule pozycji i podtytule, folder w public/formularze/zup-lodz/] */
 const RODZAJE = {
-  Rejestratory: ['Rejestrator leśniczego', 'Mobilny komputer dotykowy'],
-  Telefony: ['Rejestrator leśniczego', 'Mobilny komputer dotykowy'],
-  Tablety: ['Tablet', 'Wzmocniony tablet'],
-  'Drukarki do rejestratora': ['Drukarka mobilna', 'Drukarka mobilna'],
-  'Drukarki laserowe': ['Drukarka', 'Drukarka laserowa'],
-  'Urządzenia wielofunkcyjne': ['Urządzenie wielofunkcyjne', 'Urządzenie wielofunkcyjne'],
-  Laptopy: ['Laptop', 'Laptop'],
-  'All in One': ['Komputer all-in-one', 'Komputer all-in-one'],
-  Monitory: ['Monitor', 'Monitor'],
-  'Elektroniczne Zarządzanie Dokumentacją': ['Sprzęt do EZD', null],
-  'Akcesoria komputerowe': ['Akcesoria komputerowe', null],
+  Rejestratory: ['Rejestrator leśniczego', 'Mobilny komputer dotykowy', 'rejestratory'],
+  Telefony: ['Rejestrator leśniczego', 'Mobilny komputer dotykowy', 'rejestratory'],
+  Tablety: ['Tablet', 'Wzmocniony tablet', 'tablety'],
+  'Drukarki do rejestratora': ['Drukarka mobilna', 'Drukarka mobilna', 'drukarki-mobilne'],
+  'Drukarki laserowe': ['Drukarka', 'Drukarka laserowa', 'drukarki-i-urzadzenia-wielofunkcyjne'],
+  'Urządzenia wielofunkcyjne': ['Urządzenie wielofunkcyjne', 'Urządzenie wielofunkcyjne', 'drukarki-i-urzadzenia-wielofunkcyjne'],
+  Laptopy: ['Laptop', 'Laptop', 'laptopy-i-komputery'],
+  'All in One': ['Komputer all-in-one', 'Komputer all-in-one', 'laptopy-i-komputery'],
+  Monitory: ['Monitor', 'Monitor', 'monitory'],
+  'Elektroniczne Zarządzanie Dokumentacją': ['Sprzęt do EZD', null, 'sprzet-do-ezd'],
+  'Urządzenia fiskalne': ['Drukarka fiskalna', 'Drukarka fiskalna', 'drukarki-mobilne'],
+  'Akcesoria komputerowe': ['Akcesoria komputerowe', null, 'akcesoria-komputerowe'],
 }
 
 /** Wyjątki: rodzaj (wtedy tytuł = rodzaj + nazwa z karty) albo cały tytuł pozycji. */
@@ -322,13 +315,15 @@ const WYJATKI = {
 }
 
 /**
- * Opisy przepisane z dokumentu ręcznie — tam, gdzie komórka w Wordzie jest
- * ścianą tekstu albo urywa się w połowie (monitory HP ze stacją dokującą).
- * Treść i wartości z dokumentu, sam układ skrócony do listy.
+ * Opisy urządzeń: lista punktów, dostawca i ewentualna nota pod tabelą.
+ *
+ * Od 12.11.2026 to jest źródło opisów — ZUP publikuje oferty jako PDF, więc
+ * komórki z Worda nie da się już czytać przy każdej budowie. Wpisy powstały
+ * z dokumentów .docx (po redakcji literówek), a nowe modele są przepisane
+ * z PDF-ów ze strony składnicy. Oferta bez wpisu idzie starą ścieżką przez
+ * .docx z oferty-zrodla/, o ile jej `plik` jeszcze tam leży.
  */
-const OPISY_RECZNE = existsSync(w('formularze-zrodla/zup-lodz-opisy.json'))
-  ? JSON.parse(readFileSync(w('formularze-zrodla/zup-lodz-opisy.json'), 'utf8'))
-  : {}
+const OPISY = JSON.parse(readFileSync(w('formularze-zrodla/zup-lodz-opisy.json'), 'utf8'))
 
 function nazwaDodatku(nazwa, nazwaKarty) {
   return popraw(nazwa)
@@ -344,39 +339,41 @@ function model(o) {
   const k = karta(o.slug)
   if (!k.nazwa || !k.kategoria) throw new Error(`${o.slug}: karta bez nazwy albo kategorii`)
   const wyj = WYJATKI[o.slug] ?? {}
-  const [etykietaKat, rodzajKat] = RODZAJE[k.kategoria] ?? []
+  const [etykietaKat, rodzajKat, folder] = RODZAJE[k.kategoria] ?? []
   if (!etykietaKat) throw new Error(`${o.slug}: nieznana kategoria „${k.kategoria}”`)
   const rodzaj = wyj.rodzaj ?? rodzajKat
-  const opis = opisZDokumentu(komorkaUrzadzenia(o), o.slug)
-  let punkty = opis.punkty
-  let wstep = null
-
-  // drukarki mobilne: dokument wymienia sam zestaw — parametry dopowiada karta
-  const samZestaw = /w zestawie\s*:?\s*$/i.test(komorkaUrzadzenia(o)[0].t)
-  const zKarty = (k.parametry ?? '').split(' · ').filter(Boolean).map((t) => ({ t: punkt(t), b: false, pod: [] }))
-  if (samZestaw) punkty = [...zKarty, { t: 'W zestawie:', b: true, pod: punkty.map((p) => p.t) }]
-  // dokument podaje samą nazwę (czytniki, drukarki etykiet, skaner) — parametry z karty
-  else if (!punkty.length) punkty = zKarty
-
-  for (const [z, na] of SPROSTOWANIA[o.slug] ?? []) for (const x of punkty) x.t = x.t.replace(z, na)
-  if (wyj.dopisz) punkty = [...punkty, ...wyj.dopisz.map((t) => ({ t, b: false, pod: [] }))]
-
-  const reczny = OPISY_RECZNE[o.slug]
-  if (reczny) punkty = reczny.punkty.map((p) => (typeof p === 'string' ? { t: p, b: false, pod: [] } : { b: false, pod: [], ...p }))
+  const gotowy = OPISY[o.slug]
+  let punkty, opis
+  if (gotowy) {
+    opis = { dostawca: gotowy.dostawca ?? null, nota: gotowy.nota ?? null }
+    punkty = gotowy.punkty.map((p) => (typeof p === 'string' ? { t: p, b: false, pod: [] } : { b: false, pod: [], ...p }))
+  } else {
+    const komorka = komorkaUrzadzenia(o)
+    opis = opisZDokumentu(komorka, o.slug)
+    punkty = opis.punkty
+    // drukarki mobilne: dokument wymienia sam zestaw — parametry dopowiada karta
+    const samZestaw = /w zestawie\s*:?\s*$/i.test(komorka[0].t)
+    const zKarty = (k.parametry ?? '').split(' · ').filter(Boolean).map((t) => ({ t: punkt(t), b: false, pod: [] }))
+    if (samZestaw) punkty = [...zKarty, { t: 'W zestawie:', b: true, pod: punkty.map((p) => p.t) }]
+    // dokument podaje samą nazwę (czytniki, drukarki etykiet, skaner) — parametry z karty
+    else if (!punkty.length) punkty = zKarty
+    for (const [z, na] of SPROSTOWANIA[o.slug] ?? []) for (const x of punkty) x.t = x.t.replace(z, na)
+    if (wyj.dopisz) punkty = [...punkty, ...wyj.dopisz.map((t) => ({ t, b: false, pod: [] }))]
+  }
   if (!punkty.length) throw new Error(`${o.slug}: brak opisu urządzenia`)
 
-  const dostawca = reczny?.dostawca ?? opis.dostawca
+  const dostawca = opis.dostawca
   return {
     slug: o.slug,
+    folder,
     etykieta: wyj.etykieta ?? etykietaKat,
     h1: k.nazwa,
     podtytul: `${rodzaj} dla Lasów Państwowych — ceny netto dla LP`,
-    okres: o.okres && TERMINY_DO_ODWOLANIA.includes(o.okres.do) ? { ...o.okres, do: null } : o.okres,
+    okres: o.okres,
     dostawca,
     pozycja: {
       tytul: wyj.tytul ?? `${rodzaj} ${k.nazwa}`,
       zdjecie: k.zdjecie ? `public${k.zdjecie}` : null,
-      wstep,
       punkty,
       link: `www.rejestratory.info/produkt/${o.slug}`,
       cenaNetto: o.urzadzenie.cenaNetto,
@@ -693,7 +690,7 @@ const argumenty = process.argv.slice(2)
 const iHtml = argumenty.indexOf('--html-do')
 const katalogHtml = iHtml >= 0 ? path.resolve(argumenty.splice(iHtml, 2)[1]) : mkdtempSync(path.join(tmpdir(), 'formularze-zup-'))
 const iPdf = argumenty.indexOf('--pdf-do')
-const katalogPdf = iPdf >= 0 ? path.resolve(argumenty.splice(iPdf, 2)[1]) : w('public/formularze')
+const katalogPdf = iPdf >= 0 ? path.resolve(argumenty.splice(iPdf, 2)[1]) : w('public/formularze/zup-lodz')
 const tylkoDane = argumenty.includes('--dane')
 const wybrane = argumenty.filter((a) => !a.startsWith('--'))
 mkdirSync(katalogHtml, { recursive: true })
@@ -714,9 +711,10 @@ for (const o of doZrobienia) {
       if (d.nota) console.log(`  ! ${d.nota}`)
       continue
     }
+    mkdirSync(path.join(katalogPdf, d.folder), { recursive: true })
     const html = path.join(katalogHtml, `zup-lodz-${d.slug}.html`)
     writeFileSync(html, szablon(d))
-    const wynik = execFileSync('python3', [w('scripts/formularz-pdf.py'), html, path.join(katalogPdf, `zup-lodz-${d.slug}.pdf`)], {
+    const wynik = execFileSync('python3', [w('scripts/formularz-pdf.py'), html, path.join(katalogPdf, d.folder, `zup-lodz-${d.slug}.pdf`)], {
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'pipe'],
     })
