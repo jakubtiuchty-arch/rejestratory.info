@@ -142,6 +142,19 @@ const products = [
     badges: [],
     featured: false,
     customUrl: "/produkt/honeywell-ct32"
+  },
+  {
+    id: 12,
+    name: "Honeywell CT32 bez skanera",
+    category: "Rejestratory",
+    description: "Ta sama obudowa i modem 5G, bez skanera kodów",
+    specifications: "6″ FHD+, 6 GB RAM / 128 GB, IP68, 4500 mAh",
+    availability: "Dostępny",
+    whereToBuy: "ZPUH Olsztyn, TAKMA",
+    image: "/ct32_2.png",
+    badges: [],
+    featured: false,
+    customUrl: "/produkt/honeywell-ct32-bez-skanera"
   }
 ];
 
@@ -176,6 +189,7 @@ const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
     grupa: 'Honeywell',
     wiersze: [
       { model: 'CT32', href: '/produkt/honeywell-ct32', ekran: '6,0″ FHD+', android: 'do 18', aku: '4500 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tak', naj: ['android'] },
+      { model: 'CT32 bez skanera', href: '/produkt/honeywell-ct32-bez-skanera', ekran: '6,0″ FHD+', android: 'do 18', aku: '4500 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tylko aparat', naj: ['android'], slabe: ['skaner'] },
       { model: 'CT47', href: '/produkt/honeywell-ct47', ekran: '5,5″ FHD', android: 'do 16', aku: '4775 mAh', odpornosc: 'IP68 · 2,4 m', temp: '−20 °C', skaner: 'tak', naj: ['odpornosc'] },
       { model: 'CT30 XP', href: '/produkt/honeywell-ct30', ekran: '5,5″ FHD', android: 'do 15', aku: '3400 mAh', odpornosc: 'IP67 · 1,5 m', temp: '−10 °C', skaner: 'tak' },
       { model: 'CT40 XP', href: '/produkt/honeywell-ct40xp', ekran: '5,0″ FHD', android: 'do 13', aku: '4020 mAh', odpornosc: 'IP67 · 1,2 m', temp: '−20 °C', skaner: 'tak' },

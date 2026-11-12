@@ -723,6 +723,104 @@ export const OFERTY_ZPUH_OLSZTYN: OfertaSkladnicy[] = [
     ]
   },
   {
+    "slug": "honeywell-ct32-bez-skanera",
+    "skladnica": "zpuh-olsztyn",
+    "plik": "Druk zamówień Honeywell CT32 bez skanera 6.11.2026.pdf",
+    "formularz": "https://zpuh.olsztyn.lasy.gov.pl/documents/21871640/54943230/Druk+zam%C3%B3wie%C5%84+Honeywell+CT32+bez+skanera+6.11.2026.pdf/6ebc8227-9731-ec0f-08a4-8462acdaa2df",
+    "strona": "https://zpuh.olsztyn.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-11-06",
+      "do": null
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Mobilny komputer dotykowy Honeywell CT32",
+      "cenaNetto": 4230,
+      "promocja": false,
+      "wZestawie": [
+        "System Android 14",
+        "Akumulator",
+        "Karta pamięci micro SD 64 GB",
+        "Ładowarka sieciowa oraz ładowarka samochodowa",
+        "Gwarancja 24 miesiące"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Nakładka ochronna z paskiem na rękę",
+        "cenaNetto": 59,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Pasek na rękę",
+        "cenaNetto": 156,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Pasek na nadgarstek",
+        "cenaNetto": 239,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Zestaw słuchawkowy",
+        "cenaNetto": 254,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Rysik do ekranu",
+        "cenaNetto": 155,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Folia lub szkło ochronne na ekran",
+        "cenaNetto": 62,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Stacja dokująca z portem USB + zasilacz +kabel USB",
+        "cenaNetto": 772,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Stacja dokująca z portem Ethernet + zasilacz",
+        "cenaNetto": 957,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Standardowy akumulator główny 4500 mAh",
+        "cenaNetto": 197,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 120,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 130,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Kontrakt serwisowy producenta (3 letni)",
+        "cenaNetto": 1017,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
     "slug": "honeywell-rp4",
     "skladnica": "zpuh-olsztyn",
     "plik": "Druk zamówień Honeywell RP4 6.11.2026.pdf",
@@ -766,6 +864,56 @@ export const OFERTY_ZPUH_OLSZTYN: OfertaSkladnicy[] = [
       {
         "nazwa": "Papier termiczny",
         "cenaNetto": 7.4,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ]
+  },
+  {
+    "slug": "samsung-s26-fe",
+    "skladnica": "zpuh-olsztyn",
+    "plik": "Druk zamówień Samsung S25 FE 6.11.2026.pdf",
+    "formularz": "https://zpuh.olsztyn.lasy.gov.pl/documents/21871640/54943230/Druk+zam%C3%B3wie%C5%84+Samsung+S25+FE+6.11.2026.pdf/970e9995-e407-e6e4-7b09-d9dd70f8d57b",
+    "strona": "https://zpuh.olsztyn.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-11-06",
+      "do": null
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Mobilny komputer dotykowy typu smartfon Samsung Galaxy S25 FE 5G",
+      "cenaNetto": 2515,
+      "promocja": false,
+      "wZestawie": [
+        "Akumulator",
+        "Ładowarka sieciowa",
+        "Ładowarka samochodowa",
+        "Kabel USB-C",
+        "Gwarancja 24 miesiące"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 126,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 126,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Szkło lub folia ochronna na ekran",
+        "cenaNetto": 138,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Etui ochronne",
+        "cenaNetto": 193,
         "promocja": false,
         "wZestawie": []
       }

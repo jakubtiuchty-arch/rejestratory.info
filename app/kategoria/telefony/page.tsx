@@ -75,6 +75,19 @@ const products = [
     customUrl: "/produkt/samsung-s25-fe"
   },
   {
+    id: 9,
+    name: "Samsung Galaxy S26 FE",
+    category: "Telefony",
+    description: "Następca S25 FE — Exynos 2500 i zabezpieczenia do 2033 roku",
+    specifications: "Android 17, 6,7\" FHD+ AMOLED 120Hz, Exynos 2500, 8GB RAM, 256GB",
+    availability: "Dostępny",
+    whereToBuy: "ZPUH Olsztyn, TAKMA",
+    image: "s26fe_1.png",
+    badge: null,
+    featured: false,
+    customUrl: "/produkt/samsung-s26-fe"
+  },
+  {
     id: 6,
     name: "Samsung Galaxy XCover7 Pro",
     category: "Telefony",
@@ -137,7 +150,8 @@ const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
     wiersze: [
       { model: 'Galaxy A37', href: '/produkt/samsung-a37', ekran: '6,7″ AMOLED', zabezp: 'do 03.2032', aku: '5000 mAh', odpornosc: 'IP68', aparat: '50 Mpx' },
       { model: 'Galaxy A57', href: '/produkt/samsung-a57', ekran: '6,7″ AMOLED', zabezp: 'do 03.2032', aku: '5000 mAh', odpornosc: 'IP68', aparat: '50 Mpx' },
-      { model: 'Galaxy S25 FE', href: '/produkt/samsung-s25-fe', ekran: '6,7″ AMOLED', zabezp: 'do 09.2032', aku: '4900 mAh', odpornosc: 'IP68', aparat: '50 Mpx · zoom 3x', naj: ['zabezp'] },
+      { model: 'Galaxy S25 FE', href: '/produkt/samsung-s25-fe', ekran: '6,7″ AMOLED', zabezp: 'do 09.2032', aku: '4900 mAh', odpornosc: 'IP68', aparat: '50 Mpx · zoom 3x' },
+      { model: 'Galaxy S26 FE', href: '/produkt/samsung-s26-fe', ekran: '6,7″ AMOLED', zabezp: 'do 09.2033', aku: '4900 mAh', odpornosc: 'IP68', aparat: '50 Mpx · zoom 3x', naj: ['zabezp'] },
       { model: 'Galaxy S25+', href: '/produkt/samsung-s25-plus', ekran: '6,7″ AMOLED QHD+', zabezp: 'do 01.2032', aku: '4900 mAh', odpornosc: 'IP68', aparat: '50 Mpx · zoom 3x' },
       { model: 'Galaxy S25 Ultra', href: '/produkt/samsung-s25-ultra', ekran: '6,9″ AMOLED QHD+', zabezp: 'do 01.2032', aku: '5000 mAh', odpornosc: 'IP68', aparat: '200 Mpx · zoom 5x', naj: ['aparat'] },
       { model: 'Galaxy XCover7 Pro', href: '/produkt/samsung-xcover7', ekran: '6,6″ LCD', zabezp: 'do 05.2032', aku: '4350 mAh, wymienny', odpornosc: 'IP68, MIL-STD-810H', aparat: '50 Mpx', naj: ['odpornosc'] },

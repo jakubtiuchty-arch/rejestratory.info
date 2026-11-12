@@ -454,15 +454,15 @@
   "honeywell-ct32": {
     "dostawca": "TAKMA",
     "punkty": [
-      "System Android v. 13 – upgrade do v. 16",
+      "System Android 14 – aktualizacja do v. 16 i 18",
       "Pamięć RAM 6 GB, Flash 128 GB",
-      "Procesor 2,4 GHz ośmiordzeniowy",
+      "Procesor Qualcomm 4490, do 2,4 GHz ośmiordzeniowy",
       "Dodatkowa karta pamięci micro SD 64 GB",
-      "Bluetooth 5.0",
-      "Moduł GSM/GPRS, moduł GPS",
-      "Dual SIM",
+      "Bluetooth 5.3",
+      "Moduł 5G/LTE, moduł GPS",
+      "Dual SIM (nano SIM + eSIM)",
       "Skaner 1D i 2D",
-      "Wyświetlacz 5,5″",
+      "Wyświetlacz 6″ FHD+",
       "Ładowarka sieciowa i ładowarka samochodowa",
       "Akumulator 3,8 V, 4500 mAh"
     ]

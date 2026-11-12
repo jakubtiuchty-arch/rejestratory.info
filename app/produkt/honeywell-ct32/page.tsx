@@ -3,8 +3,9 @@
 import ProductPage, { type ProductData } from '@/components/product/ProductPage'
 import { ICON } from '@/components/product/icons'
 
-// Dane wyłącznie z druku ZUP Łódź „Oferta na Rejestrator Honeywell CT32 23.03.2026”.
-// Odporności i czasu pracy druk nie podaje, więc karta ich nie deklaruje.
+// Parametry według Honeywella: datasheet CT32 (Rev A 05/25), Configuration Guide (Global Rev A),
+// Quick Start Guide (Rev D 04/26). Do 12.11.2026 karta szła za drukiem ZUP Łódź, który podaje
+// błędnie 5,5″, Androida 13, Bluetooth 5.0 i GSM/GPRS. Wersja bez skanera ma osobną kartę.
 const data: ProductData = {
   slug: 'honeywell-ct32',
   name: 'Honeywell CT32',
@@ -13,7 +14,7 @@ const data: ProductData = {
   images: ['/ct32_2.png', '/ct32_1.png', '/ct32_3.png'],
   inquiry: {
     description: 'Rejestrator leśniczego ze skanerem 1D i 2D',
-    specifications: 'Android 13 z aktualizacją do 16 · 5,5″ · 6/128 GB · Dual SIM · 4500 mAh',
+    specifications: 'Android 14, aktualizacja do 16 i 18 · 6″ FHD+ · 6/128 GB · 5G · skaner 1D/2D · 4500 mAh',
   },
   whyNavLabel: 'Dlaczego CT32',
   whyHeading: 'Do czego przyda się w nadleśnictwie',
@@ -21,20 +22,24 @@ const data: ProductData = {
   highlights: [
     { icon: ICON.pamiec, label: 'Pamięć', value: '6 GB RAM + 128 GB' },
     { icon: ICON.skaner, label: 'Skaner', value: 'kody 1D i 2D' },
-    { icon: ICON.siec, label: 'Karty SIM', value: 'dwie, z GPS i GSM' },
+    { icon: ICON.siec, label: 'Sieć', value: '5G, nano SIM + eSIM, GPS' },
     { icon: ICON.czaspracy, label: 'Bateria', value: '4500 mAh' },
   ],
   variants: [{ id: 'pamiec', label: 'Pamięć', options: ['6 GB / 128 GB'] }],
   specGroups: [
     {
       title: 'Wyświetlacz',
-      rows: [{ k: 'Przekątna', v: '5,5″' }],
+      rows: [
+        { k: 'Przekątna', v: '6″' },
+        { k: 'Rozdzielczość', v: '1080 × 2160 Full HD+, 450 nitów' },
+        { k: 'Szkło', v: 'Corning Gorilla Glass 5' },
+      ],
     },
     {
       title: 'Wydajność',
       rows: [
-        { k: 'System', v: 'Android 13, z aktualizacją do 16' },
-        { k: 'Procesor', v: '8 rdzeni, 2,4 GHz' },
+        { k: 'System', v: 'Android 14, aktualizacja do 16 i 18 (zależnie od wsparcia Qualcomma)' },
+        { k: 'Procesor', v: 'Qualcomm 4490, 8 rdzeni, do 2,4 GHz' },
         { k: 'Pamięć RAM', v: '6 GB' },
         { k: 'Pamięć wbudowana', v: '128 GB' },
         { k: 'Karta pamięci', v: 'micro SD 64 GB w zestawie' },
@@ -44,9 +49,19 @@ const data: ProductData = {
       title: 'Łączność i odczyt',
       rows: [
         { k: 'Skaner', v: 'kody 1D i 2D' },
-        { k: 'Sieć', v: 'moduł GSM/GPRS, dwie karty SIM' },
-        { k: 'Lokalizacja', v: 'moduł GPS' },
-        { k: 'Bluetooth', v: '5.0' },
+        { k: 'Sieć', v: '5G i LTE, nano SIM i eSIM' },
+        { k: 'Wi-Fi i NFC', v: 'Wi-Fi 6E, NFC' },
+        { k: 'Lokalizacja', v: 'GPS L1+L5, A-GPS, GLONASS, Galileo, BeiDou' },
+        { k: 'Bluetooth', v: '5.3' },
+        { k: 'Aparaty', v: '13 Mpx z tyłu, 8 Mpx z przodu' },
+      ],
+    },
+    {
+      title: 'Odporność',
+      rows: [
+        { k: 'Klasa szczelności', v: 'IP65 i IP68' },
+        { k: 'Upadki', v: 'z 1,5 m na beton, z 1,8 m w etui' },
+        { k: 'Temperatura pracy', v: 'od −20 °C do +50 °C' },
       ],
     },
     {
@@ -75,30 +90,30 @@ const data: ProductData = {
     },
     {
       icon: ICON.siec,
-      title: 'Dwie karty SIM w jednym urządzeniu',
+      title: '5G i dwie karty: fizyczna i eSIM',
       body:
-        'Służbowa i zapasowa karta obok siebie — w miejscach, gdzie jeden operator nie łapie, ' +
-        'drugi zwykle tak. GPS i moduł GSM pracują niezależnie od telefonu prywatnego.',
+        'Służbowa karta nano SIM i zapasowy profil eSIM w jednym urządzeniu — w miejscach, gdzie ' +
+        'jeden operator nie łapie, drugi zwykle tak. GPS działa na dwóch pasmach (L1 i L5).',
     },
     {
       icon: ICON.wsparcie,
       title: 'Android z drogą aktualizacji',
       body:
-        'Urządzenie wychodzi z Androidem 13 z możliwością aktualizacji do wersji 16, więc nie ' +
-        'wypadnie z obiegu razem z pierwszą zmianą wymagań systemowych.',
+        'Urządzenie wychodzi z Androidem 14, a Honeywell zapowiada aktualizacje do wersji 16 i 18, ' +
+        'więc nie wypadnie z obiegu razem z pierwszą zmianą wymagań systemowych.',
     },
   ],
   usedBy: { device: 'Honeywell CT32' },
   related: [
     {
-      name: 'Honeywell CT30P',
-      href: '/produkt/honeywell-ct30',
-      note: 'Ten sam ekran 5,5″, obudowa odporna na upadki i zachlapanie',
+      name: 'Honeywell CT32 bez skanera',
+      href: '/produkt/honeywell-ct32-bez-skanera',
+      note: 'Ta sama obudowa i parametry, bez skanera kodów',
     },
     {
-      name: 'Honeywell CT40XP',
-      href: '/produkt/honeywell-ct40xp',
-      note: 'Większy ekran, gdy liczy się praca z formularzami',
+      name: 'Zebra TC58e',
+      href: '/produkt/zebra-tc58e',
+      note: 'Terminal ze skanerem, praca od −20 °C i upadek z 1,8 m',
     },
   ],
 }

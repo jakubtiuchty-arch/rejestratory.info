@@ -32,6 +32,8 @@ UUID = {
     'Druk zamówień Zebra-TC27 6.11.2026.pdf': 'c44e0e37-57f6-b52f-844f-2671db109f04',
     'Druk zamówień Zebra EM45 6.11.2026.pdf': 'f12a529c-6978-b697-ac33-73ef561f8228',
     'Druk zamówień Honeywell CT32 ze skanerem 6.11.2026.pdf': 'c978d8cb-d3d6-d5d8-48cf-8f5116cf00cd',
+    'Druk zamówień Honeywell CT32 bez skanera 6.11.2026.pdf': '6ebc8227-9731-ec0f-08a4-8462acdaa2df',
+    'Druk zamówień Samsung S25 FE 6.11.2026.pdf': '970e9995-e407-e6e4-7b09-d9dd70f8d57b',
     'Druk zamówień Zebra ZQ521 6.11.2026.pdf': 'e10f537f-e6be-ec88-ee8a-10e5a19e6923',
     'Druk zamówień Seiko MP-A40 6.11.2026.pdf': 'f5df67ac-70e7-a66d-1eec-3ff751a189bd',
     'Druk zamówień Sewoo LK-P 400 6.11.2026.pdf': 'bc48c24d-ec9a-7025-09b5-09fa813d3a9a',
@@ -56,6 +58,14 @@ TERMICZNA_NAZWY = {'Akumulator standardowy': 'Akumulator', 'Papier termiczny w r
 REJESTRATOR = ['Akumulator', 'Karta pamięci micro SD 64 GB', 'Ładowarka sieciowa oraz ładowarka samochodowa', 'Gwarancja 24 miesiące']
 BROTHER = lambda mies: ['Toner startowy', 'Kabel zasilający', f'Gwarancja {mies} miesi{"ące" if mies == 24 else "ęcy"}']
 
+CT32_NAZWY = {
+        'Kontrakt serwisowy producenta': 'Kontrakt serwisowy producenta (3 letni)',
+        'Szkło lub folia ochronna na ekran': 'Folia lub szkło ochronne na ekran',
+        'Stacja dokująca USB': 'Stacja dokująca z portem USB + zasilacz +kabel USB',
+        'Stacja dokująca USB + Ethernet': 'Stacja dokująca z portem Ethernet + zasilacz',
+        'Akumulator standardowy': 'Standardowy akumulator główny 4500 mAh',
+    }
+
 # plik formularza → slug karty, folder, dział na stronie Olsztyna, zestaw z cennika, nazwy pozycji
 OFERTY = {
     'Druk zamówień Zebra ZQ521 6.11.2026.pdf': ('zebra-zq521', 'drukarki-mobilne', 'drukarki', TERMICZNA, {
@@ -69,14 +79,11 @@ OFERTY = {
     'Druk zamówień Sewoo LK-P 400 6.11.2026.pdf': ('sewoo-lkp400', 'drukarki-mobilne', 'drukarki', TERMICZNA, TERMICZNA_NAZWY),
     'Druk zamówień Honeywell RP4 6.11.2026.pdf': ('honeywell-rp4', 'drukarki-mobilne', 'drukarki', TERMICZNA, TERMICZNA_NAZWY),
     'Druk zamówień Bixolon SPP-R410 6.11.2026.pdf': ('bixolon-sppr410', 'drukarki-mobilne', 'drukarki', TERMICZNA, TERMICZNA_NAZWY),
-    # CT32 Olsztyn sprzedaje w dwóch wersjach; karta i ZUP opisują wersję ze skanerem
-    'Druk zamówień Honeywell CT32 ze skanerem 6.11.2026.pdf': ('honeywell-ct32', 'rejestratory', 'rejestratory', ['System Android 14'] + REJESTRATOR + ['Skaner 1D i 2D'], {
-        'Kontrakt serwisowy producenta': 'Kontrakt serwisowy producenta (3 letni)',
-        'Szkło lub folia ochronna na ekran': 'Folia lub szkło ochronne na ekran',
-        'Stacja dokująca USB': 'Stacja dokująca z portem USB + zasilacz +kabel USB',
-        'Stacja dokująca USB + Ethernet': 'Stacja dokująca z portem Ethernet + zasilacz',
-        'Akumulator standardowy': 'Standardowy akumulator główny 4500 mAh',
-    }),
+    # CT32 Olsztyn sprzedaje w dwóch wersjach — każda ma swoją kartę (wersję bez skanera dodano 12.11.2026)
+    'Druk zamówień Honeywell CT32 ze skanerem 6.11.2026.pdf': ('honeywell-ct32', 'rejestratory', 'rejestratory', ['System Android 14'] + REJESTRATOR + ['Skaner 1D i 2D'], CT32_NAZWY),
+    'Druk zamówień Honeywell CT32 bez skanera 6.11.2026.pdf': ('honeywell-ct32-bez-skanera', 'rejestratory', 'rejestratory', ['System Android 14'] + REJESTRATOR, CT32_NAZWY),
+    # plik nazywa się „S25 FE”, ale Olsztyn przerobił formularz na Galaxy S26 FE (8/256 GB) — karta dodana 12.11.2026
+    'Druk zamówień Samsung S25 FE 6.11.2026.pdf': ('samsung-s26-fe', 'rejestratory', 'rejestratory', ['Akumulator', 'Ładowarka sieciowa', 'Ładowarka samochodowa', 'Kabel USB-C', 'Gwarancja 24 miesiące'], {}),
     'Druk zamówień Zebra-TC27 6.11.2026.pdf': ('zebra-tc27', 'rejestratory', 'rejestratory', REJESTRATOR + ['Skaner 1D i 2D'], {
         'Stacja dokująca USB': 'Stacja dokująca + port USB + zasilacz +kabel USB',
         'Stacja dokująca USB + Ethernet': 'Stacja dokująca + port USB + zasilacz + kabel USB + port Ethernet',
@@ -167,9 +174,6 @@ OFERTY = {
     'Druk zamówień Epson DS-730N 6.11.2026.pdf': ('epson-ds730n', 'sprzet-do-ezd', 'urzadzenia-do-ezd-z-akcesoriami', ['Zasilacz sieciowy', 'Kabel USB', 'Gwarancja 12 miesięcy'], {}),
     'Druk zamówień Zebra DS2208 6.11.2026.pdf': ('zebra-ds2208', 'sprzet-do-ezd', 'urzadzenia-do-ezd-z-akcesoriami', ['Kabel USB', 'Stojak', 'Gwarancja 12 miesięcy'], {}),
 }
-# Nie wchodzą na karty:
-# - „Druk zamówień Samsung S25 FE” — Olsztyn przerobił go na Galaxy S26 FE (8/256 GB), a karta opisuje S25 FE;
-# - „Druk zamówień Honeywell CT32 bez skanera” — wersja, której karta nie opisuje.
 
 
 def kwota(tekst):
