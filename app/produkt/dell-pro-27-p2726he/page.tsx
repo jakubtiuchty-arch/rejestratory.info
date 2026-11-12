@@ -102,9 +102,9 @@ const data: ProductData = {
   ],
   related: [
     {
-      name: 'Dell Pro 24 Plus P2425HE z USB-C',
-      href: '/produkt/dell-pro-24-plus-p2425he-usbc',
-      note: 'Ten sam zestaw portów na 23,8 cala',
+      name: 'Dell Pro P 24 P2426HE z USB-C',
+      href: '/produkt/dell-pro-p-24-p2426he',
+      note: 'Te same funkcje na mniejszym ekranie 23,8″',
     },
   ],
 }

@@ -11,29 +11,29 @@ import { porownajCeny } from '@/data/oferty'
 const products = [
   {
     id: 1,
-    name: "Samsung Galaxy A36",
+    name: "Samsung Galaxy A37",
     category: "Telefony",
     description: "Wszechstronny smartfon z wydajnym procesorem i długą żywotnością baterii",
-    specifications: "Android 15, 6,7\" FHD+, Snapdragon 6 Gen 3, 6GB RAM, 128GB",
+    specifications: "Android 16, 6,7\" FHD+, Exynos 1480, 6GB RAM, 128GB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
-    image: "a36_1.png",
+    image: "a37_1.png",
     badge: null,
     featured: false,
-    customUrl: "/produkt/samsung-a36"
+    customUrl: "/produkt/samsung-a37"
   },
   {
     id: 2,
-    name: "Samsung Galaxy A56",
+    name: "Samsung Galaxy A57",
     category: "Telefony", 
     description: "Zaawansowany smartfon z profesjonalnym aparatem i szybkim ładowaniem",
-    specifications: "Android 15, 6,7\" FHD+, Exynos 1580, 8GB RAM, 256GB",
+    specifications: "Android 16, 6,7\" FHD+, Exynos 1680, 8GB RAM, 128GB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
-    image: "a56_1.png",
+    image: "a57_1.png",
     badge: null,
     featured: true,
-    customUrl: "/produkt/samsung-a56"
+    customUrl: "/produkt/samsung-a57"
   },
   {
     id: 3,
@@ -76,13 +76,13 @@ const products = [
   },
   {
     id: 6,
-    name: "Samsung Galaxy XCover6 Pro",
+    name: "Samsung Galaxy XCover7 Pro",
     category: "Telefony",
     description: "Wytrzymały smartfon przemysłowy z certyfikatem IP68 i wymienną baterią",
-    specifications: "Android 12, 6,6\" FHD+ 120 Hz, Snapdragon 778G, 6GB RAM, 128GB",
+    specifications: "Android 15, 6,6\" FHD+ 120 Hz, Snapdragon 7s Gen 3, 6GB RAM, 128GB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
-    image: "xcover6pro_1.png",
+    image: "xcover7pro_1.png",
     badge: null,
     featured: true,
     customUrl: "/produkt/samsung-xcover7"
@@ -135,12 +135,12 @@ const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
   {
     grupa: 'Samsung',
     wiersze: [
-      { model: 'Galaxy A36', href: '/produkt/samsung-a36', ekran: '6,7″ AMOLED', zabezp: 'do 03.2031', aku: '5000 mAh', odpornosc: 'IP67', aparat: '50 Mpx' },
-      { model: 'Galaxy A56', href: '/produkt/samsung-a56', ekran: '6,7″ AMOLED', zabezp: 'do 03.2032', aku: '5000 mAh', odpornosc: 'IP67', aparat: '50 Mpx' },
+      { model: 'Galaxy A37', href: '/produkt/samsung-a37', ekran: '6,7″ AMOLED', zabezp: 'do 03.2032', aku: '5000 mAh', odpornosc: 'IP68', aparat: '50 Mpx' },
+      { model: 'Galaxy A57', href: '/produkt/samsung-a57', ekran: '6,7″ AMOLED', zabezp: 'do 03.2032', aku: '5000 mAh', odpornosc: 'IP68', aparat: '50 Mpx' },
       { model: 'Galaxy S25 FE', href: '/produkt/samsung-s25-fe', ekran: '6,7″ AMOLED', zabezp: 'do 09.2032', aku: '4900 mAh', odpornosc: 'IP68', aparat: '50 Mpx · zoom 3x', naj: ['zabezp'] },
       { model: 'Galaxy S25+', href: '/produkt/samsung-s25-plus', ekran: '6,7″ AMOLED QHD+', zabezp: 'do 01.2032', aku: '4900 mAh', odpornosc: 'IP68', aparat: '50 Mpx · zoom 3x' },
       { model: 'Galaxy S25 Ultra', href: '/produkt/samsung-s25-ultra', ekran: '6,9″ AMOLED QHD+', zabezp: 'do 01.2032', aku: '5000 mAh', odpornosc: 'IP68', aparat: '200 Mpx · zoom 5x', naj: ['aparat'] },
-      { model: 'Galaxy XCover6 Pro', href: '/produkt/samsung-xcover7', ekran: '6,6″ LCD', zabezp: 'do ok. 06.2027', aku: '4050 mAh, wymienny', odpornosc: 'IP68, MIL-STD-810H', aparat: '50 Mpx', naj: ['odpornosc'], slabe: ['zabezp'] },
+      { model: 'Galaxy XCover7 Pro', href: '/produkt/samsung-xcover7', ekran: '6,6″ LCD', zabezp: 'do 05.2032', aku: '4350 mAh, wymienny', odpornosc: 'IP68, MIL-STD-810H', aparat: '50 Mpx', naj: ['odpornosc'] },
     ],
   },
   {
@@ -455,7 +455,7 @@ export default function CategoryPage() {
             </table>
           </div>
           <p className="mt-3 text-xs text-gray-500">
-            Aktualizacje zabezpieczeń: daty według Samsung Polska; XCover6 Pro — 5 lat od premiery (06.2022). iPhone: Apple gwarantuje co najmniej 5 lat od zakończenia sprzedaży modelu.
+            Aktualizacje zabezpieczeń: daty według Samsung Polska. iPhone: Apple gwarantuje co najmniej 5 lat od zakończenia sprzedaży modelu.
           </p>
         </div>
       </section>

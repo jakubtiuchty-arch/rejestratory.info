@@ -83,11 +83,11 @@ const POLECANE_ZAPASOWO: PolecanyProdukt[] = [
     zdjecie: '/em45_1.webp',
   },
   {
-    slug: 'samsung-a56',
-    nazwa: 'Samsung Galaxy A56',
+    slug: 'samsung-a57',
+    nazwa: 'Samsung Galaxy A57',
     kategoria: 'Telefon',
     opis: 'Smartfon służbowy z zapasem pamięci',
-    zdjecie: '/a56_1.png',
+    zdjecie: '/a57_1.png',
   },
 ];
 

@@ -104,6 +104,17 @@ const MODELE = [
   ['HL-L6410', 'brother-hl-l6410'],
 ]
 
+/**
+ * Karty przerobione na następców (12.11.2026). Dokumenty .docx linkują jeszcze stare
+ * adresy kart, więc oferta wykryta pod starym slugiem trafia na kartę następcy.
+ */
+const PRZEMIANOWANE = {
+  'samsung-a36': 'samsung-a37',
+  'samsung-a56': 'samsung-a57',
+  'dell-pro-24-plus-p2425he': 'dell-pro-p-24-p2426h',
+  'dell-pro-24-plus-p2425he-usbc': 'dell-pro-p-24-p2426he',
+}
+
 const czytajDocx = (sciezka) => {
   // unzip do stdout — bez zewnętrznych zależności npm
   return execFileSync('unzip', ['-p', sciezka, 'word/document.xml'], {
@@ -387,8 +398,8 @@ const DZIALY_ZUP = {
   ],
   'monitory': [
     'dell-pro-24-plus-p2424heb',
-    'dell-pro-24-plus-p2425he',
-    'dell-pro-24-plus-p2425he-usbc',
+    'dell-pro-p-24-p2426h',
+    'dell-pro-p-24-p2426he',
     'dell-pro-27-plus-p2724deb',
     'dell-pro-27-p2726h',
     'dell-pro-27-p2726he',
@@ -736,6 +747,7 @@ for (const [plik, sciezka] of dokumenty) {
     }) => reszta
 
     for (const g of grupy.filter((g) => g.slug)) {
+      g.slug = PRZEMIANOWANE[g.slug] ?? g.slug
       oferty.push({
         slug: g.slug,
         skladnica,
@@ -838,26 +850,18 @@ const ZMIANY_ZE_STRONY_ZUP = {
     okres: od('2026-09-01'),
     ceny: { urzadzenie: 2396 },
   },
-  // Następcy pod kartą poprzednika (decyzja Jakuba z 12.11.2026): ZUP podmienił
-  // w ofercie samą nazwę — opis, cena, akcesoria i dostawca są jak u poprzednika.
-  // `model` to nazwa u składnicy; karta pokazuje ją przy cenie, formularz bierze ją za tytuł.
+  // Następcy (ZUP podmienił w ofercie samą nazwę — cena, akcesoria i dostawca jak u poprzednika).
+  // Karty przerobione 12.11.2026 na nowe modele (decyzja Jakuba), stare adresy → PRZEMIANOWANE.
+  // dokument ZUP ma akumulator 4050 mAh przepisany z XCover6 Pro — XCover7 Pro ma 4350 mAh (Samsung)
   'samsung-xcover7': {
     plik: 'Oferta na rejestrator typu Smartfon SAMSUNG GALAXY XCOVER 7 PRO_09.2026.pdf',
     okres: od('2026-09-23'),
-    model: 'Samsung Galaxy XCover7 Pro',
+    nazwy: { 'Akumulator 4050mAh': 'Akumulator 4350 mAh' },
   },
-  'samsung-a36': {
-    plik: 'Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY A37_09.2026.pdf',
-    okres: od('2026-09-23'),
-    model: 'Samsung Galaxy A37 5G',
-  },
-  'samsung-a56': {
-    plik: 'Oferta na rejestrator typu Smartfon SAMSUNG GALAXY A57_09.2026.pdf',
-    okres: od('2026-09-23'),
-    model: 'Samsung Galaxy A57 5G',
-  },
-  'dell-pro-24-plus-p2425he': { plik: MONITORY_PDF, okres: od('2026-09-23'), model: 'Dell P2426H' },
-  'dell-pro-24-plus-p2425he-usbc': { plik: MONITORY_PDF, okres: od('2026-09-23'), model: 'Dell P2426HE z koncentratorem USB-C' },
+  'samsung-a37': { plik: 'Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY A37_09.2026.pdf', okres: od('2026-09-23') },
+  'samsung-a57': { plik: 'Oferta na rejestrator typu Smartfon SAMSUNG GALAXY A57_09.2026.pdf', okres: od('2026-09-23') },
+  'dell-pro-p-24-p2426h': { plik: MONITORY_PDF, okres: od('2026-09-23') },
+  'dell-pro-p-24-p2426he': { plik: MONITORY_PDF, okres: od('2026-09-23') },
   'bixolon-sppr410': { plik: TERMICZNE_PDF, okres: od('2026-10-01'), ceny: { urzadzenie: 2124 } },
   'zebra-zq521': { plik: TERMICZNE_PDF, okres: od('2026-10-01'), ceny: { 'Akumulator o pojemności standardowej': 466.4 } },
   'honeywell-rp4': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
@@ -980,6 +984,14 @@ const zeStronyZup = [...najnowsze.values()]
     if (z.okres) nowa.okres = z.okres
     if ('dostawca' in z) nowa.dostawca = z.dostawca
     if (z.model) nowa.model = z.model
+    for (const [stara, nowa_] of Object.entries(z.nazwy ?? {})) {
+      const pozycja = nowa.dodatki.find((d) => d.nazwa === stara)
+      if (!pozycja) {
+        console.error(`PRZERWANO — ${o.slug}: w ofercie nie ma pozycji „${stara}” do przemianowania`)
+        process.exit(1)
+      }
+      pozycja.nazwa = nowa_
+    }
     for (const [nazwa, kwota] of Object.entries(z.ceny ?? {})) {
       const pozycja = nazwa === 'urzadzenie' ? nowa.urzadzenie : nowa.dodatki.find((d) => d.nazwa === nazwa)
       if (!pozycja) {

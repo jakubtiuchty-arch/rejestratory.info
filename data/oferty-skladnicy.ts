@@ -688,46 +688,6 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "dodatki": []
   },
   {
-    "slug": "dell-pro-24-plus-p2425he",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
-    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-dell-pro-24-plus-p2425he.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/monitory",
-    "okres": {
-      "od": "2026-09-23",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Monitor komputerowy DELL P2425H wyróżniony 4-gwiazdkowym certyfikatem TÜV w zakresie komfortu oczu",
-      "cenaNetto": 673,
-      "promocja": false,
-      "wZestawie": []
-    },
-    "dodatki": [],
-    "model": "Dell P2426H"
-  },
-  {
-    "slug": "dell-pro-24-plus-p2425he-usbc",
-    "skladnica": "zup-lodz",
-    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
-    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-dell-pro-24-plus-p2425he-usbc.pdf",
-    "strona": "https://zup.lodz.lasy.gov.pl/monitory",
-    "okres": {
-      "od": "2026-09-23",
-      "do": null
-    },
-    "dostawca": "TAKMA",
-    "urzadzenie": {
-      "nazwa": "Monitor komputerowy DELL P2425HE z koncentratorem USB-C",
-      "cenaNetto": 953,
-      "promocja": false,
-      "wZestawie": []
-    },
-    "dodatki": [],
-    "model": "Dell P2426HE z koncentratorem USB-C"
-  },
-  {
     "slug": "dell-pro-27-p2726h",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
@@ -779,6 +739,44 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "urzadzenie": {
       "nazwa": "Monitor komputerowy DELL P2724DEB idealny do videokonferencji",
       "cenaNetto": 1924,
+      "promocja": false,
+      "wZestawie": []
+    },
+    "dodatki": []
+  },
+  {
+    "slug": "dell-pro-p-24-p2426h",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-dell-pro-p-24-p2426h.pdf",
+    "strona": "https://zup.lodz.lasy.gov.pl/monitory",
+    "okres": {
+      "od": "2026-09-23",
+      "do": null
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Monitor komputerowy DELL P2425H wyróżniony 4-gwiazdkowym certyfikatem TÜV w zakresie komfortu oczu",
+      "cenaNetto": 673,
+      "promocja": false,
+      "wZestawie": []
+    },
+    "dodatki": []
+  },
+  {
+    "slug": "dell-pro-p-24-p2426he",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-dell-pro-p-24-p2426he.pdf",
+    "strona": "https://zup.lodz.lasy.gov.pl/monitory",
+    "okres": {
+      "od": "2026-09-23",
+      "do": null
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Monitor komputerowy DELL P2425HE z koncentratorem USB-C",
+      "cenaNetto": 953,
       "promocja": false,
       "wZestawie": []
     },
@@ -1490,10 +1488,10 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
-    "slug": "samsung-a36",
+    "slug": "samsung-a37",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY A37_09.2026.pdf",
-    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-samsung-a36.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-samsung-a37.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-09-23",
@@ -1533,14 +1531,13 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "promocja": false,
         "wZestawie": []
       }
-    ],
-    "model": "Samsung Galaxy A37 5G"
+    ]
   },
   {
-    "slug": "samsung-a56",
+    "slug": "samsung-a57",
     "skladnica": "zup-lodz",
     "plik": "Oferta na rejestrator typu Smartfon SAMSUNG GALAXY A57_09.2026.pdf",
-    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-samsung-a56.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-samsung-a57.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-09-23",
@@ -1586,8 +1583,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "promocja": false,
         "wZestawie": []
       }
-    ],
-    "model": "Samsung Galaxy A57 5G"
+    ]
   },
   {
     "slug": "samsung-galaxy-tab-active5",
@@ -1729,7 +1725,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "wZestawie": []
       },
       {
-        "nazwa": "Akumulator 4050mAh",
+        "nazwa": "Akumulator 4350 mAh",
         "cenaNetto": 214.5,
         "promocja": false,
         "wZestawie": []
@@ -1746,8 +1742,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "promocja": false,
         "wZestawie": []
       }
-    ],
-    "model": "Samsung Galaxy XCover7 Pro"
+    ]
   },
   {
     "slug": "seiko-mpa40",

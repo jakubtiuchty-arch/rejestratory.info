@@ -46,6 +46,17 @@ const nextConfig = {
       { source: '/kategoria/serwery', destination: '/kategoria/all-in-one', permanent: true },
       { source: '/produkt/dell-poweredge-:model', destination: '/kategoria/all-in-one', permanent: true },
       { source: '/produkty/serwery', destination: '/kategoria/all-in-one', permanent: true },
+      // ZUP Łódź sprzedaje od 23.09.2026 następców (decyzja Jakuba z 12.11.2026, karty przerobione
+      // na nowe modele). Stare adresy krążą w newsletterach i panelu klienta, więc prowadzą do następców.
+      { source: '/produkt/samsung-a36', destination: '/produkt/samsung-a37', permanent: true },
+      { source: '/produkt/samsung-a56', destination: '/produkt/samsung-a57', permanent: true },
+      { source: '/produkt/dell-pro-24-plus-p2425he', destination: '/produkt/dell-pro-p-24-p2426h', permanent: true },
+      { source: '/produkt/dell-pro-24-plus-p2425he-usbc', destination: '/produkt/dell-pro-p-24-p2426he', permanent: true },
+      // formularze zamówienia pod starymi nazwami (wdrożone 12.11.2026, mogły trafić do maili)
+      { source: '/formularze/zup-lodz/rejestratory/zup-lodz-samsung-a36.pdf', destination: '/formularze/zup-lodz/rejestratory/zup-lodz-samsung-a37.pdf', permanent: true },
+      { source: '/formularze/zup-lodz/rejestratory/zup-lodz-samsung-a56.pdf', destination: '/formularze/zup-lodz/rejestratory/zup-lodz-samsung-a57.pdf', permanent: true },
+      { source: '/formularze/zup-lodz/monitory/zup-lodz-dell-pro-24-plus-p2425he.pdf', destination: '/formularze/zup-lodz/monitory/zup-lodz-dell-pro-p-24-p2426h.pdf', permanent: true },
+      { source: '/formularze/zup-lodz/monitory/zup-lodz-dell-pro-24-plus-p2425he-usbc.pdf', destination: '/formularze/zup-lodz/monitory/zup-lodz-dell-pro-p-24-p2426he.pdf', permanent: true },
     ]
   },
 }

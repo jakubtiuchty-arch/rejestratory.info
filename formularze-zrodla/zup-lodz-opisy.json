@@ -298,53 +298,6 @@
       "W zestawie – przewód zasilający, przewód DP, przewód USB-C, przewód USB 3.2 Gen 1 typ A do typ B upstream"
     ]
   },
-  "dell-pro-24-plus-p2425he": {
-    "dostawca": "TAKMA",
-    "punkty": [
-      "Ekran z aktywną matrycą IPS 23,8″ z powłoką antyodblaskową",
-      "Rozdzielczość max. 1920 × 1080 przy 60 Hz",
-      "Nachylenie góra/dół: −5°/+21°",
-      "Obrót monitora w pionie",
-      "Obrót lewo/prawo -45/+45 stopni",
-      "Podświetlenie LED",
-      {
-        "t": "Złącza:",
-        "pod": [
-          "1 × HDMI 1.4 (HDCP 1.4)",
-          "1 × Display Port 1.2 (HDCP 1.4)",
-          "1 × VGA",
-          "1 × USB-C 3.2 Type-B pierwszej generacji typu upstream",
-          "3 × porty USB 3.2 Type-A pierwszej generacji typu downstream",
-          "1 × port USB 3.2 Type-C pierwszej generacji downstream z funkcją PD"
-        ]
-      },
-      "Dołączone oprogramowanie producenta monitora z bezterminową licencją na użytkowanie",
-      "W zestawie – przewód zasilający, przewód DP, przewód USB-C"
-    ]
-  },
-  "dell-pro-24-plus-p2425he-usbc": {
-    "dostawca": "TAKMA",
-    "punkty": [
-      "Ekran z aktywną matrycą IPS 23,8″ z powłoką antyodblaskową",
-      "Rozdzielczość max. 1920 × 1080 przy 60 Hz",
-      "Pochylenie w zakresie 26 stopni",
-      "Obrót lewo/prawo -45/+45 stopni",
-      "Podświetlenie LED",
-      {
-        "t": "Złącza:",
-        "pod": [
-          "1 × HDMI 1.4 (HDCP 1.4)",
-          "1 × Display Port 1.2 (HDCP 1.4)",
-          "1 × Display Port (Out) z MST (HDCP 1.4)",
-          "1 × USB-C z obsługą Display Port 1.2, USB 3.2 Gen 1 upstream port z ładowaniem o mocy do 65 W",
-          "4 × USB 5 Gbps (USB 3.2 Gen 1)",
-          "1 × RJ45"
-        ]
-      },
-      "Dołączone oprogramowanie producenta monitora z bezterminową licencją na użytkowanie",
-      "W zestawie – przewód zasilający, przewód DP, przewód USB-C"
-    ]
-  },
   "dell-pro-27-p2726h": {
     "dostawca": "TAKMA",
     "punkty": [
@@ -416,6 +369,52 @@
       "Wbudowana kamera oraz podwójny mikrofon i dwa głośniki",
       "Dołączone oprogramowanie producenta monitora z bezterminową licencją na użytkowanie",
       "W zestawie – przewód zasilający, przewód DP, przewód USB-C, przewód USB 3.2 Gen 1 typ A do typ B upstream"
+    ]
+  },
+  "dell-pro-p-24-p2426h": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran IPS 23,8″ z powłoką antyodblaskową, kąty widzenia 178°/178°",
+      "Rozdzielczość 1920 × 1080 przy 120 Hz, jasność 300 cd/m², kontrast 1500:1",
+      "Pokrycie barw 99% sRGB, TÜV Eye Comfort 4 gwiazdki, bez migotania",
+      "Regulacja wysokości do 150 mm, nachylenie −5°/+21°, obrót ±45°, pivot ±90°, VESA 100 mm",
+      {
+        "t": "Złącza:",
+        "pod": [
+          "1 × HDMI 1.4 (HDCP 1.4)",
+          "1 × DisplayPort 1.4 (HDCP 1.4)",
+          "1 × USB-B upstream 5 Gb/s",
+          "2 × USB-A downstream 5 Gb/s",
+          "2 × USB-C downstream 5 Gb/s, ładowanie do 15 W"
+        ]
+      },
+      "Oprogramowanie Dell Display and Peripheral Manager",
+      "W zestawie: przewód zasilający, przewód DisplayPort, przewód USB-A – USB-B",
+      "Gwarancja 3 lata z wymianą z wyprzedzeniem i Premium Panel"
+    ]
+  },
+  "dell-pro-p-24-p2426he": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran IPS 23,8″ z powłoką antyodblaskową, kąty widzenia 178°/178°",
+      "Rozdzielczość 1920 × 1080 przy 120 Hz, jasność 300 cd/m², kontrast 1500:1",
+      "Pokrycie barw 99% sRGB, TÜV Eye Comfort 4 gwiazdki, bez migotania",
+      "Regulacja wysokości do 150 mm, nachylenie −5°/+21°, obrót ±45°, pivot ±90°, VESA 100 mm",
+      {
+        "t": "Złącza:",
+        "pod": [
+          "1 × HDMI 2.1 (TMDS, HDCP 1.4)",
+          "1 × DisplayPort 1.4",
+          "1 × DisplayPort 1.4 out z MST",
+          "1 × USB-C upstream: DisplayPort 1.4, dane 5 Gb/s, ładowanie do 96 W (100 W z laptopami Dell)",
+          "2 × USB-A downstream 5 Gb/s",
+          "2 × USB-C downstream 5 Gb/s, ładowanie do 15 W",
+          "1 × RJ45 1 Gb/s z MAC Address Pass-Through, Wake on LAN, PXE Boot"
+        ]
+      },
+      "Oprogramowanie Dell Display and Peripheral Manager",
+      "W zestawie: przewód zasilający, przewód USB-C – USB-C 1,8 m",
+      "Gwarancja 3 lata z wymianą z wyprzedzeniem i Premium Panel"
     ]
   },
   "epson-ds730n": {
@@ -832,7 +831,7 @@
       "Gwarancja producenta 24 miesiące"
     ]
   },
-  "samsung-a36": {
+  "samsung-a37": {
     "dostawca": "SCANTER",
     "punkty": [
       "System Android 15 (lub wyższy)",
@@ -846,10 +845,10 @@
       "Akumulator 5000 mAh"
     ]
   },
-  "samsung-a56": {
+  "samsung-a57": {
     "dostawca": "TAKMA",
     "punkty": [
-      "System Android 15",
+      "System Android 16",
       "Pamięć RAM 8 GB, Flash 128 GB",
       "Bluetooth",
       "Moduł GSM/GPRS",

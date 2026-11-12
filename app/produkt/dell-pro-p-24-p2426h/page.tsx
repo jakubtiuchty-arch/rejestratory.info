@@ -3,21 +3,24 @@
 import ProductPage, { type ProductData } from '@/components/product/ProductPage'
 import { ICON } from '@/components/product/icons'
 
+// Dell Pro P 24 Monitor – P2426H (sprzedaż od 03.2026). Do 12.11.2026 karta opisywała P2425H;
+// ZUP Łódź sprzedaje od 23.09.2026 następcę, więc karta przeszła na nowy model.
+// Parametry: dell.com/en-ie (SKU 210-BVKM), polska instrukcja Della (03.2026, Rev. A00), EPREL.
 const data: ProductData = {
-  slug: 'dell-pro-24-plus-p2425he',
-  name: 'Dell Pro 24 Plus P2425H',
+  slug: 'dell-pro-p-24-p2426h',
+  name: 'Dell Pro P 24 P2426H',
   category: 'Monitory',
   categoryHref: '/kategoria/monitory',
-  images: ['/P2425HE_1.png'],
+  images: ['/P2426H_1.png'],
   inquiry: {
     description: 'Monitor 23,8 cala do codziennej pracy biurowej',
-    specifications: '23,8″ Full HD 100 Hz · IPS · 99% sRGB · pivot · 3 lata Premium Panel',
+    specifications: '23,8″ Full HD 120 Hz · IPS · 99% sRGB · pivot · 3 lata Premium Panel',
   },
-  whyNavLabel: 'Dlaczego P2425H',
+  whyNavLabel: 'Dlaczego P2426H',
   whyHeading: 'Do czego przyda się w nadleśnictwie',
   whyLabel: 'Na biurku w nadleśnictwie',
   highlights: [
-    { icon: ICON.przekatna, label: 'Ekran', value: '23,8″ Full HD, 100 Hz' },
+    { icon: ICON.przekatna, label: 'Ekran', value: '23,8″ Full HD, 120 Hz' },
     { icon: ICON.oko, label: 'Komfort', value: 'TÜV Eye Comfort 4 gwiazdki' },
     { icon: ICON.ergonomia, label: 'Ergonomia', value: 'regulacja 150 mm, pivot' },
     { icon: ICON.wsparcie, label: 'Gwarancja', value: '3 lata Premium Panel' },
@@ -28,28 +31,29 @@ const data: ProductData = {
       rows: [
         { k: 'Przekątna', v: '23,8″' },
         { k: 'Rozdzielczość', v: 'Full HD 1920 × 1080' },
-        { k: 'Odświeżanie', v: '100 Hz' },
+        { k: 'Odświeżanie', v: '120 Hz' },
         { k: 'Matryca', v: 'IPS, kąty 178°/178°' },
-        { k: 'Jasność', v: '250 cd/m², kontrast 1500:1' },
-        { k: 'Gamut', v: '99% sRGB' },
+        { k: 'Jasność', v: '300 cd/m², kontrast 1500:1' },
+        { k: 'Czas reakcji', v: '5 ms GtG w trybie szybkim, 8 ms GtG' },
+        { k: 'Gamut', v: '99% sRGB, 99% BT.709' },
       ],
     },
     {
       title: 'Łączność',
       rows: [
-        { k: 'Wideo', v: 'HDMI 1.4, DisplayPort 1.2, VGA' },
-        { k: 'USB-C', v: 'Power Delivery do 15 W' },
-        { k: 'USB-A', v: '3 × USB 3.2 pierwszej generacji' },
-        { k: 'USB-B', v: '1 × USB 3.2 upstream' },
+        { k: 'Wideo', v: 'HDMI 1.4 (do 1920 × 1080 przy 120 Hz), DisplayPort 1.4' },
+        { k: 'USB-C', v: '2 × downstream 5 Gb/s na dolnej krawędzi, tylko dane, zasilanie do 15 W' },
+        { k: 'USB-A', v: '2 × downstream 5 Gb/s' },
+        { k: 'USB-B', v: '1 × upstream 5 Gb/s' },
       ],
     },
     {
       title: 'Komfort pracy',
       rows: [
-        { k: 'Display Manager', v: 'tak, z EasyArrange' },
-        { k: 'TÜV Eye Comfort', v: '4 gwiazdki' },
+        { k: 'Oprogramowanie', v: 'Dell Display and Peripheral Manager z Easy Arrange' },
+        { k: 'TÜV Eye Comfort', v: '4 gwiazdki, ComfortView Plus' },
         { k: 'Brak migotania', v: 'tak' },
-        { k: 'Gwarancja', v: '3 lata Premium Panel' },
+        { k: 'Gwarancja', v: '3 lata z wymianą z wyprzedzeniem i Premium Panel' },
       ],
     },
     {
@@ -78,7 +82,7 @@ const data: ProductData = {
     },
     {
       icon: ICON.rozdzielczosc,
-      title: 'Matryca IPS z pełnym sRGB',
+      title: 'Matryca IPS z 99% sRGB',
       body:
         'Kąty widzenia 178° i 99% palety sRGB dają czytelny obraz także wtedy, gdy nad ekranem pochyla się dwoje ludzi.',
     },
@@ -86,28 +90,28 @@ const data: ProductData = {
       icon: ICON.wsparcie,
       title: 'Trzy lata gwarancji Premium Panel',
       body:
-        'Wymiana panelu przy wadzie pikseli w okresie gwarancji — bez sporów o pojedyncze punkty.',
+        'Dell wymienia panel w okresie gwarancji nawet przy jednym jasnym pikselu, a po zdalnej diagnozie wysyła monitor zastępczy przed odesłaniem uszkodzonego.',
     },
   ],
-  usedBy: { device: 'Dell P2425HE' },
+  usedBy: { device: 'Dell P2426H', exclude: 'P2426HE' },
   signature: [
     {
       icon: ICON.przekatna,
-      title: 'Najczęściej wybierany monitor',
+      title: 'Podstawowy monitor do biura',
       body:
-        'Podstawowy wybór do codziennej pracy biurowej w administracji — sprawdzona matryca IPS, pełna ergonomia i trzyletnia gwarancja Premium Panel.',
+        'Do codziennej pracy biurowej w administracji: matryca IPS 120 Hz, pełna regulacja z pivotem, dwa porty USB-C na dolnej krawędzi i trzyletnia gwarancja Premium Panel.',
       tone: 'akcent',
     },
   ],
   related: [
     {
-      name: 'Dell Pro 24 Plus P2425HE z USB-C',
-      href: '/produkt/dell-pro-24-plus-p2425he-usbc',
-      note: 'Ta sama matryca ze stacją dokującą USB-C',
+      name: 'Dell Pro P 24 P2426HE z USB-C',
+      href: '/produkt/dell-pro-p-24-p2426he',
+      note: 'Ekran o tych samych parametrach, z hubem USB-C do 96 W i RJ45',
     },
   ],
 }
 
-export default function DellP2425HPage() {
+export default function DellP2426HPage() {
   return <ProductPage data={data} />
 }

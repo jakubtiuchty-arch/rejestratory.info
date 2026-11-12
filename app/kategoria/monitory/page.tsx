@@ -37,31 +37,31 @@ const products = [
   },
   {
     id: 3,
-    name: "Dell Pro 24 Plus P2425HE z USBC",
+    name: "Dell Pro P 24 P2426HE z USB-C",
     category: "Monitory",
     description: "Monitor biznesowy 24 cale z ładowaniem USB-C do laptopów",
-    specifications: "23,8\" FHD 1920x1080, IPS, 100Hz, USB-C 90W, RJ-45, HDMI, DisplayPort",
+    specifications: "23,8\" FHD 1920x1080, IPS, 120Hz, USB-C 96W, RJ-45, HDMI, DisplayPort",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA", 
-    image: "/P2425HE_1.png",
+    image: "/P2426HE_1.png",
     imageScale: 0.8,
     badge: "USB-C",
     featured: true,
-    link: "/produkt/dell-pro-24-plus-p2425he-usbc"
+    link: "/produkt/dell-pro-p-24-p2426he"
   },
   {
     id: 4,
-    name: "Dell Pro 24 Plus P2425H",
+    name: "Dell Pro P 24 P2426H",
     category: "Monitory",
     description: "Kompaktowy monitor biznesowy 24 cale do codziennej pracy",
-    specifications: "23,8\" FHD 1920x1080, IPS, 100Hz, HDMI, DisplayPort, hub USB",
+    specifications: "23,8\" FHD 1920x1080, IPS, 120Hz, HDMI, DisplayPort, hub USB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
-    image: "/P2425HE_1.png",
+    image: "/P2426H_1.png",
     imageScale: 0.8,
     badge: null,
     featured: false,
-    link: "/produkt/dell-pro-24-plus-p2425he"
+    link: "/produkt/dell-pro-p-24-p2426h"
   },
   {
     id: 5,
@@ -205,7 +205,7 @@ const porownanieGrupy = [
   {
     grupa: 'Podstawowe',
     wiersze: [
-      { model: 'Dell P2425H', href: '/produkt/dell-pro-24-plus-p2425he', wartosci: { ekran: '23,8″ FHD', hz: '100 Hz', ...bezDoku, regulacja: pelnaRegulacja, oczy: 'TÜV 4★' } },
+      { model: 'Dell P2426H', href: '/produkt/dell-pro-p-24-p2426h', wartosci: { ekran: '23,8″ FHD', hz: '120 Hz', ...bezDoku, regulacja: pelnaRegulacja, oczy: 'TÜV 4★' }, naj: ['hz'] },
       { model: 'Dell P2726H', href: '/produkt/dell-pro-27-p2726h', wartosci: { ekran: '27″ FHD', hz: '120 Hz', ...bezDoku, regulacja: pelnaRegulacja, oczy: 'TÜV 4★' }, naj: ['hz'] },
       { model: 'HP 324pf', href: '/produkt/hp-seria-3-pro-324pv', wartosci: { ekran: '23,8″ FHD', hz: '100 Hz', ...bezDoku, regulacja: 'tylko pochylenie', oczy: 'TÜV Low Blue Light' }, slabe: ['regulacja'] },
       { model: 'HP 527pq', href: '/produkt/hp-seria-5-pro-527pq', wartosci: { ekran: '27″ QHD', hz: '100 Hz', ...bezDoku, regulacja: pelnaRegulacja, oczy: 'TÜV Low Blue Light' } },
@@ -214,7 +214,7 @@ const porownanieGrupy = [
   {
     grupa: 'Ze stacją dokującą USB-C',
     wiersze: [
-      { model: 'Dell P2425HE', href: '/produkt/dell-pro-24-plus-p2425he-usbc', wartosci: { ekran: '23,8″ FHD', hz: '100 Hz', dok: '90 W · RJ-45', kamera: '—', regulacja: pelnaRegulacja, oczy: 'TÜV 4★' } },
+      { model: 'Dell P2426HE', href: '/produkt/dell-pro-p-24-p2426he', wartosci: { ekran: '23,8″ FHD', hz: '120 Hz', dok: '96 W · RJ-45', kamera: '—', regulacja: pelnaRegulacja, oczy: 'TÜV 4★' }, naj: ['hz'] },
       { model: 'Dell P2726HE', href: '/produkt/dell-pro-27-p2726he', wartosci: { ekran: '27″ FHD', hz: '120 Hz', dok: '100 W · RJ-45', kamera: '—', regulacja: pelnaRegulacja, oczy: 'TÜV 4★' }, naj: ['hz'] },
       { model: 'HP 524pu', href: '/produkt/hp-seria-5-pro-524pu', wartosci: { ekran: '23,8″ FHD', hz: '100 Hz', dok: '100 W · RJ-45', kamera: '—', regulacja: pelnaRegulacja, oczy: 'TÜV Low Blue Light' } },
       { model: 'HP 527pu', href: '/produkt/hp-seria-5-pro-527pu', wartosci: { ekran: '27″ QHD', hz: '100 Hz', dok: '100 W · RJ-45', kamera: '—', regulacja: pelnaRegulacja, oczy: 'TÜV Low Blue Light' } },
