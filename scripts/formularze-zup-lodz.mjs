@@ -297,6 +297,14 @@ const WYJATKI = {
   'honeywell-1450g': { rodzaj: 'Czytnik kodów kreskowych', dopisz: ['W zestawie kabel USB i podstawka'] },
   'zebra-ds2208': { rodzaj: 'Czytnik kodów kreskowych', dopisz: ['W zestawie kabel USB i podstawka'] },
   'zebra-ds2278': { rodzaj: 'Czytnik kodów kreskowych', dopisz: ['W zestawie kabel USB i podstawka'] },
+  // ZUP sprzedaje od 23.09.2026 następcę opisanego na karcie XCover6 Pro (decyzja Jakuba z 12.11.2026).
+  // Dokument ZUP ma przy nim akumulator 4050 mAh przepisany z poprzednika — XCover7 Pro ma 4350 mAh
+  // (Samsung). Zdjęcie z karty pokazuje XCover6 Pro, więc formularz idzie bez zdjęcia.
+  'samsung-xcover7': {
+    nazwa: 'Samsung Galaxy XCover7 Pro',
+    bezZdjecia: true,
+    zamianyDodatkow: [[/4050 mAh/, '4350 mAh']],
+  },
   'honeywell-pc42e-t': { rodzaj: 'Drukarka etykiet' },
   'honeywell-pc45t': { rodzaj: 'Drukarka etykiet' },
   'zebra-zd421c': { rodzaj: 'Drukarka etykiet' },
@@ -339,6 +347,7 @@ function model(o) {
   const k = karta(o.slug)
   if (!k.nazwa || !k.kategoria) throw new Error(`${o.slug}: karta bez nazwy albo kategorii`)
   const wyj = WYJATKI[o.slug] ?? {}
+  if (wyj.nazwa) k.nazwa = wyj.nazwa
   const [etykietaKat, rodzajKat, folder] = RODZAJE[k.kategoria] ?? []
   if (!etykietaKat) throw new Error(`${o.slug}: nieznana kategoria „${k.kategoria}”`)
   const rodzaj = wyj.rodzaj ?? rodzajKat
@@ -373,14 +382,14 @@ function model(o) {
     dostawca,
     pozycja: {
       tytul: wyj.tytul ?? `${rodzaj} ${k.nazwa}`,
-      zdjecie: k.zdjecie ? `public${k.zdjecie}` : null,
+      zdjecie: k.zdjecie && !wyj.bezZdjecia ? `public${k.zdjecie}` : null,
       punkty,
       link: `www.rejestratory.info/produkt/${o.slug}`,
       cenaNetto: o.urzadzenie.cenaNetto,
       promocja: !!o.urzadzenie.promocja,
     },
     dodatki: o.dodatki.map((d) => ({
-      nazwa: nazwaDodatku(d.nazwa, k.nazwa),
+      nazwa: (wyj.zamianyDodatkow ?? []).reduce((n, [z, na]) => n.replace(z, na), nazwaDodatku(d.nazwa, k.nazwa)),
       opis: (d.wZestawie ?? []).map(popraw).join(' · '),
       cenaNetto: d.cenaNetto,
       promocja: !!d.promocja,
