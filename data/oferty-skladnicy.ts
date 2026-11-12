@@ -27,6 +27,8 @@ export type OfertaSkladnicy = {
   okres: { od: string; do: string | null } | null
   /** kto według dokumentu odpowiada za dostawę i serwis; null, gdy nie jest podany */
   dostawca?: string | null
+  /** nazwa modelu u składnicy, gdy sprzedaje następcę opisanego na karcie modelu */
+  model?: string
   urzadzenie: PozycjaOferty
   dodatki: PozycjaOferty[]
 }
@@ -684,6 +686,46 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       "wZestawie": []
     },
     "dodatki": []
+  },
+  {
+    "slug": "dell-pro-24-plus-p2425he",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-dell-pro-24-plus-p2425he.pdf",
+    "strona": "https://zup.lodz.lasy.gov.pl/monitory",
+    "okres": {
+      "od": "2026-09-23",
+      "do": null
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Monitor komputerowy DELL P2425H wyróżniony 4-gwiazdkowym certyfikatem TÜV w zakresie komfortu oczu",
+      "cenaNetto": 673,
+      "promocja": false,
+      "wZestawie": []
+    },
+    "dodatki": [],
+    "model": "Dell P2426H"
+  },
+  {
+    "slug": "dell-pro-24-plus-p2425he-usbc",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na monitory.HP.Dell 09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/monitory/zup-lodz-dell-pro-24-plus-p2425he-usbc.pdf",
+    "strona": "https://zup.lodz.lasy.gov.pl/monitory",
+    "okres": {
+      "od": "2026-09-23",
+      "do": null
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Monitor komputerowy DELL P2425HE z koncentratorem USB-C",
+      "cenaNetto": 953,
+      "promocja": false,
+      "wZestawie": []
+    },
+    "dodatki": [],
+    "model": "Dell P2426HE z koncentratorem USB-C"
   },
   {
     "slug": "dell-pro-27-p2726h",
@@ -1448,6 +1490,106 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     ]
   },
   {
+    "slug": "samsung-a36",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY A37_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-samsung-a36.pdf",
+    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-09-23",
+      "do": null
+    },
+    "dostawca": "SCANTER",
+    "urzadzenie": {
+      "nazwa": "Mobilny komputer dotykowy SAMSUNG GALAXY A36 - rejestrator leśniczego",
+      "cenaNetto": 1451,
+      "promocja": false,
+      "wZestawie": [
+        "Ładowarka sieciowa z kablem USB i ładowarka samochodowa"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 129.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 97.9,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Nakładka na obudowę zabezpieczająca przed uszkodzeniami",
+        "cenaNetto": 63.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Folia lub szkoło ochronne na ekran",
+        "cenaNetto": 64.9,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ],
+    "model": "Samsung Galaxy A37 5G"
+  },
+  {
+    "slug": "samsung-a56",
+    "skladnica": "zup-lodz",
+    "plik": "Oferta na rejestrator typu Smartfon SAMSUNG GALAXY A57_09.2026.pdf",
+    "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-samsung-a56.pdf",
+    "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
+    "okres": {
+      "od": "2026-09-23",
+      "do": null
+    },
+    "dostawca": "TAKMA",
+    "urzadzenie": {
+      "nazwa": "Mobilny komputer dotykowy SAMSUNG GALAXY A56- rejestrator leśniczego",
+      "cenaNetto": 1980,
+      "promocja": false,
+      "wZestawie": [
+        "Ładowarka sieciowa z kablem USB i ładowarka samochodowa"
+      ]
+    },
+    "dodatki": [
+      {
+        "nazwa": "Ładowarka sieciowa",
+        "cenaNetto": 129.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Ładowarka samochodowa",
+        "cenaNetto": 97.9,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator 5000mAh",
+        "cenaNetto": 214.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Nakładka na obudowę zabezpieczająca przed uszkodzeniami",
+        "cenaNetto": 63.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Folia lub szkoło ochronne na ekran",
+        "cenaNetto": 64.9,
+        "promocja": false,
+        "wZestawie": []
+      }
+    ],
+    "model": "Samsung Galaxy A57 5G"
+  },
+  {
     "slug": "samsung-galaxy-tab-active5",
     "skladnica": "zup-lodz",
     "plik": "Oferta na tablety 09.2026.pdf",
@@ -1604,7 +1746,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "promocja": false,
         "wZestawie": []
       }
-    ]
+    ],
+    "model": "Samsung Galaxy XCover7 Pro"
   },
   {
     "slug": "seiko-mpa40",

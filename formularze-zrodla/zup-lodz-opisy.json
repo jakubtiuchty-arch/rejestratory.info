@@ -298,6 +298,53 @@
       "W zestawie – przewód zasilający, przewód DP, przewód USB-C, przewód USB 3.2 Gen 1 typ A do typ B upstream"
     ]
   },
+  "dell-pro-24-plus-p2425he": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran z aktywną matrycą IPS 23,8″ z powłoką antyodblaskową",
+      "Rozdzielczość max. 1920 × 1080 przy 60 Hz",
+      "Nachylenie góra/dół: −5°/+21°",
+      "Obrót monitora w pionie",
+      "Obrót lewo/prawo -45/+45 stopni",
+      "Podświetlenie LED",
+      {
+        "t": "Złącza:",
+        "pod": [
+          "1 × HDMI 1.4 (HDCP 1.4)",
+          "1 × Display Port 1.2 (HDCP 1.4)",
+          "1 × VGA",
+          "1 × USB-C 3.2 Type-B pierwszej generacji typu upstream",
+          "3 × porty USB 3.2 Type-A pierwszej generacji typu downstream",
+          "1 × port USB 3.2 Type-C pierwszej generacji downstream z funkcją PD"
+        ]
+      },
+      "Dołączone oprogramowanie producenta monitora z bezterminową licencją na użytkowanie",
+      "W zestawie – przewód zasilający, przewód DP, przewód USB-C"
+    ]
+  },
+  "dell-pro-24-plus-p2425he-usbc": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran z aktywną matrycą IPS 23,8″ z powłoką antyodblaskową",
+      "Rozdzielczość max. 1920 × 1080 przy 60 Hz",
+      "Pochylenie w zakresie 26 stopni",
+      "Obrót lewo/prawo -45/+45 stopni",
+      "Podświetlenie LED",
+      {
+        "t": "Złącza:",
+        "pod": [
+          "1 × HDMI 1.4 (HDCP 1.4)",
+          "1 × Display Port 1.2 (HDCP 1.4)",
+          "1 × Display Port (Out) z MST (HDCP 1.4)",
+          "1 × USB-C z obsługą Display Port 1.2, USB 3.2 Gen 1 upstream port z ładowaniem o mocy do 65 W",
+          "4 × USB 5 Gbps (USB 3.2 Gen 1)",
+          "1 × RJ45"
+        ]
+      },
+      "Dołączone oprogramowanie producenta monitora z bezterminową licencją na użytkowanie",
+      "W zestawie – przewód zasilający, przewód DP, przewód USB-C"
+    ]
+  },
   "dell-pro-27-p2726h": {
     "dostawca": "TAKMA",
     "punkty": [
@@ -783,6 +830,33 @@
         ]
       },
       "Gwarancja producenta 24 miesiące"
+    ]
+  },
+  "samsung-a36": {
+    "dostawca": "SCANTER",
+    "punkty": [
+      "System Android 15 (lub wyższy)",
+      "Pamięć RAM 6 GB, Flash 128 GB",
+      "Aparat 50 MP",
+      "Bluetooth",
+      "Moduł GSM/GPRS",
+      "Moduł GPS",
+      "Wyświetlacz 6,7″",
+      "Ładowarka sieciowa z kablem USB i ładowarka samochodowa",
+      "Akumulator 5000 mAh"
+    ]
+  },
+  "samsung-a56": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "System Android 15",
+      "Pamięć RAM 8 GB, Flash 128 GB",
+      "Bluetooth",
+      "Moduł GSM/GPRS",
+      "Moduł GPS",
+      "Wyświetlacz 6,7″",
+      "Ładowarka sieciowa z kablem USB i ładowarka samochodowa",
+      "Akumulator 5000 mAh"
     ]
   },
   "samsung-galaxy-tab-active5": {

@@ -813,12 +813,7 @@ const POZA_OFERTA_ZUP = [
   'hp-elitebook-6-g1ah-16',
   'samsung-ssd-t7',
   'samsung-ssd-t9',
-  // następcy w tej samej cenie, ale to inne modele niż na naszych kartach
-  'samsung-a36', // → Galaxy A37 5G
-  'samsung-a56', // → Galaxy A57 5G
-  'dell-pro-24-plus-p2425he', // → Dell P2426H
-  'dell-pro-24-plus-p2425he-usbc', // → Dell P2426HE
-  'brother-mfc-l8900cdw', // → MFC-L8970CDW, dopisany niżej
+  'brother-mfc-l8900cdw', // → MFC-L8970CDW, ma własną kartę i ofertę niżej
 ]
 
 /**
@@ -843,11 +838,26 @@ const ZMIANY_ZE_STRONY_ZUP = {
     okres: od('2026-09-01'),
     ceny: { urzadzenie: 2396 },
   },
-  // dokument nazywa ten model „XCOVER 7 PRO”; karta ma w nazwie XCover6 Pro
+  // Następcy pod kartą poprzednika (decyzja Jakuba z 12.11.2026): ZUP podmienił
+  // w ofercie samą nazwę — opis, cena, akcesoria i dostawca są jak u poprzednika.
+  // `model` to nazwa u składnicy; karta pokazuje ją przy cenie, formularz bierze ją za tytuł.
   'samsung-xcover7': {
     plik: 'Oferta na rejestrator typu Smartfon SAMSUNG GALAXY XCOVER 7 PRO_09.2026.pdf',
     okres: od('2026-09-23'),
+    model: 'Samsung Galaxy XCover7 Pro',
   },
+  'samsung-a36': {
+    plik: 'Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY A37_09.2026.pdf',
+    okres: od('2026-09-23'),
+    model: 'Samsung Galaxy A37 5G',
+  },
+  'samsung-a56': {
+    plik: 'Oferta na rejestrator typu Smartfon SAMSUNG GALAXY A57_09.2026.pdf',
+    okres: od('2026-09-23'),
+    model: 'Samsung Galaxy A57 5G',
+  },
+  'dell-pro-24-plus-p2425he': { plik: MONITORY_PDF, okres: od('2026-09-23'), model: 'Dell P2426H' },
+  'dell-pro-24-plus-p2425he-usbc': { plik: MONITORY_PDF, okres: od('2026-09-23'), model: 'Dell P2426HE z koncentratorem USB-C' },
   'bixolon-sppr410': { plik: TERMICZNE_PDF, okres: od('2026-10-01'), ceny: { urzadzenie: 2124 } },
   'zebra-zq521': { plik: TERMICZNE_PDF, okres: od('2026-10-01'), ceny: { 'Akumulator o pojemności standardowej': 466.4 } },
   'honeywell-rp4': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
@@ -969,6 +979,7 @@ const zeStronyZup = [...najnowsze.values()]
     nowa.plik = z.plik
     if (z.okres) nowa.okres = z.okres
     if ('dostawca' in z) nowa.dostawca = z.dostawca
+    if (z.model) nowa.model = z.model
     for (const [nazwa, kwota] of Object.entries(z.ceny ?? {})) {
       const pozycja = nazwa === 'urzadzenie' ? nowa.urzadzenie : nowa.dodatki.find((d) => d.nazwa === nazwa)
       if (!pozycja) {
@@ -1046,6 +1057,8 @@ export type OfertaSkladnicy = {
   okres: { od: string; do: string | null } | null
   /** kto według dokumentu odpowiada za dostawę i serwis; null, gdy nie jest podany */
   dostawca?: string | null
+  /** nazwa modelu u składnicy, gdy sprzedaje następcę opisanego na karcie modelu */
+  model?: string
   urzadzenie: PozycjaOferty
   dodatki: PozycjaOferty[]
 }

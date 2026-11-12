@@ -1002,6 +1002,17 @@ const CenySkladnic = ({ oferty: wejscie, nazwa }: { oferty: OfertaZUP[]; nazwa: 
                             czytelnik nie wie, czy ładowarki trzeba dokupić.
                             Przy kilku składnicach zestaw bywa różny, więc
                             wtedy opis idzie do kolumn, nie pod nazwę. */}
+                        {/* składnica sprzedaje następcę modelu z karty — mówimy to wprost,
+                            bo formularz i dostawa będą na model ze składnicy */}
+                        {w.glowna &&
+                          oferty
+                            .filter((o) => o.model)
+                            .map((o) => (
+                              <span key={o.skladnica} className="mt-1.5 block text-sm text-stone-600">
+                                <span className="text-stone-500">W {SKLADNICE[o.skladnica].nazwa} jako: </span>
+                                <span className="font-medium text-stone-800">{o.model}</span>
+                              </span>
+                            ))}
                         {w.glowna && oferty.length === 1 && wZestawie.length > 0 && (
                           <span className="mt-1.5 block text-sm text-stone-600">
                             <span className="text-stone-500">W cenie: </span>
@@ -1126,7 +1137,9 @@ const CenaWSkrocie = ({ oferty }: { oferty: OfertaZUP[] }) => {
         <span className="mt-0.5 block text-xs text-stone-500">
           {wielu
             ? 'Zobacz porównanie i pozycje dodatkowe'
-            : `${SKLADNICE[oferty[0].skladnica].nazwa} · zobacz pozycje dodatkowe`}
+            : oferty[0].model
+              ? `${SKLADNICE[oferty[0].skladnica].nazwa} jako ${oferty[0].model}`
+              : `${SKLADNICE[oferty[0].skladnica].nazwa} · zobacz pozycje dodatkowe`}
         </span>
       </span>
       <img
