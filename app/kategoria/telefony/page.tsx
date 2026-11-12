@@ -53,7 +53,7 @@ const products = [
     name: "Samsung Galaxy S25 Ultra",
     category: "Telefony",
     description: "Topowy smartfon z S Pen i aparatem 200MP do profesjonalnej dokumentacji",
-    specifications: "Android 15, 6,9\" QHD+, Snapdragon 8 Elite, 12GB RAM, 512GB",
+    specifications: "Android 15, 6,9\" QHD+, Snapdragon 8 Elite, 12GB RAM, 256GB",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",
     image: "s25ultra_1.png", 
