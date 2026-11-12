@@ -36,7 +36,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "aio-dell-pro-24",
     "skladnica": "zup-lodz",
     "plik": "Oferta na komputery ALL IN ONE HP 17.04.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-aio-dell-pro-24.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
       "od": "2026-03-10",
@@ -55,7 +55,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "aio-dell-pro-24-bez-systemu",
     "skladnica": "zup-lodz",
     "plik": "Oferta na komputery ALL IN ONE HP 17.04.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-aio-dell-pro-24-bez-systemu.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
       "od": "2026-03-10",
@@ -74,7 +74,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "bixolon-sppr410",
     "skladnica": "zup-lodz",
     "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-bixolon-sppr410.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-07-01",
@@ -122,7 +122,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "brother-dcp-b7620dw",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-brother-dcp-b7620dw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -156,7 +156,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "brother-dcp-l5510dw",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenie wielofunkcyjne Brother_03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-brother-dcp-l5510dw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -194,7 +194,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "brother-hl-l6210dw",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-brother-hl-l6210dw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -238,7 +238,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "brother-hl-l6410",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-brother-hl-l6410.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -290,7 +290,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "brother-mfc-l5710dw",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-brother-mfc-l5710dw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -330,7 +330,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "brother-mfc-l6710dw",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-brother-mfc-l6710dw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -368,7 +368,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "brother-mfc-l8390cdw",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenie wielofunkcyjne Brother_03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-brother-mfc-l8390cdw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -406,7 +406,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "brother-mfc-l8900cdw",
     "skladnica": "zup-lodz",
     "plik": "Oferta na urządzenia wielofunkcyjne_04.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-brother-mfc-l8900cdw.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/urzadzenia-wielofunkcyjne-",
     "okres": {
       "od": "2026-03-10",
@@ -498,7 +498,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-km5221",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-km5221.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -517,7 +517,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-km7321",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-km7321.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -536,7 +536,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-pro-14-plus",
     "skladnica": "zup-lodz",
     "plik": "Oferta Laptopy_06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-pro-14-plus.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
       "od": "2026-03-10",
@@ -562,7 +562,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-pro-16",
     "skladnica": "zup-lodz",
     "plik": "Oferta Laptopy_06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-pro-16.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
       "od": "2026-03-10",
@@ -588,7 +588,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-pro-16-plus",
     "skladnica": "zup-lodz",
     "plik": "Oferta Laptopy_06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-pro-16-plus.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
       "od": "2026-03-10",
@@ -614,7 +614,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-pro-24-plus-p2424heb",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-pro-24-plus-p2424heb.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -633,7 +633,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-pro-24-plus-p2425he",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-pro-24-plus-p2425he.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -652,7 +652,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-pro-24-plus-p2425he-usbc",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-pro-24-plus-p2425he-usbc.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -671,7 +671,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-pro-27-p2726h",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-pro-27-p2726h.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -690,7 +690,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-pro-27-p2726he",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-pro-27-p2726he.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -709,7 +709,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "dell-pro-27-plus-p2724deb",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-dell-pro-27-plus-p2724deb.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -728,7 +728,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "epson-ds730n",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-epson-ds730n.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -747,7 +747,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-1250g",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-honeywell-1250g.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -779,7 +779,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-1450g",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-honeywell-1450g.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -811,7 +811,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-ct30",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Honeywell CT30P_23.03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-honeywell-ct30.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-21",
@@ -882,7 +882,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-ct32",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Honeywell CT32 23.03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-honeywell-ct32.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-21",
@@ -971,7 +971,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-ct40xp",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Honeywell CT40XP_23.03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-honeywell-ct40xp.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-21",
@@ -1054,7 +1054,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-ct47",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Honeywell CT47_23.03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-honeywell-ct47.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-21",
@@ -1125,7 +1125,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-eda52",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Honeywell EDA52_03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-honeywell-eda52.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-10",
@@ -1197,7 +1197,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-pc42e-t",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-honeywell-pc42e-t.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -1253,7 +1253,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-pc45t",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-honeywell-pc45t.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -1285,7 +1285,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "honeywell-rp4",
     "skladnica": "zup-lodz",
     "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-honeywell-rp4.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-07-01",
@@ -1333,7 +1333,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-460",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-460.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1352,7 +1352,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-655",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-655.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1371,7 +1371,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-715",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-715.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1390,7 +1390,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-elitebook-6-g1ah-14",
     "skladnica": "zup-lodz",
     "plik": "Oferta Laptopy_06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-elitebook-6-g1ah-14.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
       "od": "2026-05-30",
@@ -1420,7 +1420,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-elitebook-6-g1ah-16",
     "skladnica": "zup-lodz",
     "plik": "Oferta Laptopy_06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-elitebook-6-g1ah-16.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/komputery-pc-laptopy-all-in-one",
     "okres": {
       "od": "2026-03-10",
@@ -1439,7 +1439,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-seria-3-pro-324pv",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-seria-3-pro-324pv.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-05-30",
@@ -1458,7 +1458,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-seria-5-pro-524pm",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-seria-5-pro-524pm.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-05-30",
@@ -1480,7 +1480,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-seria-5-pro-524pu",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-seria-5-pro-524pu.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-05-30",
@@ -1501,7 +1501,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-seria-5-pro-527pm",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-seria-5-pro-527pm.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-05-30",
@@ -1523,7 +1523,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-seria-5-pro-527pq",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-seria-5-pro-527pq.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-05-30",
@@ -1542,7 +1542,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "hp-seria-5-pro-527pu",
     "skladnica": "zup-lodz",
     "plik": "Oferta na monitory.HP.Dell 01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-hp-seria-5-pro-527pu.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/monitory",
     "okres": {
       "od": "2026-03-10",
@@ -1561,7 +1561,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "m3-sl20",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator M3 Mobile SL20+_01.07.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-m3-sl20.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-07-01",
@@ -1638,7 +1638,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "ms-365",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-ms-365.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1657,7 +1657,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "podkladka-pod-mysz",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-podkladka-pod-mysz.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1676,7 +1676,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "podnozek-biurowy",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-podnozek-biurowy.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1695,7 +1695,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "samsung-a36",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY A36_03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-samsung-a36.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-10",
@@ -1741,7 +1741,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "samsung-a56",
     "skladnica": "zup-lodz",
     "plik": "Oferta na rejestrator typu Smartfon SAMSUNG GALAXY A56_01.06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-samsung-a56.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-05-30",
@@ -1793,7 +1793,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "samsung-galaxy-tab-active5",
     "skladnica": "zup-lodz",
     "plik": "Oferta na tablety 03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-samsung-galaxy-tab-active5.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/tablety",
     "okres": {
       "od": "2026-03-10",
@@ -1814,7 +1814,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "samsung-s25-fe",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG GALAXY S25 FE_06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-samsung-s25-fe.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-07-01",
@@ -1860,7 +1860,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "samsung-s25-ultra",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator typu Smartfon SAMSUNG Galaxy S25 Ultra_03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-samsung-s25-ultra.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-10",
@@ -1900,7 +1900,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "samsung-ssd-t7",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-samsung-ssd-t7.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1919,7 +1919,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "samsung-ssd-t9",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-samsung-ssd-t9.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -1938,7 +1938,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "samsung-xcover7",
     "skladnica": "zup-lodz",
     "plik": "Oferta na rejestrator typu Smartfon SAMSUNG GALAXY XCOVER PRO6_03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-samsung-xcover7.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-10",
@@ -1990,7 +1990,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "seiko-mpa40",
     "skladnica": "zup-lodz",
     "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-seiko-mpa40.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-07-01",
@@ -2038,7 +2038,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "sewoo-lkp400",
     "skladnica": "zup-lodz",
     "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-sewoo-lkp400.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-07-01",
@@ -2135,7 +2135,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "sewoo-lkp43",
     "skladnica": "zup-lodz",
     "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-sewoo-lkp43.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-07-01",
@@ -2189,7 +2189,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "torba-hp-15",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-torba-hp-15.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -2210,7 +2210,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "torba-na-laptopa-15",
     "skladnica": "zup-lodz",
     "plik": "Oferta na akcesoria komputerow_03.2026r.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-torba-na-laptopa-15.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/akcesoria-komputerowe",
     "okres": {
       "od": "2026-03-10",
@@ -2232,7 +2232,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "unitech-ea660",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Unitech EA660_06.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-unitech-ea660.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-05-30",
@@ -2315,7 +2315,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "unitech-pa768",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator UnitechPA768_03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-unitech-pa768.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-10",
@@ -2404,7 +2404,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "zebra-ds2208",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-zebra-ds2208.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -2423,7 +2423,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "zebra-ds2278",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-zebra-ds2278.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -2528,7 +2528,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "zebra-tc27",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestrator Zebra TC27_01.07.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-zebra-tc27.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-07-01",
@@ -2617,7 +2617,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "zebra-tc58e",
     "skladnica": "zup-lodz",
     "plik": "Oferta na Rejestratotor Zebra TC58E_03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-zebra-tc58e.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-03-10",
@@ -2712,7 +2712,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "zebra-zd421c",
     "skladnica": "zup-lodz",
     "plik": "Oferta na sprzęt do EZD 03.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-zebra-zd421c.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/sprzet-do-ezd",
     "okres": {
       "od": "2026-03-10",
@@ -2811,7 +2811,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
     "slug": "zebra-zq521",
     "skladnica": "zup-lodz",
     "plik": "Oferta na drukarki termiczne_01.07.2026.docx",
-    "formularz": null,
+    "formularz": "/formularze/zup-lodz-zebra-zq521.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
       "od": "2026-07-01",

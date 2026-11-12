@@ -1,0 +1,99 @@
+{
+  "hp-seria-5-pro-524pm": {
+    "dostawca": "TAKMA",
+    "punkty": [
+      "Ekran LCD 23,8″ panoramiczny, matryca IPS z podświetleniem WLED, matowa, z powłoką antyodblaskową",
+      "Wbudowane cztery głośniki i dwa mikrofony z redukcją hałasu (DNN Noise Reduction)",
+      "Kamera 5 Mpix (2592 × 1944) chowana w obrysie ekranu (pop-up), kąt widzenia 80°, regulacja pochylenia +5°/−20°, sensor IR i czujnik zbliżeniowy do Windows Hello",
+      "Redukcja migotania obrazu i niebieskiego światła, utwardzenie powierzchni ekranu 3H",
+      "Regulacja: pochylenie −5° do +23°, wysokość min. 15 cm, obrót −45°/+45°, pivot ±90°",
+      "Zasilacz wbudowany w monitor, montaż VESA 100 mm, sRGB 100%, slot na linkę zabezpieczającą",
+      "Wymiary bez podstawki 21,25 × 1,86 × 12,40 cala; waga 9,5 kg z podstawką, 5,0 kg bez podstawki",
+      {
+        "t": "Wbudowana stacja dokująca, porty min.:",
+        "pod": [
+          "1 × DisplayPort 1.4 IN",
+          "1 × DisplayPort 1.4 OUT",
+          "1 × HDMI 2.0",
+          "1 × USB typ-C 5 Gbps z ładowaniem zewnętrznych urządzeń, w tym notebooków, do 100 W i obsługą DisplayPort 1.4",
+          "1 × USB typ-C 5 Gbps (dane) z zasilaniem zewnętrznych urządzeń do 15 W",
+          "1 × LAN RJ-45 (10/100/1000 Mbps) z MAC Address Pass Through, Wake on LAN, PXE Boot",
+          "Hub USB: min. 3 × USB typ-A 5 Gbps, w tym min. 1 z ładowaniem zewnętrznych urządzeń, + 1 × USB typ-B"
+        ]
+      },
+      "W zestawie: podstawa monitora oraz przewody min. 1,8 m: USB typ-C (C-C), USB A-B, DisplayPort 1.4, HDMI, zasilający"
+    ]
+  },
+  "hp-seria-5-pro-524pu": {
+    "punkty": [
+      "Ekran LCD 23,8″ panoramiczny, matryca IPS z podświetleniem WLED, matowa",
+      "Redukcja migotania obrazu i niebieskiego światła, utwardzenie powierzchni ekranu min. 3H",
+      "Regulacja: pochylenie −5° do +23°, wysokość min. 15 cm, obrót −45°/+45°, pivot ±90°",
+      "Zasilacz wbudowany w monitor, montaż VESA 100 mm, sRGB 100%, slot na linkę zabezpieczającą",
+      "Waga monitora bez podstawy maks. 4,4 kg",
+      {
+        "t": "Wbudowana stacja dokująca, porty min.:",
+        "pod": [
+          "1 × DisplayPort 1.4 IN",
+          "1 × DisplayPort 1.4 OUT",
+          "1 × HDMI 2.0",
+          "1 × USB typ-C 5 Gbps z ładowaniem zewnętrznych urządzeń, w tym notebooków, do 100 W i obsługą DisplayPort 1.4",
+          "1 × USB typ-C 5 Gbps (dane) z zasilaniem zewnętrznych urządzeń do 15 W",
+          "1 × LAN RJ-45 (10/100/1000 Mbps) z MAC Address Pass Through, Wake on LAN, PXE Boot",
+          "Hub USB: min. 3 × USB typ-A 5 Gbps, w tym min. 1 z ładowaniem zewnętrznych urządzeń"
+        ]
+      },
+      "W zestawie: przewód zasilający, przewód USB typ-C 3.2 (C-C) min. 1,8 m"
+    ]
+  },
+  "hp-seria-5-pro-527pm": {
+    "punkty": [
+      "Ekran LCD 27″ panoramiczny, matryca IPS z podświetleniem WLED, matowa",
+      "Wbudowane cztery głośniki o mocy 3 W i 5 W oraz dwa mikrofony z redukcją hałasu (DNN Noise Reduction)",
+      "Kamera 5 Mpix (2592 × 1944) chowana w obrysie ekranu (pop-up), kąt widzenia 80°, regulacja pochylenia +5°/−20°, sensor IR i czujnik zbliżeniowy do Windows Hello",
+      "Redukcja migotania obrazu i niebieskiego światła, utwardzenie powierzchni ekranu min. 3H",
+      "Regulacja: pochylenie −5° do +20°, wysokość min. 15 cm, obrót −45°/+45°, pivot ±90°",
+      "Zasilacz wbudowany w monitor, montaż VESA 100 mm, sRGB 100%, slot na linkę zabezpieczającą",
+      "Waga monitora bez podstawy maks. 6,2 kg",
+      {
+        "t": "Wbudowana stacja dokująca, porty min.:",
+        "pod": [
+          "1 × DisplayPort 1.4 IN",
+          "1 × DisplayPort 1.4 OUT",
+          "1 × HDMI 2.0",
+          "1 × USB typ-C 5 Gbps z ładowaniem zewnętrznych urządzeń, w tym notebooków, do 100 W i obsługą DisplayPort 1.4",
+          "1 × USB typ-C 5 Gbps (dane) z zasilaniem zewnętrznych urządzeń do 15 W",
+          "1 × LAN RJ-45 (10/100/1000 Mbps) z MAC Address Pass Through, Wake on LAN, PXE Boot",
+          "Hub USB: min. 3 × USB typ-A 5 Gbps, w tym min. 1 z ładowaniem zewnętrznych urządzeń, + 1 × USB typ-B"
+        ]
+      },
+      "W zestawie przewody min. 1,8 m: USB typ-C (C-C), USB A-B, DisplayPort 1.4, HDMI, zasilający"
+    ]
+  },
+  "hp-elitebook-6-g1ah-14": {
+    "punkty": [
+      "Ekran 14,0″ Full HD",
+      "Pamięć 16 GB RAM z możliwością rozbudowy do 64 GB",
+      "Pamięć masowa 512 GB",
+      "Zintegrowana karta graficzna",
+      "Klawiatura z podświetleniem, 98 klawiszy; clickpad; czytnik linii papilarnych",
+      "Karta dźwiękowa, dwa głośniki i dwa mikrofony",
+      "Kamera FHD wbudowana w obudowę ekranu, z mechaniczną przesłoną",
+      "Wi-Fi 6E (160 MHz) z Bluetooth 5.3",
+      {
+        "t": "Wbudowane porty i złącza:",
+        "pod": [
+          "1 × HDMI 2.1",
+          "2 × USB 3.2 Gen 1 (5 Gbps), w tym jeden dosilony, ładujący urządzenia także przy wyłączonym notebooku",
+          "2 × USB 4 (40 Gbps) typu C z Power Delivery i DisplayPort 1.4",
+          "1 × RJ45",
+          "1 × złącze słuchawkowe/mikrofonowe (combo)",
+          "Czytnik kart kryptograficznych Smart Card"
+        ]
+      },
+      "Waga 1,4 kg, akumulator 56 Wh",
+      "Z systemem operacyjnym",
+      "Gwarancja 36 miesięcy"
+    ]
+  }
+}

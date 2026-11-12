@@ -472,9 +472,19 @@ const pojedynczaPozycja = (tekst) => {
   return POJEDYNCZE_POZYCJE.find(([fragment]) => duze.includes(uprosc(fragment)))?.[1] ?? null
 }
 
-/** Formularze przerobione na PDF i wrzucone do `public/formularze/`. */
+/**
+ * Formularze zamówienia w `public/formularze/`. EM45 ma własny, ze stacją
+ * dokującą; pozostałe oferty ZUP Łódź buduje scripts/formularze-zup-lodz.mjs
+ * jako `zup-lodz-<slug>.pdf` — podpinamy każdy, który leży na dysku.
+ */
 const FORMULARZE_PDF = {
   'zebra-em45': '/formularze/zup-lodz-zebra-em45-2026-07.pdf',
+}
+const formularzOferty = (slug, skladnica) => {
+  if (skladnica !== 'zup-lodz') return null
+  if (FORMULARZE_PDF[slug]) return FORMULARZE_PDF[slug]
+  const sciezka = `/formularze/zup-lodz-${slug}.pdf`
+  return existsSync(join('public', sciezka)) ? sciezka : null
 }
 
 const oferty = []
@@ -723,7 +733,7 @@ for (const [plik, sciezka] of dokumenty) {
         slug: g.slug,
         skladnica,
         plik,
-        formularz: FORMULARZE_PDF[g.slug] ?? null,
+        formularz: formularzOferty(g.slug, skladnica),
         strona: stronaSkladnicy(g.slug, skladnica),
         okres: sekcja.okres,
         dostawca: g.urzadzenie._dostawca,
