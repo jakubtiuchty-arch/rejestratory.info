@@ -144,9 +144,12 @@ const data: ProductData = {
       // pasek przycięty do 2000 × 496): leśniczy trzyma terminal poziomo w obu dłoniach,
       // tył z aparatem skierowany na stos, lewe ~55% kadru puste pod tekst. Stos widać
       // TYLKO na ekranie (uwaga Jakuba: nie może go być na ekranie i poza nim naraz).
+      // Terminal z AI przekłamywał wygląd, więc w dłonie wklejone jest prawdziwe zdjęcie
+      // tc501_1.png (obrót 90° w lewo, przyciemnione pod zmierzch, wycięty ekran), a pod
+      // nie wchodzi ekran z animacji AI — ffmpeg, pozycja 1183:287 w klatce 2206 × 946.
       // Na ekranie mapa głębi bez liczb — Zebra nie ma aplikacji do pomiaru stosów.
-      video: '/czujnik-tof-tc501.mp4?v=4',
-      image: '/czujnik-tof-tc501-poster.jpg?v=4',
+      video: '/czujnik-tof-tc501.mp4?v=5',
+      image: '/czujnik-tof-tc501-poster.jpg?v=5',
       backgroundMedia: true,
       imageAlt:
         'Leśniczy w rękawicach trzyma Zebra TC501 poziomo na leśnej drodze — na ekranie ' +
