@@ -160,7 +160,7 @@ const products = [
     id: 13,
     name: "Zebra TC501",
     category: "Rejestratory",
-    description: "Następca TC5x z ekranem AMOLED 1500 nitów, Wi-Fi 7 i Androidem do 19",
+    description: "Następca TC5x z czujnikiem 3D ToF, ekranem AMOLED 1500 nitów i Androidem do 19",
     specifications: "6″ FHD+ AMOLED, 12 GB RAM / 256 GB, IP68, 5000 mAh hot-swap",
     availability: "Dostępny",
     whereToBuy: "ZUP Łódź, TAKMA",

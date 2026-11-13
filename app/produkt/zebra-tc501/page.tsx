@@ -7,6 +7,11 @@ import { ICON } from '@/components/product/icons'
 // release notes pierwszego wydania Androida 15 GMS, lista wspieranych wersji Androida Zebry.
 // Konfiguracja 12/256 GB — taką ZUP Łódź kupuje w umowie NH.271.51.2026 z 02.11.2026
 // (część 3, „Mobilny komputer dotykowy – typ 4”). Karta dodana 13.11.2026.
+// Czujnik ToF: spec sheet („Time of Flight (iToF) — available on select SKUs”, 3D data
+// in any lighting), PRG TC501 (moduł iToF na tylnej ściance), Zebra TechDocs Mobile Parcel 3.0
+// (VGA iToF, paczki 10–120 cm, palety w becie z dwóch ujęć, framework wgrany fabrycznie).
+// Umowa ZUP Łódź wymaga czujnika („Czujnik Time of Flight (ToF sensor)” w wierszu Skaner).
+// Szerokokątnego aparatu 13 Mpx nie podajemy — to osobna opcja, umowa go nie wymaga.
 const data: ProductData = {
   slug: 'zebra-tc501',
   name: 'Zebra TC501',
@@ -14,8 +19,8 @@ const data: ProductData = {
   categoryHref: '/kategoria/rejestratory',
   images: ['/tc501_1.png', '/tc501_2.png'],
   inquiry: {
-    description: 'Rejestrator leśniczego z ekranem 1500 nitów i Wi-Fi 7',
-    specifications: 'Android 15, do 19 · 6″ FHD+ AMOLED · 12/256 GB · 5G · skaner 1D/2D · 5000 mAh hot-swap · IP68',
+    description: 'Rejestrator leśniczego z czujnikiem 3D ToF, ekranem 1500 nitów i Wi-Fi 7',
+    specifications: 'Android 15, do 19 · 6″ FHD+ AMOLED · 12/256 GB · 5G · skaner 1D/2D · czujnik ToF · 5000 mAh hot-swap · IP68',
   },
   whyNavLabel: 'Dlaczego TC501',
   whyHeading: 'Do czego przyda się w nadleśnictwie',
@@ -23,7 +28,7 @@ const data: ProductData = {
   highlights: [
     { icon: ICON.pamiec, label: 'Pamięć', value: '12 GB RAM + 256 GB' },
     { icon: ICON.jasnosc, label: 'Ekran', value: '6″ AMOLED, do 1500 nitów' },
-    { icon: ICON.siec, label: 'Sieć', value: '5G, Wi-Fi 7, Bluetooth 6.0' },
+    { icon: ICON.lidar, label: 'Pomiar 3D', value: 'czujnik ToF, kamera głębi VGA' },
     { icon: ICON.upadek, label: 'Upadki', value: 'z 2,44 m na beton' },
   ],
   variants: [{ id: 'pamiec', label: 'Pamięć', options: ['12 GB / 256 GB'] }],
@@ -51,13 +56,24 @@ const data: ProductData = {
     {
       title: 'Łączność i odczyt',
       rows: [
-        { k: 'Skaner', v: 'kody 1D i 2D, czujnik odległości ToF' },
+        { k: 'Skaner', v: 'kody 1D i 2D' },
         { k: 'RFID', v: 'UHF krótkiego zasięgu, do 2 m' },
         { k: 'Sieć', v: '5G i LTE, SIM i 2 × eSIM' },
         { k: 'Wi-Fi i Bluetooth', v: 'Wi-Fi 7 (2,4 / 5 / 6 GHz), Bluetooth 6.0' },
         { k: 'NFC', v: 'ISO 14443 A/B, ISO 15693, Mifare, FeliCa' },
         { k: 'Lokalizacja', v: 'GPS, GLONASS, Galileo, BeiDou, QZSS' },
         { k: 'Aparaty', v: '50 Mpx z autofokusem, 8 Mpx z przodu' },
+      ],
+    },
+    {
+      title: 'Czujnik ToF (pomiar 3D)',
+      rows: [
+        { k: 'Technologia', v: 'iToF — pomiar czasu przelotu światła, kamera głębi VGA na tylnej ściance' },
+        { k: 'Co mierzy', v: 'głębię, odległość, obecność przedmiotu i objętość — w każdym oświetleniu' },
+        { k: 'Wymiary paczek', v: 'Zebra Dimensioning: od 10 do 120 cm, prostopadłościenne i o nieregularnym kształcie' },
+        { k: 'Palety', v: 'pomiar z dwóch ujęć (wersja beta)' },
+        { k: 'Oprogramowanie', v: 'moduł pomiarowy wgrany fabrycznie, wynik trafia do aplikacji przez API Zebry' },
+        { k: 'Dostępność', v: 'tylko wybrane wersje TC501 — umowa ZUP Łódź wymaga czujnika ToF' },
       ],
     },
     {
@@ -108,6 +124,22 @@ const data: ProductData = {
       body:
         'Akumulator 5000 mAh wymienia się bez wyłączania terminala, a na dłuższe wyjazdy jest ' +
         'wersja 7240 mAh.',
+    },
+  ],
+  signature: [
+    {
+      icon: ICON.lidar,
+      title: 'Czujnik ToF mierzy w trzech wymiarach',
+      body:
+        'Obok aparatu pracuje czujnik ToF (time-of-flight) z kamerą głębi VGA. Oświetla kadr ' +
+        'modulowanym światłem i z opóźnienia odbitego sygnału liczy odległość każdego punktu — ' +
+        'powstaje mapa głębi, która nie zależy od oświetlenia. Terminal mierzy więc odległość, ' +
+        'wykrywa obecność przedmiotu i podaje jego objętość. Wgrany fabrycznie moduł Zebra ' +
+        'Dimensioning mierzy paczki od 10 do 120 cm, także o nieregularnym kształcie, a palety ' +
+        'z dwóch ujęć — w magazynie nadleśnictwa czy w szkółce wymiary przesyłki do listu ' +
+        'przewozowego zmierzy się bez taśmy. Czujnik mają tylko wybrane wersje TC501; ' +
+        'umowa ZUP Łódź go wymaga.',
+      tone: 'ciemny',
     },
   ],
   usedBy: { device: 'Zebra TC501' },
