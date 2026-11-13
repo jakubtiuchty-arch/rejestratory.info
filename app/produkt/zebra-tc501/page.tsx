@@ -147,16 +147,18 @@ const data: ProductData = {
       // tc501_1.png (obrót 90°, skala 158 px w klatce 2688 × 1152, kciuki z AI na
       // wierzchu); na ekranie mapa głębi stosu. Ruch mgły i promieni: Seedance 2.5,
       // klatki wyrównane do kompozytu (SIFT) i z wklejonym prawdziwym terminalem w
-      // każdej klatce. Skan ToF na stosie i ekranie dorysowany w kodzie: linia biegnie
-      // od terminala w lewo, kłody zapalają się kolorami mapy głębi i gasną. Bez liczb
-      // i wymiarów — Zebra nie ma aplikacji do pomiaru stosów. Pasek 2000 × 566.
-      video: '/czujnik-tof-tc501.mp4?v=6',
-      image: '/czujnik-tof-tc501-poster.jpg?v=6',
+      // każdej klatce. Pomiar dorysowany w kodzie (uwaga Jakuba: ma wyglądać jak
+      // mierzenie, nie kolorowy stos): od rogu najbliżej terminala rosną kolejno linie
+      // wysokości, szerokości i głębokości z licznikiem, potem przerywany obrys bryły;
+      // ekran terminala pokazuje podgląd stosu z tymi samymi liniami. Wartości są
+      // poglądowe — Zebra nie ma aplikacji do pomiaru stosów. Pasek 2000 × 566.
+      video: '/czujnik-tof-tc501.mp4?v=7',
+      image: '/czujnik-tof-tc501-poster.jpg?v=7',
       backgroundMedia: true,
       imageAlt:
         'Leśniczy przy stosie drewna na leśnej drodze o zachodzie słońca trzyma Zebra TC501 ' +
-        'poziomo — linia skanu czujnika ToF przechodzi po kłodach, które zapalają się ' +
-        'kolorami mapy głębi, takiej samej jak na ekranie terminala',
+        'poziomo i mierzy stos — na kłodach pojawiają się linie wysokości, szerokości ' +
+        'i głębokości z wymiarami, a na ekranie terminala podgląd z tymi samymi liniami',
     },
   ],
   usedBy: { device: 'Zebra TC501' },
