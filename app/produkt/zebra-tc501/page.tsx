@@ -142,14 +142,15 @@ const data: ProductData = {
       tone: 'ciemny',
       // baner z Higgsfielda (gpt_image_2_6 21:9 na zdjęciach tc501_1/2 → Seedance 2.5,
       // pasek przycięty do 2000 × 496): leśniczy trzyma terminal poziomo w obu dłoniach,
-      // tył z aparatem skierowany na stos, lewe ~55% kadru puste pod tekst.
+      // tył z aparatem skierowany na stos, lewe ~55% kadru puste pod tekst. Stos widać
+      // TYLKO na ekranie (uwaga Jakuba: nie może go być na ekranie i poza nim naraz).
       // Na ekranie mapa głębi bez liczb — Zebra nie ma aplikacji do pomiaru stosów.
-      video: '/czujnik-tof-tc501.mp4?v=3',
-      image: '/czujnik-tof-tc501-poster.jpg?v=3',
+      video: '/czujnik-tof-tc501.mp4?v=4',
+      image: '/czujnik-tof-tc501-poster.jpg?v=4',
       backgroundMedia: true,
       imageAlt:
-        'Leśniczy w rękawicach trzyma Zebra TC501 poziomo przed stosem drewna — czujnik ToF ' +
-        'z tyłu terminala pokrywa czoła kłód siatką głębi, a ekran pokazuje mapę głębi stosu',
+        'Leśniczy w rękawicach trzyma Zebra TC501 poziomo na leśnej drodze — na ekranie ' +
+        'terminala stos drewna z mapą głębi z czujnika ToF, po której przechodzi linia skanu',
     },
   ],
   usedBy: { device: 'Zebra TC501' },
