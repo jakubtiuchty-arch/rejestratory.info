@@ -140,15 +140,16 @@ const data: ProductData = {
         'przewozowego zmierzy się bez taśmy. Czujnik mają tylko wybrane wersje TC501; ' +
         'umowa ZUP Łódź go wymaga.',
       tone: 'ciemny',
-      // baner z Higgsfielda (gpt_image_2_6 21:9 na zdjęciach tc501_1/2 → Seedance 2.5):
-      // tył terminala z aparatem skierowany na stos drewna, lewe ~40% kadru puste pod tekst.
+      // baner z Higgsfielda (gpt_image_2_6 21:9 na zdjęciach tc501_1/2 → Seedance 2.5,
+      // pasek przycięty do 2000 × 496): leśniczy trzyma terminal poziomo w obu dłoniach,
+      // tył z aparatem skierowany na stos, lewe ~55% kadru puste pod tekst.
       // Na ekranie mapa głębi bez liczb — Zebra nie ma aplikacji do pomiaru stosów.
-      video: '/czujnik-tof-tc501.mp4?v=2',
-      image: '/czujnik-tof-tc501-poster.jpg?v=2',
+      video: '/czujnik-tof-tc501.mp4?v=3',
+      image: '/czujnik-tof-tc501-poster.jpg?v=3',
       backgroundMedia: true,
       imageAlt:
-        'Leśniczy trzyma Zebra TC501 przed stosem drewna przy drodze leśnej — wiązka czujnika ' +
-        'ToF z tyłu terminala pokrywa czoła kłód siatką głębi, a ekran pokazuje mapę głębi stosu',
+        'Leśniczy w rękawicach trzyma Zebra TC501 poziomo przed stosem drewna — czujnik ToF ' +
+        'z tyłu terminala pokrywa czoła kłód siatką głębi, a ekran pokazuje mapę głębi stosu',
     },
   ],
   usedBy: { device: 'Zebra TC501' },

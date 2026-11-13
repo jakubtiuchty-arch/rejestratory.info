@@ -56,7 +56,7 @@ export type Signature = {
    *  więc kafelek wygląda poprawnie także zanim plik się wczyta */
   video?: string
   /** baner: wideo wypełnia cały kafelek, tekst leży na nim po lewej (od lg),
-   *  na wąskim ekranie wideo nad tekstem. Kadr musi mieć lewe ~40% puste
+   *  na wąskim ekranie wideo nad tekstem. Kadr musi mieć lewe ~55% puste
    *  i ciemne, bo tam trafia tekst (np. skan ToF na TC501) */
   backgroundMedia?: boolean
 }
@@ -1569,16 +1569,20 @@ export default function ProductPage({ data }: { data: ProductData }) {
                     loop
                     playsInline
                     aria-label={k.imageAlt}
-                    className="block aspect-[16/10] w-full object-cover object-[78%_center] lg:absolute lg:inset-0 lg:-z-10 lg:aspect-auto lg:h-full lg:object-right"
+                    className="block aspect-[5/2] w-full object-cover object-[80%_center] lg:absolute lg:inset-y-0 lg:left-[15%] lg:right-0 lg:-z-10 lg:aspect-auto lg:h-full lg:w-auto lg:object-right"
                   />
+                  {/* lewy brzeg kadru jest ciemny jak kafelek, więc przesunięcie
+                      sceny w prawo o 15% nie zostawia widocznej krawędzi */}
                   <div
                     aria-hidden
-                    className="absolute inset-y-0 left-0 -z-10 hidden w-[58%] bg-gradient-to-r from-[#0A1B12] from-40% to-transparent lg:block"
+                    className="absolute inset-y-0 left-0 -z-10 hidden w-[62%] bg-gradient-to-r from-[#0A1B12] from-[78%] to-transparent lg:block"
                   />
-                  <div className="p-6 lg:flex lg:min-h-[480px] lg:max-w-[42%] lg:flex-col lg:justify-center lg:p-10">
-                    <img src={naCiemnym(k.icon)} alt="" className="h-8 w-8 opacity-90" />
-                    <h3 className="mt-5 text-lg font-semibold text-white lg:text-xl">{k.title}</h3>
-                    <p className="mt-2 leading-relaxed">{k.body}</p>
+                  <div className="p-6 lg:flex lg:min-h-[240px] lg:max-w-[50%] lg:flex-col lg:justify-center lg:px-8 lg:py-6">
+                    <div className="flex items-center gap-3">
+                      <img src={naCiemnym(k.icon)} alt="" className="h-7 w-7 opacity-90" />
+                      <h3 className="text-lg font-semibold text-white">{k.title}</h3>
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed">{k.body}</p>
                   </div>
                 </div>
               )
