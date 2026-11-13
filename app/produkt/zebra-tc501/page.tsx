@@ -140,20 +140,23 @@ const data: ProductData = {
         'przewozowego zmierzy się bez taśmy. Czujnik mają tylko wybrane wersje TC501; ' +
         'umowa ZUP Łódź go wymaga.',
       tone: 'ciemny',
-      // baner z Higgsfielda (gpt_image_2_6 21:9 na zdjęciach tc501_1/2 → Seedance 2.5,
-      // pasek przycięty do 2000 × 496): leśniczy trzyma terminal poziomo w obu dłoniach,
-      // tył z aparatem skierowany na stos, lewe ~55% kadru puste pod tekst. Stos widać
-      // TYLKO na ekranie (uwaga Jakuba: nie może go być na ekranie i poza nim naraz).
-      // Terminal z AI przekłamywał wygląd, więc w dłonie wklejone jest prawdziwe zdjęcie
-      // tc501_1.png (obrót 90° w lewo, przyciemnione pod zmierzch, wycięty ekran), a pod
-      // nie wchodzi ekran z animacji AI — ffmpeg, pozycja 1183:287 w klatce 2206 × 946.
-      // Na ekranie mapa głębi bez liczb — Zebra nie ma aplikacji do pomiaru stosów.
-      video: '/czujnik-tof-tc501.mp4?v=5',
-      image: '/czujnik-tof-tc501-poster.jpg?v=5',
+      // Baner na wzór sceny ze stosem z hero strony głównej (uwaga Jakuba 13.11.2026):
+      // gpt_image_2_6 21:9 (wzór: klatka z hero-nadlesnictwo.mp4 + zdjęcia tc501_1/2),
+      // leśniczy przy stosie trzyma terminal poziomo, tył z aparatem na stos.
+      // Terminal z AI przekłamywał wygląd, więc w dłonie wklejone jest prawdziwe
+      // tc501_1.png (obrót 90°, skala 158 px w klatce 2688 × 1152, kciuki z AI na
+      // wierzchu); na ekranie mapa głębi stosu. Ruch mgły i promieni: Seedance 2.5,
+      // klatki wyrównane do kompozytu (SIFT) i z wklejonym prawdziwym terminalem w
+      // każdej klatce. Skan ToF na stosie i ekranie dorysowany w kodzie: linia biegnie
+      // od terminala w lewo, kłody zapalają się kolorami mapy głębi i gasną. Bez liczb
+      // i wymiarów — Zebra nie ma aplikacji do pomiaru stosów. Pasek 2000 × 566.
+      video: '/czujnik-tof-tc501.mp4?v=6',
+      image: '/czujnik-tof-tc501-poster.jpg?v=6',
       backgroundMedia: true,
       imageAlt:
-        'Leśniczy w rękawicach trzyma Zebra TC501 poziomo na leśnej drodze — na ekranie ' +
-        'terminala stos drewna z mapą głębi z czujnika ToF, po której przechodzi linia skanu',
+        'Leśniczy przy stosie drewna na leśnej drodze o zachodzie słońca trzyma Zebra TC501 ' +
+        'poziomo — linia skanu czujnika ToF przechodzi po kłodach, które zapalają się ' +
+        'kolorami mapy głębi, takiej samej jak na ekranie terminala',
     },
   ],
   usedBy: { device: 'Zebra TC501' },

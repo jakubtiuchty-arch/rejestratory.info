@@ -55,9 +55,9 @@ export type Signature = {
   /** krótka pętla wideo w miejsce zdjęcia; `image` służy wtedy za plakat,
    *  więc kafelek wygląda poprawnie także zanim plik się wczyta */
   video?: string
-  /** baner: wideo wypełnia cały kafelek, tekst leży na nim po lewej (od lg),
-   *  na wąskim ekranie wideo nad tekstem. Kadr musi mieć lewe ~55% puste
-   *  i ciemne, bo tam trafia tekst (np. skan ToF na TC501) */
+  /** baner jak hero strony głównej: wideo na całą wysokość kafelka, tekst na
+   *  nim po lewej, przygaszony gradientem (od lg); na wąskim ekranie wideo nad
+   *  tekstem. Lewa część kadru to tło bez ważnych elementów (np. skan ToF na TC501) */
   backgroundMedia?: boolean
 }
 
@@ -1551,8 +1551,8 @@ export default function ProductPage({ data }: { data: ProductData }) {
           {kafelki.map((k) => {
             const ciemny = k.wyrozniony && k.tone === 'ciemny'
             if (k.backgroundMedia && k.video) {
-              // Baner: scena wypełnia cały kafelek, tekst leży na lewym, celowo
-              // pustym polu kadru, przyciemnionym gradientem w kolorze kafelka.
+              // Baner: scena wypełnia kafelek, tekst leży na lewej części kadru
+              // (las i droga), przyciemnionej gradientem w kolorze kafelka.
               // Na wąskim ekranie tekst zasłoniłby scenę, więc wideo idzie nad tekst.
               return (
                 <div
@@ -1569,13 +1569,15 @@ export default function ProductPage({ data }: { data: ProductData }) {
                     loop
                     playsInline
                     aria-label={k.imageAlt}
-                    className="block aspect-[5/2] w-full object-cover object-[80%_center] lg:absolute lg:inset-y-0 lg:left-[15%] lg:right-0 lg:-z-10 lg:aspect-auto lg:h-full lg:w-auto lg:object-right"
+                    className="block aspect-[5/2] w-full object-cover object-right lg:absolute lg:inset-y-0 lg:right-0 lg:-z-10 lg:aspect-auto lg:h-full lg:w-auto lg:max-w-none lg:[mask-image:linear-gradient(to_right,transparent,black_18%)]"
                   />
-                  {/* lewy brzeg kadru jest ciemny jak kafelek, więc przesunięcie
-                      sceny w prawo o 15% nie zostawia widocznej krawędzi */}
+                  {/* Jak hero strony głównej: scenę widać też pod tekstem, przygaszoną
+                      gradientem od lewej. Wideo ma pełną wysokość kafelka, więc na
+                      szerokim ekranie nie sięga lewej krawędzi — jego brzeg wygasza
+                      maska, a pas przy krawędzi kafelka ma pełny kolor. */}
                   <div
                     aria-hidden
-                    className="absolute inset-y-0 left-0 -z-10 hidden w-[62%] bg-gradient-to-r from-[#0A1B12] from-[78%] to-transparent lg:block"
+                    className="absolute inset-0 -z-10 hidden bg-[linear-gradient(to_right,#0A1B12_0%,#0A1B12_20%,rgba(10,27,18,0.78)_34%,rgba(10,27,18,0.5)_50%,transparent_66%)] lg:block"
                   />
                   <div className="p-6 lg:flex lg:min-h-[240px] lg:max-w-[50%] lg:flex-col lg:justify-center lg:px-8 lg:py-6">
                     <div className="flex items-center gap-3">
