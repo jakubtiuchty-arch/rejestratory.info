@@ -55,6 +55,9 @@ export type Signature = {
   /** krótka pętla wideo w miejsce zdjęcia; `image` służy wtedy za plakat,
    *  więc kafelek wygląda poprawnie także zanim plik się wczyta */
   video?: string
+  /** wideo zajmuje połowę kafelka zamiast wąskiej kolumny — dla scen 16:9,
+   *  które w 340 px giną obok tekstu (np. animacja skanu ToF na TC501) */
+  largeMedia?: boolean
 }
 
 /** Krok wdrożenia — używane przez urządzenia fiskalne, gdzie zakup to proces, nie dostawa. */
@@ -1233,7 +1236,15 @@ export default function ProductPage({ data }: { data: ProductData }) {
       // zdjęcie żyje tylko na wyróżniku, więc przy scaleniu trzeba je przenieść
       return [
         w.icon,
-        { ...lepszy, tone: w.tone, image: w.image, imageAlt: w.imageAlt, video: w.video, wyrozniony: true as const },
+        {
+          ...lepszy,
+          tone: w.tone,
+          image: w.image,
+          imageAlt: w.imageAlt,
+          video: w.video,
+          largeMedia: w.largeMedia,
+          wyrozniony: true as const,
+        },
       ]
     }),
   )
@@ -1247,6 +1258,7 @@ export default function ProductPage({ data }: { data: ProductData }) {
         image: undefined,
         imageAlt: undefined,
         video: undefined,
+        largeMedia: undefined,
         wyrozniony: false as const,
       })),
   ]
@@ -1579,7 +1591,11 @@ export default function ProductPage({ data }: { data: ProductData }) {
                       loop
                       playsInline
                       aria-label={k.imageAlt}
-                      className="mx-auto mt-6 w-full max-w-[300px] self-center rounded-lg sm:mx-0 sm:mt-0 sm:w-[42%] sm:max-w-[340px]"
+                      className={
+                        k.largeMedia
+                          ? 'mt-6 w-full self-center rounded-xl sm:mt-0 sm:w-1/2 sm:max-w-[620px]'
+                          : 'mx-auto mt-6 w-full max-w-[300px] self-center rounded-lg sm:mx-0 sm:mt-0 sm:w-[42%] sm:max-w-[340px]'
+                      }
                     />
                   ) : (
                     k.image && (

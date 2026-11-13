@@ -140,6 +140,14 @@ const data: ProductData = {
         'przewozowego zmierzy się bez taśmy. Czujnik mają tylko wybrane wersje TC501; ' +
         'umowa ZUP Łódź go wymaga.',
       tone: 'ciemny',
+      // animacja z Higgsfielda (gpt_image_2_6 na zdjęciach tc501_1/2 → Seedance 2.5),
+      // pętla: wynik → wygaszenie → skan → wynik; poster to ostatnia klatka
+      video: '/czujnik-tof-tc501.mp4',
+      image: '/czujnik-tof-tc501-poster.jpg',
+      largeMedia: true,
+      imageAlt:
+        'Zebra TC501 skierowany na karton — wiązka czujnika ToF obejmuje pudełko, ' +
+        'a na ekranie terminala pojawiają się jego wymiary 40 × 30 × 25 cm',
     },
   ],
   usedBy: { device: 'Zebra TC501' },
