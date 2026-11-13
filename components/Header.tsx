@@ -43,7 +43,7 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
         <nav className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
             <a href="/">
-              <img src="/rejestratory_logo_footer_header.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo_footer_header.png" alt="Rejestratory.info" className="h-10 w-auto" />
             </a>
           </div>
           

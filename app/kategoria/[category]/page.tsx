@@ -333,7 +333,7 @@ export default function CategoryPage() {
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <img src="/rejestratory_logo.png" alt="Rejestartory.info" className="h-10 w-auto" />
+              <img src="/rejestratory_logo.png" alt="Rejestratory.info" className="h-10 w-auto" />
             </div>
             
             <div className="flex items-center gap-8">
