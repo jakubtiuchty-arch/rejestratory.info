@@ -11,7 +11,8 @@ const data: ProductData = {
   name: 'Samsung Galaxy XCover7 Pro',
   category: 'Telefony',
   categoryHref: '/kategoria/telefony',
-  images: ['/xcover7pro_1.png'],
+  // zdjęcia z galerii samsung.com/us (SM-G766UZKTXAU), docięte do 800 × 1200 jak S25 FE
+  images: ['/xcover7pro_1.png', '/xcover7pro_2.png', '/xcover7pro_3.png'],
   inquiry: {
     description: 'Wzmocniony smartfon z wymienną baterią',
     specifications: 'Android 15 · 6,6″ FHD+ LCD 120 Hz · Snapdragon 7s Gen 3 · 6/128 GB · 4350 mAh wymienna · IP68, MIL-STD-810H',
