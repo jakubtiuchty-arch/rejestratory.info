@@ -149,16 +149,17 @@ const data: ProductData = {
       // klatki wyrównane do kompozytu (SIFT) i z wklejonym prawdziwym terminalem w
       // każdej klatce. Pomiar dorysowany w kodzie (uwaga Jakuba: ma wyglądać jak
       // mierzenie, nie kolorowy stos): od rogu najbliżej terminala rosną kolejno linie
-      // wysokości, szerokości i głębokości z licznikiem, potem przerywany obrys bryły;
-      // ekran terminala pokazuje podgląd stosu z tymi samymi liniami. Wartości są
-      // poglądowe — Zebra nie ma aplikacji do pomiaru stosów. Pasek 2000 × 566.
-      video: '/czujnik-tof-tc501.mp4?v=7',
-      image: '/czujnik-tof-tc501-poster.jpg?v=7',
+      // wysokości, szerokości i głębokości z licznikiem, potem przerywany obrys bryły.
+      // Ekran terminala czarny — stos nie może być naraz na ekranie i w scenie (uwaga
+      // Jakuba). Wartości są poglądowe — Zebra nie ma aplikacji do pomiaru stosów.
+      // Pasek 2000 × 566.
+      video: '/czujnik-tof-tc501.mp4?v=8',
+      image: '/czujnik-tof-tc501-poster.jpg?v=8',
       backgroundMedia: true,
       imageAlt:
         'Leśniczy przy stosie drewna na leśnej drodze o zachodzie słońca trzyma Zebra TC501 ' +
         'poziomo i mierzy stos — na kłodach pojawiają się linie wysokości, szerokości ' +
-        'i głębokości z wymiarami, a na ekranie terminala podgląd z tymi samymi liniami',
+        'i głębokości z wymiarami',
     },
   ],
   usedBy: { device: 'Zebra TC501' },
