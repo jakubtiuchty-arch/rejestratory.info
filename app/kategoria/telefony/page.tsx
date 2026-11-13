@@ -125,6 +125,19 @@ const products = [
     badge: "Nowość",
     featured: true,
     customUrl: "/produkt/iphone-17-pro-max"
+  },
+  {
+    id: 10,
+    name: "Motorola Edge 60 Pro",
+    category: "Telefony",
+    description: "Smartfon z odpornością IP68 i IP69 oraz baterią 6000 mAh",
+    specifications: "Android 15, 6,7\" pOLED 120 Hz, Dimensity 8350, 12GB RAM, 512GB",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "edge60pro_1.png",
+    badge: null,
+    featured: false,
+    customUrl: "/produkt/motorola-edge-60-pro"
   }
 ];
 
@@ -162,6 +175,12 @@ const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
     wiersze: [
       { model: 'iPhone 17 Pro', href: '/produkt/iphone-17-pro', ekran: '6,3″ OLED', zabezp: 'min. 5 lat', aku: '3988 mAh', odpornosc: 'IP68', aparat: '48 Mpx · zoom 4x' },
       { model: 'iPhone 17 Pro Max', href: '/produkt/iphone-17-pro-max', ekran: '6,9″ OLED', zabezp: 'min. 5 lat', aku: '4823 mAh', odpornosc: 'IP68', aparat: '48 Mpx · zoom 4x' },
+    ],
+  },
+  {
+    grupa: 'Motorola',
+    wiersze: [
+      { model: 'Edge 60 Pro', href: '/produkt/motorola-edge-60-pro', ekran: '6,7″ pOLED', zabezp: 'do 04.2029', aku: '6000 mAh', odpornosc: 'IP68 i IP69, MIL-STD-810H', aparat: '50 Mpx · zoom 3x', naj: ['aku', 'odpornosc'] },
     ],
   },
 ]

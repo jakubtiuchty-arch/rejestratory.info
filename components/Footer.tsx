@@ -26,6 +26,7 @@ const KATEGORIE = [
   ['Urządzenia fiskalne', '/kategoria/urzadzenia-fiskalne'],
   ['Zarządzanie dokumentacją', '/kategoria/ezd'],
   ['Akcesoria komputerowe', '/kategoria/akcesoria-komputerowe'],
+  ['Wideokonferencje', '/kategoria/wideokonferencje'],
 ]
 
 const OBSLUGA = [

@@ -155,6 +155,45 @@ const products = [
     badges: [],
     featured: false,
     customUrl: "/produkt/honeywell-ct32-bez-skanera"
+  },
+  {
+    id: 13,
+    name: "Zebra TC501",
+    category: "Rejestratory",
+    description: "Następca TC5x z ekranem AMOLED 1500 nitów, Wi-Fi 7 i Androidem do 19",
+    specifications: "6″ FHD+ AMOLED, 12 GB RAM / 256 GB, IP68, 5000 mAh hot-swap",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "/tc501_1.png",
+    badges: [],
+    featured: false,
+    customUrl: "/produkt/zebra-tc501"
+  },
+  {
+    id: 14,
+    name: "Newland MT95 Kambur Pro III",
+    category: "Rejestratory",
+    description: "Rejestrator ze skanerem 1D i 2D oraz baterią wymienianą bez wyłączania",
+    specifications: "6″, 6 GB RAM / 64 GB, 5G, IP67, 5100 mAh hot-swap",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "/mt95_1.png",
+    badges: [],
+    featured: false,
+    customUrl: "/produkt/newland-mt95"
+  },
+  {
+    id: 15,
+    name: "Datalogic Memor 17",
+    category: "Rejestratory",
+    description: "Lekki rejestrator 245 g ze skanerem i ładowaniem bezprzewodowym",
+    specifications: "6″ FHD+, 6 GB RAM / 64 GB, 5G, IP68, 4000 mAh",
+    availability: "Dostępny",
+    whereToBuy: "ZUP Łódź, TAKMA",
+    image: "/memor17_1.png",
+    badges: [],
+    featured: false,
+    customUrl: "/produkt/datalogic-memor-17"
   }
 ];
 
@@ -182,14 +221,15 @@ const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
     wiersze: [
       { model: 'EM45', href: '/produkt/zebra-em45', ekran: '6,7″ FHD+', android: 'do 16', aku: '4750 mAh', odpornosc: 'IP68 · 1,2 m', temp: '0 °C', skaner: 'tylko aparat', slabe: ['temp', 'skaner'] },
       { model: 'TC27', href: '/produkt/zebra-tc27', ekran: '6,0″ FHD+', android: 'do 16', aku: '3800 mAh', odpornosc: 'IP68 · 1,3 m', temp: '−10 °C', skaner: 'tak' },
-      { model: 'TC58e', href: '/produkt/zebra-tc58e', ekran: '6,0″ FHD+', android: 'do 18', aku: '4680 mAh', odpornosc: 'IP68 · 1,8 m', temp: '−20 °C', skaner: 'tak', naj: ['android'] },
+      { model: 'TC58e', href: '/produkt/zebra-tc58e', ekran: '6,0″ FHD+', android: 'do 18', aku: '4680 mAh', odpornosc: 'IP68 · 1,8 m', temp: '−20 °C', skaner: 'tak' },
+      { model: 'TC501', href: '/produkt/zebra-tc501', ekran: '6,0″ FHD+', android: 'do 19', aku: '5000 mAh', odpornosc: 'IP68 · 2,4 m', temp: '−20 °C', skaner: 'tak', naj: ['android', 'odpornosc'] },
     ],
   },
   {
     grupa: 'Honeywell',
     wiersze: [
-      { model: 'CT32', href: '/produkt/honeywell-ct32', ekran: '6,0″ FHD+', android: 'do 18', aku: '4500 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tak', naj: ['android'] },
-      { model: 'CT32 bez skanera', href: '/produkt/honeywell-ct32-bez-skanera', ekran: '6,0″ FHD+', android: 'do 18', aku: '4500 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tylko aparat', naj: ['android'], slabe: ['skaner'] },
+      { model: 'CT32', href: '/produkt/honeywell-ct32', ekran: '6,0″ FHD+', android: 'do 18', aku: '4500 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tak' },
+      { model: 'CT32 bez skanera', href: '/produkt/honeywell-ct32-bez-skanera', ekran: '6,0″ FHD+', android: 'do 18', aku: '4500 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tylko aparat', slabe: ['skaner'] },
       { model: 'CT47', href: '/produkt/honeywell-ct47', ekran: '5,5″ FHD', android: 'do 16', aku: '4775 mAh', odpornosc: 'IP68 · 2,4 m', temp: '−20 °C', skaner: 'tak', naj: ['odpornosc'] },
       { model: 'CT30 XP', href: '/produkt/honeywell-ct30', ekran: '5,5″ FHD', android: 'do 15', aku: '3400 mAh', odpornosc: 'IP67 · 1,5 m', temp: '−10 °C', skaner: 'tak' },
       { model: 'CT40 XP', href: '/produkt/honeywell-ct40xp', ekran: '5,0″ FHD', android: 'do 13', aku: '4020 mAh', odpornosc: 'IP67 · 1,2 m', temp: '−20 °C', skaner: 'tak' },
@@ -201,6 +241,18 @@ const porownanie: { grupa: string; wiersze: Wiersz[] }[] = [
     wiersze: [
       { model: 'EA660', href: '/produkt/unitech-ea660', ekran: '6,0″ FHD+', android: 'do 17', aku: '5000 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tak' },
       { model: 'PA768', href: '/produkt/unitech-pa768', ekran: '6,3″ FHD+', android: 'do 16', aku: '5100 mAh', odpornosc: 'IP68 · 1,5 m', temp: '−20 °C', skaner: 'tak', naj: ['aku'] },
+    ],
+  },
+  {
+    grupa: 'Newland',
+    wiersze: [
+      { model: 'MT95 Kambur Pro III', href: '/produkt/newland-mt95', ekran: '6,0″', android: '15', aku: '5100 mAh', odpornosc: 'IP67 · 1,5 m', temp: '−20 °C', skaner: 'tak', naj: ['aku'] },
+    ],
+  },
+  {
+    grupa: 'Datalogic',
+    wiersze: [
+      { model: 'Memor 17', href: '/produkt/datalogic-memor-17', ekran: '6,0″ FHD+', android: 'do 19', aku: '4000 mAh', odpornosc: 'IP68 · 1,3 m', temp: '−10 °C', skaner: 'tak', naj: ['android'] },
     ],
   },
   {

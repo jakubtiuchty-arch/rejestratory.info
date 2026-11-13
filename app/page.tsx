@@ -18,6 +18,7 @@ import {
   ScrollText,
   Smartphone,
   Tablet,
+  Video
 } from "lucide-react";
 import { ICON, naCiemnym } from '@/components/product/icons'
 
@@ -46,7 +47,8 @@ const categories = [
   { id: 10, name: "All in One", href: "/kategoria/all-in-one", Icon: Computer },
   { id: 11, name: "Elektroniczne Zarządzanie Dokumentacją", href: "/kategoria/ezd", Icon: FolderCheck },
   { id: 12, name: "Urządzenia fiskalne", href: "/kategoria/urzadzenia-fiskalne", Icon: ReceiptText },
-  { id: 13, name: "Akcesoria komputerowe", href: "/kategoria/akcesoria-komputerowe", Icon: Keyboard }
+  { id: 13, name: "Akcesoria komputerowe", href: "/kategoria/akcesoria-komputerowe", Icon: Keyboard },
+  { id: 15, name: "Wideokonferencje", href: "/kategoria/wideokonferencje", Icon: Video }
 ];
 
 const getCategoryUrl = (categoryName: string) =>
