@@ -55,9 +55,10 @@ export type Signature = {
   /** krótka pętla wideo w miejsce zdjęcia; `image` służy wtedy za plakat,
    *  więc kafelek wygląda poprawnie także zanim plik się wczyta */
   video?: string
-  /** wideo zajmuje połowę kafelka zamiast wąskiej kolumny — dla scen 16:9,
-   *  które w 340 px giną obok tekstu (np. animacja skanu ToF na TC501) */
-  largeMedia?: boolean
+  /** baner: wideo wypełnia cały kafelek, tekst leży na nim po lewej (od lg),
+   *  na wąskim ekranie wideo nad tekstem. Kadr musi mieć lewe ~40% puste
+   *  i ciemne, bo tam trafia tekst (np. skan ToF na TC501) */
+  backgroundMedia?: boolean
 }
 
 /** Krok wdrożenia — używane przez urządzenia fiskalne, gdzie zakup to proces, nie dostawa. */
@@ -1242,7 +1243,7 @@ export default function ProductPage({ data }: { data: ProductData }) {
           image: w.image,
           imageAlt: w.imageAlt,
           video: w.video,
-          largeMedia: w.largeMedia,
+          backgroundMedia: w.backgroundMedia,
           wyrozniony: true as const,
         },
       ]
@@ -1258,7 +1259,7 @@ export default function ProductPage({ data }: { data: ProductData }) {
         image: undefined,
         imageAlt: undefined,
         video: undefined,
-        largeMedia: undefined,
+        backgroundMedia: undefined,
         wyrozniony: false as const,
       })),
   ]
@@ -1549,6 +1550,39 @@ export default function ProductPage({ data }: { data: ProductData }) {
         <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2">
           {kafelki.map((k) => {
             const ciemny = k.wyrozniony && k.tone === 'ciemny'
+            if (k.backgroundMedia && k.video) {
+              // Baner: scena wypełnia cały kafelek, tekst leży na lewym, celowo
+              // pustym polu kadru, przyciemnionym gradientem w kolorze kafelka.
+              // Na wąskim ekranie tekst zasłoniłby scenę, więc wideo idzie nad tekst.
+              return (
+                <div
+                  key={k.title}
+                  className={`relative isolate overflow-hidden rounded-2xl bg-[#0A1B12] text-emerald-50/80 transition hover:-translate-y-0.5 hover:shadow-md ${
+                    k === rozpiety ? 'md:col-span-2' : ''
+                  }`}
+                >
+                  <video
+                    src={k.video}
+                    poster={k.image}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    aria-label={k.imageAlt}
+                    className="block aspect-[16/10] w-full object-cover object-[78%_center] lg:absolute lg:inset-0 lg:-z-10 lg:aspect-auto lg:h-full lg:object-right"
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-y-0 left-0 -z-10 hidden w-[58%] bg-gradient-to-r from-[#0A1B12] from-40% to-transparent lg:block"
+                  />
+                  <div className="p-6 lg:flex lg:min-h-[480px] lg:max-w-[42%] lg:flex-col lg:justify-center lg:p-10">
+                    <img src={naCiemnym(k.icon)} alt="" className="h-8 w-8 opacity-90" />
+                    <h3 className="mt-5 text-lg font-semibold text-white lg:text-xl">{k.title}</h3>
+                    <p className="mt-2 leading-relaxed">{k.body}</p>
+                  </div>
+                </div>
+              )
+            }
             return (
               <div
                 key={k.title}
@@ -1591,11 +1625,7 @@ export default function ProductPage({ data }: { data: ProductData }) {
                       loop
                       playsInline
                       aria-label={k.imageAlt}
-                      className={
-                        k.largeMedia
-                          ? 'mt-6 w-full self-center rounded-xl sm:mt-0 sm:w-1/2 sm:max-w-[620px]'
-                          : 'mx-auto mt-6 w-full max-w-[300px] self-center rounded-lg sm:mx-0 sm:mt-0 sm:w-[42%] sm:max-w-[340px]'
-                      }
+                      className="mx-auto mt-6 w-full max-w-[300px] self-center rounded-lg sm:mx-0 sm:mt-0 sm:w-[42%] sm:max-w-[340px]"
                     />
                   ) : (
                     k.image && (
