@@ -15,7 +15,7 @@ const products = [
     description: "To nie tylko zwykły smartfon!",
     specifications: "6,7″ FHD+, 8 GB RAM / 128 GB, IP68, 4750 mAh",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/em45_1.webp",
     badges: ["Bestseller", "Nowość"],
     featured: true
@@ -27,7 +27,7 @@ const products = [
     description: "Wytrzymały terminal mobilny do pracy w trudnych warunkach",
     specifications: "6″ FHD+, 6 GB RAM / 64 GB, IP68, 3800 mAh",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/tc27_1.png",
     badges: [],
     featured: false
@@ -51,7 +51,7 @@ const products = [
     description: "Mobilny komputer 5G z najwyższej półki do zastosowań terenowych",
     specifications: "5,5″ FHD, 6 GB RAM / 128 GB, IP68, 4775 mAh",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "TAKMA",
     image: "/ct47_1.png",
     badges: [],
     featured: true
@@ -75,7 +75,7 @@ const products = [
     description: "Profesjonalny terminal przemysłowy z zaawansowanymi funkcjami",
     specifications: "6,3″ FHD+, 6 GB RAM / 64 GB, IP68, 5100 mAh",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "TAKMA",
     image: "/pa768_1.png",
     badges: [],
     featured: false
@@ -87,7 +87,7 @@ const products = [
     description: "Kompaktowy komputer mobilny idealny dla leśników",
     specifications: "5,5″ HD+, 4 GB RAM / 64 GB, IP67, 4500 mAh",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA, ZPUH Olsztyn", 
+    whereToBuy: "TAKMA",
     image: "/eda52_1.png",
     badges: [],
     featured: true
@@ -99,7 +99,7 @@ const products = [
     description: "Ekstremalnie wytrzymały terminal do najtrudniejszych zadań",
     specifications: "5″ FHD, 4 GB RAM / 32 GB, IP67, 4020 mAh",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "TAKMA",
     image: "/ct40xp_1.png",
     badges: [],
     featured: false
@@ -111,7 +111,7 @@ const products = [
     description: "Lekki i wytrzymały terminal z długą żywotnością baterii",
     specifications: "5,5″ FHD, 4 GB RAM / 64 GB, IP67, 3400 mAh",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "TAKMA",
     image: "/ct30p_1.png",
     badges: [],
     featured: false,
@@ -137,7 +137,7 @@ const products = [
     description: "Rejestrator ze skanerem 1D i 2D oraz modemem 5G",
     specifications: "6″ FHD+, 6 GB RAM / 128 GB, IP68, 4500 mAh",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/ct32_2.png",
     badges: [],
     featured: false,

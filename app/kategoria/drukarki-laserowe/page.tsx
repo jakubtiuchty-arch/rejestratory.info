@@ -15,7 +15,7 @@ const products = [
     description: "Wydajna drukarka laserowa monochromatyczna dla biur średniej wielkości",
     specifications: "Drukarka laserowa, A4, 50 ppm, duplex, USB, Ethernet, PCL6",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/hll6410ph.png",
     featured: true,
     link: "/produkt/brother-hl-l6410"
@@ -27,7 +27,7 @@ const products = [
     description: "Kompaktowa drukarka 3w1 z funkcją skanowania i kopiowania - idealna do stanowiska leśniczego",
     specifications: "Drukarka laserowa, skaner, kopiarka, A4, 34 ppm, Wi-Fi, duplex, PCL6",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/dcpb75620dwph.png",
     featured: true,
     link: "/produkt/brother-dcp-b7620dw"
@@ -39,7 +39,7 @@ const products = [
     description: "Profesjonalna drukarka laserowa z bezprzewodowym połączeniem Wi-Fi",
     specifications: "Drukarka laserowa, A4, 48 ppm, Wi-Fi, duplex, USB, Ethernet, PCL6",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA", 
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/hll6210dwph.png",
     featured: true,
     link: "/produkt/brother-hl-l6210dw"

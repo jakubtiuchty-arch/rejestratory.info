@@ -29,7 +29,7 @@ const products: Product[] = [
     description: "Wydajny laptop z dużym ekranem 16 cali do pracy biurowej",
     specifications: "AMD Ryzen 5, 16GB DDR5 (do 64GB), 512GB SSD, 16\" WUXGA IPS, Smart Card, Windows 11 Pro",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "TAKMA",
     image: "/hp_elite_16_1.png",
     featured: true,
     slug: "hp-elitebook-6-g1ah-16"
@@ -66,7 +66,7 @@ const products: Product[] = [
     description: "Ekonomiczny laptop 16 cali dostarczany bez systemu operacyjnego",
     specifications: "Intel Core 3 100U (6 rdzeni), 8GB RAM, 256GB SSD, 16\" FHD+ IPS, bez systemu operacyjnego",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "TAKMA",
     image: "/dell_16_bs_1.png",
     badge: null,
     featured: false,

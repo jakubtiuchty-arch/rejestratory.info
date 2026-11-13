@@ -17,7 +17,7 @@ const products = [
     description: "Kompaktowa drukarka etykiet z taśmą w kasecie do oznaczania dokumentów",
     specifications: "Termotransfer z kasetą 74 m, 203 dpi, USB, Ethernet lub Wi-Fi jako moduł",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/zd421c_1.png",
     featured: true
   },
@@ -41,7 +41,7 @@ const products = [
     description: "Sieciowy skaner dokumentów do digitalizacji archiwów leśnych",
     specifications: "A4, 600 dpi, 40 str/min, duplex, ADF 100 arkuszy, USB 2.0, Ethernet",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/ds730_1.png",
     featured: true
   },
@@ -53,7 +53,7 @@ const products = [
     description: "Uniwersalny skaner kodów kreskowych 1D/2D do biura",
     specifications: "Imager 2D, USB, czytanie z ekranu, zasięg do 37 cm",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/zebra-ds2208.png",
     featured: true
   },

@@ -15,7 +15,7 @@ const products = [
     description: "Kolorowe urządzenie wielofunkcyjne z drukiem dwustronnym i Wi-Fi",
     specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 31 ppm",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "TAKMA",
     image: "/MFCL8690CDW_1.png",
     badge: "Bestseller",
     featured: true
@@ -27,7 +27,7 @@ const products = [
     description: "Czarno-białe urządzenie wielofunkcyjne z automatycznym podajnikiem",
     specifications: "Drukarka monochromatyczna, skaner, kopiarka, fax, A4, 40 ppm",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/MFCL5710DW_1.png",
     badge: null,
     featured: false
@@ -39,7 +39,7 @@ const products = [
     description: "Profesjonalne kolorowe urządzenie wielofunkcyjne A4 z NFC",
     specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 31 ppm, NFC",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA", 
+    whereToBuy: "TAKMA",
     image: "/MFCL8900CDW_1.png",
     badge: "Nowość",
     featured: true
@@ -51,7 +51,7 @@ const products = [
     description: "Wydajne czarno-białe urządzenie wielofunkcyjne dla średnich biur",
     specifications: "Drukarka monochromatyczna, skaner, kopiarka, fax, A4, 46 ppm",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/MFCL6710DW_1.png", 
     badge: null,
     featured: false
@@ -63,7 +63,7 @@ const products = [
     description: "Kompaktowe urządzenie 3w1 bez funkcji faxu z drukiem dwustronnym",
     specifications: "Drukarka monochromatyczna, skaner, kopiarka, A4, 40 ppm",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/DCPL5510DW_1.png",
     badge: "Ekonomiczne",
     featured: true
@@ -75,7 +75,7 @@ const products = [
     description: "Zaawansowane kolorowe urządzenie wielofunkcyjne z dużą wydajnością",
     specifications: "Drukarka kolorowa, skaner, kopiarka, fax, A4, 31 ppm, duplex",
     availability: "Dostępny",
-    whereToBuy: "ZUP Łódź, TAKMA",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/MFCL8390CDW_1.png",
     badge: null,
     featured: true
@@ -87,7 +87,7 @@ const products = [
     description: "Kolorowe urządzenie wielofunkcyjne z podajnikiem ADF na 80 arkuszy",
     specifications: "Drukarka kolorowa, skaner dwustronny, kopiarka, fax, A4, 31 ppm, NFC",
     availability: "Dostępność wkrótce",
-    whereToBuy: "",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/MFCL8730CDW_1.png",
     badge: null,
     featured: false
@@ -99,7 +99,7 @@ const products = [
     description: "Kolorowe urządzenie wielofunkcyjne z ekranem 7″ i skanerem do 100 obrazów/min",
     specifications: "Drukarka kolorowa, skaner dwustronny, kopiarka, fax, A4, 31 ppm, NFC",
     availability: "Dostępność wkrótce",
-    whereToBuy: "",
+    whereToBuy: "ZUP Łódź, ZPUH Olsztyn, TAKMA",
     image: "/MFCL8970CDW_1.png",
     badge: null,
     featured: false
