@@ -73,7 +73,7 @@ const data: ProductData = {
         { k: 'Wymiary paczek', v: 'Zebra Dimensioning: od 10 do 120 cm, prostopadłościenne i o nieregularnym kształcie' },
         { k: 'Palety', v: 'pomiar z dwóch ujęć (wersja beta)' },
         { k: 'Oprogramowanie', v: 'moduł pomiarowy wgrany fabrycznie, wynik trafia do aplikacji przez API Zebry' },
-        { k: 'Dostępność', v: 'tylko wybrane wersje TC501 — umowa ZUP Łódź wymaga czujnika ToF' },
+        { k: 'Dostępność', v: 'tylko wybrane wersje TC501' },
       ],
     },
     {
@@ -131,14 +131,10 @@ const data: ProductData = {
       icon: ICON.lidar,
       title: 'Czujnik ToF mierzy w trzech wymiarach',
       body:
-        'Obok aparatu pracuje czujnik ToF (time-of-flight) z kamerą głębi VGA. Oświetla kadr ' +
-        'modulowanym światłem i z opóźnienia odbitego sygnału liczy odległość każdego punktu — ' +
-        'powstaje mapa głębi, która nie zależy od oświetlenia. Terminal mierzy więc odległość, ' +
-        'wykrywa obecność przedmiotu i podaje jego objętość. Wgrany fabrycznie moduł Zebra ' +
-        'Dimensioning mierzy paczki od 10 do 120 cm, także o nieregularnym kształcie, a palety ' +
-        'z dwóch ujęć — w magazynie nadleśnictwa czy w szkółce wymiary przesyłki do listu ' +
-        'przewozowego zmierzy się bez taśmy. Czujnik mają tylko wybrane wersje TC501; ' +
-        'umowa ZUP Łódź go wymaga.',
+        'Czujnik ToF obok aparatu liczy odległość każdego punktu kadru z opóźnienia odbitego ' +
+        'światła, w każdym oświetleniu. Terminal mierzy więc odległość i objętość, a wgrany ' +
+        'fabrycznie moduł Zebra Dimensioning podaje wymiary paczek od 10 do 120 cm i palet — ' +
+        'bez taśmy. Czujnik mają tylko wybrane wersje TC501.',
       tone: 'ciemny',
       // Baner na wzór sceny ze stosem z hero strony głównej (uwaga Jakuba 13.11.2026):
       // gpt_image_2_6 21:9 (wzór: klatka z hero-nadlesnictwo.mp4 + zdjęcia tc501_1/2),
