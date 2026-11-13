@@ -11,7 +11,8 @@ const data: ProductData = {
   name: 'Samsung Galaxy S26 FE',
   category: 'Telefony',
   categoryHref: '/kategoria/telefony',
-  images: ['/s26fe_1.png'],
+  // zdjęcia z galerii samsung.com/us (SM-S741UZKAXAA, grafitowy), docięte do 800 × 1200 jak S25 FE
+  images: ['/s26fe_1.png', '/s26fe_2.png', '/s26fe_3.png'],
   inquiry: {
     description: 'Flagowe funkcje w przystępniejszej cenie',
     specifications: 'Android 17 · 6,7″ FHD+ AMOLED 120 Hz · Exynos 2500 · 8/256 GB · 4900 mAh · IP68',
