@@ -144,18 +144,23 @@ const data: ProductData = {
       // (prawdziwe tc501_1.png w dłoniach) i zdjęciami tc501_1/2 jako wzorem wyglądu —
       // na ekranie tapeta Zebry, odblask drzew na szkle, słońce na krawędzi obudowy.
       // Ruch mgły i promieni: Seedance 2.5 (kadr startowy = końcowy), klatki wyrównane
-      // do kadru (SIFT, tło), bez żadnych łat. Pomiar dorysowany w kodzie (uwaga Jakuba: ma wyglądać jak
-      // mierzenie, nie kolorowy stos): od rogu najbliżej terminala rosną kolejno linie
-      // wysokości, szerokości i głębokości z licznikiem, potem przerywany obrys bryły.
-      // Stos nie może być naraz na ekranie i w scenie (uwaga Jakuba). Wartości są
-      // poglądowe — Zebra nie ma aplikacji do pomiaru stosów. Pasek 2000 × 566.
-      video: '/czujnik-tof-tc501.mp4?v=10',
-      image: '/czujnik-tof-tc501-poster.jpg?v=10',
+      // do kadru (SIFT, tło, każda klatka osobno); Seedance gubił literę E w nadruku ZEBRA,
+      // więc sam napis wraca z kadru, przesunięty za ruchem terminala. Leśniczy stoi trochę dalej, żeby był
+      // widoczny cały stos z czołami (uwaga Jakuba). Pomiar dorysowany w kodzie (uwaga
+      // Jakuba: ma wyglądać jak mierzenie, nie kolorowy stos): od rogu najbliżej terminala
+      // rosną kolejno linie wysokości, szerokości i głębokości z licznikiem, potem
+      // przerywany obrys bryły; dalej linia skanu przechodzi po czołach kłód (czoła
+      // wykryte w kadrze z koloru), mijane czoła dostają obrys, a licznik nad stosem
+      // liczy m³. Pętla 8,1 s. Stos nie może być naraz na ekranie i w scenie (uwaga
+      // Jakuba). Wartości są poglądowe (35,5 m³ = 2,10 × 6,50 × 4,00 × 0,65) — Zebra nie
+      // ma aplikacji do pomiaru stosów. Pasek 2000 × 566.
+      video: '/czujnik-tof-tc501.mp4?v=11',
+      image: '/czujnik-tof-tc501-poster.jpg?v=11',
       backgroundMedia: true,
       imageAlt:
         'Leśniczy przy stosie drewna na leśnej drodze o zachodzie słońca trzyma Zebra TC501 ' +
-        'poziomo i mierzy stos — na kłodach pojawiają się linie wysokości, szerokości ' +
-        'i głębokości z wymiarami',
+        'poziomo i mierzy stos — pojawiają się linie wysokości, szerokości i głębokości, ' +
+        'a potem skan przechodzi po czołach kłód i licznik podaje objętość w m³',
     },
   ],
   usedBy: { device: 'Zebra TC501' },
