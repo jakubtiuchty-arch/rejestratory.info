@@ -86,7 +86,9 @@ function KartaPolecana({ p }: { p: PolecanyMenu }) {
         {p.opis && <p className="mt-1 text-sm text-gray-600">{p.opis}</p>}
         <ul className="mt-5 space-y-1.5 text-sm leading-snug text-gray-500">
           {p.cechy.map((c) => (
-            <li key={c}>{c}</li>
+            <li key={c.k}>
+              <span className="text-gray-400">{c.k}:</span> <span className="text-gray-600">{c.v}</span>
+            </li>
           ))}
         </ul>
         <div className="mt-auto pt-6">
@@ -119,7 +121,7 @@ function KartaPolecana({ p }: { p: PolecanyMenu }) {
             alt=""
             className={`pointer-events-none absolute drop-shadow-xl transition-transform duration-300 group-hover:-translate-y-1 ${
               p.uklad === 'szeroki'
-                ? '-right-2 bottom-4 w-[112%] max-w-none'
+                ? 'inset-x-0 bottom-3 h-[88%] w-full object-contain object-bottom'
                 : '-bottom-16 left-1/2 w-[92%] -translate-x-1/2 rotate-[8deg] group-hover:rotate-[6deg]'
             }`}
           />

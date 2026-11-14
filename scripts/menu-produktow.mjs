@@ -45,6 +45,9 @@ const KATEGORIE = [
  * kart mają po kilka tysięcy pikseli; miniatura ma ok. 640 px, przezroczyste tło).
  * `uklad: 'szeroki'` dla zdjęć poziomych i kwadratowych (tablet, laptop) — dostają
  * szerszą kolumnę i nie są przechylane jak telefon.
+ * Parametry na karcie: trzy pierwsze wyróżnienia (`highlights`) z etykietą.
+ * `cechy: [1, 2, 4]` wybiera inne wyróżnienia, a `cechy: [{ k, v }]` podaje je
+ * wprost — dla kart bez wyróżnień, przepisane z ich treści.
  * Wybór Jakuba z 14.11.2026; pozostałe kategorie na razie bez polecanego.
  */
 const POLECANE = {
@@ -52,6 +55,25 @@ const POLECANE = {
   telefony: { slug: 'samsung-a57', zdjecie: '/menu/polecany-samsung-a57.webp' },
   tablety: { slug: 'samsung-galaxy-tab-active5', zdjecie: '/menu/polecany-samsung-galaxy-tab-active5.webp', uklad: 'szeroki' },
   laptopy: { slug: 'hp-elitebook-6-g1ah-14', zdjecie: '/menu/polecany-hp-elitebook-6-g1ah-14.webp', uklad: 'szeroki' },
+  'urzadzenia-wielofunkcyjne': { slug: 'brother-dcp-l5510dw', zdjecie: '/menu/polecany-brother-dcp-l5510dw.webp', uklad: 'szeroki' },
+  monitory: { slug: 'hp-seria-5-pro-524pu', zdjecie: '/menu/polecany-hp-seria-5-pro-524pu.webp', uklad: 'szeroki' },
+  'drukarki-do-rejestratora': { slug: 'zebra-zq521', zdjecie: '/menu/polecany-zebra-zq521.webp', uklad: 'szeroki' },
+  // bez „Języków druku” (PCL6, BR-Script3…) — mało mówią na pierwszy rzut oka
+  'drukarki-laserowe': { slug: 'brother-dcp-b7620dw', zdjecie: '/menu/polecany-brother-dcp-b7620dw.webp', uklad: 'szeroki', cechy: [1, 2, 4] },
+  'all-in-one': { slug: 'aio-dell-pro-24', zdjecie: '/menu/polecany-aio-dell-pro-24.webp', uklad: 'szeroki' },
+  // karta nie ma wyróżnień — parametry z jej opisu do zapytania i specyfikacji
+  'urzadzenia-fiskalne': {
+    slug: 'posnet-pospay-2',
+    zdjecie: '/menu/polecany-posnet-pospay-2.webp',
+    uklad: 'szeroki',
+    cechy: [
+      { k: 'Płatności', v: 'terminal na kartę i BLIK' },
+      { k: 'Ekran', v: '4,5″, dotykowy' },
+      { k: 'Łączność', v: 'LTE lub Wi-Fi' },
+    ],
+  },
+  // zdjęcie kamery (drugie z karty) — pierwsze pokazuje cały zestaw w pasku 4:1, w karcie byłoby za małe
+  wideokonferencje: { slug: 'logitech-rally-plus', zdjecie: '/menu/polecany-logitech-rally-plus.webp', uklad: 'szeroki' },
 }
 
 /**
@@ -124,7 +146,13 @@ for (const slug of readdirSync(KARTY)) {
       href: `/produkt/${slug}`,
       image: POLECANE[kategoria].zdjecie ?? tresc.match(/images: \['([^']+)'/)?.[1] ?? null,
       opis: pole(tresc, 'description'),
-      cechy: [...blokCech.matchAll(/value: '((?:[^'\\]|\\.)*)'/g)].slice(0, 3).map((m) => m[1].replace(/\\'/g, "'")),
+      cechy: (() => {
+        const wszystkie = [...blokCech.matchAll(/label: '((?:[^'\\]|\\.)*)', value: '((?:[^'\\]|\\.)*)'/g)]
+          .map((m) => ({ k: m[1].replace(/\\'/g, "'"), v: m[2].replace(/\\'/g, "'") }))
+        const wybor = POLECANE[kategoria].cechy
+        if (!wybor) return wszystkie.slice(0, 3)
+        return wybor.map((c) => (typeof c === 'number' ? wszystkie[c] : c)).filter(Boolean)
+      })(),
       cenaOd: cenyOd(slug),
       uklad: POLECANE[kategoria].uklad ?? 'pionowy',
     }
@@ -155,7 +183,7 @@ export type PolecanyMenu = {
   href: string
   image: string | null
   opis: string | null
-  cechy: string[]
+  cechy: { k: string; v: string }[]
   /** najniższa cena netto ze składnic, null gdy model jest wyceniany indywidualnie */
   cenaOd: number | null
   /** pionowy: telefon przechylony w wąskiej kolumnie; szeroki: tablet, laptop */

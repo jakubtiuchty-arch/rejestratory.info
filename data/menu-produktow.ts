@@ -8,7 +8,7 @@ export type PolecanyMenu = {
   href: string
   image: string | null
   opis: string | null
-  cechy: string[]
+  cechy: { k: string; v: string }[]
   /** najniższa cena netto ze składnic, null gdy model jest wyceniany indywidualnie */
   cenaOd: number | null
   /** pionowy: telefon przechylony w wąskiej kolumnie; szeroki: tablet, laptop */
@@ -95,9 +95,18 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
       "image": "/menu/polecany-zebra-em45.webp",
       "opis": "Terminal terenowy w obudowie smartfona",
       "cechy": [
-        "IP68, upadek z 1,2 m (1,5 m w etui)",
-        "4750 mAh, do 25 h pracy",
-        "6,7″ FHD+, 120 Hz, 450 nitów"
+        {
+          "k": "Odporność",
+          "v": "IP68, upadek z 1,2 m (1,5 m w etui)"
+        },
+        {
+          "k": "Bateria",
+          "v": "4750 mAh, do 25 h pracy"
+        },
+        {
+          "k": "Ekran",
+          "v": "6,7″ FHD+, 120 Hz, 450 nitów"
+        }
       ],
       "cenaOd": 2728.5,
       "uklad": "pionowy"
@@ -155,9 +164,18 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
       "image": "/menu/polecany-samsung-a57.webp",
       "opis": "Smartfon służbowy z zapasem pamięci",
       "cechy": [
-        "6,7″ Super AMOLED+, 120 Hz",
-        "Exynos 1680, 8 rdzeni",
-        "5000 mAh, ładowanie 45 W"
+        {
+          "k": "Ekran",
+          "v": "6,7″ Super AMOLED+, 120 Hz"
+        },
+        {
+          "k": "Procesor",
+          "v": "Exynos 1680, 8 rdzeni"
+        },
+        {
+          "k": "Bateria",
+          "v": "5000 mAh, ładowanie 45 W"
+        }
       ],
       "cenaOd": 1980,
       "uklad": "pionowy"
@@ -187,9 +205,18 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
       "image": "/menu/polecany-samsung-galaxy-tab-active5.webp",
       "opis": "Wzmocniony tablet terenowy z wymienną baterią",
       "cechy": [
-        "8″ 1920 × 1200, 120 Hz",
-        "Exynos 1380",
-        "IP68, MIL-STD-810H"
+        {
+          "k": "Ekran",
+          "v": "8″ 1920 × 1200, 120 Hz"
+        },
+        {
+          "k": "Procesor",
+          "v": "Exynos 1380"
+        },
+        {
+          "k": "Odporność",
+          "v": "IP68, MIL-STD-810H"
+        }
       ],
       "cenaOd": 2119,
       "uklad": "szeroki"
@@ -227,9 +254,18 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
       "image": "/menu/polecany-hp-elitebook-6-g1ah-14.webp",
       "opis": "Laptop biznesowy 14 cali ze stacją dokującą HP",
       "cechy": [
-        "14″ WUXGA",
-        "AMD Ryzen 5 220",
-        "16 GB + SSD 512 GB"
+        {
+          "k": "Ekran",
+          "v": "14″ WUXGA"
+        },
+        {
+          "k": "Procesor",
+          "v": "AMD Ryzen 5 220"
+        },
+        {
+          "k": "Pamięć",
+          "v": "16 GB + SSD 512 GB"
+        }
       ],
       "cenaOd": 5329,
       "uklad": "szeroki"
@@ -272,7 +308,29 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "Brother MFC-L8970CDW",
         "href": "/produkt/brother-mfc-l8970cdw"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "Brother DCP-L5510DW",
+      "href": "/produkt/brother-dcp-l5510dw",
+      "image": "/menu/polecany-brother-dcp-l5510dw.webp",
+      "opis": "Monochromatyczne urządzenie 3 w 1 do kancelarii",
+      "cechy": [
+        {
+          "k": "Prędkość druku",
+          "v": "48 stron/min (A4)"
+        },
+        {
+          "k": "Dupleks",
+          "v": "automatyczny, 24 str./min"
+        },
+        {
+          "k": "Podajnik ADF",
+          "v": "50 arkuszy"
+        }
+      ],
+      "cenaOd": 1375,
+      "uklad": "szeroki"
+    }
   },
   {
     "slug": "monitory",
@@ -327,7 +385,29 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "HP Pro S5 QHD USB-C Conferencing 527pm",
         "href": "/produkt/hp-seria-5-pro-527pm"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "HP Pro S5 FHD USB-C 524pu",
+      "href": "/produkt/hp-seria-5-pro-524pu",
+      "image": "/menu/polecany-hp-seria-5-pro-524pu.webp",
+      "opis": "Monitor 23,8 cala ze stacją dokującą w obudowie",
+      "cechy": [
+        {
+          "k": "Ekran",
+          "v": "23,8″ Full HD, 100 Hz"
+        },
+        {
+          "k": "USB-C",
+          "v": "obraz i ładowanie do 100 W"
+        },
+        {
+          "k": "Sieć",
+          "v": "RJ-45 z MAPT, WoL i PXE"
+        }
+      ],
+      "cenaOd": 1022,
+      "uklad": "szeroki"
+    }
   },
   {
     "slug": "drukarki-do-rejestratora",
@@ -358,7 +438,29 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "Bixolon SPP-R410",
         "href": "/produkt/bixolon-sppr410"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "Zebra ZQ521",
+      "href": "/produkt/zebra-zq521",
+      "image": "/menu/polecany-zebra-zq521.webp",
+      "opis": "Mobilna drukarka 4-calowa do pracy w terenie",
+      "cechy": [
+        {
+          "k": "Odporność",
+          "v": "IP54, upadki z 2 m"
+        },
+        {
+          "k": "Temperatura",
+          "v": "od -20 °C do +55 °C"
+        },
+        {
+          "k": "Prędkość druku",
+          "v": "127 mm/s, 203 dpi"
+        }
+      ],
+      "cenaOd": 2444,
+      "uklad": "szeroki"
+    }
   },
   {
     "slug": "drukarki-laserowe",
@@ -377,7 +479,29 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "Brother HL-L6210DW",
         "href": "/produkt/brother-hl-l6210dw"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "Brother DCP-B7620DW",
+      "href": "/produkt/brother-dcp-b7620dw",
+      "image": "/menu/polecany-brother-dcp-b7620dw.webp",
+      "opis": "Kompaktowe urządzenie 3 w 1 na mniejsze stanowisko",
+      "cechy": [
+        {
+          "k": "Prędkość druku",
+          "v": "34 strony/min (A4)"
+        },
+        {
+          "k": "Skanowanie",
+          "v": "22,5 ipm mono"
+        },
+        {
+          "k": "Łączność",
+          "v": "Wi-Fi, Ethernet, USB"
+        }
+      ],
+      "cenaOd": 920,
+      "uklad": "szeroki"
+    }
   },
   {
     "slug": "all-in-one",
@@ -392,7 +516,29 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "Dell Pro 24 All in One bez systemu",
         "href": "/produkt/aio-dell-pro-24-bez-systemu"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "Dell Pro 24 All in One",
+      "href": "/produkt/aio-dell-pro-24",
+      "image": "/menu/polecany-aio-dell-pro-24.webp",
+      "opis": "Komputer w obudowie monitora, gotowy do pracy",
+      "cechy": [
+        {
+          "k": "Ekran",
+          "v": "23,8″ FHD, 100 Hz"
+        },
+        {
+          "k": "Procesor",
+          "v": "Core Ultra 5 235, 14 rdzeni"
+        },
+        {
+          "k": "Pamięć",
+          "v": "16 GB DDR5 + SSD 512 GB"
+        }
+      ],
+      "cenaOd": 6260,
+      "uklad": "szeroki"
+    }
   },
   {
     "slug": "ezd",
@@ -446,7 +592,29 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "Posnet Temo Online",
         "href": "/produkt/posnet-temo-online"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "Posnet Pospay 2",
+      "href": "/produkt/posnet-pospay-2",
+      "image": "/menu/polecany-posnet-pospay-2.webp",
+      "opis": "Kasa fiskalna online z drukarką i terminalem płatniczym",
+      "cechy": [
+        {
+          "k": "Płatności",
+          "v": "terminal na kartę i BLIK"
+        },
+        {
+          "k": "Ekran",
+          "v": "4,5″, dotykowy"
+        },
+        {
+          "k": "Łączność",
+          "v": "LTE lub Wi-Fi"
+        }
+      ],
+      "cenaOd": null,
+      "uklad": "szeroki"
+    }
   },
   {
     "slug": "akcesoria-komputerowe",
@@ -528,6 +696,28 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "Logitech Rally Board 65",
         "href": "/produkt/logitech-rally-board-65"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "Logitech Rally Plus",
+      "href": "/produkt/logitech-rally-plus",
+      "image": "/menu/polecany-logitech-rally-plus.webp",
+      "opis": "Modułowy system wideokonferencyjny do dużych sal",
+      "cechy": [
+        {
+          "k": "Kamera",
+          "v": "4K PTZ, zoom 15× (5× optyczny)"
+        },
+        {
+          "k": "Głośniki",
+          "v": "2 × Rally Speaker, do 100 dB"
+        },
+        {
+          "k": "Mikrofony",
+          "v": "2 panele, łączone do 7"
+        }
+      ],
+      "cenaOd": null,
+      "uklad": "szeroki"
+    }
   }
 ]
