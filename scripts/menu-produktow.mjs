@@ -53,6 +53,7 @@ const KATEGORIE = [
 const POLECANE = {
   rejestratory: { slug: 'zebra-em45', zdjecie: '/menu/polecany-zebra-em45.webp' },
   telefony: { slug: 'samsung-a57', zdjecie: '/menu/polecany-samsung-a57.webp' },
+  // miniatura z drugiego zdjęcia karty (przód i tył) — pierwsze ma kałużę i krople wody pod spodem
   tablety: { slug: 'samsung-galaxy-tab-active5', zdjecie: '/menu/polecany-samsung-galaxy-tab-active5.webp', uklad: 'szeroki' },
   laptopy: { slug: 'hp-elitebook-6-g1ah-14', zdjecie: '/menu/polecany-hp-elitebook-6-g1ah-14.webp', uklad: 'szeroki' },
   'urzadzenia-wielofunkcyjne': { slug: 'brother-dcp-l5510dw', zdjecie: '/menu/polecany-brother-dcp-l5510dw.webp', uklad: 'szeroki' },
