@@ -75,12 +75,14 @@ const zloty = (kwota: number) => {
  * Cała karta jest linkiem do produktu. Cena to najniższa cena netto ze składnic.
  */
 function KartaPolecana({ p }: { p: PolecanyMenu }) {
+  const szeroki = p.uklad === 'szeroki'
   return (
     <a
       href={p.href}
       className="group relative hidden min-h-[22rem] min-w-0 flex-1 gap-4 overflow-hidden rounded-2xl bg-gradient-to-br from-stone-50 via-white to-emerald-50/70 p-6 ring-1 ring-gray-100 transition-shadow hover:shadow-md hover:ring-emerald-200 lg:flex"
     >
-      <div className="relative z-10 flex min-w-0 flex-1 flex-col">
+      {/* przy szerokim zdjęciu tekst ma stałą kolumnę, a zdjęcie bierze całą resztę */}
+      <div className={`relative z-10 flex flex-col ${szeroki ? 'w-[45%] shrink-0 xl:w-[15.5rem]' : 'min-w-0 flex-1'}`}>
         <p className="text-sm font-semibold text-gray-500">Polecany produkt</p>
         <p className="mt-5 text-2xl font-bold tracking-tight text-gray-900">{p.name}</p>
         {p.opis && <p className="mt-1 text-sm text-gray-600">{p.opis}</p>}
@@ -109,24 +111,27 @@ function KartaPolecana({ p }: { p: PolecanyMenu }) {
           </span>
         </div>
       </div>
-      {/* zdjęcie we własnej kolumnie: duże, przechylone i przycięte dołem jak w x-kom,
-          ale nie wchodzi na tekst przy węższym ekranie */}
-      {p.image && (
-        <div
-          aria-hidden
-          className={`relative shrink-0 ${p.uklad === 'szeroki' ? 'w-[46%] max-w-[17rem]' : 'w-[38%] max-w-[13rem]'}`}
-        >
-          <img
-            src={p.image}
-            alt=""
-            className={`pointer-events-none absolute drop-shadow-xl transition-transform duration-300 group-hover:-translate-y-1 ${
-              p.uklad === 'szeroki'
-                ? 'inset-x-0 bottom-3 h-[88%] w-full object-contain object-bottom'
-                : '-bottom-16 left-1/2 w-[92%] -translate-x-1/2 rotate-[8deg] group-hover:rotate-[6deg]'
-            }`}
-          />
-        </div>
-      )}
+      {/* telefon: wąska kolumna, przechylony i przycięty dołem jak w x-kom;
+          tablet, laptop, drukarka, monitor: zdjęcie wypełnia resztę karty,
+          wyśrodkowane w pionie i lekko wychodzące poza margines */}
+      {p.image &&
+        (szeroki ? (
+          <div aria-hidden className="relative min-w-0 flex-1">
+            <img
+              src={p.image}
+              alt=""
+              className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-contain drop-shadow-xl transition-transform duration-300 group-hover:scale-[1.09]"
+            />
+          </div>
+        ) : (
+          <div aria-hidden className="relative w-[38%] max-w-[13rem] shrink-0">
+            <img
+              src={p.image}
+              alt=""
+              className="pointer-events-none absolute -bottom-16 left-1/2 w-[92%] -translate-x-1/2 rotate-[8deg] drop-shadow-xl transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-[6deg]"
+            />
+          </div>
+        ))}
     </a>
   )
 }
@@ -232,7 +237,7 @@ export function MenuProduktowDesktop({ aktywny }: { aktywny: boolean }) {
             <div className="container mx-auto px-4">
               <div
                 className={`mx-auto flex max-h-[calc(100vh-5rem)] overflow-hidden rounded-b-2xl border border-t-0 border-gray-200 bg-white text-left shadow-xl ${
-                  kat.polecany ? 'max-w-6xl' : 'max-w-5xl'
+                  kat.polecany ? 'max-w-7xl' : 'max-w-5xl'
                 }`}
               >
                 {/* kategorie */}
@@ -296,7 +301,7 @@ export function MenuProduktowDesktop({ aktywny }: { aktywny: boolean }) {
                   <div className="flex gap-6">
                     {/* kolumny czytane z góry na dół, w kolejności ze strony kategorii;
                         przy polecanym produkcie lista ma jedną kolumnę, a obok stoi karta */}
-                    <ul className={kat.polecany ? 'w-full lg:w-64 lg:shrink-0' : 'w-full gap-x-4 lg:columns-2'}>
+                    <ul className={kat.polecany ? 'w-full lg:w-52 lg:shrink-0 xl:w-64' : 'w-full gap-x-4 lg:columns-2'}>
                       {kat.produkty.map((p) => (
                         <li key={p.href} className="break-inside-avoid">
                           <a
