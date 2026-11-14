@@ -3,7 +3,22 @@
 // Odświeżenie: node scripts/menu-produktow.mjs (odpala się przed `npm run build`).
 
 export type ProduktMenu = { name: string; href: string }
-export type KategoriaMenu = { slug: string; name: string; href: string; produkty: ProduktMenu[] }
+export type PolecanyMenu = {
+  name: string
+  href: string
+  image: string | null
+  opis: string | null
+  cechy: string[]
+  /** najniższa cena netto ze składnic, null gdy model jest wyceniany indywidualnie */
+  cenaOd: number | null
+}
+export type KategoriaMenu = {
+  slug: string
+  name: string
+  href: string
+  produkty: ProduktMenu[]
+  polecany?: PolecanyMenu
+}
 
 export const MENU_PRODUKTOW: KategoriaMenu[] = [
   {
@@ -71,7 +86,19 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "Unitech PA768",
         "href": "/produkt/unitech-pa768"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "Zebra EM45",
+      "href": "/produkt/zebra-em45",
+      "image": "/menu/polecany-zebra-em45.webp",
+      "opis": "Terminal terenowy w obudowie smartfona",
+      "cechy": [
+        "IP68, upadek z 1,2 m (1,5 m w etui)",
+        "4750 mAh, do 25 h pracy",
+        "6,7″ FHD+, 120 Hz, 450 nitów"
+      ],
+      "cenaOd": 2728.5
+    }
   },
   {
     "slug": "telefony",

@@ -34,7 +34,7 @@ import {
   Video,
   type LucideIcon,
 } from 'lucide-react'
-import { MENU_PRODUKTOW, type KategoriaMenu } from '@/data/menu-produktow'
+import { MENU_PRODUKTOW, type KategoriaMenu, type PolecanyMenu } from '@/data/menu-produktow'
 
 /** Te same ikony co w kafelkach kategorii na stronie głównej. */
 const IKONY: Record<string, LucideIcon> = {
@@ -62,6 +62,64 @@ export const ileProduktow = (n: number) => {
   if (n === 1) return '1 produkt'
   if (d >= 2 && d <= 4 && !(s >= 12 && s <= 14)) return `${n} produkty`
   return `${n} produktów`
+}
+
+/** Bez `toLocaleString` — Node z okrojonym ICU gubi spację tysięczną (jak w ProductPage). */
+const zloty = (kwota: number) => {
+  const [calosc, grosze] = kwota.toFixed(2).split('.')
+  return `${calosc.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')},${grosze} zł`
+}
+
+/**
+ * Karta „Polecany produkt” po prawej stronie listy produktów (wzór: menu x-kom).
+ * Cała karta jest linkiem do produktu. Cena to najniższa cena netto ze składnic.
+ */
+function KartaPolecana({ p }: { p: PolecanyMenu }) {
+  return (
+    <a
+      href={p.href}
+      className="group relative hidden min-h-[22rem] min-w-0 flex-1 gap-4 overflow-hidden rounded-2xl bg-gradient-to-br from-stone-50 via-white to-emerald-50/70 p-6 ring-1 ring-gray-100 transition-shadow hover:shadow-md hover:ring-emerald-200 lg:flex"
+    >
+      <div className="relative z-10 flex min-w-0 flex-1 flex-col">
+        <p className="text-sm font-semibold text-gray-500">Polecany produkt</p>
+        <p className="mt-5 text-2xl font-bold tracking-tight text-gray-900">{p.name}</p>
+        {p.opis && <p className="mt-1 text-sm text-gray-600">{p.opis}</p>}
+        <ul className="mt-5 space-y-1.5 text-sm leading-snug text-gray-500">
+          {p.cechy.map((c) => (
+            <li key={c}>{c}</li>
+          ))}
+        </ul>
+        <div className="mt-auto pt-6">
+          {p.cenaOd !== null ? (
+            <>
+              <p className="text-sm text-gray-500">w składnicy od</p>
+              <p className="whitespace-nowrap text-2xl font-semibold tabular-nums text-gray-900 xl:text-3xl">
+                {zloty(p.cenaOd)}
+                <span className="ml-1.5 text-sm font-normal text-gray-500">netto</span>
+              </p>
+            </>
+          ) : (
+            <p className="text-sm text-gray-500">cena na zapytanie</p>
+          )}
+          <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-emerald-700">
+            Zobacz produkt
+            <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </span>
+        </div>
+      </div>
+      {/* zdjęcie we własnej kolumnie: duże, przechylone i przycięte dołem jak w x-kom,
+          ale nie wchodzi na tekst przy węższym ekranie */}
+      {p.image && (
+        <div aria-hidden className="relative w-[38%] max-w-[13rem] shrink-0">
+          <img
+            src={p.image}
+            alt=""
+            className="pointer-events-none absolute -bottom-16 left-1/2 w-[92%] -translate-x-1/2 rotate-[8deg] drop-shadow-xl transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-[6deg]"
+          />
+        </div>
+      )}
+    </a>
+  )
 }
 
 /* ───────────────────────────── komputer ───────────────────────────── */
@@ -163,7 +221,11 @@ export function MenuProduktowDesktop({ aktywny }: { aktywny: boolean }) {
             className="absolute inset-x-0 top-full z-50"
           >
             <div className="container mx-auto px-4">
-              <div className="mx-auto flex max-h-[calc(100vh-5rem)] max-w-5xl overflow-hidden rounded-b-2xl border border-t-0 border-gray-200 bg-white text-left shadow-xl">
+              <div
+                className={`mx-auto flex max-h-[calc(100vh-5rem)] overflow-hidden rounded-b-2xl border border-t-0 border-gray-200 bg-white text-left shadow-xl ${
+                  kat.polecany ? 'max-w-6xl' : 'max-w-5xl'
+                }`}
+              >
                 {/* kategorie */}
                 <div className="flex w-72 shrink-0 flex-col overflow-y-auto border-r border-gray-100 bg-gray-50 py-2">
                   <ul>
@@ -222,19 +284,25 @@ export function MenuProduktowDesktop({ aktywny }: { aktywny: boolean }) {
                       <ArrowRight aria-hidden className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                     </a>
                   </div>
-                  {/* kolumny czytane z góry na dół, w kolejności ze strony kategorii */}
-                  <ul className="gap-x-4 lg:columns-2">
-                    {kat.produkty.map((p) => (
-                      <li key={p.href} className="break-inside-avoid">
-                        <a
-                          href={p.href}
-                          className="block rounded-lg px-3 py-2 text-[15px] leading-snug text-gray-700 transition-colors hover:bg-emerald-50 hover:text-emerald-700 focus-visible:bg-emerald-50"
-                        >
-                          {p.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="flex gap-6">
+                    {/* kolumny czytane z góry na dół, w kolejności ze strony kategorii;
+                        przy polecanym produkcie lista ma jedną kolumnę, a obok stoi karta */}
+                    <ul className={kat.polecany ? 'w-full lg:w-64 lg:shrink-0' : 'w-full gap-x-4 lg:columns-2'}>
+                      {kat.produkty.map((p) => (
+                        <li key={p.href} className="break-inside-avoid">
+                          <a
+                            href={p.href}
+                            className={`block rounded-lg px-3 text-[15px] leading-snug transition-colors hover:bg-emerald-50 hover:text-emerald-700 focus-visible:bg-emerald-50 ${
+                              kat.polecany ? 'py-1.5' : 'py-2'
+                            } ${p.href === kat.polecany?.href ? 'font-semibold text-gray-900' : 'text-gray-700'}`}
+                          >
+                            {p.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                    {kat.polecany && <KartaPolecana p={kat.polecany} />}
+                  </div>
                 </div>
               </div>
             </div>
