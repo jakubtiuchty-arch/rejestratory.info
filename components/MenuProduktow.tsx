@@ -110,11 +110,18 @@ function KartaPolecana({ p }: { p: PolecanyMenu }) {
       {/* zdjęcie we własnej kolumnie: duże, przechylone i przycięte dołem jak w x-kom,
           ale nie wchodzi na tekst przy węższym ekranie */}
       {p.image && (
-        <div aria-hidden className="relative w-[38%] max-w-[13rem] shrink-0">
+        <div
+          aria-hidden
+          className={`relative shrink-0 ${p.uklad === 'szeroki' ? 'w-[46%] max-w-[17rem]' : 'w-[38%] max-w-[13rem]'}`}
+        >
           <img
             src={p.image}
             alt=""
-            className="pointer-events-none absolute -bottom-16 left-1/2 w-[92%] -translate-x-1/2 rotate-[8deg] drop-shadow-xl transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-[6deg]"
+            className={`pointer-events-none absolute drop-shadow-xl transition-transform duration-300 group-hover:-translate-y-1 ${
+              p.uklad === 'szeroki'
+                ? '-right-2 bottom-4 w-[112%] max-w-none'
+                : '-bottom-16 left-1/2 w-[92%] -translate-x-1/2 rotate-[8deg] group-hover:rotate-[6deg]'
+            }`}
           />
         </div>
       )}

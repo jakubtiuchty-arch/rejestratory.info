@@ -42,11 +42,16 @@ const KATEGORIE = [
 
 /**
  * Polecany produkt w kategorii: slug karty i lekka miniatura do menu (zdjęcia
- * kart mają po kilka tysięcy pikseli; miniatura to ok. 300 × 640, przezroczyste tło).
- * Na razie tylko rejestratory (prośba Jakuba 14.11.2026: polecany EM45).
+ * kart mają po kilka tysięcy pikseli; miniatura ma ok. 640 px, przezroczyste tło).
+ * `uklad: 'szeroki'` dla zdjęć poziomych i kwadratowych (tablet, laptop) — dostają
+ * szerszą kolumnę i nie są przechylane jak telefon.
+ * Wybór Jakuba z 14.11.2026; pozostałe kategorie na razie bez polecanego.
  */
 const POLECANE = {
   rejestratory: { slug: 'zebra-em45', zdjecie: '/menu/polecany-zebra-em45.webp' },
+  telefony: { slug: 'samsung-a57', zdjecie: '/menu/polecany-samsung-a57.webp' },
+  tablety: { slug: 'samsung-galaxy-tab-active5', zdjecie: '/menu/polecany-samsung-galaxy-tab-active5.webp', uklad: 'szeroki' },
+  laptopy: { slug: 'hp-elitebook-6-g1ah-14', zdjecie: '/menu/polecany-hp-elitebook-6-g1ah-14.webp', uklad: 'szeroki' },
 }
 
 /**
@@ -121,6 +126,7 @@ for (const slug of readdirSync(KARTY)) {
       opis: pole(tresc, 'description'),
       cechy: [...blokCech.matchAll(/value: '((?:[^'\\]|\\.)*)'/g)].slice(0, 3).map((m) => m[1].replace(/\\'/g, "'")),
       cenaOd: cenyOd(slug),
+      uklad: POLECANE[kategoria].uklad ?? 'pionowy',
     }
   }
 }
@@ -152,6 +158,8 @@ export type PolecanyMenu = {
   cechy: string[]
   /** najniższa cena netto ze składnic, null gdy model jest wyceniany indywidualnie */
   cenaOd: number | null
+  /** pionowy: telefon przechylony w wąskiej kolumnie; szeroki: tablet, laptop */
+  uklad: 'pionowy' | 'szeroki'
 }
 export type KategoriaMenu = {
   slug: string

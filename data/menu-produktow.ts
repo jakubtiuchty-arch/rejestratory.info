@@ -11,6 +11,8 @@ export type PolecanyMenu = {
   cechy: string[]
   /** najniższa cena netto ze składnic, null gdy model jest wyceniany indywidualnie */
   cenaOd: number | null
+  /** pionowy: telefon przechylony w wąskiej kolumnie; szeroki: tablet, laptop */
+  uklad: 'pionowy' | 'szeroki'
 }
 export type KategoriaMenu = {
   slug: string
@@ -97,7 +99,8 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "4750 mAh, do 25 h pracy",
         "6,7″ FHD+, 120 Hz, 450 nitów"
       ],
-      "cenaOd": 2728.5
+      "cenaOd": 2728.5,
+      "uklad": "pionowy"
     }
   },
   {
@@ -145,7 +148,20 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "Motorola Edge 60 Pro",
         "href": "/produkt/motorola-edge-60-pro"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "Samsung Galaxy A57",
+      "href": "/produkt/samsung-a57",
+      "image": "/menu/polecany-samsung-a57.webp",
+      "opis": "Smartfon służbowy z zapasem pamięci",
+      "cechy": [
+        "6,7″ Super AMOLED+, 120 Hz",
+        "Exynos 1680, 8 rdzeni",
+        "5000 mAh, ładowanie 45 W"
+      ],
+      "cenaOd": 1980,
+      "uklad": "pionowy"
+    }
   },
   {
     "slug": "tablety",
@@ -164,7 +180,20 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "Apple iPad Pro 11″ (M5)",
         "href": "/produkt/ipad-pro-11-m5-a3358"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "Samsung Galaxy Tab Active5",
+      "href": "/produkt/samsung-galaxy-tab-active5",
+      "image": "/menu/polecany-samsung-galaxy-tab-active5.webp",
+      "opis": "Wzmocniony tablet terenowy z wymienną baterią",
+      "cechy": [
+        "8″ 1920 × 1200, 120 Hz",
+        "Exynos 1380",
+        "IP68, MIL-STD-810H"
+      ],
+      "cenaOd": 2119,
+      "uklad": "szeroki"
+    }
   },
   {
     "slug": "laptopy",
@@ -191,7 +220,20 @@ export const MENU_PRODUKTOW: KategoriaMenu[] = [
         "name": "Dell Pro 16",
         "href": "/produkt/dell-pro-16"
       }
-    ]
+    ],
+    "polecany": {
+      "name": "HP EliteBook 6 G1a 14",
+      "href": "/produkt/hp-elitebook-6-g1ah-14",
+      "image": "/menu/polecany-hp-elitebook-6-g1ah-14.webp",
+      "opis": "Laptop biznesowy 14 cali ze stacją dokującą HP",
+      "cechy": [
+        "14″ WUXGA",
+        "AMD Ryzen 5 220",
+        "16 GB + SSD 512 GB"
+      ],
+      "cenaOd": 5329,
+      "uklad": "szeroki"
+    }
   },
   {
     "slug": "urzadzenia-wielofunkcyjne",
