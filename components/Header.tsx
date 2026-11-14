@@ -5,6 +5,7 @@ import { useInquiry } from '@/components/InquiryContext';
 import { AnimatePresence } from "framer-motion";
 import { ICON, naCiemnym } from '@/components/product/icons'
 import SearchAutocomplete from '@/app/components/SearchAutocomplete'
+import { MenuProduktowDesktop, MenuProduktowMobile } from '@/components/MenuProduktow'
 
 interface HeaderProps {
   activeTab?: 'home' | 'produkty' | 'serwis' | 'kontakt';
@@ -38,7 +39,8 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
   const isActive = (tab: string) => activeTab === tab;
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200">
+    // relative + z-40: rozwijane menu „Produkty” wisi pod nagłówkiem nad treścią strony
+    <header className="relative z-40 bg-white shadow-sm border-b border-gray-200">
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
@@ -62,18 +64,7 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
                   Strona główna
                 </a>
               </li>
-              <li>
-                <a 
-                  href="/#produkty" 
-                  className={`transition-colors ${
-                    isActive('produkty') 
-                      ? 'text-emerald-600 font-semibold' 
-                      : 'text-gray-700 hover:text-emerald-600'
-                  }`}
-                >
-                  Produkty
-                </a>
-              </li>
+              <MenuProduktowDesktop aktywny={isActive('produkty')} />
               <li>
                 <a 
                   href="/serwis" 
@@ -213,19 +204,7 @@ export default function Header({ activeTab = 'home' }: HeaderProps) {
                   Strona główna
                 </a>
               </li>
-              <li>
-                <a 
-                  href="/#produkty" 
-                  className={`block px-4 py-2 transition-colors ${
-                    isActive('produkty')
-                      ? 'text-emerald-600 bg-emerald-50 font-semibold'
-                      : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-600'
-                  }`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Produkty
-                </a>
-              </li>
+              <MenuProduktowMobile aktywny={isActive('produkty')} onWybor={() => setMobileMenuOpen(false)} />
               <li>
                 <a 
                   href="/serwis" 

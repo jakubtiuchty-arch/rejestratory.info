@@ -7,7 +7,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "prebuild": "node scripts/policz-karty.mjs && node scripts/indeks-wyszukiwarki.mjs",
+    "prebuild": "node scripts/policz-karty.mjs && node scripts/indeks-wyszukiwarki.mjs && node scripts/menu-produktow.mjs",
     "test:contracts": "tsc --outDir .vercel/contracts-tests --target ES2022 --module commonjs --esModuleInterop --skipLibCheck tests/contracts.test.ts && node --test .vercel/contracts-tests/tests/contracts.test.js",
     "test:contracts-ui": "node tools/test-contracts-ui.cjs",
     "test:pospay": "tsc --outDir .vercel/pospay-tests --target ES2022 --module commonjs --esModuleInterop --skipLibCheck tests/pospay.test.ts tests/pospay-routes.test.ts && node --test .vercel/pospay-tests/tests/pospay*.test.js"
