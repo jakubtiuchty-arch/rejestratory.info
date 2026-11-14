@@ -81,8 +81,8 @@ function KartaPolecana({ p }: { p: PolecanyMenu }) {
       href={p.href}
       className="group relative hidden min-h-[22rem] min-w-0 flex-1 gap-4 overflow-hidden rounded-2xl bg-gradient-to-br from-stone-50 via-white to-emerald-50/70 p-6 ring-1 ring-gray-100 transition-shadow hover:shadow-md hover:ring-emerald-200 lg:flex"
     >
-      {/* przy szerokim zdjęciu tekst ma stałą kolumnę, a zdjęcie bierze całą resztę */}
-      <div className={`relative z-10 flex flex-col ${szeroki ? 'w-[45%] shrink-0 xl:w-[15.5rem]' : 'min-w-0 flex-1'}`}>
+      {/* tekst ma stałą kolumnę w każdej karcie, zdjęcie bierze resztę */}
+      <div className="relative z-10 flex w-[45%] shrink-0 flex-col xl:w-[15.5rem]">
         <p className="text-sm font-semibold text-gray-500">Polecany produkt</p>
         <p className="mt-5 text-2xl font-bold tracking-tight text-gray-900">{p.name}</p>
         {p.opis && <p className="mt-1 text-sm text-gray-600">{p.opis}</p>}
@@ -111,27 +111,28 @@ function KartaPolecana({ p }: { p: PolecanyMenu }) {
           </span>
         </div>
       </div>
-      {/* telefon: wąska kolumna, przechylony i przycięty dołem jak w x-kom;
-          tablet, laptop, drukarka, monitor: zdjęcie wypełnia resztę karty,
-          wyśrodkowane w pionie i lekko wychodzące poza margines */}
-      {p.image &&
-        (szeroki ? (
-          <div aria-hidden className="relative min-w-0 flex-1">
+      {/* Scena zdjęcia, wspólna dla wszystkich kart: produkt zawsze w całości (bez
+          przycinania), postawiony na miękkim cieniu na środku jasnej poświaty.
+          Pole zdjęcia zależy od kształtu: telefon dostaje wysokie i wąskie, tablet,
+          laptop, drukarka czy monitor — szerokie i niższe, więc wszystkie wyglądają
+          na podobnie „duże”, a podstawa każdego leży na tej samej linii. */}
+      {p.image && (
+        <div aria-hidden className="pointer-events-none relative -my-6 -mr-6 min-w-0 flex-1">
+          <div className="absolute left-1/2 top-[46%] aspect-square w-[88%] max-w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.95),rgba(236,253,245,0.55)_60%,transparent)]" />
+          <div
+            className={`absolute bottom-[8.5%] left-1/2 h-5 -translate-x-1/2 rounded-[50%] bg-gray-900/25 blur-lg transition-all duration-300 group-hover:bg-gray-900/20 ${
+              szeroki ? 'w-[62%]' : 'w-[32%]'
+            }`}
+          />
+          <div className={`absolute ${szeroki ? 'inset-x-[6%] bottom-[11%] top-[13%]' : 'inset-x-[14%] bottom-[11%] top-[6%]'}`}>
             <img
               src={p.image}
               alt=""
-              className="pointer-events-none absolute inset-0 h-full w-full scale-105 object-contain drop-shadow-xl transition-transform duration-300 group-hover:scale-[1.09]"
+              className="h-full w-full object-contain object-bottom drop-shadow-[0_12px_16px_rgba(0,0,0,0.12)] transition-transform duration-300 group-hover:-translate-y-1.5"
             />
           </div>
-        ) : (
-          <div aria-hidden className="relative w-[38%] max-w-[13rem] shrink-0">
-            <img
-              src={p.image}
-              alt=""
-              className="pointer-events-none absolute -bottom-16 left-1/2 w-[92%] -translate-x-1/2 rotate-[8deg] drop-shadow-xl transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-[6deg]"
-            />
-          </div>
-        ))}
+        </div>
+      )}
     </a>
   )
 }
