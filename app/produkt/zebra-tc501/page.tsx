@@ -139,19 +139,18 @@ const data: ProductData = {
       // Baner na wzór sceny ze stosem z hero strony głównej (uwaga Jakuba 13.11.2026):
       // gpt_image_2_6 21:9 (wzór: klatka z hero-nadlesnictwo.mp4 + zdjęcia tc501_1/2),
       // leśniczy przy stosie trzyma terminal poziomo, tył z aparatem na stos.
-      // Terminal z AI przekłamywał wygląd, więc w dłonie wklejone jest prawdziwe
-      // tc501_1.png (obrót 90°, skala 158 px w klatce 2688 × 1152, kciuki z AI na
-      // wierzchu) razem z jego ekranem (tapeta Zebry, ciepły odblask nieba na szkle) —
-      // bez dorysowanych łat na ekranie. Ruch mgły i promieni: Seedance 2.5,
-      // klatki wyrównane do kompozytu (SIFT) i z wklejonym prawdziwym terminalem w
-      // każdej klatce. Pomiar dorysowany w kodzie (uwaga Jakuba: ma wyglądać jak
+      // Terminal wklejony ze zdjęcia wyglądał na doklejony (uwaga Jakuba 14.11.2026), więc
+      // cały kadr jest wygenerowany na nowo razem z terminalem: gpt_image_2_6 z kompozytem
+      // (prawdziwe tc501_1.png w dłoniach) i zdjęciami tc501_1/2 jako wzorem wyglądu —
+      // na ekranie tapeta Zebry, odblask drzew na szkle, słońce na krawędzi obudowy.
+      // Ruch mgły i promieni: Seedance 2.5 (kadr startowy = końcowy), klatki wyrównane
+      // do kadru (SIFT, tło), bez żadnych łat. Pomiar dorysowany w kodzie (uwaga Jakuba: ma wyglądać jak
       // mierzenie, nie kolorowy stos): od rogu najbliżej terminala rosną kolejno linie
       // wysokości, szerokości i głębokości z licznikiem, potem przerywany obrys bryły.
-      // Stos nie może być naraz na ekranie i w scenie, a płaska czarna łata wyglądała
-      // na doklejoną (uwagi Jakuba). Wartości są poglądowe — Zebra nie ma aplikacji do
-      // pomiaru stosów. Pasek 2000 × 566.
-      video: '/czujnik-tof-tc501.mp4?v=9',
-      image: '/czujnik-tof-tc501-poster.jpg?v=9',
+      // Stos nie może być naraz na ekranie i w scenie (uwaga Jakuba). Wartości są
+      // poglądowe — Zebra nie ma aplikacji do pomiaru stosów. Pasek 2000 × 566.
+      video: '/czujnik-tof-tc501.mp4?v=10',
+      image: '/czujnik-tof-tc501-poster.jpg?v=10',
       backgroundMedia: true,
       imageAlt:
         'Leśniczy przy stosie drewna na leśnej drodze o zachodzie słońca trzyma Zebra TC501 ' +
