@@ -60,57 +60,89 @@ type PolecanyProdukt = {
   kategoria: string;
   opis: string;
   zdjecie: string;
+  /** szerokość / wysokość zdjęcia przyciętego do konturu produktu */
+  proporcja: number;
   sztuk?: number;
   nadlesnictwa?: number;
 };
 
 /**
- * Zapas na wypadek, gdyby ranking z panelu nie odpowiedział — trzy modele
- * najczęściej występujące u klientów w chwili pisania kodu. Normalnie sekcja
- * bierze dane z `/api/najczestsze-urzadzenia`, więc sama nadąża za sprzedażą.
+ * Polecane produkty wybrane przez TAKMA (Jakub, 15.11.2026), w tej kolejności:
+ * Pospay 2, Brother MFC-L8390CDW, Zebra TC501. Wcześniej sekcja brała ranking
+ * z `/api/najczestsze-urzadzenia`. Zdjęcia w `public/polecane/` są przycięte do
+ * konturu produktu (z pierwszego zdjęcia karty), żeby scena w karcie sama
+ * ustawiała skalę i cień — bez pustych marginesów z oryginałów.
  */
-const POLECANE_ZAPASOWO: PolecanyProdukt[] = [
+const POLECANE: PolecanyProdukt[] = [
   {
-    slug: 'zebra-zq521',
-    nazwa: 'Zebra ZQ521',
-    kategoria: 'Drukarka do rejestratora',
-    opis: 'Mobilna drukarka 4-calowa do pracy w terenie',
-    zdjecie: '/zq521_1.png',
+    slug: 'posnet-pospay-2',
+    nazwa: 'Posnet Pospay 2',
+    kategoria: 'Urządzenie fiskalne',
+    opis: 'Kasa fiskalna online z drukarką i terminalem płatniczym',
+    zdjecie: '/polecane/posnet-pospay-2.webp',
+    proporcja: 393 / 318,
   },
   {
-    slug: 'zebra-em45',
-    nazwa: 'Zebra EM45',
+    slug: 'brother-mfc-l8390cdw',
+    nazwa: 'Brother MFC-L8390CDW',
+    kategoria: 'Urządzenie wielofunkcyjne',
+    opis: 'Kolorowe urządzenie z faksem i dwustronnym skanem',
+    zdjecie: '/polecane/brother-mfc-l8390cdw.webp',
+    proporcja: 499 / 602,
+  },
+  {
+    slug: 'zebra-tc501',
+    nazwa: 'Zebra TC501',
     kategoria: 'Rejestrator',
-    opis: 'Terminal terenowy w obudowie smartfona',
-    zdjecie: '/em45_1.webp',
-  },
-  {
-    slug: 'samsung-a57',
-    nazwa: 'Samsung Galaxy A57',
-    kategoria: 'Telefon',
-    opis: 'Smartfon służbowy z zapasem pamięci',
-    zdjecie: '/a57_1.png',
+    opis: 'Rejestrator z czujnikiem 3D ToF i ekranem 1500 nitów',
+    zdjecie: '/polecane/zebra-tc501.webp',
+    proporcja: 311 / 640,
   },
 ];
+
+/**
+ * Scena zdjęcia w karcie polecanego produktu (jak w menu „Produkty”): produkt
+ * w całości, na wspólnej linii podstawy, na miękkim cieniu pod jasną poświatą.
+ * Pole zdjęcia zależy od kształtu, więc kasa, drukarka i telefon wyglądają na
+ * podobnie „duże”. Wartości w % kwadratowego pola karty.
+ */
+function polePolecanego(proporcja: number) {
+  const pole =
+    proporcja >= 1.1
+      ? { x: 19, gora: 26, dol: 16 } // szerokie: kasa, laptop, monitor
+      : proporcja >= 0.7
+        ? { x: 17, gora: 15, dol: 16 } // zbliżone do kwadratu: drukarka
+        : { x: 22, gora: 9, dol: 16 }; // wysokie: telefon, rejestrator
+  const szerokoscProduktu = Math.min(100 - 2 * pole.x, (100 - pole.gora - pole.dol) * proporcja);
+  return { ...pole, cien: Math.round(szerokoscProduktu * 0.95) };
+}
+
+function ScenaPolecanego({ produkt }: { produkt: PolecanyProdukt }) {
+  const pole = polePolecanego(produkt.proporcja);
+  return (
+    <div className="relative aspect-square overflow-hidden rounded-t-2xl bg-gradient-to-br from-stone-50 via-white to-emerald-50/70">
+      <div className="absolute left-1/2 top-[46%] aspect-square w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.95),rgba(236,253,245,0.55)_60%,transparent)]" />
+      <div
+        className="absolute left-1/2 h-5 -translate-x-1/2 translate-y-1/2 rounded-[50%] bg-gray-900/25 blur-lg transition-colors duration-300 group-hover:bg-gray-900/20"
+        style={{ bottom: `${pole.dol}%`, width: `${pole.cien}%` }}
+      />
+      <div
+        className="absolute"
+        style={{ left: `${pole.x}%`, right: `${pole.x}%`, top: `${pole.gora}%`, bottom: `${pole.dol}%` }}
+      >
+        <img
+          src={produkt.zdjecie}
+          alt={produkt.nazwa}
+          className="h-full w-full object-contain object-bottom drop-shadow-[0_12px_16px_rgba(0,0,0,0.12)] transition-transform duration-300 group-hover:-translate-y-1.5"
+        />
+      </div>
+    </div>
+  );
+}
 
 export default function HomePage() {
   const [categoriesView, setCategoriesView] = React.useState(0); // 0=4, 1=8, 2=all
   const [promoOpen, setPromoOpen] = React.useState(false);
-  const [polecane, setPolecane] = React.useState<PolecanyProdukt[]>(POLECANE_ZAPASOWO);
-
-  // ranking liczony z panelu: co faktycznie stoi w nadleśnictwach
-  React.useEffect(() => {
-    let aktualne = true;
-    fetch('/api/najczestsze-urzadzenia?ile=3')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => {
-        if (aktualne && d?.ranking?.length) setPolecane(d.ranking);
-      })
-      .catch(() => {});
-    return () => {
-      aktualne = false;
-    };
-  }, []);
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
   // Force video to play on mount
@@ -441,11 +473,11 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Polecane produkty</h2>
-            <p className="text-stone-600">Sprzęt, który najczęściej pracuje w nadleśnictwach</p>
+            <p className="text-stone-600">Wybrane urządzenia z oferty dla nadleśnictw</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            {polecane.map((produkt, i) => (
+            {POLECANE.map((produkt, i) => (
               <motion.a
                 key={produkt.slug}
                 href={`/produkt/${produkt.slug}`}
@@ -454,13 +486,7 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: (i + 1) * 0.1 }}
                 className="group flex flex-col rounded-2xl border border-stone-200 bg-white transition hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div className="flex aspect-square items-center justify-center overflow-hidden rounded-t-2xl">
-                  <img
-                    src={produkt.zdjecie}
-                    alt={produkt.nazwa}
-                    className="h-4/5 w-4/5 object-contain"
-                  />
-                </div>
+                <ScenaPolecanego produkt={produkt} />
                 <div className="border-t border-stone-200"></div>
                 <div className="flex flex-1 flex-col p-6">
                   <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-700">
