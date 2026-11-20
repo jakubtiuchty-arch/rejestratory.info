@@ -515,7 +515,7 @@
     {
       "slug": "iphone-17-pro-max",
       "karta": "iphone-17-pro-max",
-      "nazwa": "Apple iPhone 17 Pro Max",
+      "nazwa": "Apple iPhone 17 Pro Max 256 GB",
       "kategoria": "Telefony",
       "etykieta": "Smartfon",
       "rodzaj": "Smartfon",
@@ -526,6 +526,10 @@
           "b": true
         },
         "Układ Apple A19 Pro",
+        {
+          "t": "Pamięć wbudowana 256 GB",
+          "b": true
+        },
         {
           "t": "Ekran 6,9″ Super Retina XDR (OLED), 120 Hz",
           "b": true
