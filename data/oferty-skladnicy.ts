@@ -666,7 +666,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "promocja": false,
         "wZestawie": []
       }
-    ]
+    ],
+    "model": "Dell Pro 5 16"
   },
   {
     "slug": "dell-pro-24-plus-p2424heb",
@@ -1045,11 +1046,11 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "honeywell-rp4",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na drukarki termiczne_01.10.2026.pdf",
+    "plik": "Formularz zamówienia HONEYWELL RP4.pdf",
     "formularz": "/formularze/zup-lodz/drukarki-mobilne/zup-lodz-honeywell-rp4.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
-      "od": "2026-10-01",
+      "od": "2026-11-17",
       "do": null
     },
     "dostawca": "TAKMA",
@@ -1084,7 +1085,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       },
       {
         "nazwa": "Papier termiczny",
-        "cenaNetto": 7.48,
+        "cenaNetto": 7.15,
         "promocja": false,
         "wZestawie": []
       }
@@ -1126,7 +1127,8 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       "promocja": false,
       "wZestawie": []
     },
-    "dodatki": []
+    "dodatki": [],
+    "model": "HP WRLS KB/MSE Combo"
   },
   {
     "slug": "hp-715",
@@ -2080,7 +2082,7 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
   {
     "slug": "zebra-em45",
     "skladnica": "zup-lodz",
-    "plik": "Oferta na Rejestratotor Zebra EM45 + STACJA_09.2026.pdf",
+    "plik": "Oferta na Rejestratotor Zebra EM45 + STACJA_11..2026.docx",
     "formularz": "/formularze/zup-lodz/rejestratory/zup-lodz-zebra-em45.pdf",
     "strona": "https://zup.lodz.lasy.gov.pl/rejestratory",
     "okres": {
@@ -2105,6 +2107,12 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
         "wZestawie": []
       },
       {
+        "nazwa": "Pasek na rękę",
+        "cenaNetto": 107.8,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
         "nazwa": "Szkło lub folia ochronna na ekran",
         "cenaNetto": 77,
         "promocja": false,
@@ -2124,23 +2132,41 @@ export const OFERTY_SKLADNICY: OfertaSkladnicy[] = [
       },
       {
         "nazwa": "Ładowarka samochodowa",
-        "cenaNetto": 107.8,
+        "cenaNetto": 104.5,
         "promocja": false,
         "wZestawie": []
       },
       {
         "nazwa": "Nakładka na obudowę zabezpieczająca przed uszkodzeniami",
-        "cenaNetto": 198,
+        "cenaNetto": 192.5,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Akumulator o standardowej pojemności",
+        "cenaNetto": 737,
         "promocja": false,
         "wZestawie": []
       },
       {
         "nazwa": "Stacja dokująca do rejestratora Zebra EM45",
-        "cenaNetto": 1991,
+        "cenaNetto": 1925,
         "promocja": false,
         "wZestawie": [
           "W zestawie wkładki (shimy) umożliwiające korzystanie ze stacji i mobilnego komputera dotykowego wyposażonego w etui ochronne + zasilacz z przewodem"
         ]
+      },
+      {
+        "nazwa": "Stacja dokująca z portem USB+zasilacz +kabel USB",
+        "cenaNetto": 825,
+        "promocja": false,
+        "wZestawie": []
+      },
+      {
+        "nazwa": "Stacja ładująca – biurkowa + kabel",
+        "cenaNetto": 748,
+        "promocja": false,
+        "wZestawie": []
       }
     ]
   },

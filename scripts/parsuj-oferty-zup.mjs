@@ -843,11 +843,8 @@ const POZA_OFERTA_ZUP = [
  */
 const od = (data, koniec = null) => ({ od: data, do: koniec })
 const ZMIANY_ZE_STRONY_ZUP = {
-  'zebra-em45': {
-    plik: 'Oferta na Rejestratotor Zebra EM45 + STACJA_09.2026.pdf',
-    okres: od('2026-09-01'),
-    ceny: { urzadzenie: 2728.5, 'Kontrakt serwisowy producenta (3 letni) do ZEBRA EM45': 482.9 },
-  },
+  // zebra-em45: od 20.11.2026 z nowego .docx („…STACJA_11..2026.docx”, przysłany przez ZUP z akcesoriami
+  // z umowy NH.271.51.2026) — wpis ze strony ZUP zdjęty, bo Word ma już te ceny i nowe pozycje.
   'm3-sl20': {
     plik: 'Oferta na Rejestrator M3 Mobile SL20+_01.09.2026.pdf',
     okres: od('2026-09-01'),
@@ -874,7 +871,13 @@ const ZMIANY_ZE_STRONY_ZUP = {
   'zebra-tc27': { nazwy: { 'Akumulator o standardowej pojemności 3100mAh': 'Akumulator o standardowej pojemności 3800 mAh' } },
   'bixolon-sppr410': { plik: TERMICZNE_PDF, okres: od('2026-10-01'), ceny: { urzadzenie: 2124 } },
   'zebra-zq521': { plik: TERMICZNE_PDF, okres: od('2026-10-01'), ceny: { 'Akumulator o pojemności standardowej': 466.4 } },
-  'honeywell-rp4': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
+  // ZUP przysłał 20.11.2026 formularz z nową ceną papieru i prośbą o okres „od 17.11.2026 do odwołania”
+  // (kopia: oferty-zrodla/od-zup-2026-11-17/Formularz zamówienia HONEYWELL RP4.pdf)
+  'honeywell-rp4': {
+    plik: 'Formularz zamówienia HONEYWELL RP4.pdf',
+    okres: od('2026-11-17'),
+    ceny: { 'Papier termiczny': 7.15 },
+  },
   'seiko-mpa40': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
   'sewoo-lkp400': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
   'sewoo-lkp43': { plik: TERMICZNE_PDF, okres: od('2026-10-01') },
@@ -895,12 +898,14 @@ const ZMIANY_ZE_STRONY_ZUP = {
   'dell-km5221': { plik: AKCESORIA_PDF },
   'dell-km7321': { plik: AKCESORIA_PDF },
   'hp-460': { plik: AKCESORIA_PDF },
-  'hp-655': { plik: AKCESORIA_PDF },
+  // aneks 1/2025 do umowy NH.271.42.2025: model „WRLS KB/MSE Combo” (nazwa katalogowa HP zestawu 655)
+  'hp-655': { plik: AKCESORIA_PDF, model: 'HP WRLS KB/MSE Combo' },
   'hp-715': { plik: AKCESORIA_PDF },
   'torba-hp-15': { plik: AKCESORIA_PDF },
   'dell-pro-14-plus': { plik: LAPTOPY_PDF, okres: od('2026-11-05') },
-  // dokument nazywa ten laptop „DELL PRO 5 16” — parametry i cena jak Dell Pro 16 Plus
-  'dell-pro-16-plus': { plik: LAPTOPY_PDF, okres: od('2026-11-05'), dostawca: null },
+  // dokument nazywa ten laptop „DELL PRO 5 16” — parametry i cena jak Dell Pro 16 Plus. Aneks 13/2026
+  // do umowy NH.271.2.2024 zmienia model na Dell Pro 5 16 (prośba ZUP z 20.11.2026 o zmianę na formularzu).
+  'dell-pro-16-plus': { plik: LAPTOPY_PDF, okres: od('2026-11-05'), dostawca: null, model: 'Dell Pro 5 16' },
   'hp-elitebook-6-g1ah-14': { plik: LAPTOPY_PDF },
   ...Object.fromEntries(
     [

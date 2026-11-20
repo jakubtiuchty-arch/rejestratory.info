@@ -9,7 +9,8 @@ HTML formularza → PDF z polami do wpisywania (AcroForm).
    data-wyrownanie (0 do lewej, 1 do środka, 2 do prawej),
    data-rozmiar (stopień pisma w pt, domyślnie 9),
    data-wartosc (tekst wpisany na start — pole zostaje edytowalne),
-   data-pogrubienie (obecność atrybutu = Helvetica Bold).
+   data-pogrubienie (obecność atrybutu = Helvetica Bold),
+   data-kolor (kolor wpisanego tekstu jako #rrggbb, np. jasny na ciemnym pasie).
    Każda strona A4 to element .strona; pozycja liczona względem niej.
 3. PyMuPDF nakłada pola nad kreską: bez ramki i tła, a NeedAppearances
    każe przeglądarce PDF rysować wpisany tekst własną czcionką, więc
@@ -20,6 +21,7 @@ Użycie (zwykle woła go scripts/formularz-oferty.mjs):
     python3 scripts/formularz-pdf.py formularz.html wynik.pdf
 Wymaga: pip install playwright pymupdf
 """
+import re
 import sys
 import tempfile
 from pathlib import Path
@@ -46,6 +48,7 @@ ODCZYT_POL = """els => {
       rozmiar: Number(el.dataset.rozmiar || 0),
       wartosc: el.dataset.wartosc || '',
       pogrubienie: 'pogrubienie' in el.dataset,
+      kolor: el.dataset.kolor || '',
       strona: nr,
       x0: r.left - s.left,
       x1: r.right - s.left,
@@ -76,6 +79,11 @@ def drukuj(html, pdf):
     return pola
 
 
+def kolor_pola(p):
+    hex_ = p.get("kolor", "").lstrip("#")
+    return tuple(int(hex_[i:i + 2], 16) / 255 for i in (0, 2, 4)) if len(hex_) == 6 else KOLOR_TEKSTU
+
+
 def dodaj_pola(pdf, pola):
     doc = fitz.open(pdf)
     for p in pola:
@@ -91,7 +99,7 @@ def dodaj_pola(pdf, pola):
         w.text_fontsize = rozmiar
         if p.get("wartosc"):
             w.field_value = p["wartosc"]
-        w.text_color = KOLOR_TEKSTU
+        w.text_color = kolor_pola(p)
         w.border_width = 0
         w.border_color = None
         w.fill_color = None
@@ -104,8 +112,44 @@ def dodaj_pola(pdf, pola):
                 annot.update()  # wygląd wpisanej wartości policzony już z wyrównaniem
         if p.get("pogrubienie"):
             pogrub(doc, annot, p, rozmiar)
+        elif p.get("wartosc"):
+            wysrodkuj_tekst(doc, annot, rozmiar)
     doc.need_appearances(True)
     return doc
+
+
+def wysrodkuj_tekst(doc, annot, rozmiar):
+    """Wpisana wartość zwykłego pola (np. okres ważności w zielonym pasie) wyśrodkowana w pionie.
+
+    PyMuPDF 1.26 przy polskich znakach osadza własny font i stawia linię bazową
+    o ok. 3,5 pt POD dolną krawędzią pola, a do tego zawęża przycięcie — Podgląd
+    i druk pokazują wtedy ucięte dolne pół napisu. Poprawiamy tylko pozycję w
+    gotowym strumieniu wyglądu: przycięcie na całe pole, linia bazowa tak, by
+    wielkie litery (0,72 stopnia pisma) stały na środku. Przeglądarki, które
+    przerysowują pole same (NeedAppearances), i tak liczą to po swojemu."""
+    typ, ap = doc.xref_get_key(annot.xref, "AP/N")
+    if typ != "xref":
+        return
+    ap = int(ap.split()[0])
+    szer, wys = annot.rect.width, annot.rect.height
+    strumien = doc.xref_stream(ap).decode("latin-1")
+    # układ odwrócony („1 0 0 -1 0 h cm”): y liczone od góry pola
+    baza = (wys + 0.72 * rozmiar) / 2
+    strumien, n_klip = re.subn(
+        r"(1 0 0 -1 -?0 [\d.]+ cm\s+q\s+)0 [\d.\-]+ [\d.]+ [\d.]+ re",
+        lambda m: f"{m.group(1)}0 0 {szer:g} {wys:g} re",
+        strumien,
+        count=1,
+    )
+    strumien, n_tm = re.subn(
+        r"([\d.\-]+ 0 0 [\d.\-]+ [\d.\-]+) [\d.\-]+ Tm",
+        lambda m: f"{m.group(1)} {baza:.2f} Tm",
+        strumien,
+        count=1,
+    )
+    if not (n_klip and n_tm):
+        sys.exit(f"pole {annot.field_name}: nieznany układ wyglądu PyMuPDF — sprawdź wysrodkuj_tekst()")
+    doc.update_stream(ap, strumien.encode("latin-1"))
 
 
 def pogrub(doc, annot, p, rozmiar):
@@ -125,7 +169,7 @@ def pogrub(doc, annot, p, rozmiar):
         zwykly = doc.get_new_xref()
         doc.update_object(zwykly, "<</Type/Font/Subtype/Type1/BaseFont/Helvetica/Encoding/WinAnsiEncoding>>")
         doc.xref_set_key(cel, klucz.replace("HeBo", "Helv"), f"{zwykly} 0 R")
-    kolor = " ".join(f"{k:g}" for k in KOLOR_TEKSTU)
+    kolor = " ".join(f"{k:g}" for k in kolor_pola(p))
     doc.xref_set_key(annot.xref, "DA", f"({kolor} rg /HeBo {rozmiar:g} Tf)")
     tekst = p.get("wartosc")
     typ, ap = doc.xref_get_key(annot.xref, "AP/N")
