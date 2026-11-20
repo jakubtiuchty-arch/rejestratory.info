@@ -8,6 +8,8 @@
  *   node scripts/formularze-zup-lodz.mjs                 # wszystkie oferty
  *   node scripts/formularze-zup-lodz.mjs zebra-tc27 …    # wybrane slugi
  *   node scripts/formularze-zup-lodz.mjs --html-do <katalog>   # zostaw HTML robocze
+ *   node scripts/formularze-zup-lodz.mjs --umowa formularze-zrodla/zup-lodz-umowa-NH.271.51.2026.json
+ *                                       # formularze z umowy, bez cen (patrz modelUmowy)
  *
  * Skąd dane — nic nie jest wpisywane tutaj z ręki poza poprawkami literówek:
  *   ceny, okres, promocje, wyposażenie  → data/oferty-skladnicy.ts
@@ -116,6 +118,7 @@ const LITEROWKI = [
   [/BEZ SYSTEMU/g, 'bez systemu operacyjnego'],
   [/szkoło/g, 'szkło'],
   [/\+kabel/g, '+ kabel'],
+  [/USB\+zasilacz/g, 'USB + zasilacz'],
   [/\(3 letni\)/g, '(3-letni)'],
   [/pojedyń\. akumulatora w wersji std i rozszerz\./g, 'pojedynczego akumulatora w wersji standardowej i rozszerzonej'],
   [/(\d) st$/g, '$1 stron'],
@@ -284,6 +287,7 @@ const RODZAJE = {
   'Elektroniczne Zarządzanie Dokumentacją': ['Sprzęt do EZD', null, 'sprzet-do-ezd'],
   'Urządzenia fiskalne': ['Drukarka fiskalna', 'Drukarka fiskalna', 'drukarki-mobilne'],
   'Akcesoria komputerowe': ['Akcesoria komputerowe', null, 'akcesoria-komputerowe'],
+  Wideokonferencje: ['Wideokonferencje', 'System do wideokonferencji', 'wideokonferencje'],
 }
 
 /** Wyjątki: rodzaj (wtedy tytuł = rodzaj + nazwa z karty) albo cały tytuł pozycji. */
@@ -305,7 +309,13 @@ const WYJATKI = {
   'dell-km5221': { rodzaj: 'Klawiatura i mysz bezprzewodowa' },
   'dell-km7321': { rodzaj: 'Klawiatura i mysz bezprzewodowa' },
   'hp-460': { tytul: 'Klawiatura bezprzewodowa HP 460 Multi-device', rodzaj: 'Klawiatura bezprzewodowa' },
-  'hp-655': { tytul: 'Klawiatura i mysz bezprzewodowa HP 655', rodzaj: 'Klawiatura i mysz bezprzewodowa' },
+  // Aneks 1/2025 do umowy NH.271.42.2025: model „WRLS KB/MSE Combo” (prośba ZUP z 20.11.2026). To nazwa
+  // katalogowa HP tego samego zestawu HP 655 (4R009AA: „HP 655 WRLS KB/MSE Combo”), więc zdjęcie z karty zostaje.
+  'hp-655': {
+    tytul: 'Klawiatura i mysz bezprzewodowa HP WRLS KB/MSE Combo',
+    rodzaj: 'Klawiatura i mysz bezprzewodowa',
+    zdjecieKarty: true,
+  },
   'hp-715': { tytul: 'Mysz bezprzewodowa HP 715', rodzaj: 'Mysz bezprzewodowa' },
   'ms-365': { tytul: 'Microsoft 365 Business Standard', rodzaj: 'Pakiet biurowy' },
   'podkladka-pod-mysz': { tytul: 'Podkładka pod mysz', rodzaj: 'Akcesoria komputerowe' },
@@ -342,7 +352,8 @@ function model(o) {
   if (!k.nazwa || !k.kategoria) throw new Error(`${o.slug}: karta bez nazwy albo kategorii`)
   const wyj = WYJATKI[o.slug] ?? {}
   // Składnica sprzedaje następcę modelu z karty (`model` w ofercie): tytuł formularza to nazwa
-  // u składnicy, a zdjęcie z karty — pokazujące poprzednika — nie trafia na formularz.
+  // u składnicy, a zdjęcie z karty — pokazujące poprzednika — nie trafia na formularz. Wyjątek:
+  // `zdjecieKarty`, gdy nowa nazwa to ten sam sprzęt (np. nazwa katalogowa producenta).
   const nastepca = !!o.model
   if (nastepca) k.nazwa = o.model
   const [etykietaKat, rodzajKat, folder] = RODZAJE[k.kategoria] ?? []
@@ -379,7 +390,7 @@ function model(o) {
     dostawca,
     pozycja: {
       tytul: wyj.tytul ?? `${rodzaj} ${k.nazwa}`,
-      zdjecie: k.zdjecie && !nastepca ? `public${k.zdjecie}` : null,
+      zdjecie: k.zdjecie && (!nastepca || wyj.zdjecieKarty) ? `public${k.zdjecie}` : null,
       punkty,
       link: `www.rejestratory.info/produkt/${o.slug}`,
       cenaNetto: o.urzadzenie.cenaNetto,
@@ -392,6 +403,52 @@ function model(o) {
       promocja: !!d.promocja,
     })),
     nota: opis.nota,
+  }
+}
+
+/**
+ * Formularz z umowy składnicy z TAKMA (np. NH.271.51.2026) — zanim składnica ustali swoje ceny.
+ * Ceny z formularza cenowego umowy to ceny dla składnicy, więc na formularz nie trafiają:
+ * pola cen zostają puste. Gdy składnica wpisze już swoje ceny dla LP, leżą w `cenyZup`
+ * (urządzenie, potem wyposażenie w kolejności `dodatki`) i formularz wychodzi z nimi. Urządzenie nie musi mieć karty w katalogu (wtedy bez linku i zdjęcia
+ * z karty). Dane: formularze-zrodla/zup-lodz-umowa-*.json.
+ */
+function modelUmowy(u, umowa) {
+  const [etykietaKat, rodzajKat, folder] = RODZAJE[u.kategoria] ?? []
+  if (!etykietaKat) throw new Error(`${u.slug}: nieznana kategoria „${u.kategoria}”`)
+  const rodzaj = u.rodzaj ?? rodzajKat
+  const punkty = u.punkty.map((p) => (typeof p === 'string' ? { t: p, b: false, pod: [] } : { b: false, pod: [], ...p }))
+  if (!punkty.length) throw new Error(`${u.slug}: brak opisu urządzenia`)
+  const ceny = u.cenyZup ?? []
+  if (ceny.length && ceny.length !== u.dodatki.length + 1)
+    throw new Error(`${u.slug}: cenyZup ma ${ceny.length} kwot, a pozycji jest ${u.dodatki.length + 1}`)
+  return {
+    slug: u.slug,
+    folder,
+    etykieta: u.etykieta ?? etykietaKat,
+    h1: u.nazwa,
+    podtytul: `${rodzaj} dla Lasów Państwowych — ceny netto dla LP`,
+    okres: umowa.okres,
+    termin: umowa.termin ?? null,
+    // formularz z umowy musi zmieścić się na jednej kartce A4
+    jednaStrona: true,
+    dostawca: umowa.dostawca,
+    pozycja: {
+      tytul: u.tytul ?? `${rodzaj} ${u.nazwa}`,
+      // „/plik” — zdjęcie z public (karta katalogu), inna ścieżka — zdjęcie producenta w formularze-zrodla/
+      zdjecie: u.zdjecie ? (u.zdjecie.startsWith('/') ? `public${u.zdjecie}` : u.zdjecie) : null,
+      // bardzo szerokie zdjęcie (wideobar) idzie nad opis na całą szerokość zamiast do wąskiej kolumny
+      zdjecieNadOpisem: !!u.zdjecieNadOpisem,
+      punkty,
+      link: u.karta ? `www.rejestratory.info/produkt/${u.karta}` : null,
+      cenaNetto: ceny[0] ?? null,
+      promocja: false,
+    },
+    dodatki: u.dodatki.map((a, i) => {
+      const { nazwa, opis = [] } = typeof a === 'string' ? { nazwa: a } : a
+      return { nazwa, opis: opis.join(' · '), cenaNetto: ceny[i + 1] ?? null, promocja: false }
+    }),
+    nota: u.nota ?? null,
   }
 }
 
@@ -442,15 +499,19 @@ function szablon(d) {
   // Twarda spacja w kwocie i zapas szerokości są konieczne: Podgląd macOS i przeglądarki
   // rysują pole po swojemu i kwotę „1 700,00” w ciasnym polu łamały na spacji, pokazując samo „1”.
   let nrCeny = 0
+  // bez kwoty (formularz z umowy przed ustaleniem cen przez składnicę) pole zostaje puste do wpisania
   const cena = (kwota, czego, rozmiar) =>
-    `<span class="linia" data-pole="cena_${++nrCeny}" data-opis="Cena netto — ${esc(czego)} (zł)" data-wyrownanie="2" data-rozmiar="${rozmiar}" data-pogrubienie data-wartosc="${zl(kwota)}"></span>`
+    `<span class="linia" data-pole="cena_${++nrCeny}" data-opis="Cena netto — ${esc(czego)} (zł)" data-wyrownanie="2" data-rozmiar="${rozmiar}" data-pogrubienie${
+      kwota == null ? '' : ` data-wartosc="${zl(kwota)}"`
+    }></span>`
   const pole = (nazwa, etykieta) =>
     `<label class="pole"><span>${esc(etykieta)}</span><span class="linia" data-pole="${nazwa}" data-opis="${esc(etykieta)}"></span></label>`
 
   const p = d.pozycja
-  const foto = p.zdjecie ? obraz(p.zdjecie) : null
+  const foto = p.zdjecie ? obraz(p.zdjecie, p.zdjecieNadOpisem ? 900 : 520) : null
+  const fotoNadOpisem = foto && p.zdjecieNadOpisem
   // pionowe zdjęcie (telefon, rejestrator) dostaje wąską kolumnę, poziome szerszą — jak w EM45
-  const szerFoto = foto ? (foto.wys > foto.szer * 1.15 ? 68 : foto.wys > foto.szer * 0.8 ? 84 : 112) : 0
+  const szerFoto = foto && !fotoNadOpisem ? (foto.wys > foto.szer * 1.15 ? 68 : foto.wys > foto.szer * 0.8 ? 84 : 112) : 0
   const okres = d.okres
     ? `Oferta ważna dla zamówień złożonych od ${dataPL(d.okres.od)} do ${d.okres.do ? dataPL(d.okres.do) : 'odwołania'}`
     : ''
@@ -498,7 +559,12 @@ body { font: 9.3pt/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; color: #1
 .pas { overflow: hidden; display: flex; align-items: center; justify-content: space-between; gap: 12pt; height: 24.5pt; padding: 0 10pt;
   border-radius: 4pt; background: #14532d }
 .pas b { font-size: 7pt; letter-spacing: .32em; text-transform: uppercase; color: #a3e635; white-space: nowrap }
-.pas span { font-size: 8pt; color: #d7f0df; white-space: nowrap }
+/* okres ważności i termin realizacji są polami formularza (składnica zmienia je sama, bez
+   przebudowy): tekst w HTML wyznacza tylko układ, a widać wartość pola — stąd przezroczysty */
+.pas .okres { flex: 1; min-width: 0; height: 13pt; overflow: hidden; font-size: 8pt; line-height: 13pt; text-align: right;
+  white-space: nowrap; color: transparent }
+/* pole pisze z wewnętrznym odstępem 2 pt — cofnięte o tyle, by tekst stał w linii z sąsiednimi */
+.warunki .termin { margin-left: -2pt; color: transparent }
 h1 { margin-top: 10pt; font-size: 21pt; line-height: 1.25; font-weight: 700; letter-spacing: -.005em }
 .podtytul { margin-top: 2pt; font-size: 10pt; color: #4b5563 }
 
@@ -521,6 +587,7 @@ h1 { margin-top: 10pt; font-size: 21pt; line-height: 1.25; font-weight: 700; let
 .karta-tresc { display: grid; grid-template-columns: ${szerFoto ? `${szerFoto}pt ` : ''}1fr 100pt; column-gap: 10pt;
   padding: 8.5pt 9.5pt 8pt }
 .foto img { display: block; width: 100%; margin-top: 2pt }
+.foto-nad img { display: block; width: 78%; margin: 1pt auto 9pt }
 .opis ul { padding-left: 20pt }
 .opis li { padding-left: 1pt; line-height: 1.42; margin-bottom: 1.35pt }
 .opis li.b { font-weight: 700 }
@@ -567,11 +634,38 @@ h1 { margin-top: 10pt; font-size: 21pt; line-height: 1.25; font-weight: 700; let
   border-top: .75pt solid #e5e9e5; font-size: 7.6pt; color: #6b7280 }
 .stopka span:last-child { display: flex; align-items: center; gap: 4pt; white-space: nowrap }
 .stopka img { height: 8.6pt }
+/* ściśle: tylko formularze z umowy (data-jedna-strona), gdy „gesto” nie wystarcza do jednej kartki */
+.scisle .strona { padding: 26pt 30pt 22pt 30pt }
+.scisle .blok { margin-top: 6pt }
+.scisle h1 { margin-top: 7pt; font-size: 19pt }
+.scisle .podtytul { font-size: 9.4pt }
+.scisle .strony-umowy { margin-top: 7pt }
+.scisle .strony-umowy > div { padding: 7pt 8pt 5pt }
+.scisle .zamawiajacy .pole { margin-top: 2.6pt; font-size: 7pt }
+.scisle .zamawiajacy .pole .linia { height: 13pt }
+.scisle .dostawca b { margin-top: 5pt; font-size: 9pt }
+.scisle .dostawca p { font-size: 8.2pt; line-height: 1.45 }
+.scisle .dostawca .serwis { margin-top: 6pt; padding: 3.6pt 6pt }
+.scisle .karta-glowa { padding: 4.4pt 9pt }
+.scisle .karta-tresc { padding: 6pt 9pt 6pt }
+.scisle .opis li { font-size: 8.4pt; line-height: 1.24; margin-bottom: .3pt }
+.scisle .opis .pod span { font-size: 7.9pt; line-height: 1.28; margin-top: 0 }
+.scisle .tab-glowa { min-height: 22pt }
+.scisle .wiersz { margin-top: 0; min-height: 18pt; padding-top: 1.6pt; padding-bottom: 1.6pt; font-size: 8.8pt }
+.scisle .wiersz .nazwa small { font-size: 7.2pt; line-height: 1.25 }
+.scisle .warunki > div { padding: 5pt 8pt 4pt }
+.scisle .warunki b { font-size: 9pt }
+.scisle .podpis { margin-top: 8pt }
+.scisle .stopka { margin-top: 6pt; padding-top: 5pt }
 </style></head>
-<body>
+<body${d.jednaStrona ? ' data-jedna-strona' : ''}>
 <div id="zrodlo">
   <div class="blok">
-    <div class="pas"><b>Formularz zamówienia — ${esc(d.etykieta)}</b><span>${esc(okres)}</span></div>
+    <div class="pas"><b>Formularz zamówienia — ${esc(d.etykieta)}</b>${
+      okres
+        ? `<span class="okres" data-pole="okres_oferty" data-opis="Okres ważności oferty" data-wartosc="${esc(okres)}" data-wyrownanie="2" data-rozmiar="8" data-kolor="#d7f0df">${esc(okres)}</span>`
+        : ''
+    }</div>
     <h1>${esc(d.h1)}</h1>
     <p class="podtytul">${esc(d.podtytul)}</p>
     <div class="strony-umowy">
@@ -594,12 +688,13 @@ h1 { margin-top: 10pt; font-size: 21pt; line-height: 1.25; font-weight: 700; let
   <section class="karta blok">
     <div class="karta-glowa"><h2>${esc(p.tytul)}</h2>${d.dodatki.length ? '<span class="kapitaliki">Pozycja 1</span>' : ''}</div>
     <div class="karta-tresc">
-      ${foto ? `<div class="foto"><img src="${foto.uri}" alt=""></div>` : ''}
+      ${foto && !fotoNadOpisem ? `<div class="foto"><img src="${foto.uri}" alt=""></div>` : ''}
       <div class="opis">
+        ${fotoNadOpisem ? `<div class="foto-nad"><img src="${foto.uri}" alt=""></div>` : ''}
         <ul>
           ${lista}
         </ul>
-        <span class="link">${esc(p.link)}</span>
+        ${p.link ? `<span class="link">${esc(p.link)}</span>` : ''}
       </div>
       <div class="cena">
         ${p.promocja ? '<i class="promo">Promocja</i>' : ''}
@@ -617,7 +712,9 @@ h1 { margin-top: 10pt; font-size: 21pt; line-height: 1.25; font-weight: 700; let
   <div class="blok koniec">
     <div class="warunki">
       <div><span class="kapitaliki">Podatek</span><b>Do cen należy doliczyć VAT 23%</b></div>
-      <div><span class="kapitaliki">Termin realizacji</span><b>Do uzgodnienia</b></div>
+      <div><span class="kapitaliki">Termin realizacji</span><b class="termin" data-pole="termin_realizacji" data-opis="Termin realizacji" data-wartosc="${esc(
+        d.termin ?? 'Do uzgodnienia',
+      )}" data-rozmiar="9.6" data-pogrubienie>${esc(d.termin ?? 'Do uzgodnienia')}</b></div>
       <div><span class="kapitaliki">Płatność</span><b>Przelew 14 dni</b></div>
     </div>
     <div class="podpis"><span class="linia" data-pole="podpis_imie_nazwisko" data-opis="Imię i nazwisko osoby zamawiającej"></span>Podpis zamawiającego</div>
@@ -677,14 +774,29 @@ addEventListener('load', () => {
       strony = uloz()
     }
   }
+  // formularz z umowy: jeśli wciąż więcej niż jedna kartka — układ ścisły
+  if ('jednaStrona' in document.body.dataset && strony.length > 1) {
+    document.body.classList.add('gesto', 'scisle')
+    strony = uloz()
+  }
   zrodlo.remove()
   // długa etykieta w zielonym pasie (np. „urządzenie wielofunkcyjne”) dostaje ciaśniejsze odstępy liter
   const pas = document.querySelector('.pas')
   const etykieta = pas.querySelector('b')
-  const ciasno = () => pas.querySelector('span').getBoundingClientRect().right > pas.getBoundingClientRect().right - 9
+  const okres = pas.querySelector('.okres')
+  // szerokość samego napisu (scrollWidth nie spada poniżej szerokości pola); zapas 8 px,
+  // bo pole pisze Helveticą, odrobinę szerszą od Helvetica Neue z HTML
+  const napis = document.createRange()
+  if (okres) napis.selectNodeContents(okres)
+  const ciasno = () => okres && napis.getBoundingClientRect().width + 8 > okres.clientWidth
   for (let odstep = 0.3; ciasno() && odstep > 0.15; odstep -= 0.02) etykieta.style.letterSpacing = odstep + 'em'
-  if (ciasno()) pas.querySelector('span').style.fontSize = '7.4pt'
+  if (ciasno()) {
+    okres.style.fontSize = '7.4pt'
+    okres.dataset.rozmiar = '7.4'
+  }
   for (let odstep = 0.14; ciasno() && odstep > 0.03; odstep -= 0.02) etykieta.style.letterSpacing = odstep + 'em'
+  // w składzie ścisłym termin ma mniejsze pismo — pole też
+  if (document.body.classList.contains('scisle')) document.querySelector('.termin').dataset.rozmiar = '9'
 })
 </script>
 </body></html>`
@@ -695,18 +807,21 @@ addEventListener('load', () => {
 const argumenty = process.argv.slice(2)
 const iHtml = argumenty.indexOf('--html-do')
 const katalogHtml = iHtml >= 0 ? path.resolve(argumenty.splice(iHtml, 2)[1]) : mkdtempSync(path.join(tmpdir(), 'formularze-zup-'))
+const iUmowa = argumenty.indexOf('--umowa')
+const UMOWA = iUmowa >= 0 ? JSON.parse(readFileSync(path.resolve(argumenty.splice(iUmowa, 2)[1]), 'utf8')) : null
 const iPdf = argumenty.indexOf('--pdf-do')
-const katalogPdf = iPdf >= 0 ? path.resolve(argumenty.splice(iPdf, 2)[1]) : w('public/formularze/zup-lodz')
+const katalogPdf =
+  iPdf >= 0 ? path.resolve(argumenty.splice(iPdf, 2)[1]) : w(UMOWA ? UMOWA.katalogPdf : 'public/formularze/zup-lodz')
 const tylkoDane = argumenty.includes('--dane')
 const wybrane = argumenty.filter((a) => !a.startsWith('--'))
 mkdirSync(katalogHtml, { recursive: true })
 mkdirSync(katalogPdf, { recursive: true })
 
-const doZrobienia = OFERTY.filter((o) => !wybrane.length || wybrane.includes(o.slug))
+const doZrobienia = (UMOWA ? UMOWA.urzadzenia : OFERTY).filter((o) => !wybrane.length || wybrane.includes(o.slug))
 const bledy = []
 for (const o of doZrobienia) {
   try {
-    const d = model(o)
+    const d = UMOWA ? modelUmowy(o, UMOWA) : model(o)
     if (tylkoDane) {
       console.log(`\n## ${d.slug} — ${d.pozycja.tytul} [${d.etykieta}] dostawca: ${d.dostawca}`)
       for (const x of d.pozycja.punkty) {
