@@ -132,6 +132,8 @@ const data: ProductData = {
       { label: 'BLIK kodem', value: '0,54 %', fee: '+ 0,09 zł' },
       { label: 'Karty zagraniczne', value: '1,79 %' },
     ],
+    commissionsExplain:
+      '„+ 0,09 zł” to stała opłata 9 groszy za każdą transakcję, doliczana do części procentowej. Przykład: przy płatności kartą na 500 zł prowizja wynosi 0,79 % z 500 zł, czyli 3,95 zł, plus 0,09 zł — razem 4,04 zł.',
     note: 'Prowizję od każdej transakcji nalicza operator płatności Planet Pay, bez opłaty autoryzacyjnej i bez opłaty za raportowanie do KAS. Stawka 1,79 % dotyczy kart wydanych za granicą, w EOG i poza nim. Nadleśnictwo, które spełnia warunki programu Polska Bezgotówkowa, nie płaci prowizji przez 12 miesięcy albo do 100 tys. zł obrotu. W abonamencie: wynajem terminala płatniczego z dożywotnią gwarancją, aplikacja sprzedażowa POS-UP z aktualizacjami oraz karta SIM z transmisją danych do Centralnego Repozytorium Kas. Urządzenie objęte jest gwarancją 24 miesięcy dla nadleśnictw. Przeglądy ustawowe co 2 lata rozliczane osobno.',
   },
   // klient generuje ofertę PDF sam — dane w lib/oferta-pdf/produkty.ts

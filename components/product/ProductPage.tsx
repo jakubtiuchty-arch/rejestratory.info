@@ -96,6 +96,8 @@ export type Pricing = {
   commissionsLabel?: string
   /** fee: stała opłata od transakcji, pisana mniejszym stopniem obok stawki procentowej */
   commissions?: { label: string; value: string; fee?: string }[]
+  /** wyjaśnienie stałej opłaty z przykładem — wyróżnione pod stawkami, nie w drobnym druku */
+  commissionsExplain?: string
   note?: string
 }
 
@@ -1483,6 +1485,11 @@ export default function ProductPage({ data }: { data: ProductData }) {
                           </div>
                         ))}
                       </div>
+                      {data.pricing.commissionsExplain && (
+                        <p className="mt-3 rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-xs leading-relaxed text-stone-700">
+                          {data.pricing.commissionsExplain}
+                        </p>
+                      )}
                       {data.pricing.note && (
                         <p className="mt-3 text-xs leading-relaxed text-stone-500">{data.pricing.note}</p>
                       )}

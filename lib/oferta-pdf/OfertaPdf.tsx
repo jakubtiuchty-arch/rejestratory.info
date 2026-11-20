@@ -103,12 +103,13 @@ const s = StyleSheet.create({
   feeText: { fontSize: 8, color: '#374151', marginTop: 4 },
   /* stawki na całą szerokość — cztery kafle obok opisu nie mieszczą etykiet; opis
      w linii nagłówka i jedna linia przypisu, żeby oferta została na jednej stronie */
-  prowizjeBox: { backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 10, marginBottom: 8 },
+  prowizjeBox: { backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 8, marginBottom: 8 },
   prowizjeGora: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
   prowizjeUwaga: { fontSize: 7.5, color: C.muted },
-  prowizjePrzypis: { fontSize: 7.5, color: '#374151', marginTop: 6 },
+  prowizjeObjasnienie: { fontSize: 7.5, color: C.ink, marginTop: 5 },
+  prowizjePrzypis: { fontSize: 7.5, color: '#374151', marginTop: 1 },
   commissions: { flexDirection: 'row', gap: 8 },
-  commission: { flex: 1, backgroundColor: C.soft, borderRadius: 5, paddingVertical: 5, alignItems: 'center' },
+  commission: { flex: 1, backgroundColor: C.soft, borderRadius: 5, paddingVertical: 4, alignItems: 'center' },
   commissionLabel: { fontSize: 7.5, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.6 },
   commissionValue: { fontSize: 14, fontWeight: 'bold', color: C.emerald, marginTop: 2 },
   /* stała opłata w tej samej linii co stawka — druga linia podnosiła ofertę na drugą stronę */
@@ -262,6 +263,7 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
                   </View>
                 ))}
               </View>
+              {p.prowizjeObjasnienie ? <Text style={s.prowizjeObjasnienie}>{p.prowizjeObjasnienie}</Text> : null}
               {p.prowizjePrzypis ? <Text style={s.prowizjePrzypis}>{p.prowizjePrzypis}</Text> : null}
             </View>
           ) : null}

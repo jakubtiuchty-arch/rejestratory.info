@@ -20,7 +20,9 @@ export type ProduktOferty = {
   prowizje?: { label: string; value: string; dodatek?: string }[]
   /** krótka uwaga w linii nagłówka prowizji, np. o braku opłat dodatkowych */
   prowizjeUwaga?: string
-  /** jedna linia pod stawkami */
+  /** jedna linia pod stawkami: co znaczy stała opłata od transakcji, z przykładem */
+  prowizjeObjasnienie?: string
+  /** jedna linia pod objaśnieniem */
   prowizjePrzypis?: string
   /** kroki wdrożenia — powtarzają oś z karty produktu */
   wdrozenie: { title: string; note: string }[]
@@ -49,6 +51,8 @@ export const PRODUKTY_OFERTY: Record<string, ProduktOferty> = {
       { label: 'Karty zagraniczne', value: '1,79 %' },
     ],
     prowizjeUwaga: 'bez opłaty autoryzacyjnej i bez opłaty za raportowanie do KAS',
+    prowizjeObjasnienie:
+      '„+ 0,09 zł” to stała opłata za każdą transakcję, np. płatność kartą na 500 zł: 0,79 % (3,95 zł) + 0,09 zł = 4,04 zł prowizji.',
     prowizjePrzypis:
       // jedna linia w PDF — dłuższe zdanie łamie się i zabiera miejsce paskowi „Jak zamówić”
       'Polska Bezgotówkowa: 0 zł prowizji przez 12 miesięcy lub do 100 tys. zł obrotu, jeśli nadleśnictwo spełnia warunki programu.',
