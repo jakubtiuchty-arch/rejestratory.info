@@ -101,12 +101,18 @@ const s = StyleSheet.create({
   feeBig: { fontSize: 14, fontWeight: 'bold', color: C.ink, marginTop: 2 },
   feeUnit: { fontSize: 8, color: C.muted },
   feeText: { fontSize: 8, color: '#374151', marginTop: 4 },
-  prowizjeBox: { flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 12, marginBottom: 8 },
-  prowizjeLewa: { flex: 1 },
-  commissions: { flexDirection: 'row', gap: 8, width: 288 },
-  commission: { flex: 1, backgroundColor: C.soft, borderRadius: 5, paddingVertical: 11, alignItems: 'center' },
+  /* stawki na całą szerokość — cztery kafle obok opisu nie mieszczą etykiet; opis
+     w linii nagłówka i jedna linia przypisu, żeby oferta została na jednej stronie */
+  prowizjeBox: { backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, paddingHorizontal: 12, paddingVertical: 10, marginBottom: 8 },
+  prowizjeGora: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
+  prowizjeUwaga: { fontSize: 7.5, color: C.muted },
+  prowizjePrzypis: { fontSize: 7.5, color: '#374151', marginTop: 6 },
+  commissions: { flexDirection: 'row', gap: 8 },
+  commission: { flex: 1, backgroundColor: C.soft, borderRadius: 5, paddingVertical: 5, alignItems: 'center' },
   commissionLabel: { fontSize: 7.5, color: C.muted, textTransform: 'uppercase', letterSpacing: 0.6 },
-  commissionValue: { fontSize: 14, fontWeight: 'bold', color: C.emerald, marginTop: 3 },
+  commissionValue: { fontSize: 14, fontWeight: 'bold', color: C.emerald, marginTop: 2 },
+  /* stała opłata w tej samej linii co stawka — druga linia podnosiła ofertę na drugą stronę */
+  commissionExtra: { fontSize: 8, fontWeight: 'bold' },
 
   steps: { flexDirection: 'row', backgroundColor: C.white, borderWidth: 1, borderColor: C.edge, borderRadius: 6, padding: 8, marginBottom: 4 },
   step: { flex: 1, alignItems: 'center', paddingHorizontal: 2 },
@@ -239,21 +245,24 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
 
           {p.prowizje ? (
             <View style={s.prowizjeBox} wrap={false}>
-              <View style={s.prowizjeLewa}>
-                <Text style={s.boxTitle}>Prowizja od transakcji</Text>
-                <Text style={s.feeText}>
-                  Nalicza ją operator płatności eService od wartości każdej transakcji. Stawki VISA
-                  i MasterCard dotyczą kart wydanych w Polsce.
+              <View style={s.prowizjeGora}>
+                <Text style={s.boxTitle}>
+                  Prowizja od transakcji{p.operatorPlatnosci ? ` · ${p.operatorPlatnosci}` : ''}
                 </Text>
+                {p.prowizjeUwaga ? <Text style={s.prowizjeUwaga}>{p.prowizjeUwaga}</Text> : null}
               </View>
               <View style={s.commissions}>
                 {p.prowizje.map((c) => (
                   <View key={c.label} style={s.commission}>
                     <Text style={s.commissionLabel}>{c.label}</Text>
-                    <Text style={s.commissionValue}>{c.value}</Text>
+                    <Text style={s.commissionValue}>
+                      {c.value}
+                      {c.dodatek ? <Text style={s.commissionExtra}> {c.dodatek}</Text> : null}
+                    </Text>
                   </View>
                 ))}
               </View>
+              {p.prowizjePrzypis ? <Text style={s.prowizjePrzypis}>{p.prowizjePrzypis}</Text> : null}
             </View>
           ) : null}
 
@@ -280,7 +289,8 @@ export function OfertaPdfDoc({ o }: { o: OfertaPdfDane }) {
             <Text style={s.boxTitle}>Jak zamówić</Text>
             <Text style={s.kontaktText}>
               Prosimy o odpowiedź na niniejszą ofertę lub kontakt telefoniczny: {SPRZEDAWCA.telefon}.
-              Potwierdzimy termin dostawy i prześlemy dokumenty do fiskalizacji.
+              Potwierdzimy termin dostawy i prześlemy dokumenty do fiskalizacji
+              {p.operatorPlatnosci ? ` oraz do umowy z ${p.operatorPlatnosci}` : ''}.
             </Text>
           </View>
           ) : null}

@@ -5,17 +5,20 @@ import { ICON } from '@/components/product/icons'
 
 const WDROZENIE_DOKUMENTY = {
   heading: 'Dokumenty do fiskalizacji',
+  subheading: 'Umowa z Planet Pay i zgłoszenie do Urzędu Skarbowego',
   intro:
-    'Po otrzymaniu zamówienia przesyłamy szczegółowy wykaz dokumentów wymaganych do zgłoszenia urządzenia do eService oraz do urzędu skarbowego. Poniżej wykaz pozycji, które warto przygotować z wyprzedzeniem.',
+    'Po otrzymaniu zamówienia przesyłamy szczegółowy wykaz dokumentów wymaganych do zgłoszenia urządzenia do urzędu skarbowego oraz do umowy z Planet Pay, operatorem płatności kartą i BLIK-iem. Umowę z Planet Pay podpisuje się zdalnie, a płatności uruchamiane są elektronicznie. Poniżej wykaz pozycji, które warto przygotować z wyprzedzeniem.',
   items: [
     'Dane nadleśnictwa — NIP, REGON, pełna nazwa',
     'Adres miejsca instalacji urządzenia',
     'Nazwy i adresy leśnictw',
+    'Numer rachunku bankowego, na który Planet Pay przekaże wpływy z płatności kartą i BLIK-iem',
+    'Dane osoby upoważnionej do podpisania umowy z Planet Pay',
     'Skan paragonu dotychczasowych urządzeń fiskalnych, jeśli takie są w użyciu',
     'Numer telefonu kontaktowego',
   ],
   footer:
-    'Wypełnienie dokumentów oraz zgłoszenie do eService realizujemy wspólnie z Państwem, na każdym etapie postępowania.',
+    'Wypełnienie dokumentów, fiskalizację oraz zawarcie umowy z Planet Pay realizujemy wspólnie z Państwem, na każdym etapie postępowania.',
 }
 
 const data: ProductData = {
@@ -117,13 +120,19 @@ const data: ProductData = {
   pricing: {
     heading: 'Cennik i prowizje',
     main: { k: 'Zakup urządzenia', v: '1 799 zł', unit: 'netto' },
-    rows: [{ k: 'Abonament za terminal', v: '39 zł netto / mies.' }],
-    commissions: [
-      { label: 'VISA', value: '0,69 %' },
-      { label: 'MasterCard', value: '0,79 %' },
-      { label: 'BLIK', value: '0,39 %' },
+    rows: [
+      { k: 'Abonament za terminal', v: '39 zł netto / mies.' },
+      { k: 'Opłata autoryzacyjna i raportowanie do KAS', v: '0 zł' },
     ],
-    note: 'Urządzenie objęte jest gwarancją 24 miesięcy dla nadleśnictw, wobec 12 miesięcy w standardzie producenta. W abonamencie: wynajem terminala płatniczego z dożywotnią gwarancją, aplikacja sprzedażowa POS-UP z aktualizacjami oraz karta SIM z transmisją danych do Centralnego Repozytorium Kas. Stawki VISA i MasterCard dotyczą kart wydanych w Polsce. Przeglądy ustawowe co 2 lata rozliczane osobno.',
+    // stawki Planet Pay dla Pospay 2: planetpay.pl/rozwiazania-fiskalne-pospay i posnet.com.pl, sprawdzone 20.11.2026
+    commissionsLabel: 'Prowizja Planet Pay od transakcji',
+    commissions: [
+      { label: 'Karty krajowe', value: '0,79 %', fee: '+ 0,09 zł' },
+      { label: 'BLIK zbliżeniowy', value: '0,79 %', fee: '+ 0,09 zł' },
+      { label: 'BLIK kodem', value: '0,54 %', fee: '+ 0,09 zł' },
+      { label: 'Karty zagraniczne', value: '1,79 %' },
+    ],
+    note: 'Prowizję od każdej transakcji nalicza operator płatności Planet Pay, bez opłaty autoryzacyjnej i bez opłaty za raportowanie do KAS. Stawka 1,79 % dotyczy kart wydanych za granicą, w EOG i poza nim. Nadleśnictwo, które spełnia warunki programu Polska Bezgotówkowa, nie płaci prowizji przez 12 miesięcy albo do 100 tys. zł obrotu. W abonamencie: wynajem terminala płatniczego z dożywotnią gwarancją, aplikacja sprzedażowa POS-UP z aktualizacjami oraz karta SIM z transmisją danych do Centralnego Repozytorium Kas. Urządzenie objęte jest gwarancją 24 miesięcy dla nadleśnictw. Przeglądy ustawowe co 2 lata rozliczane osobno.',
   },
   // klient generuje ofertę PDF sam — dane w lib/oferta-pdf/produkty.ts
   ofertaPdf: true,
@@ -140,7 +149,7 @@ const data: ProductData = {
     steps: [
       { icon: ICON.zamowienie, title: 'Zamówienie', note: 'Posnet Pospay 2 w TAKMA' },
       { icon: ICON.formularz, title: 'Dokumenty', note: 'do fiskalizacji', documents: true },
-      { icon: ICON.fiskalizacja, title: 'Fiskalizacja', note: 'i zgłoszenie do eService' },
+      { icon: ICON.fiskalizacja, title: 'Fiskalizacja', note: 'i umowa z Planet Pay' },
       { icon: ICON.kurier, title: 'Dostawa', note: 'urządzenia do nadleśnictwa' },
       { icon: ICON.szkolenie, title: 'Szkolenie', note: 'leśniczych z obsługi' },
       { icon: ICON.integracja, title: 'Integracja', note: 'z rejestratorami' },

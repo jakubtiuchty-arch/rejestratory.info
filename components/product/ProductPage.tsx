@@ -77,7 +77,14 @@ export type Timeline = {
   /** zdanie pod nagłówkiem — streszcza, ile kroków i czego dotyczą */
   lead?: string
   /** treść okna „Jakie dokumenty?” */
-  documents?: { heading: string; intro: string; items: string[]; footer?: string }
+  documents?: {
+    heading: string
+    /** podtytuł okna — czego dotyczą dokumenty (np. umowa z operatorem płatności) */
+    subheading?: string
+    intro: string
+    items: string[]
+    footer?: string
+  }
 }
 /** Cennik z prowizjami — tylko urządzenia rozliczane abonamentowo (terminal płatniczy). */
 export type Pricing = {
@@ -85,7 +92,10 @@ export type Pricing = {
   /** kwota główna — wyróżniona wielkością, żeby cennik miał punkt zaczepienia */
   main?: { k: string; v: string; unit?: string }
   rows?: { k: string; v: string }[]
-  commissions?: { label: string; value: string }[]
+  /** nagłówek nad prowizjami, np. z nazwą operatora płatności */
+  commissionsLabel?: string
+  /** fee: stała opłata od transakcji, pisana mniejszym stopniem obok stawki procentowej */
+  commissions?: { label: string; value: string; fee?: string }[]
   note?: string
 }
 
@@ -627,9 +637,9 @@ const DokumentyModal = ({
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold tracking-tight text-white">{tresc.heading}</h3>
-                  <p className="mt-0.5 text-sm text-emerald-50/60">
-                    Zgłoszenie do eService i Urzędu Skarbowego
-                  </p>
+                  {tresc.subheading && (
+                    <p className="mt-0.5 text-sm text-emerald-50/60">{tresc.subheading}</p>
+                  )}
                 </div>
               </div>
               <button
@@ -1446,9 +1456,14 @@ export default function ProductPage({ data }: { data: ProductData }) {
                   {data.pricing.commissions && data.pricing.commissions.length > 0 && (
                     <div className="border-t border-stone-200 bg-stone-50 px-5 py-4">
                       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-stone-500">
-                        Prowizja od transakcji
+                        {data.pricing.commissionsLabel ?? 'Prowizja od transakcji'}
                       </p>
-                      <div className="mt-3 grid grid-cols-3 gap-2">
+                      {/* cztery stawki w dwóch rzędach — w trzech kolumnach „0,79 % + 0,09 zł” się nie mieści */}
+                      <div
+                        className={`mt-3 grid gap-2 ${
+                          data.pricing.commissions.length === 4 ? 'grid-cols-2' : 'grid-cols-3'
+                        }`}
+                      >
                         {data.pricing.commissions.map((c) => (
                           <div
                             key={c.label}
@@ -1457,7 +1472,14 @@ export default function ProductPage({ data }: { data: ProductData }) {
                             <div className="text-[11px] font-medium uppercase tracking-wide text-stone-500">
                               {c.label}
                             </div>
-                            <div className="mt-0.5 text-base font-bold text-emerald-700">{c.value}</div>
+                            <div className="mt-0.5 text-base font-bold text-emerald-700">
+                              {c.value}
+                              {c.fee && (
+                                <span className="ml-1 text-xs font-semibold text-emerald-700/75">
+                                  {c.fee}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         ))}
                       </div>

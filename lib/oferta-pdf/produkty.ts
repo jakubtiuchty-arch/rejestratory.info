@@ -14,7 +14,14 @@ export type ProduktOferty = {
   cenaNetto: number
   /** opłata cykliczna poza tabelą pozycji jednorazowych */
   abonament?: { nazwa: string; cenaNetto: number; okres: string; opis: string }
-  prowizje?: { label: string; value: string }[]
+  /** operator płatności kartą — pada w opisie prowizji i w „Jak zamówić” */
+  operatorPlatnosci?: string
+  /** dodatek: stała opłata od transakcji, druga linia pod stawką procentową */
+  prowizje?: { label: string; value: string; dodatek?: string }[]
+  /** krótka uwaga w linii nagłówka prowizji, np. o braku opłat dodatkowych */
+  prowizjeUwaga?: string
+  /** jedna linia pod stawkami */
+  prowizjePrzypis?: string
   /** kroki wdrożenia — powtarzają oś z karty produktu */
   wdrozenie: { title: string; note: string }[]
 }
@@ -33,17 +40,24 @@ export const PRODUKTY_OFERTY: Record<string, ProduktOferty> = {
       opis:
         'Wynajem terminala płatniczego z dożywotnią gwarancją, aplikacja sprzedażowa POS-UP z aktualizacjami oraz karta SIM z transmisją danych do Centralnego Repozytorium Kas.',
     },
+    // stawki Planet Pay dla Pospay 2 (planetpay.pl/rozwiazania-fiskalne-pospay), sprawdzone 20.11.2026
+    operatorPlatnosci: 'Planet Pay',
     prowizje: [
-      { label: 'VISA', value: '0,69 %' },
-      { label: 'MasterCard', value: '0,79 %' },
-      { label: 'BLIK', value: '0,39 %' },
+      { label: 'Karty krajowe', value: '0,79 %', dodatek: '+ 0,09 zł' },
+      { label: 'BLIK zbliżeniowy', value: '0,79 %', dodatek: '+ 0,09 zł' },
+      { label: 'BLIK kodem', value: '0,54 %', dodatek: '+ 0,09 zł' },
+      { label: 'Karty zagraniczne', value: '1,79 %' },
     ],
+    prowizjeUwaga: 'bez opłaty autoryzacyjnej i bez opłaty za raportowanie do KAS',
+    prowizjePrzypis:
+      // jedna linia w PDF — dłuższe zdanie łamie się i zabiera miejsce paskowi „Jak zamówić”
+      'Polska Bezgotówkowa: 0 zł prowizji przez 12 miesięcy lub do 100 tys. zł obrotu, jeśli nadleśnictwo spełnia warunki programu.',
     // podpisy krótkie, po jednej linii — dłuższe łamią się na trzy wiersze
     // i cała oferta przestaje mieścić się na jednej stronie
     wdrozenie: [
       { title: 'Zamówienie', note: 'w TAKMA' },
       { title: 'Dokumenty', note: 'do fiskalizacji' },
-      { title: 'Fiskalizacja', note: 'w eService' },
+      { title: 'Fiskalizacja', note: 'umowa Planet Pay' },
       { title: 'Dostawa', note: 'do nadleśnictwa' },
       { title: 'Szkolenie', note: 'leśniczych' },
       { title: 'Integracja', note: 'z rejestratorami' },
