@@ -296,6 +296,9 @@ const WYJATKI = {
   'aio-dell-pro-24': { tytul: 'Komputer all-in-one Dell Pro 24 z systemem operacyjnym' },
   'aio-dell-pro-24-bez-systemu': { tytul: 'Komputer all-in-one Dell Pro 24 bez systemu operacyjnego' },
   'dell-pro-16': { tytul: 'Laptop Dell Pro 16 bez systemu operacyjnego' },
+  // ZUP sprzedaje go jako Dell Pro 5 16 (aneks 13/2026) — karta pokazuje poprzednika, więc zdjęcie
+  // prawdziwego Dell Pro 5 16 (P516260) ze strony Della, główne ujęcie z galerii (20.11.2026)
+  'dell-pro-16-plus': { zdjecie: 'formularze-zrodla/zdjecia/dell-pro-5-16.png' },
   'epson-ds730n': { rodzaj: 'Skaner dokumentów' },
   'honeywell-1250g': { rodzaj: 'Czytnik kodów kreskowych', dopisz: ['W zestawie kabel USB i podstawka'] },
   'honeywell-1450g': { rodzaj: 'Czytnik kodów kreskowych', dopisz: ['W zestawie kabel USB i podstawka'] },
@@ -353,7 +356,8 @@ function model(o) {
   const wyj = WYJATKI[o.slug] ?? {}
   // Składnica sprzedaje następcę modelu z karty (`model` w ofercie): tytuł formularza to nazwa
   // u składnicy, a zdjęcie z karty — pokazujące poprzednika — nie trafia na formularz. Wyjątek:
-  // `zdjecieKarty`, gdy nowa nazwa to ten sam sprzęt (np. nazwa katalogowa producenta).
+  // `zdjecieKarty`, gdy nowa nazwa to ten sam sprzęt (np. nazwa katalogowa producenta),
+  // albo `zdjecie` — zdjęcie następcy od producenta w formularze-zrodla/zdjecia/.
   const nastepca = !!o.model
   if (nastepca) k.nazwa = o.model
   const [etykietaKat, rodzajKat, folder] = RODZAJE[k.kategoria] ?? []
@@ -390,7 +394,7 @@ function model(o) {
     dostawca,
     pozycja: {
       tytul: wyj.tytul ?? `${rodzaj} ${k.nazwa}`,
-      zdjecie: k.zdjecie && (!nastepca || wyj.zdjecieKarty) ? `public${k.zdjecie}` : null,
+      zdjecie: wyj.zdjecie ?? (k.zdjecie && (!nastepca || wyj.zdjecieKarty) ? `public${k.zdjecie}` : null),
       punkty,
       link: `www.rejestratory.info/produkt/${o.slug}`,
       cenaNetto: o.urzadzenie.cenaNetto,
