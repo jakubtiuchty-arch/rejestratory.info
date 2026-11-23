@@ -25,9 +25,10 @@ a `public/newsletter/manifest.json` wskazuje bieżące wydanie.
 | termin do ustalenia | Vertiv Liebert itON 1000 VA (UPS do serwerowni/kancelarii) | /produkt/vertin-1000 | propozycja — do akceptacji (przesunięty z 09.11 i z 16.11: w tych tygodniach Brother i nowe urządzenia ZUP Łódź) |
 | 2026-11-04 | **Laptopy HP — zakupy przed końcem roku** (układ jak rejestratory 19.10, bez urządzenia tygodnia; EliteBook 6 G1ah 16″ i 6 G1a 14″, dostępność w ZUP Łódź, wzmianka o HP Dock G6, monitorach i akcesoriach HP) | /kategoria/laptopy | ZAPLANOWANE ręcznie 03.11 — **środa 04.11 9:00**, plik `2026-11-04-laptopy-hp-koniec-roku.html`, UTM `laptopy-hp-2026-11`, hero `las-laptopy-hp-mgla-anim.gif` (laptopy na omszałym kamieniu, poranna mgła i promienie słońca; wybrane z 4 próbek zamiast wachlarza, który wyglądał na wklejony). ID maili w `scheduled-2026-11-04.json`. Rezerwacja w `newsletter_sends` blokuje przycisk — **nie zatwierdzać testówki**. |
 | termin do ustalenia | **Uchwyty samochodowe RAM Mounts** (zestawy do Zebra EM45, Zebra TC27, Galaxy Tab Active5, Galaxy XCover6 Pro oraz X-Grip do smartfonów) | /kategoria/uchwyty-samochodowe | PRZYGOTOWANE 21.10 — plik `2026-10-27-uchwyty-ram-mounts.html` (data w nazwie robocza), testówka wysłana Jakubowi. Strona kategorii i 5 kart produktów czekają na akceptację. Termin wysyłki ustala Jakub; `manifest.json` NIE wskazuje tego wydania. |
-| 2026-11-23 | Zebra TC27 (kompaktowy rejestrator z klawiaturą numeryczną) | /produkt/zebra-tc27 | propozycja — do akceptacji |
+| 2026-11-23 | Zebra TC27 (kompaktowy rejestrator leśniczego) | /produkt/zebra-tc27 | wydanie gotowe (2026-11-23-zebra-tc27.html) |
 | 2026-11-30 | Unitech PA768 (rejestrator — alternatywa dla Zebry i Honeywella) | /produkt/unitech-pa768 | propozycja — do akceptacji |
 | 2026-12-07 | M3 Mobile SL20+ (rejestrator z wbudowaną drukarką, alternatywna marka) | /produkt/m3-sl20 | propozycja — do akceptacji |
+| 2026-12-14 | Honeywell CT40XP (kompaktowy terminal z ekranem Full HD, alternatywa w ofercie Honeywell) | /produkt/honeywell-ct40xp | propozycja — do akceptacji |
 
 Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie zapasu.
 
@@ -117,3 +118,23 @@ Kolejne pozycje dopisuje Jakub albo Claude — utrzymywać minimum 3 tygodnie za
   `honeywell-ct47_small.png` (zmiana rozmiaru istniejącego zdjęcia produktu, nie nowa grafika).
   W kolejce zostały 4 przyszłe pozycje z datą (Vertiv UPS 09.11, Zebra TC27 16.11, Unitech PA768
   23.11, M3 Mobile SL20+ 30.11) — zapas 3+ tygodni zachowany, nie dopisywałem nowych propozycji.
+- **2026-11-23** — wydanie Zebra TC27 zbudowane na bazie Epson DS-730n (ostatnie wydanie w
+  standardowym formacie „urządzenie tygodnia"; nowsze pliki w `editions/` — HP koniec roku 04.11,
+  Brother koniec roku 10.11, ZUP Łódź nowe urządzenia 17.11 — mają inny układ, bez jednego
+  urządzenia tygodnia, więc nie nadawały się na bazę layoutu, zgodnie z precedensem z 26.10),
+  z jednym odstępstwem od standardu: w `public/` istnieje tylko **jedno** zdjęcie produktu
+  (`tc27_1.png`, 800×1200) — galeria pokazuje jedno zdjęcie zamiast czterech, tak jak w
+  poprzednich wydaniach z ograniczonym materiałem. Przeskalowałem je (ImageMagick `convert`,
+  maks. 800 px) do `public/newsletter/tc27_1.png` (533×800). Hero zostawiłem jako istniejący
+  plik `las-em45-anim.gif` (leśniczy z rejestratorem w terenie — tematycznie pasuje do TC27),
+  podmieniłem tylko alt-text. W wierszu kolejki na 23.11 widniał dopisek „z klawiaturą
+  numeryczną" — karta produktu (`app/produkt/zebra-tc27/page.tsx`) nie potwierdza tej cechy,
+  więc nie użyłem jej w treści wydania ani w opisie wiersza kolejki (zgodnie z zasadą „niczego
+  nie zmyślam"; jeśli to prawda, proszę o potwierdzenie, żeby dodać w kolejnym wydaniu). Specyfikacja
+  (7 wierszy) wzięta wprost z karty produktu. Cena: w repo jest realna oferta ZUP Łódź
+  (`data/oferty-skladnicy.ts`, 2873 zł netto z dodatkową kartą micro SD 64 GB oraz ładowarką
+  sieciową i samochodową w zestawie) — użyta wprost. Do tile „z poprzedniego wydania" (Epson
+  DS-730n, ostatnie standardowe wydanie przed serią wydań bez urządzenia tygodnia) dorobiłem
+  miniaturę `epson-ds730n_small.png` (zmiana rozmiaru istniejącego zdjęcia produktu, nie nowa
+  grafika). W kolejce zostały tylko 2 przyszłe pozycje z datą (Unitech PA768 30.11, M3 Mobile
+  SL20+ 07.12), więc dopisałem jedną propozycję na zapas: Honeywell CT40XP (14.12).
